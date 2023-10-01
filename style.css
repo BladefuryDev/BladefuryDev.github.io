@@ -23,11 +23,31 @@ nav {
     display: flex;
 }
 
+.logo {
+    display: flex;
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    padding-left: 2.5rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo:hover {
+    color: white;
+    cursor: pointer;
+    text-shadow: 0 2px 5px black;
+}
+
 @media (max-width: 540px) {
     .nav-items {
         width: 100%;
         justify-content: center;
         margin-top: 5px;
+    }
+    .logo {
+        width: 100%;
+        justify-content: center;
     }
 }
 
@@ -41,21 +61,6 @@ nav a {
 nav a:hover {
     cursor: pointer;
     text-shadow: 0 2px 5px #000000;
-}
-
-.logo {
-    color: rgb(255, 255, 255);
-    font-size: 2rem;
-    font-weight: bold;
-    font-style: italic;
-    padding-left: 2.5rem;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.logo:hover {
-    color: white;
-    cursor: pointer;
-    text-shadow: 0 2px 5px black;
 }
 
 
