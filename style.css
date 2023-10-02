@@ -64,8 +64,7 @@ nav a:hover {
     text-shadow: 0 2px 5px #000000;
 }
 
-
-/* Main Page Stuff Below */
+/* Main Page */
 .about {
     background: #5e819c;
     z-index: 2;
@@ -177,6 +176,36 @@ section.media-sample {
     justify-content: center;
 }
 
+/* Media Page */
+.coming-soon {
+    background: #0e68ad;
+    border-radius: 1.5rem;
+}
+
+.coming-soon-content {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    justify-content: center;
+}
+
+.coming-soon-content h1 {
+    display: flex;
+    justify-content: center;
+    color: white;
+    text-shadow: 0 .5px 10px rgba(0, 0, 0, 0.2);
+    padding-top: 1rem ;
+}
+
+.coming-soon-content p {
+    display: flex;
+    justify-content: center;
+    color: white;
+    text-shadow: 0 .5px 10px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+}
+
+/* Footer */
 footer {
     height: 80px;
     background: #5e819c;
