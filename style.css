@@ -7,10 +7,13 @@
 
 body{
     background: #2c2c2c;
+    margin-left: 3%;
+    margin-right: 3%;
 }
 
 nav {
     height: 80px;
+    border-radius: 0px 0px 1.5rem 1.5rem;
     background: #5e819c;
     display: flex;
     justify-content: space-between;
@@ -68,7 +71,7 @@ nav a:hover {
 .about {
     background: #5e819c;
     z-index: 2;
-    border-radius: 0 0 1.5rem 1.5rem;
+    border-radius: 1.5rem;
 }
 
 .about-container {
