@@ -151,6 +151,11 @@ button:hover {
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
+.spacer {
+    width: auto;
+    height: 18px;
+}
+
 footer {
     height: 80px;
     background: linear-gradient(to bottom, #0059b3, #004080);
