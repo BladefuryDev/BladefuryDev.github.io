@@ -51,7 +51,7 @@ nav {
 }
 
 /* Responsive Navigation */
-@media (max-width: 768px) {
+@media (max-width: 540px) {
     nav {
         height: auto;
         flex-direction: column;
@@ -80,7 +80,7 @@ nav {
 }
 
 /* Main Page */
-.about, .media-sample {
+.about, .media-sample, .artPage {
     background: linear-gradient(to bottom, #ffffff, #cce0ff);
     border: 2px solid #003366;
     border-radius: 15px;
@@ -90,12 +90,12 @@ nav {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.about:hover, .media-sample:hover {
+.about:hover, .media-sample:hover, .artPage:hover {
     transform: translateY(-5px);
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-.about-container, .media-sample-container, .column-left {
+.about-container, .media-sample-container, .column-left, .artPage-container {
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -68,13 +68,13 @@ nav a:hover {
 }
 
 /* Main Page */
-.about {
-    background: #5e819c;
+.about, section.media-sample, .artPage {
+    background: #0e68ad;
     z-index: 2;
     border-radius: 1.5rem;
 }
 
-.about-container {
+.about-container, .artPage-container {
     display: grid;
     grid-template-columns: 1fr;
     height: auto;
@@ -121,12 +121,6 @@ button:hover {
 .spacer {
     width: auto;
     height: 18px;
-}
-
-section.media-sample {
-    background: #0e68ad;
-    z-index: 1;
-    border-radius: 1.5rem;
 }
 
 .media-sample-container {
