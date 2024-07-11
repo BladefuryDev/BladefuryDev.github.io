@@ -216,5 +216,7 @@ section.media-sample {
 footer {
     height: 80px;
     background: #5e819c;
-    border-radius: 1.5rem 1.5rem 0 0;
+    border-radius: 1.5rem 1.5rem 0 0;display: flex;
+    justify-content: center;
+    align-items: center;
 }
