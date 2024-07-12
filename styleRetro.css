@@ -7,13 +7,13 @@
 }
 
 body {
-    background: linear-gradient(to bottom, #e6f0ff, #9cc2fa);
+    background: linear-gradient(to bottom, #e6f0ff, #8fbafa);
     margin-left: 3%;
     margin-right: 3%;
 }
 
 .blurred-bg {
-    background: url('assets/tilemaker-blue-daytime-sky-with-clouds-3d-animation-style.png') repeat;
+    /*background: url('assets/tilemaker-blue-daytime-sky-with-clouds-3d-animation-style.png') repeat;*/
     position: fixed;
     top: 0;
     left: 0;
