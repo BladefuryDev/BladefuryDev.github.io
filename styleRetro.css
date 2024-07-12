@@ -57,6 +57,7 @@ nav {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        padding-bottom: 8px;
     }
 
     .nav-items {
@@ -96,7 +97,7 @@ nav {
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-.about-container, .media-sample-container, .column-left, .artPage-container {
+.about-container, .media-sample-container, .column-left {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -116,10 +117,44 @@ nav {
 }
 
 /* Media Page */
-.media-content-row {
+.artPage-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.art-card {
+    background: linear-gradient(to bottom, #f0f8ff, #dbefff);
+    border: 2px solid #003366;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    width: 22%;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.art-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.art-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.art-card h2 {
+    color: #003366;
+    margin-bottom: 10px;
+}
+
+.art-card p {
+    color: #004080;
+    text-shadow: 0px 0px 2px #00000070;
 }
 
 .media-content-row img {
@@ -133,6 +168,50 @@ nav {
 .media-content-row img:hover {
     transform: scale(1.05);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive Media Page */
+@media (max-width: 768px) {
+    .art-card {
+        width: calc(50% - 40px); /* Two cards per row */
+    }
+}
+
+@media (max-width: 480px) {
+    .art-card {
+        width: calc(100% - 40px); /* One card per row */
+    }
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 700px;
+}
+
+.modal-content img {
+    width: 100%;
+    border-radius: 10px;
+    padding-bottom: 8px;
 }
 
 button {
