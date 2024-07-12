@@ -23,6 +23,21 @@ body {
     opacity: 0.85;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
 /* Navigation */
 nav {
     height: 80px;
@@ -225,6 +240,92 @@ nav {
     padding-bottom: 8px;
 }
 
+/* Resume Page */
+.resume {
+    background: linear-gradient(to bottom, #ffffff, #cce0ff); /* Match the retro theme */
+    border: 2px solid #003366;
+    border-radius: 15px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.resume-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.resume h1, .resume h2, .resume h3 {
+    color: #003366; /* Dark blue for headings */
+    text-shadow: 0px 0px 2px #00000070; /* Slight shadow for text */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.resume p, .resume ul {
+    color: #004080; /* Blue for text */
+    margin-bottom: 20px;
+    text-shadow: 0px 0px 2px #00000070; /* Slight shadow for text */
+    list-style-type: none;
+}
+
+.resume ul li {
+    margin-bottom: 10px;
+}
+
+/* Projects Page */
+.projects {
+    background: linear-gradient(to bottom, #ffffff, #cce0ff); /* Match the retro theme */
+    border: 2px solid #003366;
+    border-radius: 15px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.projects h1 {
+    color: #003366; /* Dark blue for headings */
+    text-shadow: 0px 0px 2px #00000070; /* Slight shadow for text */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.project-card {
+    background: linear-gradient(to bottom, #f0f8ff, #dbefff); /* Light blue gradient */
+    border: 2px solid #003366;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.project-card h2 {
+    color: #003366;
+    margin-bottom: 10px;
+}
+
+.project-card p {
+    color: #004080; /* Blue for text */
+    text-shadow: 0px 0px 2px #00000070; /* Slight shadow for text */
+}
+
+
+/* Assets and Footer*/
 button {
     background: linear-gradient(to bottom, #0066cc, #003366);
     color: white;
@@ -246,6 +347,8 @@ button:hover {
     width: auto;
     height: 18px;
 }
+
+
 
 footer {
     height: 80px;

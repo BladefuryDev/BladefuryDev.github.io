@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexfury Games - Projects</title>
+    <link id="stylesheet" rel="stylesheet" href="styleModern.css">
+    <script>
+        // Load the style from cookie
+        window.onload = function() {
+            const style = getCookie('style');
+            if (style) {
+                document.getElementById('stylesheet').setAttribute('href', style);
+            } else {
+                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
+            }
+        };
+
+        // Function to switch styles
+        function switchStyle() {
+            const currentStyle = document.getElementById('stylesheet').getAttribute('href');
+            if (currentStyle === 'styleModern.css') {
+                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
+                setCookie('style', 'styleRetro.css', 7);
+            } else {
+                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
+                setCookie('style', 'styleModern.css', 7);
+            }
+        }
+
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+        }
+
+        // Function to get a cookie
+        function getCookie(name) {
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            const cookieName = name + "=";
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cookieName) === 0) {
+                    return c.substring(cookieName.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav>
+            <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
+            <div class="nav-items">
+                <a href="index.html">Home</a>
+                <a href="media.html">Media</a>
+                <a href="projects.html">Projects</a>
+                <a href="resume.html">Resume</a>
+            </div>
+        </nav>
+
+        <div class="content">
+            <section class="projects">
+                <div class="projects-container">
+                    <h1>Projects</h1>
+                    <!-- Placeholder for project cards -->
+                    <div class="project-card">
+                        <h2>Project Title</h2>
+                        <p>Description of the project. More details about the content can go here.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <button onclick="switchStyle()">Change Style</button>
+        </footer>
+    </div>
+</body>
+</html>

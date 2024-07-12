@@ -62,51 +62,55 @@
 
 <body>
     <div class="blurred-bg"></div>
-    <nav>
-        <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
-        <div class="nav-items">
-            <a href="index.html">Home</a>
-            <a href="media.html">Media</a>
-            <a href="/">Programs</a>
-            <a href="/">Projects</a>
+    <div class="wrapper">
+        <nav>
+            <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
+            <div class="nav-items">
+                <a href="index.html">Home</a>
+                <a href="media.html">Media</a>
+                <a href="projects.html">Projects</a>
+                <a href="resume.html">Resume</a>
+            </div>
+        </nav>
+        <!-- Content Start -->
+        <div class="content">
+            <div class="spacer"></div>
+            <section class="about">
+                <div class="about-container">
+                    <div class="column-left">
+                        <h1>Wow! That's Text!</h1>
+                        <p>Evidently, this site is still in it's early development phase as the author re-learns HTML and takes a look at what else has changed since 2016. Wow! It sure has been a long time!</p>
+                        <button>Amazing!</button>
+                    </div>
+                    <div class="column-right">
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="spacer"></div>
+            <section class="media-sample">
+                <div class="media-sample-container">
+                    <div class="media-header-row">
+                        <h1>I Do The Art!</h1>
+                        <p>I tend to dabble in digital art from time to time. Here's some of that to feast your eyes upon!</p>
+                    </div>
+                    <div class="media-content-row">
+                        <img alt="" src="images/Hex_The_OrbWM.png"/>
+                        <img alt="" src="images/HexFenaraOceansideCliff.png"/>
+                        <img alt="" src="images/Hex-LabCoat.png"/>
+                        <img alt="" src="images/HexLucario.png"/>
+                    </div>
+                    <div class="media-button-row">
+                        <button onclick="location.href='media.html'"> See More!</button>
+                    </div>
+                </div>
+            </section>
+            <div class="spacer"></div>
+            <!-- Content End -->
         </div>
-    </nav>
-    <!-- Content Start -->
-    <div class="spacer"></div>
-    <section class="about">
-        <div class="about-container">
-            <div class="column-left">
-                 <h1>Wow! That's Text!</h1>
-                 <p>Evidently, this site is still in it's early development phase as the author re-learns HTML and takes a look at what else has changed since 2016. Wow! It sure has been a long time!</p>
-                 <button>Amazing!</button>
-            </div>
-            <div class="column-right">
-                
-            </div>
-        </div>
-    </section>
-    <div class="spacer"></div>
-    <section class="media-sample">
-        <div class="media-sample-container">
-            <div class="media-header-row">
-                <h1>I Do The Art!</h1>
-                <p>I tend to dabble in digital art from time to time. Here's some of that to feast your eyes upon!</p>
-            </div>
-            <div class="media-content-row">
-                <img alt="" src="images/Hex_The_OrbWM.png"/>
-                <img alt="" src="images/HexFenaraOceansideCliff.png"/>
-                <img alt="" src="images/Hex-LabCoat.png"/>
-                <img alt="" src="images/HexLucario.png"/>
-            </div>
-            <div class="media-button-row">
-                 <button onclick="location.href='media.html'"> See More!</button>
-            </div>
-        </div>
-    </section>
-    <!-- Content End -->
-    <div class="spacer"></div>
-    <footer>
-        <button onclick="switchStyle()">Change Style</button>
-    </footer>
+        <footer>
+            <button onclick="switchStyle()">Change Style</button>
+        </footer>
+    </div>
 </body>
 </html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexfury Games - Resume</title>
+    <link id="stylesheet" rel="stylesheet" href="styleModern.css">
+    <script>
+        // Load the style from cookie
+        window.onload = function() {
+            const style = getCookie('style');
+            if (style) {
+                document.getElementById('stylesheet').setAttribute('href', style);
+            } else {
+                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
+            }
+        };
+
+        // Function to switch styles
+        function switchStyle() {
+            const currentStyle = document.getElementById('stylesheet').getAttribute('href');
+            if (currentStyle === 'styleModern.css') {
+                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
+                setCookie('style', 'styleRetro.css', 7);
+            } else {
+                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
+                setCookie('style', 'styleModern.css', 7);
+            }
+        }
+
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+        }
+
+        // Function to get a cookie
+        function getCookie(name) {
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            const cookieName = name + "=";
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cookieName) === 0) {
+                    return c.substring(cookieName.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav>
+            <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
+            <div class="nav-items">
+                <a href="index.html">Home</a>
+                <a href="media.html">Media</a>
+                <a href="projects.html">Projects</a>
+                <a href="resume.html">Resume</a>
+            </div>
+        </nav>
+
+        <div class="content">
+            <section class="resume">
+                <div class="resume-container">
+                    <h1>Resume</h1>
+                    <h2>Professional Summary</h2>
+                    <p>Brief summary of your professional background, skills, and experience.</p>
+                    
+                    <h2>Experience</h2>
+                    <ul>
+                        <li>
+                            <h3>Job Title 1</h3>
+                            <p>Company Name, Location</p>
+                            <p>Duration</p>
+                            <p>Brief description of responsibilities and achievements.</p>
+                        </li>
+                        <li>
+                            <h3>Job Title 2</h3>
+                            <p>Company Name, Location</p>
+                            <p>Duration</p>
+                            <p>Brief description of responsibilities and achievements.</p>
+                        </li>
+                        <!-- Add more experience as needed -->
+                    </ul>
+                    
+                    <h2>Education</h2>
+                    <ul>
+                        <li>
+                            <h3>Degree</h3>
+                            <p>Institution Name, Location</p>
+                            <p>Duration</p>
+                            <p>Brief description of relevant coursework and achievements.</p>
+                        </li>
+                        <!-- Add more education as needed -->
+                    </ul>
+                    
+                    <h2>Skills</h2>
+                    <ul>
+                        <li>Skill 1</li>
+                        <li>Skill 2</li>
+                        <li>Skill 3</li>
+                        <!-- Add more skills as needed -->
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <button onclick="switchStyle()">Change Style</button>
+        </footer>
+    </div>
+</body>
+</html>
