@@ -36,6 +36,7 @@ html, body {
 
 .content {
     flex: 1;
+    padding: 20px;
 }
 
 /* Navigation */
@@ -278,9 +279,9 @@ nav {
 .projects {
     background: linear-gradient(to bottom, #ffffff, #cce0ff); /* Match the retro theme */
     border: 2px solid #003366;
+    padding-top: 18px;
     border-radius: 15px;
     margin: 20px;
-    padding: 20px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -303,26 +304,102 @@ nav {
     border-radius: 15px;
     margin: 10px;
     padding: 20px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     width: 80%;
-    text-align: center;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.project-image {
+    width: 100%;
+    max-width: 150px;
+    margin-right: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.card-content {
+    flex: 1;
+    text-align: left;
+}
+
+.card-content p {
+    padding-bottom: 12px;
 }
 
 .project-card h2 {
-    color: #003366;
+    font-size: 1.5rem;
     margin-bottom: 10px;
+    color: #003366; /* Dark blue for headings */
 }
 
 .project-card p {
+    font-size: 1rem;
     color: #004080; /* Blue for text */
-    text-shadow: 0px 0px 2px #00000070; /* Slight shadow for text */
 }
+
+.card-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: right;
+}
+
+.github-button, .download-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #003366; /* Dark blue for buttons */
+    transition: background-color 0.3s, transform 0.25s;
+}
+
+.github-button:hover, .download-button:hover {
+    background-color: #001f4d;
+    transform: scale(1.02);
+}
+
+/* Responsive Projects Page */
+@media (max-width: 480px) {
+    .project-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .project-image {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .card-content {
+        text-align: center;
+    }
+
+    .card-buttons {
+        justify-content: center;
+    }
+
+    .project-card h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #003366; /* Dark blue for headings */
+        text-align: center;
+    }
+
+    .project-card p {
+        font-size: 1rem;
+        color: #004080; /* Blue for text */
+        text-align: center;
+    }
+}
+
 
 
 /* Assets and Footer*/

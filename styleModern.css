@@ -25,6 +25,7 @@ html, body {
 
 .content {
     flex: 1;
+    padding: 20px;
 }
 
 nav {
@@ -133,6 +134,8 @@ button {
 button:hover {
     background: #5e819c; /* Medium Blue */
     color: #ffffff; /* White */
+    transform: scale(+2%, 0.25s) ;
+    
 }
 
 .spacer {
@@ -202,7 +205,7 @@ button:hover {
     background: #1c3b5a; /* Darker Blue */
     border-radius: 1rem;
     margin: 10px;
-    padding: 20px;
+    padding: 18px;
     width: calc(25% - 40px); /* Adjust width for spacing */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s, box-shadow 0.3s;
@@ -219,6 +222,7 @@ button:hover {
     height: auto;
     border-radius: 1rem;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .art-card h2 {
@@ -294,7 +298,6 @@ button:hover {
 .resume {
     background: #3d3d3d; /* Medium Gray for Modern Theme or appropriate color for Retro Theme */
     border-radius: 15px;
-    margin: 20px;
     padding: 20px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
@@ -306,14 +309,14 @@ button:hover {
 }
 
 .resume h1, .resume h2, .resume h3 {
-    color: #ffffff; /* White */
+    color: #ffffff;
     text-shadow: 0px 0px 2px #00000070;
     margin-bottom: 20px;
     text-align: center;
 }
 
 .resume p, .resume ul {
-    color: #b0c4de; /* Light Blue */
+    color: #b0c4de;
     margin-bottom: 20px;
     text-shadow: 0px 0px 2px #00000070;
     list-style-type: none;
@@ -327,8 +330,8 @@ button:hover {
 .projects {
     background: #3d3d3d; /* Medium Gray */
     border-radius: 15px;
-    margin: 20px;
-    padding: 20px;
+    padding-top: 18px;
+    padding-bottom: 18px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -350,11 +353,29 @@ button:hover {
     border-radius: 15px;
     margin: 10px;
     padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     width: 80%;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
-    color: #ffffff; /* White for text */
+}
+
+.project-image {
+    width: 100%;
+    max-width: 150px;
+    margin-right: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.card-content {
+    flex: 1;
+    text-align: left;
+}
+
+.card-content p {
+    padding-bottom: 12px;
 }
 
 .project-card h2 {
@@ -368,14 +389,74 @@ button:hover {
     color: #b0c4de; /* Light Blue for text */
 }
 
-/* Footer */
+.card-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: right;
+}
+
+.github-button, .download-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #0e68ad;
+    transition: background-color 0.3s;
+}
+
+.github-button:hover, .download-button:hover {
+    background-color: #094a72;
+    transform:scale(+2%, 0.25s) ;
+}
+
+/*Responsive Projects Page*/
+@media (max-width: 480px) {
+    .project-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .project-image {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .card-buttons {
+        justify-content: center;
+    }
+
+    .project-card h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .project-card p {
+        font-size: 1rem;
+        color: #b0c4de;
+        text-align: center;
+    }
+}
+
+/*Assets and Footer */
+.email {
+    color: white;
+}
+
+.email:hover {
+    color: rgb(202, 227, 255);
+}
+
 footer {
     height: 80px;
-    background: #0e68ad; /* Dark Blue */
+    background: #0e68ad;
     border-radius: 1.5rem 1.5rem 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff; /* White */
+    color: #ffffff;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

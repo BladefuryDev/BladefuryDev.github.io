@@ -6,28 +6,6 @@
     <title>Hexfury Games - Projects</title>
     <link id="stylesheet" rel="stylesheet" href="styleModern.css">
     <script>
-        // Load the style from cookie
-        window.onload = function() {
-            const style = getCookie('style');
-            if (style) {
-                document.getElementById('stylesheet').setAttribute('href', style);
-            } else {
-                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
-            }
-        };
-
-        // Function to switch styles
-        function switchStyle() {
-            const currentStyle = document.getElementById('stylesheet').getAttribute('href');
-            if (currentStyle === 'styleModern.css') {
-                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
-                setCookie('style', 'styleRetro.css', 7);
-            } else {
-                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
-                setCookie('style', 'styleModern.css', 7);
-            }
-        }
-
         // Function to set a cookie
         function setCookie(name, value, days) {
             const date = new Date();
@@ -35,7 +13,7 @@
             const expires = "expires=" + date.toUTCString();
             document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
         }
-
+        
         // Function to get a cookie
         function getCookie(name) {
             const decodedCookie = decodeURIComponent(document.cookie);
@@ -52,7 +30,45 @@
             }
             return "";
         }
-    </script>
+        
+        // Function to switch styles
+        function switchStyle() {
+            const currentStyle = document.getElementById('stylesheet').getAttribute('href');
+            if (currentStyle === 'styleModern.css') {
+                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
+                setCookie('style', 'styleRetro.css', 7);
+            } else {
+                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
+                setCookie('style', 'styleModern.css', 7);
+            }
+        }
+        
+        // Function to load style from cookie
+        function loadStyleFromCookie() {
+            const style = getCookie('style');
+            if (style) {
+                document.getElementById('stylesheet').setAttribute('href', style);
+            } else {
+                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
+            }
+        }
+        
+        // Load the style when the page loads
+        window.onload = function() {
+            loadStyleFromCookie();
+        };
+
+        // Function to open modal
+        function openModal(imgSrc) {
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('imgModal').style.display = 'block';
+        }
+
+        // Function to close modal
+        function closeModal() {
+            document.getElementById('imgModal').style.display = 'none';
+        }
+        </script>
 </head>
 
 <body>
@@ -73,13 +89,49 @@
                     <h1>Projects</h1>
                     <!-- Placeholder for project cards -->
                     <div class="project-card">
-                        <h2>Project Title</h2>
-                        <p>Description of the project. More details about the content can go here.</p>
+                        <img src="images/projects/TTMP.png" alt="Project Image" class="project-image" onclick="openModal('images/projects/TTMP.png')">
+                        <div class="card-content">
+                            <h2>Tome Tales Management Panel</h2>
+                            <p>A simple program to randomize loot drops and enemies for various DND campaigns and text/story based roleplays I take part in across various friend groups.</p>
+                            <div class="card-buttons">
+                                <a href="https://github.com/BladefuryDev/Tome-Tales-Management-Panel" class="github-button">GitHub</a>
+                                <a href="https://github.com/BladefuryDev/Tome-Tales-Management-Panel/releases/download/v0.362/Tome.Tales.Management.Panel.exe" class="download-button">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <img src="images/projects/Aeronautica.gif" alt="Project Image" class="project-image" onclick="openModal('images/projects/Aeronautica.gif')">
+                        <div class="card-content">
+                            <h2>Aeronautica - ROBLOX</h2>
+                            <p>Train, Buy, Fly - Aeronautica is an open-world flight simulator with economy elements where the goal is entirely up to you. Earn money by completing unique jobs or flights between distant islands and continents. You can even create an airline for your friends to join! Train and earn licenses to unlock new exciting vehicles. Customize and maintain your planes as you work your way up from the smallest Ultralights to the world’s largest Airliners like the Airbus A380 Superjumbo. </p>
+                            <div class="card-buttons">
+                                <a href="https://www.roblox.com/games/6647962258/Aeronautica" class="download-button">Play</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <img src="images/projects/V849.webp" alt="Project Image" class="project-image" onclick="openModal('images/projects/V849.webp')">
+                        <div class="card-content">
+                            <h2>Vault 849 - ROBLOX</h2>
+                            <p>My personal place to test new scripting methods and overall, simply experiment! The place is uncopylocked so anyone can take a peek and learn too.</p>
+                            <p>Once built for the various communities of Roblox's past, now simply a hangout for just about anyone. Here is the (almost) final product, I present to you! Vault 849!</p>
+                            <div class="card-buttons">
+                                <a href="https://www.roblox.com/games/642642113/Vault-849" class="download-button">Play</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
-
+        <!-- Modal for full image view -->
+        <div id="imgModal" class="modal">
+            <div class="modal-content">
+                <img id="modalImg" src="" alt="Full View">
+                <button class="close-btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+        <!-- Content End -->
+        <div class="spacer"></div>
         <footer>
             <button onclick="switchStyle()">Change Style</button>
         </footer>
