@@ -66,6 +66,7 @@ nav {
     font-style: italic;
     padding-left: 2.5rem;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: text-shadow 0.15s;
 }
 
 .logo:hover {
@@ -93,6 +94,7 @@ nav a {
     color: var(--white);
     padding: 0 1rem;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: text-shadow 0.15s;
 }
 
 nav a:hover {
@@ -100,22 +102,29 @@ nav a:hover {
     text-shadow: 0 2px 5px var(--black);
 }
 
-/* Main Page */
-.about, section.media-sample, .artPage {
+/* Unified Card Styles */
+.card-section {
     background: var(--medium-gray);
     z-index: 2;
     border-radius: 1rem;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    margin: 20px;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.about-container, .artPage-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    height: auto;
-    padding: 3rem calc((100vw - 1300px) / 2);
+.card-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-.column-left {
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -125,15 +134,32 @@ nav a:hover {
     text-shadow: 0 .5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.column-left h1 {
+.card-content h1 {
     margin-bottom: 2rem;
     font-size: 3rem;
 }
 
-.column-left p {
+.card-content p {
     margin-bottom: 2rem;
     font-size: 1.5rem;
     line-height: 1.5;
+}
+
+.media-content-row { 
+    padding-bottom: 12pt;
+}
+
+.media-content-row img {
+    width: 22%;
+    margin: 1%;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.media-content-row img:hover {
+    transform: scale(1.05);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 button {
@@ -159,56 +185,6 @@ button:hover {
 .spacer {
     width: auto;
     height: 18px;
-}
-
-.media-sample-container {
-    display: grid;
-    justify-content: center;
-    grid-template-columns: 1fr;
-    height: auto;
-    padding: 3rem calc((100vw - 1300px) / 2);
-}
-
-.media-header-row {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--white);
-    text-shadow: 0 .5px 10px rgba(0, 0, 0, 0.2);
-    padding: 0rem 2rem;
-}
-
-.media-header-row h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.media-header-row p {
-    margin-bottom: 2rem;
-    font-size: 1.5rem;
-    line-height: 1.5;
-}
-
-.media-content-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-bottom: 1.5rem;
-}
-
-.media-content-row img {
-    width: auto;
-    height: 10rem;
-    padding: 4px;
-    border-radius: 1rem;
-}
-
-.media-button-row {
-    display: flex;
-    justify-content: center;
 }
 
 /* Media Page */
@@ -246,7 +222,7 @@ button:hover {
 .art-card h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: var(--white);
+    color: var (--white);
 }
 
 .art-card p {
@@ -255,6 +231,12 @@ button:hover {
 }
 
 /* Responsive Media Page */
+@media (max-width: 1070px) {
+    .art-card {
+        width: calc(33.3333% - 40px); /* Three cards per row */
+    }
+}
+
 @media (max-width: 768px) {
     .art-card {
         width: calc(50% - 40px); /* Two cards per row */
@@ -379,6 +361,10 @@ button:hover {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
 .project-image {
     width: 100%;
     max-width: 150px;
@@ -473,6 +459,30 @@ button:hover {
     color: rgb(153, 199, 252);
     transition: 0.25s;
 }
+
+.tool-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: var(--white);
+    background-color: var(--dark-blue);
+    transition: background-color 0.3s scale 0.15;
+    margin: 10px;
+}
+
+.tool-button:hover {
+    background-color: var(--medium-blue);
+    transform: scale(1.02);
+}
+
+.button-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
 
 footer {
     height: 80px;

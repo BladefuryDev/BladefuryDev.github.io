@@ -88,12 +88,14 @@ nav {
     padding: 10px 20px;
     text-decoration: none;
     text-shadow: 1px 1px 2px var(--black);
+    transition: background-color 0.3s, font-size 0.3s; /* Added transform transition */
 }
 
 .nav-items a:hover {
     background: var(--medium-blue);
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1.05em;
 }
 
 /* Responsive Navigation */
@@ -127,8 +129,8 @@ nav {
     }
 }
 
-/* Main Page */
-.about, .media-sample, .artPage {
+/* Unified Card Styles */
+.card-section {
     background: linear-gradient(to bottom, var(--white), var(--light-blue));
     border: 2px solid var(--darker-blue);
     border-radius: 15px;
@@ -138,28 +140,77 @@ nav {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.about:hover, .media-sample:hover, .artPage:hover {
+.card-section:hover {
     transform: translateY(-5px);
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-.about-container, .media-sample-container, .column-left {
+.card-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.about h1, .media-header-row h1 {
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: var(--darker-blue);
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
-    margin-bottom: 20px;
-    text-align: center;
+    padding: 0rem 2rem;
+    text-shadow: 0 .5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.about p, .media-header-row p {
-    color: var(--medium-blue);
-    margin-bottom: 20px;
-    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+.card-content h1 {
+    margin-bottom: 2rem;
+    font-size: 3rem;
+}
+
+.card-content p {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+.media-content-row { 
+    padding-bottom: 12pt;
+}
+
+.media-content-row img {
+    width: 22%;
+    margin: 1%;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.media-content-row img:hover {
+    transform: scale(1.05);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+button {
+    width: auto;
+    padding: 1rem 3rem;
+    font-size: 1rem;
+    border: none;
+    color: var(--white);
+    background: linear-gradient(to bottom, var(--button-gradient-start), var(--button-gradient-end));
+    cursor: pointer;
+    border-radius: 1rem;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(to bottom, var(--button-hover-gradient-start), var(--button-hover-gradient-end));
+    transform: scale(1.05);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.spacer {
+    width: auto;
+    height: 18px;
 }
 
 /* Media Page */
@@ -203,20 +254,13 @@ nav {
     text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
 }
 
-.media-content-row img {
-    width: 22%;
-    margin: 1%;
-    border-radius: 10px;
-    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.media-content-row img:hover {
-    transform: scale(1.05);
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-}
-
 /* Responsive Media Page */
+@media (max-width: 1070px) {
+    .art-card {
+        width: calc(33.3333% - 40px); /* Three cards per row */
+    }
+}
+
 @media (max-width: 768px) {
     .art-card {
         width: calc(50% - 40px); /* Two cards per row */
@@ -423,6 +467,32 @@ nav {
 }
 
 /* Assets and Footer */
+.tool-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 2px solid var(--darker-blue);
+    text-decoration: none;
+    color: var(--white);
+    cursor: pointer;
+    background: linear-gradient(to bottom, var(--button-gradient-start), var(--button-gradient-end));
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+}
+
+.tool-button:hover {
+    background-color: var(--medium-blue);
+    transform: scale(1.05);
+}
+
+.button-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
 button {
     background: linear-gradient(to bottom, var(--button-gradient-start), var(--button-gradient-end));
     color: var(--white);
