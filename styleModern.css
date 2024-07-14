@@ -223,11 +223,13 @@ button:hover {
     font-size: 1.5rem;
     margin-bottom: 10px;
     color: var (--white);
+    text-align: center;
 }
 
 .art-card p {
     font-size: 1rem;
     color: var(--light-blue);
+    text-align: center;
 }
 
 /* Responsive Media Page */
@@ -448,6 +450,50 @@ button:hover {
         text-align: center;
     }
 }
+
+/* Dynamic Text and Button Scaling for Mobile Devices */
+@media (max-width: 768px) {
+    .card-content h1 {
+        font-size: 2rem; /* Adjust the heading size */
+    }
+
+    .card-content p {
+        font-size: 1rem; /* Adjust the paragraph size */
+    }
+
+    .card-buttons a, .card-buttons button, .tool-button, button {
+        padding: 8px 16px; /* Adjust button padding */
+        font-size: 0.875rem; /* Adjust button text size */
+    }
+
+    .tool-button .button-logo {
+        width: 20px; /* Adjust logo size */
+        height: 20px; /* Adjust logo size */
+        margin-right: 8px; /* Adjust logo margin */
+    }
+}
+
+@media (max-width: 480px) {
+    .card-content h1 {
+        font-size: 1.5rem; /* Further adjust the heading size */
+    }
+
+    .card-content p {
+        font-size: 0.875rem; /* Further adjust the paragraph size */
+    }
+
+    .card-buttons a, .card-buttons button, .tool-button, button {
+        padding: 6px 12px; /* Further adjust button padding */
+        font-size: 0.75rem; /* Further adjust button text size */
+    }
+
+    .tool-button .button-logo {
+        width: 18px; /* Further adjust logo size */
+        height: 18px; /* Further adjust logo size */
+        margin-right: 6px; /* Further adjust logo margin */
+    }
+}
+
 
 /* Assets and Footer */
 .email {
