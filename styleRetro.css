@@ -55,7 +55,8 @@ html, body {
 
 .content {
     flex: 1;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 /* Navigation */
@@ -157,7 +158,7 @@ nav {
     justify-content: center;
     align-items: center;
     color: var(--darker-blue);
-    padding: 0rem 2rem;
+    padding: 0rem 0.25rem;
     text-shadow: 0 .5px 10px rgba(0, 0, 0, 0.2);
 }
 

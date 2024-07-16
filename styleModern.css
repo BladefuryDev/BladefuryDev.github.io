@@ -21,8 +21,8 @@
 
 body {
     background: var(--dark-gray);
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 html, body {
@@ -38,7 +38,8 @@ html, body {
 
 .content {
     flex: 1;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 nav {
@@ -130,7 +131,7 @@ nav a:hover {
     justify-content: center;
     align-items: center;
     color: var(--white);
-    padding: 0rem 2rem;
+    padding: 0rem 0.25rem;
     text-shadow: 0 .5px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -298,6 +299,7 @@ button:hover {
 
 /* Resume Page */
 .resume {
+    margin: 20px;
     background: var(--medium-gray);
     border-radius: 1rem;
     padding: 20px;
@@ -335,6 +337,7 @@ button:hover {
     padding-top: 18px;
     padding-bottom: 18px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    margin: 20px;
 }
 
 .projects-container {
