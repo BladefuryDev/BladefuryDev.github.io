@@ -40,6 +40,9 @@ html, body {
     flex: 1;
     padding-top: 20px;
     padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 nav {
@@ -104,7 +107,10 @@ nav a:hover {
 }
 
 /* Unified Card Styles */
-.card-section {
+.card-section {display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
     background: var(--medium-gray);
     z-index: 2;
     border-radius: 1rem;
@@ -112,6 +118,15 @@ nav a:hover {
     margin: 20px;
     padding: 20px;
     transition: transform 0.3s, box-shadow 0.3s;
+    flex: 1 1 45%; /* Allow cards to take up about half the width */
+    max-width: 45%;
+}
+
+@media (max-width: 1200px) {
+    .card-section {
+        flex: 1 1 100%; /* On smaller screens, each card takes full width */
+        max-width: 100%;
+    }
 }
 
 .card-section:hover {
@@ -148,6 +163,9 @@ nav a:hover {
 
 .media-content-row { 
     padding-bottom: 12pt;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .media-content-row img {
@@ -161,6 +179,13 @@ nav a:hover {
 .media-content-row img:hover {
     transform: scale(1.05);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .media-content-row img {
+        width: 48%; /* Two images per row */
+        margin: 1%;
+    }
 }
 
 button {
@@ -518,7 +543,7 @@ button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the container */
+    object-fit: fill; /* Ensures the image covers the container */
     border-radius: 12px;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
