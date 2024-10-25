@@ -8,7 +8,7 @@ if ("serviceWorker" in navigator) {
 	window.addEventListener("load", () => {
 		// Register the service worker with an absolute path
 		navigator.serviceWorker
-			.register("/service-worker.js")
+			.register("./service-worker.js")
 			.then((registration) => {
 				console.log("[Service Worker] Registered with scope:", registration.scope);
 			})
@@ -28,7 +28,7 @@ if ("serviceWorker" in navigator) {
 
 // Load and execute main.lua by appending a script tag with type "application/lua"
 const script = document.createElement("script");
-script.src = "/lua/main.lua";
+script.src = "./lua/main.lua";
 script.type = "application/lua";
 script.async = true;
 document.body.appendChild(script);
