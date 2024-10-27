@@ -1,116 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hexfury Games</title>
-    <link id="stylesheet" rel="stylesheet" href="styleModern.css">
+    <link id="stylesheet" rel="stylesheet" href="styleModern.css" />
     <script>
-        // Function to set a cookie
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
-        }
-        
-        // Function to get a cookie
-        function getCookie(name) {
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const ca = decodedCookie.split(';');
-            const cookieName = name + "=";
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(cookieName) === 0) {
-                    return c.substring(cookieName.length, c.length);
-                }
-            }
-            return "";
-        }
-        
-        // Function to switch styles
-        function switchStyle() {
-            const currentStyle = document.getElementById('stylesheet').getAttribute('href');
-            if (currentStyle === 'styleModern.css') {
-                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
-                setCookie('style', 'styleRetro.css', 7);
-            } else {
-                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
-                setCookie('style', 'styleModern.css', 7);
-            }
-        }
-        
-        // Function to load style from cookie
-        function loadStyleFromCookie() {
-            const style = getCookie('style');
-            if (style) {
-                document.getElementById('stylesheet').setAttribute('href', style);
-            } else {
-                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
-            }
-        }
-        
-        // Load the style when the page loads
-        window.onload = function() {
-            loadStyleFromCookie();
-        };
-    </script>
-</head>
+      // Function to set a cookie
+      function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+      }
 
-<body>
+      // Function to get a cookie
+      function getCookie(name) {
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(";");
+        const cookieName = name + "=";
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(cookieName) === 0) {
+            return c.substring(cookieName.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      // Function to switch styles
+      function switchStyle() {
+        const currentStyle = document
+          .getElementById("stylesheet")
+          .getAttribute("href");
+        if (currentStyle === "styleModern.css") {
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleRetro.css");
+          setCookie("style", "styleRetro.css", 7);
+        } else {
+          // Fallback to default
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleModern.css");
+          setCookie("style", "styleModern.css", 7);
+        }
+      }
+
+      // Function to load style from cookie
+      function loadStyleFromCookie() {
+        const style = getCookie("style");
+        if (style) {
+          document.getElementById("stylesheet").setAttribute("href", style);
+        } else {
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleModern.css");
+        }
+      }
+
+      // Load the style when the page loads
+      window.onload = function () {
+        loadStyleFromCookie();
+      };
+    </script>
+  </head>
+
+  <body>
     <div class="wrapper">
-        <nav>
-            <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
-            <div class="nav-items">
-                <a href="index.html">Home</a>
-                <a href="media.html">Media</a>
-                <a href="projects.html">Projects</a>
-                <a href="resume.html">Resume</a>
-            </div>
-        </nav>
-        <!-- Content Start -->
-        <div class="content">
-            <div class="spacer"></div>
-            <section class="card-section">
-                <div class="card-container">
-                    <div class="card-content">
-                        <h1>Welcome!</h1>
-                        <p>Welcome to my site! Here you'll find a collection of my various works, a space where I share projects, and a gallery for my art (which I don't create all that often, but it’s here nonetheless!). Feel free to browse through and see what I've been up to. Enjoy!</p>
-                        <div class="image-container">
-                            <img src="images/projects/TTMP.png" alt="Sample Image 1" class="fade-image">
-                            <img src="images/projects/AeronauticaWide.webp" alt="Sample Image 2" class="fade-image">
-                            <img src="images/projects/V849Wide.webp" alt="Sample Image 3" class="fade-image">
-                        </div>
-                        <p>Above, you'll find a glimpse of some of the projects I've worked on. One highlight is a program I created to randomize loot drops and enemy spawns for various roleplay and D&D games, which has been a huge time saver for several friend groups. You'll also see two Roblox games: one where I developed some backend scripting for a full-fledged game, and my personal playground and test area, Vault 849!</p>
-                        <button onclick="location.href='projects.html'">See Projects!</button>
-                    </div>
-                </div>
-            </section>
-            <div class="spacer"></div>
-            <section class="card-section">
-                <div class="card-container">
-                    <div class="card-content">
-                        <h1>I Do The Art!</h1>
-                        <p>I tend to dabble in digital art from time to time. Here's some of that to feast your eyes upon!</p>
-                        <div class="media-content-row">
-                            <img alt="" src="images/Hex_The_OrbWM.png"/>
-                            <img alt="" src="images/HexFenaraOceansideCliff.png"/>
-                            <img alt="" src="images/Hex-LabCoat.png"/>
-                            <img alt="" src="images/HexLucario.png"/>
-                        </div>
-                        <button onclick="location.href='media.html'">See More!</button>
-                    </div>
-                </div>
-            </section>
-            <div class="spacer"></div>
-            <!-- Content End -->
+      <nav>
+        <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
+        <div class="nav-items">
+          <a href="index.html">Home</a>
+          <a href="media.html">Media</a>
+          <a href="projects.html">Projects</a>
+          <a href="resume.html">Resume</a>
         </div>
-        <footer>
-            <button onclick="switchStyle()">Change Style</button>
-        </footer>
+      </nav>
+      <!-- Content Start -->
+      <div class="content">
+        <div class="spacer"></div>
+        <section class="card-section">
+          <div class="card-container">
+            <div class="card-content">
+              <h1>Welcome!</h1>
+              <p>
+                Welcome to my site! Here you'll find a collection of my various
+                works, a space where I share projects, and a gallery for my art
+                (which I don't create all that often, but it’s here
+                nonetheless!). Feel free to browse through and see what I've
+                been up to. Enjoy!
+              </p>
+              <div class="image-container">
+                <img
+                  src="images/projects/TTMP.png"
+                  alt="Sample Image 1"
+                  class="fade-image"
+                />
+                <img
+                  src="images/projects/AeronauticaWide.webp"
+                  alt="Sample Image 2"
+                  class="fade-image"
+                />
+                <img
+                  src="images/projects/V849Wide.webp"
+                  alt="Sample Image 3"
+                  class="fade-image"
+                />
+              </div>
+              <p>
+                Above, you'll find a glimpse of some of the projects I've worked
+                on. One highlight is a program I created to randomize loot drops
+                and enemy spawns for various roleplay and D&D games, which has
+                been a huge time saver for several friend groups. You'll also
+                see two Roblox games: one where I developed some backend
+                scripting for a full-fledged game, and my personal playground
+                and test area, Vault 849!
+              </p>
+              <button onclick="location.href='projects.html'">
+                See Projects!
+              </button>
+            </div>
+          </div>
+        </section>
+        <div class="spacer"></div>
+        <section class="card-section">
+          <div class="card-container">
+            <div class="card-content">
+              <h1>I Do The Art!</h1>
+              <p>
+                I tend to dabble in digital art from time to time. Here's some
+                of that to feast your eyes upon!
+              </p>
+              <div class="media-content-row">
+                <img alt="" src="images/Hex_The_OrbWM.png" />
+                <img alt="" src="images/HexFenaraOceansideCliff.png" />
+                <img alt="" src="images/Hex-LabCoat.png" />
+                <img alt="" src="images/HexLucario.png" />
+              </div>
+              <button onclick="location.href='media.html'">See More!</button>
+            </div>
+          </div>
+        </section>
+        <div class="spacer"></div>
+        <!-- Content End -->
+      </div>
+      <footer>
+        <button onclick="switchStyle()">Change Style</button>
+      </footer>
     </div>
-</body>
+  </body>
 </html>
