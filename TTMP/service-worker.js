@@ -1,6 +1,6 @@
 const CACHE_NAME = "tome-tales-cache-v1-1";
 const urlsToCache = [
-  "./", // Relative to /TTMP/
+  "./",
   "./index.js",
   "./src/output.css",
   "./app.js",
