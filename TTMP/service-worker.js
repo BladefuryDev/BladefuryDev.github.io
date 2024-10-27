@@ -17,7 +17,9 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log("Opened cache");
-      return cache.addAll(urlsToCache);
+      return cache.addAll(urlsToCache).catch((error) => {
+        console.error("Failed to cache:", error);
+      });
     })
   );
 });
@@ -26,11 +28,13 @@ self.addEventListener("install", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      // Cache hit - return the response
       if (response) {
         return response;
       }
-      return fetch(event.request);
+      return fetch(event.request).catch((error) => {
+        console.error("Fetch failed; returning offline page instead.", error);
+        // Optionally return a fallback page here if needed
+      });
     })
   );
 });
@@ -43,6 +47,7 @@ self.addEventListener("activate", (event) => {
       Promise.all(
         cacheNames.map((cacheName) => {
           if (!cacheWhitelist.includes(cacheName)) {
+            console.log(`Deleting old cache: ${cacheName}`);
             return caches.delete(cacheName);
           }
         })
