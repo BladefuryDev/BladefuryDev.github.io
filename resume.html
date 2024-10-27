@@ -1,148 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hexfury Games - Resume</title>
-    <link id="stylesheet" rel="stylesheet" href="styleModern.css">
+    <link id="stylesheet" rel="stylesheet" href="styleModern.css" />
+    <link rel="icon" href="assets/icons/PRSG.ico" />
     <script>
-        // Load the style from cookie
-        window.onload = function() {
-            const style = getCookie('style');
-            if (style) {
-                document.getElementById('stylesheet').setAttribute('href', style);
-            } else {
-                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
-            }
-        };
-
-        // Function to switch styles
-        function switchStyle() {
-            const currentStyle = document.getElementById('stylesheet').getAttribute('href');
-            if (currentStyle === 'styleModern.css') {
-                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
-                setCookie('style', 'styleRetro.css', 7);
-            } else {
-                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
-                setCookie('style', 'styleModern.css', 7);
-            }
+      // Load the style from cookie
+      window.onload = function () {
+        const style = getCookie("style");
+        if (style) {
+          document.getElementById("stylesheet").setAttribute("href", style);
+        } else {
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleModern.css");
         }
+      };
 
-        // Function to set a cookie
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+      // Function to switch styles
+      function switchStyle() {
+        const currentStyle = document
+          .getElementById("stylesheet")
+          .getAttribute("href");
+        if (currentStyle === "styleModern.css") {
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleRetro.css");
+          setCookie("style", "styleRetro.css", 7);
+        } else {
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleModern.css");
+          setCookie("style", "styleModern.css", 7);
         }
+      }
 
-        // Function to get a cookie
-        function getCookie(name) {
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const ca = decodedCookie.split(';');
-            const cookieName = name + "=";
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(cookieName) === 0) {
-                    return c.substring(cookieName.length, c.length);
-                }
-            }
-            return "";
+      // Function to set a cookie
+      function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+      }
+
+      // Function to get a cookie
+      function getCookie(name) {
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(";");
+        const cookieName = name + "=";
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(cookieName) === 0) {
+            return c.substring(cookieName.length, c.length);
+          }
         }
+        return "";
+      }
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="wrapper">
-        <nav>
-            <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
-            <div class="nav-items">
-                <a href="index.html">Home</a>
-                <a href="media.html">Media</a>
-                <a href="projects.html">Projects</a>
-                <a href="resume.html">Resume</a>
-            </div>
-        </nav>
-        <div class="spacer"></div>
-        <div class="content">
-            <section class="resume">
-                <div class="resume-container">
-                    <h1>Christopher S</h1>
-                    <p>Miami, FL</p>
-                    <p>***-***-0067 – <a class="email" href="mailto:firedragon8492@gmail.com">firedragon8492@gmail.com</a></p>
-                    
-                    <h2>Experience</h2>
-                    <ul>
-                        <li>
-                            <h3>QA Tester • ROBLOX Corporation • Feb 2017 – 2019</h3>
-                            <p>Worked with a volunteer team of QA testers to play test and report issues in upcoming games and events ensuring a smooth launch of new experiences.</p>
-                            <p>Conducted testing of game mechanics graphics and user interfaces to identify and report bugs and glitches.</p>
-                            <p>Worked closely with development teams to verify bug fixes and provide feedback on user experience contributing to the successful release of upcoming games, events and updates.</p>
-                        </li>
-                        <li>
-                            <h3>Front Service Clerk • PUBLIX 1397 • July 2019 – Current</h3>
-                            <p>Provided customer service by assisting customers with bagging and delivering goods to their vehicles and answering inquiries about store products and policies.</p>
-                            <p>Maintained a clean and organized store environment by restocking shelves sweeping floors and ensuring compliance with safety and sanitation standards.</p>
-                            <p>Demonstrated excellent communication and teamwork skills by working with colleagues to complete tasks efficiently and effectively.</p>
-                            <p>Consistently received positive feedback from customers for providing personalized and friendly service contributing to a higher level of customer satisfaction.</p>
-                            <p>Not part of the job description or requirement but I did branch out into maintaining store equipment lead by curiosity.</p>
-                        </li>
-                        <li>
-                            <h3>Senior Developer for Aeronautica • Roblox • 2020 - Current</h3>
-                            <p>As the Lead Developer for Aeronautica an open-world economy and aviation arcade game on Roblox I am responsible for overseeing the backend scripting and technical development of the game.</p>
-                            <p>Since starting in 2020 I have worked to design and create scenery while also developing UI systems and administrative tools for the game's moderation team.</p>
-                            <p>Through my efforts I have been able to help escalate the game's progress and improve the enjoyability and safety for the player-base that wasn’t seeking to negatively impact others.</p>
-                        </li>
-                    </ul>
-                    
-                    <h2>Skills</h2>
-                    <ul>
-                        <li>Fluent in English with excellent written and verbal communication skills including the ability to articulate complex technical concepts in a clear and concise manner.</li>
-                        <li>Type at a speed of 68 words per minute ensuring speedy and accurate data entry and documentation.</li>
-                        <li>Proficient in working with computers including building and repairing hardware troubleshooting software issues and configuring network settings.</li>
-                        <li>Intermediate-level proficiency in Microsoft Word Excel PowerPoint and Outlook enabling efficient creation and management of various types of documents spreadsheets and presentations.</li>
-                        <li>Skilled in coding with LUA including developing and debugging scripts for games and software applications.</li>
-                        <li>Possess entry-level coding knowledge with C# JavaScript HTML and Python with a strong willingness to learn and expand coding skills to tackle new challenges. These skills were self taught.</li>
-                        <li>Adobe Certified Associate in Dreamweaver and Illustrator demonstrating expertise in creating and designing websites graphics and multimedia content.</li>
-                        <li>Intermediate-level proficiency in video editing using Vegas 17 including editing and post-production of video content for various platforms.</li>
-                        <li>Adept at quickly learning new skills and technologies as needed, whether it's a new coding language, software application, or tool. Most of my skills are self-taught, and I'm always eager to expand my knowledge to tackle new challenges.</li>
-                    </ul>
-                    
-                    <h2>Education</h2>
-                    <ul>
-                        <li>
-                            <h3>Miami Senior High • 2014 - 2018</h3>
-                            <p>Developed a strong foundation in computer repair and maintenance through hands-on experience repairing multiple school computers including hardware maintenance and software changes.</p>
-                            <p>Applied multimedia production skills by managing a daily news show for Miami High as part of TV Production III including filming editing and post-production tasks.</p>
-                            <p>Demonstrated leadership and mentorship skills by monitoring and assisting new students with their work in TV Production III providing guidance on technical and creative aspects of the production process.</p>
-                            <p>Gained experience in event videography by filming various school sports and assemblies including setup lighting and audio recording.</p>
-                            <p>Completed certification in Adobe Dreamweaver and Illustrator honing skills in website and graphic design and demonstrating proficiency in using industry-standard software tools.</p>
-                        </li>
-                    </ul>
-
-                    <h2>Unofficial Experience</h2>
-                    <ul>
-                        <li>
-                            <h3>Local PC repairs</h3>
-                            <p>With a passion for technology and a natural aptitude for troubleshooting I have been providing quality PC repair services to my community since my high school days.</p>
-                            <p>As an experienced PC builder I possess a deep understanding of hardware maintenance and repairs allowing me to effectively diagnose and resolve issues with desktops and laptops.</p>
-                            <p>Whether it's fixing software issues replacing hardware components or providing upgrades and optimizations I am dedicated to delivering prompt and reliable service to my clients.</p>
-                        </li>
-                    </ul>
-
-                    <h2>Reference</h2>
-                    <p>Publix store 1397 | +1 (305)-358-3433</p>
-                    <p>Request for active store manager.</p>
-                </div>
-            </section>
+      <nav>
+        <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
+        <div class="nav-items">
+          <a href="index.html">Home</a>
+          <a href="media.html">Media</a>
+          <a href="projects.html">Projects</a>
+          <a href="resume.html">Resume</a>
         </div>
+      </nav>
+      <div class="spacer"></div>
+      <div class="content">
+        <section class="resume">
+          <div class="resume-container">
+            <h1>Christopher S</h1>
+            <p>Miami, FL</p>
+            <p>
+              ***-***-0067 –
+              <a class="email" href="mailto:firedragon8492@gmail.com"
+                >firedragon8492@gmail.com</a
+              >
+            </p>
 
-        <footer>
-            <button onclick="switchStyle()">Change Style</button>
-        </footer>
+            <h2>Experience</h2>
+            <ul>
+              <li>
+                <h3>QA Tester • ROBLOX Corporation • Feb 2017 – 2019</h3>
+                <p>
+                  Worked with a volunteer team of QA testers to play test and
+                  report issues in upcoming games and events ensuring a smooth
+                  launch of new experiences.
+                </p>
+                <p>
+                  Conducted testing of game mechanics graphics and user
+                  interfaces to identify and report bugs and glitches.
+                </p>
+                <p>
+                  Worked closely with development teams to verify bug fixes and
+                  provide feedback on user experience contributing to the
+                  successful release of upcoming games, events and updates.
+                </p>
+              </li>
+              <li>
+                <h3>Front Service Clerk • PUBLIX 1397 • July 2019 – Current</h3>
+                <p>
+                  Provided customer service by assisting customers with bagging
+                  and delivering goods to their vehicles and answering inquiries
+                  about store products and policies.
+                </p>
+                <p>
+                  Maintained a clean and organized store environment by
+                  restocking shelves sweeping floors and ensuring compliance
+                  with safety and sanitation standards.
+                </p>
+                <p>
+                  Demonstrated excellent communication and teamwork skills by
+                  working with colleagues to complete tasks efficiently and
+                  effectively.
+                </p>
+                <p>
+                  Consistently received positive feedback from customers for
+                  providing personalized and friendly service contributing to a
+                  higher level of customer satisfaction.
+                </p>
+                <p>
+                  Not part of the job description or requirement but I did
+                  branch out into maintaining store equipment lead by curiosity.
+                </p>
+              </li>
+              <li>
+                <h3>
+                  Senior Developer for Aeronautica • Roblox • 2020 - Current
+                </h3>
+                <p>
+                  As the Lead Developer for Aeronautica an open-world economy
+                  and aviation arcade game on Roblox I am responsible for
+                  overseeing the backend scripting and technical development of
+                  the game.
+                </p>
+                <p>
+                  Since starting in 2020 I have worked to design and create
+                  scenery while also developing UI systems and administrative
+                  tools for the game's moderation team.
+                </p>
+                <p>
+                  Through my efforts I have been able to help escalate the
+                  game's progress and improve the enjoyability and safety for
+                  the player-base that wasn’t seeking to negatively impact
+                  others.
+                </p>
+              </li>
+            </ul>
+
+            <h2>Skills</h2>
+            <ul>
+              <li>
+                Fluent in English with excellent written and verbal
+                communication skills including the ability to articulate complex
+                technical concepts in a clear and concise manner.
+              </li>
+              <li>
+                Type at a speed of 68 words per minute ensuring speedy and
+                accurate data entry and documentation.
+              </li>
+              <li>
+                Proficient in working with computers including building and
+                repairing hardware troubleshooting software issues and
+                configuring network settings.
+              </li>
+              <li>
+                Intermediate-level proficiency in Microsoft Word Excel
+                PowerPoint and Outlook enabling efficient creation and
+                management of various types of documents spreadsheets and
+                presentations.
+              </li>
+              <li>
+                Skilled in coding with LUA including developing and debugging
+                scripts for games and software applications.
+              </li>
+              <li>
+                Possess entry-level coding knowledge with C# JavaScript HTML and
+                Python with a strong willingness to learn and expand coding
+                skills to tackle new challenges. These skills were self taught.
+              </li>
+              <li>
+                Adobe Certified Associate in Dreamweaver and Illustrator
+                demonstrating expertise in creating and designing websites
+                graphics and multimedia content.
+              </li>
+              <li>
+                Intermediate-level proficiency in video editing using Vegas 17
+                including editing and post-production of video content for
+                various platforms.
+              </li>
+              <li>
+                Adept at quickly learning new skills and technologies as needed,
+                whether it's a new coding language, software application, or
+                tool. Most of my skills are self-taught, and I'm always eager to
+                expand my knowledge to tackle new challenges.
+              </li>
+            </ul>
+
+            <h2>Education</h2>
+            <ul>
+              <li>
+                <h3>Miami Senior High • 2014 - 2018</h3>
+                <p>
+                  Developed a strong foundation in computer repair and
+                  maintenance through hands-on experience repairing multiple
+                  school computers including hardware maintenance and software
+                  changes.
+                </p>
+                <p>
+                  Applied multimedia production skills by managing a daily news
+                  show for Miami High as part of TV Production III including
+                  filming editing and post-production tasks.
+                </p>
+                <p>
+                  Demonstrated leadership and mentorship skills by monitoring
+                  and assisting new students with their work in TV Production
+                  III providing guidance on technical and creative aspects of
+                  the production process.
+                </p>
+                <p>
+                  Gained experience in event videography by filming various
+                  school sports and assemblies including setup lighting and
+                  audio recording.
+                </p>
+                <p>
+                  Completed certification in Adobe Dreamweaver and Illustrator
+                  honing skills in website and graphic design and demonstrating
+                  proficiency in using industry-standard software tools.
+                </p>
+              </li>
+            </ul>
+
+            <h2>Unofficial Experience</h2>
+            <ul>
+              <li>
+                <h3>Local PC repairs</h3>
+                <p>
+                  With a passion for technology and a natural aptitude for
+                  troubleshooting I have been providing quality PC repair
+                  services to my community since my high school days.
+                </p>
+                <p>
+                  As an experienced PC builder I possess a deep understanding of
+                  hardware maintenance and repairs allowing me to effectively
+                  diagnose and resolve issues with desktops and laptops.
+                </p>
+                <p>
+                  Whether it's fixing software issues replacing hardware
+                  components or providing upgrades and optimizations I am
+                  dedicated to delivering prompt and reliable service to my
+                  clients.
+                </p>
+              </li>
+            </ul>
+
+            <h2>Reference</h2>
+            <p>Publix store 1397 | +1 (305)-358-3433</p>
+            <p>Request for active store manager.</p>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        <button onclick="switchStyle()">Change Style</button>
+      </footer>
     </div>
-</body>
+  </body>
 </html>

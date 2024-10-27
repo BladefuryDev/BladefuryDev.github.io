@@ -1,167 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hexfury Games</title>
-    <link id="stylesheet" rel="stylesheet" href="styleModern.css">
+    <link id="stylesheet" rel="stylesheet" href="styleModern.css" />
+    <link rel="icon" href="assets/icons/PRSG.ico" />
     <script>
-        // Function to set a cookie
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
-        }
-        
-        // Function to get a cookie
-        function getCookie(name) {
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const ca = decodedCookie.split(';');
-            const cookieName = name + "=";
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(cookieName) === 0) {
-                    return c.substring(cookieName.length, c.length);
-                }
-            }
-            return "";
-        }
-        
-        // Function to switch styles
-        function switchStyle() {
-            const currentStyle = document.getElementById('stylesheet').getAttribute('href');
-            if (currentStyle === 'styleModern.css') {
-                document.getElementById('stylesheet').setAttribute('href', 'styleRetro.css');
-                setCookie('style', 'styleRetro.css', 7);
-            } else {
-                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
-                setCookie('style', 'styleModern.css', 7);
-            }
-        }
-        
-        // Function to load style from cookie
-        function loadStyleFromCookie() {
-            const style = getCookie('style');
-            if (style) {
-                document.getElementById('stylesheet').setAttribute('href', style);
-            } else {
-                document.getElementById('stylesheet').setAttribute('href', 'styleModern.css');
-            }
-        }
-        
-        // Load the style when the page loads
-        window.onload = function() {
-            loadStyleFromCookie();
-        };
+      // Function to set a cookie
+      function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+      }
 
-        // Function to open modal
-        function openModal(imgSrc) {
-            document.getElementById('modalImg').src = imgSrc;
-            document.getElementById('imgModal').style.display = 'block';
+      // Function to get a cookie
+      function getCookie(name) {
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(";");
+        const cookieName = name + "=";
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(cookieName) === 0) {
+            return c.substring(cookieName.length, c.length);
+          }
         }
+        return "";
+      }
 
-        // Function to close modal
-        function closeModal() {
-            document.getElementById('imgModal').style.display = 'none';
+      // Function to switch styles
+      function switchStyle() {
+        const currentStyle = document
+          .getElementById("stylesheet")
+          .getAttribute("href");
+        if (currentStyle === "styleModern.css") {
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleRetro.css");
+          setCookie("style", "styleRetro.css", 7);
+        } else {
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleModern.css");
+          setCookie("style", "styleModern.css", 7);
         }
-        </script>
-</head>
+      }
 
-<body>
+      // Function to load style from cookie
+      function loadStyleFromCookie() {
+        const style = getCookie("style");
+        if (style) {
+          document.getElementById("stylesheet").setAttribute("href", style);
+        } else {
+          document
+            .getElementById("stylesheet")
+            .setAttribute("href", "styleModern.css");
+        }
+      }
+
+      // Load the style when the page loads
+      window.onload = function () {
+        loadStyleFromCookie();
+      };
+
+      // Function to open modal
+      function openModal(imgSrc) {
+        document.getElementById("modalImg").src = imgSrc;
+        document.getElementById("imgModal").style.display = "block";
+      }
+
+      // Function to close modal
+      function closeModal() {
+        document.getElementById("imgModal").style.display = "none";
+      }
+    </script>
+  </head>
+
+  <body>
     <div class="wrapper">
-        <nav>
-            <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
-            <div class="nav-items">
-                <a href="index.html">Home</a>
-                <a href="media.html">Media</a>
-                <a href="projects.html">Projects</a>
-                <a href="resume.html">Resume</a>
-            </div>
-        </nav>
-        <!-- Content Start -->
-        <div class="spacer"></div>
-        <div class="content">
-            <section class="card-section">
-                <div class="card-container">
-                    <div class="card-content">
-                        <h1>My Art Tools</h1>
-                        <p>I use a mixture of Krita and Adobe Photoshop for my work. Krita is used for actual drawing, coloring, and shading, while Adobe Photoshop is used for its superior and easier-to-use effects and export settings.</p>
-                        <div class="card-buttons">
-                            <a href="https://krita.org/en/" class="tool-button">
-                                <img src="assets/icons/rsz_calligrakrita-basesvg.png" alt="Krita Logo" class="button-logo">
-                                Krita
-                            </a>
-                            <a href="https://www.adobe.com/products/photoshop.html" class="tool-button">
-                                <img src="assets/icons/rsz_adobe-photoshop-logo-freelogovectorsnet_.png" alt="Photoshop Logo" class="button-logo">
-                                Adobe Photoshop
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <div class="spacer"></div>
-            <section class="artPage">
-                <div class="artPage-container">
-                    <div class="art-card">
-                        <img src="images/Hex_-_Rememberance_1.png" alt="Art Image 1" onclick="openModal('images/Hex_-_Rememberance_1.png')">
-                        <h2>Rememberance</h2>
-                        <p>Memories of a long lost home. Every now and then, nightmares of a certain day always seems to crop up. The start of I84.</p>
-                    </div>
-                    <div class="art-card">
-                        <img src="images/Hex_AI_test_unit.png" alt="Art Image 2" onclick="openModal('images/Hex_AI_test_unit.png')">
-                        <h2>Starlit Mountains</h2>
-                        <p>A relaxing night sat atop a cliff. The world is beautiful, if you take the time to truly admire it.</p>
-                    </div>
-                    <div class="art-card">
-                        <img src="images/HexBackrooms.png" alt="Art Image 3" onclick="openModal('images/HexBackrooms.png')">
-                        <h2>Hex in the Backrooms</h2>
-                        <p>It seems someone has taken a wrong step at some point... Good luck!</p>
-                    </div>
-                    <div class="art-card">
-                        <img src="images/HexFenaraOceansideCliff.png" alt="Art Image 4" onclick="openModal('images/HexFenaraOceansideCliff.png')">
-                        <h2>Cliffside Oceanview</h2>
-                        <p>A piece I made for a friend who's character was a Fennekin. Adorable!</p>
-                    </div>
-                    <div class="art-card">
-                        <img src="images/Hex-LabCoat.png" alt="Art Image 5" onclick="openModal('images/Hex-LabCoat.png')">
-                        <h2>Hex - Paradigm Research Group</h2>
-                        <p>A snazzy lab-coat for a certain science floof. Science for his world anyway, specializing in controlling magical artifacts via the use of Psychic and Aura based energies.</p>
-                    </div>
-                    <div class="art-card">
-                        <img src="images/HexLucario.png" alt="Art Image 6" onclick="openModal('images/HexLucario.png')">
-                        <h2>Hex the Lucario</h2>
-                        <p>Every Pokemon has to evolve at some point, Hex finally achieved said milestone on his own accord.</p>
-                    </div>
-                    <div class="art-card">
-                        <img src="images/Hex_The_OrbWM.png" alt="Art Image 7" onclick="openModal('images/Hex_The_OrbWM.png')">
-                        <h2>Escape Orb Experiment</h2>
-                        <p>Escape orbs are interesting, punching holes through space to free a user from whatever structure of cave they're in when deployed. Even better when modified to override the destination. Looks like someone didn't know this one was changed though. Think fast little one!</p>
-                    </div>
-                    <div class="art-card">
-                        <img src="images/Stargate_Hex.png" alt="Art Image 9"  onclick="openModal('images/Stargate_Hex.png')">
-                        <h2>Exo-Reality Gate</h2>
-                        <p>Escape Orbs working in concert can reach destinations significantly farther than intended. One such Experiment broke through the confines of reality, linking an infinite number of variants of this world to one. Where should we go next?</p>
-                    </div>
-                    <!-- Add more art cards as needed -->
-                </div>
-            </section>
+      <nav>
+        <div class="logo" onclick="location.href='index.html'">HEXFURY</div>
+        <div class="nav-items">
+          <a href="index.html">Home</a>
+          <a href="media.html">Media</a>
+          <a href="projects.html">Projects</a>
+          <a href="resume.html">Resume</a>
         </div>
-        <!-- Modal for full image view -->
-        <div id="imgModal" class="modal">
-            <div class="modal-content">
-                <img id="modalImg" src="" alt="Full View">
-                <button class="close-btn" onclick="closeModal()">Close</button>
+      </nav>
+      <!-- Content Start -->
+      <div class="spacer"></div>
+      <div class="content">
+        <section class="card-section">
+          <div class="card-container">
+            <div class="card-content">
+              <h1>My Art Tools</h1>
+              <p>
+                I use a mixture of Krita and Adobe Photoshop for my work. Krita
+                is used for actual drawing, coloring, and shading, while Adobe
+                Photoshop is used for its superior and easier-to-use effects and
+                export settings.
+              </p>
+              <div class="card-buttons">
+                <a href="https://krita.org/en/" class="tool-button">
+                  <img
+                    src="assets/icons/rsz_calligrakrita-basesvg.png"
+                    alt="Krita Logo"
+                    class="button-logo"
+                  />
+                  Krita
+                </a>
+                <a
+                  href="https://www.adobe.com/products/photoshop.html"
+                  class="tool-button"
+                >
+                  <img
+                    src="assets/icons/rsz_adobe-photoshop-logo-freelogovectorsnet_.png"
+                    alt="Photoshop Logo"
+                    class="button-logo"
+                  />
+                  Adobe Photoshop
+                </a>
+              </div>
             </div>
-        </div>
-        <!-- Content End -->
+          </div>
+        </section>
         <div class="spacer"></div>
-        <footer>
-            <button onclick="switchStyle()">Change Style</button>
-        </footer>
+        <section class="artPage">
+          <div class="artPage-container">
+            <div class="art-card">
+              <img
+                src="images/Hex_-_Rememberance_1.png"
+                alt="Art Image 1"
+                onclick="openModal('images/Hex_-_Rememberance_1.png')"
+              />
+              <h2>Rememberance</h2>
+              <p>
+                Memories of a long lost home. Every now and then, nightmares of
+                a certain day always seems to crop up. The start of I84.
+              </p>
+            </div>
+            <div class="art-card">
+              <img
+                src="images/Hex_AI_test_unit.png"
+                alt="Art Image 2"
+                onclick="openModal('images/Hex_AI_test_unit.png')"
+              />
+              <h2>Starlit Mountains</h2>
+              <p>
+                A relaxing night sat atop a cliff. The world is beautiful, if
+                you take the time to truly admire it.
+              </p>
+            </div>
+            <div class="art-card">
+              <img
+                src="images/HexBackrooms.png"
+                alt="Art Image 3"
+                onclick="openModal('images/HexBackrooms.png')"
+              />
+              <h2>Hex in the Backrooms</h2>
+              <p>
+                It seems someone has taken a wrong step at some point... Good
+                luck!
+              </p>
+            </div>
+            <div class="art-card">
+              <img
+                src="images/HexFenaraOceansideCliff.png"
+                alt="Art Image 4"
+                onclick="openModal('images/HexFenaraOceansideCliff.png')"
+              />
+              <h2>Cliffside Oceanview</h2>
+              <p>
+                A piece I made for a friend who's character was a Fennekin.
+                Adorable!
+              </p>
+            </div>
+            <div class="art-card">
+              <img
+                src="images/Hex-LabCoat.png"
+                alt="Art Image 5"
+                onclick="openModal('images/Hex-LabCoat.png')"
+              />
+              <h2>Hex - Paradigm Research Group</h2>
+              <p>
+                A snazzy lab-coat for a certain science floof. Science for his
+                world anyway, specializing in controlling magical artifacts via
+                the use of Psychic and Aura based energies.
+              </p>
+            </div>
+            <div class="art-card">
+              <img
+                src="images/HexLucario.png"
+                alt="Art Image 6"
+                onclick="openModal('images/HexLucario.png')"
+              />
+              <h2>Hex the Lucario</h2>
+              <p>
+                Every Pokemon has to evolve at some point, Hex finally achieved
+                said milestone on his own accord.
+              </p>
+            </div>
+            <div class="art-card">
+              <img
+                src="images/Hex_The_OrbWM.png"
+                alt="Art Image 7"
+                onclick="openModal('images/Hex_The_OrbWM.png')"
+              />
+              <h2>Escape Orb Experiment</h2>
+              <p>
+                Escape orbs are interesting, punching holes through space to
+                free a user from whatever structure of cave they're in when
+                deployed. Even better when modified to override the destination.
+                Looks like someone didn't know this one was changed though.
+                Think fast little one!
+              </p>
+            </div>
+            <div class="art-card">
+              <img
+                src="images/Stargate_Hex.png"
+                alt="Art Image 9"
+                onclick="openModal('images/Stargate_Hex.png')"
+              />
+              <h2>Exo-Reality Gate</h2>
+              <p>
+                Escape Orbs working in concert can reach destinations
+                significantly farther than intended. One such Experiment broke
+                through the confines of reality, linking an infinite number of
+                variants of this world to one. Where should we go next?
+              </p>
+            </div>
+            <!-- Add more art cards as needed -->
+          </div>
+        </section>
+      </div>
+      <!-- Modal for full image view -->
+      <div id="imgModal" class="modal">
+        <div class="modal-content">
+          <img id="modalImg" src="" alt="Full View" />
+          <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+      <!-- Content End -->
+      <div class="spacer"></div>
+      <footer>
+        <button onclick="switchStyle()">Change Style</button>
+      </footer>
     </div>
-</body>
+  </body>
 </html>
