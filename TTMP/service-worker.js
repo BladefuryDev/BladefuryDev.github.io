@@ -1,16 +1,15 @@
 const CACHE_NAME = "tome-tales-cache-v1-1";
 const urlsToCache = [
-  "/",
-  "/index.js",
-  "/src/output.css",
-  "/app.js",
-  "/manifest.json",
-  "/package.json",
-  "/favicon.ico",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/lua/main.lua",
-  "/fengari-web.js",
+  "./", // Relative to /TTMP/
+  "./index.js",
+  "./src/output.css",
+  "./app.js",
+  "./manifest.json",
+  "./favicon.ico",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "./lua/main.lua",
+  "./fengari-web.js",
 ];
 
 // Install the service worker and cache all necessary assets
