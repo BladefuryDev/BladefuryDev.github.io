@@ -52,265 +52,369 @@
             id="logo-subtext"
             class="text-sm text-white drop-shadow-sm cursor-default"
           >
-            Sample Texterrrrrrr!
+            If you can see this, the script broke. Lol
           </p>
         </div>
       </div>
     </nav>
-    <!-- Nerd studd is done -->
-    <!-- Main Content /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/ -->
-    <main class="p-6" id="dungeons-page">
-      <div
-        class="flex flex-col md:flex-row bg-gray-900 rounded-lg p-4 drop-shadow-md md:space-x-4 md:space-y-0 space-y-4 mb-4"
-      >
+    <!-- Nerd stuff is done -->
+
+    <!-- Main Content /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/ -->
+    <main>
+      <!-- Overworld Page -->
+      <div class="p-6 hidden" id="overworld-page">
+        <!-- 🔥Loot Box Column/Row -->
         <div
-          class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-2"
-          id="file-config"
+          class="flex flex-col md:flex-row bg-gray-900 rounded-lg p-4 drop-shadow-md md:space-x-4 md:space-y-0 space-y-4 mb-4"
+          id="loot-system"
         >
-          <h2 class="text-white text-lg font-bold">File System</h2>
-          <label id="load-file-ident" class="text-gray-500 text-sm -mt-6"
-            >ℹ️ no file loaded</label
-          >
           <div
-            class="p-2 bg-gray-900 rounded-md flex flex-col md:space-x-2 md:space-y-0 space-y-2 justify-center items-center md:flex-row"
+            class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-4"
+            id="loot-boxes-container"
           >
-            <button
-              class="bg-yellow-500 text-white font-bold py-2 px-1 rounded-md hover:bg-yellow-300 hover:text-black transition-colors w-28"
-            >
-              New File
-            </button>
-            <button
-              class="bg-green-500 text-white font-bold py-2 px-1 rounded-md hover:bg-green-300 hover:text-black transition-colors w-28"
-            >
-              Load File
-            </button>
-          </div>
-        </div>
-        <div
-          class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-2 select-none"
-        >
-          <h2 class="text-white text-lg font-bold">
-            The loaded file currently includes:
-          </h2>
-          <label class="text-gray-500 text-sm -mt-6">0 - Places</label>
-          <label class="text-gray-500 text-sm -mt-6">0 - Items</label>
-          <label class="text-gray-500 text-sm -mt-6">0 - Enemies</label>
-          <label class="text-gray-500 text-sm -mt-6">0 - Loot Boxes</label>
-          <label class="text-gray-500 text-sm -mt-6">0 - Quest Assets</label>
-        </div>
-      </div>
-
-      <div
-        class="flex flex-col md:flex-row bg-gray-900 rounded-lg p-4 drop-shadow-md space-y-6 md:space-y-0 md:space-x-6 justify-around"
-      >
-        <!-- 🔥Encounter Config Column -->
-        <div
-          class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-6"
-          id="encounter-config"
-        >
-          <h2 class="text-white text-lg font-bold">Encounter Configuration</h2>
-
-          <!-- Location Label -->
-          <div class="w-full">
-            <label
-              for="environment-select"
-              class="text-white text-sm block mb-2"
-            >
-              Select Environment:
-            </label>
+            <h2 class="text-white text-lg font-bold">Loot Box Openings</h2>
             <select
-              id="environment-select"
-              class="w-full rounded-lg bg-gray-500 p-2 text-white hover:text-black cursor-pointer hover:bg-gray-200 transition-colors"
+              class="w-48 rounded-lg bg-gray-500 p-2 cursor-pointer hover:bg-gray-200 text-white hover:text-black transition-colors"
             >
-              <option value="generic" class="bg-gray-200 hover:bg-blue-500">
-                Generic
-              </option>
+              <option value="default">Test Box</option>
             </select>
-          </div>
-
-          <!-- Environmental Toggles -->
-          <div class="w-full space-y-2">
-            <label class="text-white text-sm block"
-              >Environmental Toggles:</label
-            >
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="hazards" class="h-4 w-4" />
-              <label for="hazards" class="text-white text-sm"
-                >Environmental Hazards</label
+            <div class="flex-row">
+              <label class="text-sm text-white"
+                >Number of boxes to open:
+              </label>
+              <input
+                type="number"
+                min="1"
+                max="999"
+                value="1"
+                class="w-12 rounded-lg bg-gray-500 p-1 text-white hover:text-black text-center cursor-pointer hover:bg-gray-200 transition-colors ml-4"
+              />
+            </div>
+            <div class="flex-row">
+              <label
+                for="format response for discord"
+                class="text-sm text-white"
+                >Format responses for Discord?</label
               >
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="berries" class="h-4 w-4" />
-              <label for="berries" class="text-white text-sm">Berries</label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="loot-boxes" class="h-4 w-4" />
-              <label for="loot-boxes" class="text-white text-sm"
-                >Loot Boxes</label
-              >
-            </div>
-          </div>
-
-          <!-- Linear or Branching Toggle -->
-          <div class="w-full">
-            <label class="text-white text-sm block mb-2 text-center"
-              >Path Structure Mode</label
-            >
-            <div class="flex items-center justify-around">
-              <span class="text-white text-sm">Linear</span>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input
-                  aria-label="path structure toggle"
+                  aria-label="discord formatting toggle"
                   type="checkbox"
-                  id="path-structure"
+                  id="discord-format-toggle"
                   class="sr-only peer"
                 />
                 <div
-                  class="w-11 h-6 bg-gray-500 peer-focus:outline-none rounded-full peer-checked:bg-green-500 transition-colors"
+                  class="w-11 h-6 bg-gray-500 peer-focus:outline-none rounded-full peer-checked:bg-green-500 transition-colors ml-2"
                 ></div>
                 <span
-                  class="absolute left-1 top-1 h-4 w-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"
+                  class="absolute left-1 top-1 h-4 w-4 bg-white rounded-full transition-transform peer-checked:translate-x-5 ml-2"
                 ></span>
               </label>
-              <span class="text-white text-sm">Branching</span>
+            </div>
+            <div class="w-full">
+              <button
+                class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-300 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
+              >
+                Commence Opening!
+              </button>
             </div>
           </div>
-
-          <!-- Execute Button -->
-          <div class="w-full">
-            <button
-              class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-300 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
+          <div
+            class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-4"
+            id="loot-boxes-output-frame"
+          >
+            <!-- Output Frame -->
+            <div
+              class="w-full max-h-96 overflow-y-auto bg-gray-900 rounded-lg p-2 space-y-4 h-full"
             >
-              Execute
-            </button>
+              <!-- Output Card -->
+              <div
+                class="bg-gray-600 rounded-lg p-2 shadow-md space-y-2 w-full h-full"
+                id="output-card"
+              >
+                <textarea
+                  aria-label="generated text"
+                  id="output-text"
+                  class="w-full bg-gray-100 text-black p-2 rounded-md resize-none overflow-hidden text-wrap"
+                  rows="6"
+                  readonly
+                >
+ This is a sample output text. It will resize based on content.</textarea
+                >
+
+                <div class="w-full flex justify-end mt-2">
+                  <label class="text-white text-sm font-mono mr-6 mt-1">
+                    10/26/2024 @ 1:24:13
+                  </label>
+                  <button
+                    class="bg-blue-500 text-white font-bold py-1 px-4 rounded-md hover:bg-blue-300 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    onclick="copyToClipboard()"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dungoens Page -->
+      <div class="p-6" id="dungeons-page">
+        <div
+          class="flex flex-col md:flex-row bg-gray-900 rounded-lg p-4 drop-shadow-md md:space-x-4 md:space-y-0 space-y-4 mb-4"
+        >
+          <div
+            class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-2"
+            id="file-config"
+          >
+            <h2 class="text-white text-lg font-bold">File System</h2>
+            <label id="load-file-ident" class="text-gray-500 text-sm -mt-6"
+              >ℹ️ no file loaded</label
+            >
+            <div
+              class="p-2 bg-gray-900 rounded-md flex flex-col md:space-x-2 md:space-y-0 space-y-2 justify-center items-center md:flex-row"
+            >
+              <button
+                class="bg-yellow-500 text-white font-bold py-2 px-1 rounded-md hover:bg-yellow-300 hover:text-black transition-colors w-28"
+              >
+                New File
+              </button>
+              <button
+                class="bg-green-500 text-white font-bold py-2 px-1 rounded-md hover:bg-green-300 hover:text-black transition-colors w-28"
+              >
+                Load File
+              </button>
+            </div>
+          </div>
+          <div
+            class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-2 select-none"
+          >
+            <h2 class="text-white text-lg font-bold">
+              The loaded file currently includes:
+            </h2>
+            <label class="text-gray-500 text-sm -mt-6">0 - Places</label>
+            <label class="text-gray-500 text-sm -mt-6">0 - Items</label>
+            <label class="text-gray-500 text-sm -mt-6">0 - Enemies</label>
+            <label class="text-gray-500 text-sm -mt-6">0 - Loot Boxes</label>
+            <label class="text-gray-500 text-sm -mt-6">0 - Quest Assets</label>
           </div>
         </div>
 
-        <!-- 🔥Enemy Management Column -->
         <div
-          class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-4"
-          id="enemy-spawner-frame"
+          class="flex flex-col md:flex-row bg-gray-900 rounded-lg p-4 drop-shadow-md space-y-6 md:space-y-0 md:space-x-6 justify-around"
         >
-          <h2 class="text-white text-lg font-bold">Enemy Management</h2>
-          <label id="load-file-ident" class="text-gray-500 text-sm -mt-6"
-            >no file loaded</label
+          <!-- 🔥Encounter Config Column -->
+          <div
+            class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-6"
+            id="encounter-config"
           >
-          <!-- Content for Place.Enemy Management -->
-          <div class="w-full space-y-4">
-            <div class="w-full flex items-center justify-between">
-              <label for="mission-area" class="text-white text-sm mr-2"
-                >Mission area is:</label
+            <h2 class="text-white text-lg font-bold">
+              Encounter Configuration
+            </h2>
+
+            <!-- Location Label -->
+            <div class="w-full">
+              <label
+                for="environment-select"
+                class="text-white text-sm block mb-2"
               >
+                Select Environment:
+              </label>
               <select
-                aria-label="dropdown to select mission area"
-                id="mission-area-dropdown"
-                class="w-48 rounded-lg bg-gray-500 p-2 cursor-pointer hover:bg-gray-200 text-white hover:text-black transition-colors"
+                id="environment-select"
+                class="w-full rounded-lg bg-gray-500 p-2 text-white hover:text-black cursor-pointer hover:bg-gray-200 transition-colors"
               >
-                <option
-                  value="area1"
-                  class="bg-gray-200 hover:bg-blue-500 cursor-pointer"
-                >
-                  Generic Plains
+                <option value="generic" class="bg-gray-200 hover:bg-blue-500">
+                  Generic
                 </option>
               </select>
             </div>
 
-            <div class="w-full flex items-center justify-between">
-              <label for="num-foes" class="text-white text-sm mr-2"
-                >Number of foes to spawn:</label
+            <!-- Environmental Toggles -->
+            <div class="w-full space-y-2">
+              <label class="text-white text-sm block"
+                >Environmental Toggles:</label
               >
-              <input
-                aria-label="input field for number of foes to spawn"
-                type="number"
-                id="num-foes"
-                min="1"
-                max="99"
-                value="1"
-                class="w-12 rounded-lg bg-gray-500 p-1 text-white hover:text-black text-center cursor-pointer hover:bg-gray-200 transition-colors"
-              />
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="hazards" class="h-4 w-4" />
+                <label for="hazards" class="text-white text-sm"
+                  >Environmental Hazards</label
+                >
+              </div>
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="berries" class="h-4 w-4" />
+                <label for="berries" class="text-white text-sm">Berries</label>
+              </div>
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="loot-boxes" class="h-4 w-4" />
+                <label for="loot-boxes" class="text-white text-sm"
+                  >Loot Boxes</label
+                >
+              </div>
             </div>
 
-            <div class="w-full flex items-center space-x-2">
-              <input
-                aria-label="input toggle field for loot drops"
-                type="checkbox"
-                id="enable-loot"
-                class="h-4 w-4"
-              />
-              <label for="enable-loot" class="text-white text-sm"
-                >Enable Loot Drops</label
+            <!-- Linear or Branching Toggle -->
+            <div class="w-full">
+              <label class="text-white text-sm block mb-2 text-center"
+                >Path Structure Mode</label
               >
+              <div class="flex items-center justify-around">
+                <span class="text-white text-sm">Linear</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input
+                    aria-label="path structure toggle"
+                    type="checkbox"
+                    id="path-structure"
+                    class="sr-only peer"
+                  />
+                  <div
+                    class="w-11 h-6 bg-gray-500 peer-focus:outline-none rounded-full peer-checked:bg-green-500 transition-colors"
+                  ></div>
+                  <span
+                    class="absolute left-1 top-1 h-4 w-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"
+                  ></span>
+                </label>
+                <span class="text-white text-sm">Branching</span>
+              </div>
             </div>
 
-            <div class="w-full flex items-center space-x-2">
-              <input
-                aria-label="input toggle field to enable boss spawns"
-                type="checkbox"
-                id="include-bosses"
-                class="h-4 w-6"
-              />
-              <label for="include-bosses" class="text-white text-sm"
-                >Include Bosses</label
-              >
-              <input
-                id="bosses-spawn-range"
-                aria-label="slider for boss spawn percentage"
-                title="25%"
-                type="range"
-                min="0"
-                max="100"
-                value="25"
-                class="w-full ml-4 accent-blue-400"
-              />
-            </div>
-
-            <div class="w-full flex items-center justify-around mt-4">
+            <!-- Execute Button -->
+            <div class="w-full">
               <button
-                class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-300 focus:ring-blue-300 hover:text-black transition-colors"
+                class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-300 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
               >
                 Execute
               </button>
             </div>
           </div>
-        </div>
 
-        <!-- 🔥Execution Output Column -->
-        <div
-          class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-4"
-          id="output-stack"
-        >
-          <h2 class="text-white text-lg font-bold">Output Stack</h2>
-
-          <!-- Scrollable Frame -->
+          <!-- 🔥Enemy Management Column -->
           <div
-            class="w-full max-h-96 overflow-y-auto bg-gray-900 rounded-lg p-2 space-y-4"
-            id="scroll-frame"
+            class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-4"
+            id="enemy-spawner-frame"
           >
-            <!-- Output Card -->
-            <div
-              class="bg-gray-600 rounded-lg p-2 shadow-md space-y-2 w-full"
-              id="output-card"
+            <h2 class="text-white text-lg font-bold">Enemy Management</h2>
+            <label id="load-file-ident" class="text-gray-500 text-sm -mt-6"
+              >no file loaded</label
             >
-              <textarea
-                aria-label="generated text"
-                id="output-text"
-                class="w-full bg-gray-100 text-black p-2 rounded-md resize-none overflow-hidden"
-                rows="3"
-                readonly
-              >
-This is a sample output text. It will resize based on content.</textarea
-              >
-
-              <div class="w-full flex justify-end mt-2">
-                <label class="text-white text-sm font-mono mr-6 mt-1">
-                  10/26/2024 @ 1:24:13
-                </label>
-                <button
-                  class="bg-blue-500 text-white font-bold py-1 px-4 rounded-md hover:bg-blue-300 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
-                  onclick="copyToClipboard()"
+            <!-- Content for Place.Enemy Management -->
+            <div class="w-full space-y-4">
+              <div class="w-full flex items-center justify-between">
+                <label for="mission-area" class="text-white text-sm mr-2"
+                  >Mission area is:</label
                 >
-                  Copy
+                <select
+                  aria-label="dropdown to select mission area"
+                  id="mission-area-dropdown"
+                  class="w-48 rounded-lg bg-gray-500 p-2 cursor-pointer hover:bg-gray-200 text-white hover:text-black transition-colors"
+                >
+                  <option
+                    value="area1"
+                    class="bg-gray-200 hover:bg-blue-500 cursor-pointer"
+                  >
+                    Generic Plains
+                  </option>
+                </select>
+              </div>
+
+              <div class="w-full flex items-center justify-between">
+                <label for="num-foes" class="text-white text-sm mr-2"
+                  >Number of foes to spawn:</label
+                >
+                <input
+                  aria-label="input field for number of foes to spawn"
+                  type="number"
+                  id="num-foes"
+                  min="1"
+                  max="99"
+                  value="1"
+                  class="w-12 rounded-lg bg-gray-500 p-1 text-white hover:text-black text-center cursor-pointer hover:bg-gray-200 transition-colors"
+                />
+              </div>
+
+              <div class="w-full flex items-center space-x-2">
+                <input
+                  aria-label="input toggle field for loot drops"
+                  type="checkbox"
+                  id="enable-loot"
+                  class="h-4 w-4"
+                />
+                <label for="enable-loot" class="text-white text-sm"
+                  >Enable Loot Drops</label
+                >
+              </div>
+
+              <div class="w-full flex items-center space-x-2">
+                <input
+                  aria-label="input toggle field to enable boss spawns"
+                  type="checkbox"
+                  id="include-bosses"
+                  class="h-4 w-6"
+                />
+                <label for="include-bosses" class="text-white text-sm"
+                  >Include Bosses</label
+                >
+                <input
+                  id="bosses-spawn-range"
+                  aria-label="slider for boss spawn percentage"
+                  title="25%"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="25"
+                  class="w-full ml-4 accent-blue-400"
+                />
+              </div>
+
+              <div class="w-full flex items-center justify-around mt-4">
+                <button
+                  class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-300 focus:ring-blue-300 hover:text-black transition-colors w-full"
+                >
+                  Execute
                 </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 🔥Execution Output Column -->
+          <div
+            class="flex-1 flex flex-col items-center rounded-md bg-gray-800 p-6 space-y-4"
+            id="output-stack"
+          >
+            <h2 class="text-white text-lg font-bold">Output Stack</h2>
+
+            <!-- Scrollable Frame -->
+            <div
+              class="w-full max-h-96 overflow-y-auto bg-gray-900 rounded-lg p-2 space-y-4 h-full"
+              id="scroll-frame"
+            >
+              <!-- Output Card -->
+              <div
+                class="bg-gray-600 rounded-lg p-2 shadow-md space-y-2 w-full"
+                id="output-card"
+              >
+                <textarea
+                  aria-label="generated text"
+                  id="output-text"
+                  class="w-full bg-gray-100 text-black p-2 rounded-md resize-none overflow-hidden"
+                  rows="3"
+                  readonly
+                >
+This is a sample output text. It will resize based on content.</textarea
+                >
+
+                <div class="w-full flex justify-end mt-2">
+                  <label class="text-white text-sm font-mono mr-6 mt-1">
+                    10/26/2024 @ 1:24:13
+                  </label>
+                  <button
+                    class="bg-blue-500 text-white font-bold py-1 px-4 rounded-md hover:bg-blue-300 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    onclick="copyToClipboard()"
+                  >
+                    Copy
+                  </button>
+                </div>
               </div>
             </div>
           </div>
