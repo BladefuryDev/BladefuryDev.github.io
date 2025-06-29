@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexfury - About Me</title>
+    <link href="/public/output.css" rel="stylesheet">
+    <style>
+        /* * Site-wide theme properties. 
+         * Change these values to easily update the entire site's look and feel.
+         */
+        :root {
+            /* Color Palette */
+            --color-bg: rgb(15 23 42);            /* Main Background Color */
+            --color-bg-secondary: rgb(30 41 59);  /* Brighter background for containers */
+            --color-primary: rgb(21, 122, 216);       /* Main Color */
+            --color-primary-light: rgb(108, 180, 247);/* Brighter Than Main Color */
+            --color-primary-dark: rgb(15, 61, 104);  /* Darker Than Main Color */
+
+            --color-text: rgb(226 232 240);       /* Primary Text Color */
+            --color-text-muted: rgb(151, 178, 216); /* Secondary Text Color */
+            
+            /* Shadow colors for elements on the main background */
+            --shadow-color-dark: #0a101d;
+            --shadow-color-light: #141e37;
+
+            /* Neumorphic Shadow Styles */
+            --shadow-sm: 2px 2px 4px var(--color-primary-dark), -2px -2px 4px var(--color-primary-light);
+            --shadow-sm-inset: inset 2px 2px 4px var(--color-primary-dark), inset -2px -2px 4px var(--color-primary-light);
+            
+            --shadow-md: 2px 1px 4px var(--color-primary-dark), -2px -1px 4px var(--color-primary-light);
+            --shadow-md-inset: inset 3px 3px 6px var(--color-primary-dark), inset -3px -3px 6px var(--color-primary-light);
+
+            --shadow-lg: 2px 1px 4px var(--color-primary-dark), -2px -1px 4px var(--color-primary-light);
+            --shadow-lg-inset: inset 4px 4px 8px var(--color-primary-dark), inset -4px -4px 8px var(--color-primary-light);
+            
+            /* Shadow style for cards on the main background */
+            --shadow-card: 3px 3px 6px var(--shadow-color-dark), -3px -3px 6px var(--shadow-color-light);
+
+            /* Text Shadow Styles */
+            --text-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.4);
+            --text-shadow-glow: 0 0 12px var(--color-primary-dark/70);
+        }
+
+        /* Page Transition Animations */
+        @keyframes slide-out-to-left {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+        }
+        .page-is-exiting {
+            animation: slide-out-to-left 0.2s ease-in forwards;
+        }
+
+        /* Prevents a flash of unstyled content before the page transition animation runs */
+        #page-container {
+            opacity: 0;
+        }
+
+        /* --- Flip Card Styles --- */
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 320px;
+            perspective: 1000px; /* Gives the 3D effect */
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+            box-shadow: var(--shadow-card);
+            border-radius: 1rem; /* 16px */
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* For Safari */
+            backface-visibility: hidden;
+            border-radius: 1rem; /* 16px */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem; /* p-6 */
+        }
+
+        .flip-card-front {
+            background-color: var(--color-bg);
+        }
+
+        .flip-card-back {
+            background-color: var(--color-primary-dark);
+            color: var(--color-text);
+            transform: rotateY(180deg);
+        }
+
+        /* --- Progress Bar Styles --- */
+        .progress-bar {
+            display: flex;
+            gap: 0.25rem; /* gap-1 */
+            width: 80%;
+        }
+
+        .progress-segment {
+            flex: 1;
+            height: 0.75rem; /* h-3 */
+            background-color: var(--color-bg);
+            border-radius: 9999px; /* rounded-full */
+            border: 1px solid var(--color-primary-light);
+        }
+        .progress-segment.filled {
+            background-color: var(--color-primary-light);
+        }
+    </style>
+</head>
+<body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
+
+    <div class="container mx-auto px-4">
+        <!-- Placeholder for the navigation bar -->
+        <div id="navbar-placeholder"></div>
+
+        <!-- This container will be animated -->
+        <div id="page-container">
+            <main class="space-y-20 py-10">
+                <!-- My Story Section -->
+                <section id="story" class="p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
+                    <h1 class="text-4xl font-bold text-center mb-12">My Story</h1>
+                    <div class="max-w-4xl mx-auto text-lg text-[--color-text-muted] space-y-6">
+                        <p>
+                            Hello! I'm a passionate and self-taught developer with a knack for problem-solving and a love for technology. My journey into the world of code began not in a classroom, but with a curiosity for how games worked. This led me to dive headfirst into LUA scripting, where I spent countless hours tweaking, building, and bringing my own ideas to life within game environments.
+                        </p>
+                        <p>
+                            This hands-on experience taught me more than just syntax; it taught me how to think like a developer, how to debug complex systems, and how to collaborate with others to build something amazing. From there, my interests expanded. I found a similar joy in the tangible world of PC hardware—diagnosing issues, building machines from scratch, and optimizing performance. This blend of software and hardware knowledge gives me a unique, holistic perspective on technology.
+                        </p>
+                        <p>
+                            Now, I'm channeling that same energy and dedication into web development, creating intuitive and beautiful user experiences. This portfolio is a showcase of my journey so far, from my early projects to my latest work. Feel free to explore!
+                        </p>
+                    </div>
+                </section>
+
+                <!-- My Expertise Section -->
+                <section id="expertise" class="p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
+                    <h2 class="text-4xl font-bold text-center mb-12">My Expertise</h2>
+                    <div class="max-w-4xl mx-auto text-lg text-center text-[--color-text-muted] mb-12">
+                        <p>Over the years, my curiosity has led me to explore and develop a diverse set of skills. Each card below represents a key area of my expertise. Hover over any of them to learn more and see my self-assessed comfort level—I believe in transparently and honestly representing my capabilities.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                        <!-- Flip Card: Game Development -->
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front flex-col items-center justify-center">
+                                    <div class="flex h-40 w-auto">
+                                        <img src="/assets/icons/game-dev-icon.png" alt="Game Development Icon" class="h-full w-full">
+                                    </div>
+                                    <h3 class="text-2xl font-bold mt-4">Game Development</h3>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h3 class="text-2xl font-bold mb-2">Game Development</h3>
+                                    <p class="text-slate-200">My roots are in LUA-based game development. I have extensive experience creating administrative tools, backend systems, and gameplay mechanics. I excel at understanding large codebases and contributing effectively to team projects like Aeronautica.</p>
+                                    <div class="w-full mt-auto pt-4">
+                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                        <div class="progress-bar mx-auto">
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment"></div>
+                                            <div class="progress-segment"></div>
+                                            <div class="progress-segment"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flip Card: Web Design -->
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front flex-col items-center justify-center">
+                                    <div class="flex h-40 w-auto">
+                                        <img src="/assets/icons/web-dev-icon.png" alt="Web Development Icon" class="h-full w-full">
+                                    </div>
+                                    <h3 class="text-2xl font-bold mt-4">Web Design</h3>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h3 class="text-2xl font-bold mb-2">Web Design</h3>
+                                    <p class="text-slate-200">I build modern, responsive websites from the ground up. My toolkit includes HTML, CSS, and JavaScript, with a focus on utility-first frameworks like Tailwind CSS. This very portfolio is a growing sample to my design and development skills.</p>
+                                    <div class="w-full mt-auto pt-4">
+                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                        <div class="progress-bar mx-auto">
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment"></div>
+                                            <div class="progress-segment"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flip Card: QA & Hardware -->
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front flex-col items-center justify-center">
+                                    <div class="flex h-40 w-auto">
+                                        <img src="/assets/icons/qa-icon.png" alt="QA and Hardware Icon" class="h-full w-full">
+                                    </div>
+                                    <h3 class="text-2xl font-bold mt-4">QA & PC Hardware</h3>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h3 class="text-2xl font-bold mb-2">QA & PC Hardware</h3>
+                                    <p class="text-slate-200">With a background in QA testing, I have a keen eye for detail and a methodical approach to identifying and resolving issues. I'm also proficient in PC hardware repair, diagnostics, and custom builds, giving me a full-stack understanding of a system.</p>
+                                    <div class="w-full mt-auto pt-4">
+                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                        <div class="progress-bar mx-auto">
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flip Card: Digital Art & Design -->
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front flex-col items-center justify-center">
+                                    <div class="flex h-40 w-auto">
+                                        <img src="/assets/icons/PRSG.ico" alt="Digital Art Icon" class="h-full w-full">
+                                    </div>
+                                    <h3 class="text-2xl font-bold mt-4">Digital Art & Design</h3>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h3 class="text-2xl font-bold mb-2">Digital Art & Design</h3>
+                                    <p class="text-slate-200">Beyond code, I have a creative side that I express through digital art. I enjoy bringing characters to life, especially for DnD campaigns, and I also design simple, clean logos for various projects.</p>
+                                    <div class="w-full mt-auto pt-4">
+                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                        <div class="progress-bar mx-auto">
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment"></div>
+                                            <div class="progress-segment"></div>
+                                            <div class="progress-segment"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Placeholder for the footer -->
+        <div id="footer-placeholder"></div>
+    </div>
+    <!-- This script will fetch and inject the navigation bar -->
+    <script src="js/main.js" defer></script>
+</body>
+</html>
