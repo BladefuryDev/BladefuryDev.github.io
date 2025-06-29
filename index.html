@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found - Hexfury</title>
+    <link href="/public/output.css" rel="stylesheet">
+
+    <!-- Fallback redirect for non-JS clients -->
+    <meta http-equiv="refresh" content="0; url=/src/home.html">
+
+    <style>
+        /* * Site-wide theme properties. 
+         * This ensures the 404 page matches the rest of the site's theme.
+         */
+        :root {
+            /* Color Palette */
+            --color-bg: rgb(15 23 42);            /* Main Background Color */
+            --color-bg-secondary: rgb(30 41 59);  /* Brighter background for containers */
+            --color-primary: rgb(21, 122, 216);       /* Main Color */
+            --color-primary-light: rgb(108, 180, 247);/* Brighter Than Main Color */
+            --color-text: rgb(226 232 240);       /* Primary Text Color */
+            --color-text-muted: rgb(151, 178, 216); /* Secondary Text Color */
+            
+            /* Shadow colors for elements on the main background */
+            --shadow-color-dark: #0a101d;
+            --shadow-color-light: #141e37;
+            
+            /* Shadow style for cards on the main background */
+            --shadow-card: 3px 3px 6px var(--shadow-color-dark), -3px -3px 6px var(--shadow-color-light);
+        }
+
+        /* Hide fallback content by default. It will be shown by JS if the redirect fails. */
+        #fallback-content {
+            display: none;
+        }
+    </style>
+
+    <!-- Primary redirect method. This will likely execute before the meta refresh. -->
+    <script>
+        window.location.replace('/src/home.html');
+    </script>
+</head>
+<body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
+    <!-- This content is hidden and only shown if the redirect fails after a timeout -->
+    <main id="fallback-content" class="flex items-center justify-center h-screen p-4">
+        <div class="p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)] text-center max-w-lg w-full">
+            <h1 class="text-5xl font-extrabold">404 - Page Not Found</h1>
+            <p class="mt-4 text-lg text-[--color-text-muted]">
+                Sorry, the page you are looking for could not be found.
+            </p>
+            <p class="mt-8 text-md text-[--color-text-muted]">
+                We tried to redirect you to the <a href="/src/home.html" class="text-[--color-primary-light] hover:underline font-semibold">homepage</a>, but it seems to have failed. Please click the link to go there manually.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // This script will show the fallback content if the page is still open after 10 seconds.
+        // This indicates that both the JS and meta-refresh redirects have failed.
+        setTimeout(() => {
+            const fallback = document.getElementById('fallback-content');
+            if (fallback) {
+                // To make it visible, we change its display property.
+                // 'flex' is used because the parent <main> has flexbox classes.
+                fallback.style.display = 'flex';
+            }
+        }, 10000); // 10 seconds
+    </script>
+</body>
+</html>
