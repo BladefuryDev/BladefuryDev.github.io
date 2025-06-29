@@ -126,6 +126,21 @@
         .progress-segment.filled {
             background-color: var(--color-primary-light);
         }
+
+        /* Responsive adjustments for flip cards on smaller screens */
+        @media (max-width: 768px) {
+            .flip-card-back h3 {
+                font-size: 1.25rem; /* text-xl */
+                line-height: 1.75rem;
+            }
+
+            .flip-card-back p {
+                font-size: 0.875rem; /* text-sm */
+                line-height: 1.25rem;
+                -webkit-hyphens: auto;
+                hyphens: auto;
+            }
+        }
     </style>
 </head>
 <body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
