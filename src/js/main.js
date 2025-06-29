@@ -139,10 +139,28 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('hashchange', setActiveLink);
     };
 
+    /**
+     * Resets page state when navigating back/forward using browser history (bfcache).
+     */
+    const initBfcacheFix = () => {
+        window.addEventListener('pageshow', (event) => {
+            // event.persisted is true if the page is being restored from the back-forward cache.
+            if (event.persisted) {
+                const pageContainer = document.getElementById('page-container');
+                // If the page was exiting when it was cached, the animation will still be applied.
+                // We remove the class to make the content visible again, restoring its initial state.
+                if (pageContainer && pageContainer.classList.contains('page-is-exiting')) {
+                    pageContainer.classList.remove('page-is-exiting');
+                }
+            }
+        });
+    };
+
     // Initialize all site functionality
     loadComponent('/assets/htmlAssets/navbar.html', 'navbar-placeholder', initActiveNav);
     loadComponent('/assets/htmlAssets/footer.html', 'footer-placeholder');
     initPageTransition();
     initImageModal();
     initLinkTransitions();
+    initBfcacheFix();
 });
