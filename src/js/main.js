@@ -141,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Resets page state when navigating back/forward using browser history (bfcache).
+     * If a page is restored from the cache, its exit animation class might still be present,
+     * leaving the page blank. This removes the class to make the content visible again.
      */
     const initBfcacheFix = () => {
         window.addEventListener('pageshow', (event) => {
