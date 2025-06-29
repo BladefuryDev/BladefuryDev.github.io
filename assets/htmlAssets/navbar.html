@@ -1,0 +1,47 @@
+<style>
+.logo-link {
+    display: inline-block; /* Necessary for the transform to apply */
+    transition: transform 0.3s ease-out, text-shadow 0.3s ease-out;
+}
+
+.logo-link:hover {
+    transform: scale(1.1); /* Grow slightly */
+    text-shadow: var(--text-shadow-dark); /* Add the glow effect from your theme */
+}
+
+.active-nav-link {
+    box-shadow: var(--shadow-sm-inset);
+    text-shadow: var(--text-shadow-dark);
+}
+</style>
+<nav class="mb-2 p-4 rounded-b-2xl bg-[--color-primary] [box-shadow:var(--shadow-md)]">
+    <div class="flex w-full flex-col items-center md:flex-row justify-between">
+
+        <div class="text-2xl font-bold justify-center">
+            <a href="/src/index.html" class="logo-link">Hexfury</a>
+        </div>
+
+        <ul class="flex flex-row md:space-x-2 my-2 md:my-0">
+            <li>
+                <a href="/src/index.html" class="px-4 py-2 rounded-xl transition-all duration-150 hover:bg-transparent hover:[box-shadow:var(--shadow-sm-inset)]">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="/src/about.html" class="px-4 py-2 rounded-xl transition-all duration-150 hover:bg-transparent hover:[box-shadow:var(--shadow-sm-inset)]">
+                    About
+                </a>
+            </li>
+            <li>
+                <a href="/src/projects.html" class="px-4 py-2 rounded-xl transition-all duration-150 hover:bg-transparent hover:[box-shadow:var(--shadow-sm-inset)]">
+                    Projects
+                </a>
+            </li>
+            <li>
+                <a href="/src/gallery.html" class="px-4 py-2 rounded-xl transition-all duration-150 hover:bg-transparent hover:[box-shadow:var(--shadow-sm-inset)]">
+                    Gallery
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

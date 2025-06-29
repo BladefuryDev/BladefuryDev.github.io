@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexfury - Portfolio</title>
+    <link href="/public/output.css" rel="stylesheet">
+    <style>
+        /* * Site-wide theme properties. 
+         * Change these values to easily update the entire site's look and feel.
+         */
+        :root {
+            /* Color Palette */
+            --color-bg: rgb(15 23 42);            /* Main Background Color */
+            --color-bg-secondary: rgb(30 41 59);  /* Brighter background for containers */
+            --color-primary: rgb(21, 122, 216);       /* Main Color */
+            --color-primary-light: rgb(108, 180, 247);/* Brighter Than Main Color */
+            --color-primary-dark: rgb(15, 61, 104);  /* Darker Than Main Color */
+
+            --color-text: rgb(226 232 240);       /* Primary Text Color */
+            --color-text-muted: rgb(151, 178, 216); /* Secondary Text Color */
+            
+            /* Shadow colors for elements on the main background */
+            --shadow-color-dark: #0a101d;
+            --shadow-color-light: #141e37;
+
+            /* Neumorphic Shadow Styles */
+            --shadow-sm: 2px 2px 4px var(--color-primary-dark), -2px -2px 4px var(--color-primary-light);
+            --shadow-sm-inset: inset 2px 2px 4px var(--color-primary-dark), inset -2px -2px 4px var(--color-primary-light);
+            
+            --shadow-md: 2px 1px 4px var(--color-primary-dark), -2px -1px 4px var(--color-primary-light);
+            --shadow-md-inset: inset 3px 3px 6px var(--color-primary-dark), inset -3px -3px 6px var(--color-primary-light);
+
+            --shadow-lg: 2px 1px 4px var(--color-primary-dark), -2px -1px 4px var(--color-primary-light);
+            --shadow-lg-inset: inset 4px 4px 8px var(--color-primary-dark), inset -4px -4px 8px var(--color-primary-light);
+            
+            /* Shadow style for cards on the main background */
+            --shadow-card: 3px 3px 6px var(--shadow-color-dark), -3px -3px 6px var(--shadow-color-light);
+
+            /* Text Shadow Styles */
+            --text-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.4);
+            --text-shadow-glow: 0 0 12px var(--color-primary-dark/70);
+        }
+
+        /* Page Transition Animations */
+        @keyframes slide-out-to-left {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+        }
+        .page-is-exiting {
+            animation: slide-out-to-left 0.2s ease-in forwards;
+        }
+
+        /* Modal Animation */
+        #image-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.75); /* Dark overlay */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+
+            opacity: 0;
+            visibility: hidden;
+            /* Delay visibility on close to allow fade-out */
+            transition: opacity 300ms ease-in-out, visibility 0ms 300ms;
+        }
+        #image-modal.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 0ms;
+        }
+        #image-modal.is-visible .modal-content {
+            transform: scale(1);
+        }
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            transform: scale(0.9);
+            transition: transform 300ms ease-in-out;
+        }
+
+        /* Prevents a flash of unstyled content before the page transition animation runs */
+        #page-container {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
+
+    <div class="container mx-auto px-4">
+        <!-- Placeholder for the navigation bar -->
+        <div id="navbar-placeholder"></div>
+
+        <!-- This container will be animated -->
+        <div id="page-container">
+            <main class="space-y-20 py-10">
+            <!-- Hero Section -->
+            <section id="hero" class="p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)] text-center">
+                <h1 class="text-5xl font-extrabold">Welcome to My Portfolio</h1>
+                <p class="mt-4 text-lg text-[--color-text-muted]">I'm a self taught and versatile developer with experience spanning from LUA-based game development and QA testing to web design and PC hardware repair.</p>
+                <a href="#projects" class="mt-8 inline-block px-8 py-3 rounded-xl bg-[--color-primary] text-lg font-semibold transition-all duration-300 [box-shadow:var(--shadow-lg)] hover:[box-shadow:var(--shadow-lg-inset)]">
+                    View My Work
+                </a>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
+                <h2 class="text-4xl font-bold text-center mb-12">My Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Card Example -->
+                    <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2">
+                        <div class="px-6 pt-6">
+                            <h3 class="text-2xl font-bold mb-2 text-center">Aeronautica</h3>
+                            <p class="text-sm text-center text-[--color-text-muted] mb-4">Administrative Tools / Backend Developer</p>
+                        </div>
+                        <div class="px-6">
+                            <img class="w-full h-48 object-cover rounded-lg" src="/assets/images/projects/Aeronautica.gif" alt="Project One Thumbnail">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[--color-text-muted] mb-6">Train, Buy, Fly - Aeronautica is an open-world flight simulator with economy elements where the goal is entirely up to you. Earn money by completing unique jobs or flights between distant islands and continents. You can even create an airline for your friends to join! Train and earn licenses to unlock new exciting vehicles. Customize and maintain your planes as you work your way up from the smallest Ultralights to the world’s largest Airliners like the Airbus A380 Superjumbo.</p>
+                            <div class="flex justify-center">
+                                <a href="https://www.roblox.com/games/6647962258/Aeronautica" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    <span>Play Game!</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2">
+                        <div class="px-6 pt-6">
+                            <h3 class="text-2xl font-bold mb-2 text-center">TTMP 2</h3>
+                            <p class="text-sm text-center text-[--color-text-muted] mb-4">Sole Developer - Passion Project</p>
+                        </div>
+                        <div class="px-6">
+                            <img class="w-full h-48 object-cover rounded-lg" src="/assets/images/projects/TTMPnew.png" alt="Tome Tales Management Panel Thumbnail">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[--color-text-muted] mb-6">TTMP, or Tome Tales Management Panel is a program I developed to aid in the randomization of enemies, jobs and locations for some of the DnD games I played with my friends. Seeing as we wanted to introduce currency keeping and a whole lot more complicated systems that needed tracking, we eventually wanted a program that handled these things for us, or at least helped us in that regard. With that, the seed for this thing was born, a seed I'd happily cultivate into this handy little tool for us all. Quite the learning process too!</p>
+                            <div class="flex justify-center">
+                                <a href="/src/TTMP/index.html" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    <span>View Project</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2">
+                        <div class="px-6 pt-6">
+                            <h3 class="text-2xl font-bold mb-2 text-center">Project Three</h3>
+                            <p class="text-sm text-center text-[--color-text-muted] mb-4">[Your Role Here]</p>
+                        </div>
+                        <div class="px-6">
+                            <img class="w-full h-48 object-cover rounded-lg" src="https://via.placeholder.com/400x300" alt="Project Three Thumbnail">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[--color-text-muted] mb-6">A brief description of the project, its purpose, and the technologies used.</p>
+                            <div class="flex justify-center">
+                                <a href="#" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    <span>View Project</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 text-center">
+                    <a href="/src/about.html" class="inline-block px-8 py-3 rounded-xl bg-[--color-primary] text-lg font-semibold transition-all duration-300 [box-shadow:var(--shadow-lg)] hover:[box-shadow:var(--shadow-lg-inset)]">
+                        See More
+                    </a>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section id="gallery" class="p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
+                <h2 class="text-4xl font-bold text-center mb-12">My Gallery</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/Hex_The_OrbWM.png" alt="Hex the Riolu, falling through a portal opened by an anomalous dark blue Orb.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/Stargate_Hex.png" alt="Hex the Riolu turning on a Stargete.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/HexFenaraOceansideCliff.png" alt="Hex the Riolu and a friendly Fennekin both overlooking the ocean from atop a scenic cliff.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/HexLucario.png" alt="Hex as a Lucario, waving at the viewer.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/Hex_AI_test_unit.png" alt="A pretty drawing depicting a starry night sky and mountains in the distance.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-[90%] h-64 object-contain mx-auto pointer-events-none" src="/assets/icons/ttmp-Logo.png" alt="The logo for Tome Tales Management Panel.">
+                    </div>
+                </div>
+                <div class="mt-12 text-center">
+                    <a href="/src/gallery.html" class="inline-block px-8 py-3 rounded-xl bg-[--color-primary] text-lg font-semibold transition-all duration-300 [box-shadow:var(--shadow-lg)] hover:[box-shadow:var(--shadow-lg-inset)]">
+                        See More
+                    </a>
+                </div>
+            </section>
+
+            </main>
+        </div>
+
+        <!-- Placeholder for the footer -->
+        <div id="footer-placeholder"></div>
+    </div>
+    <!-- Image Modal -->
+    <div id="image-modal">
+        <img src="" alt="Enlarged gallery image" class="modal-content rounded-lg" id="modal-image-content">
+    </div>
+    <!-- This script will fetch and inject the navigation bar -->
+    <script src="js/main.js" defer></script>
+</body>
+</html>
