@@ -77,20 +77,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const initImageModal = () => {
         const modal = document.getElementById('image-modal');
         const modalImage = document.getElementById('modal-image-content');
+        const tooltip = document.getElementById('image-tooltip');
         const imageContainers = document.querySelectorAll('.gallery-image-container');
 
-        if (!modal || !modalImage || imageContainers.length === 0) return;
+        if (!modal || !modalImage || !tooltip || imageContainers.length === 0) return;
 
         imageContainers.forEach(container => {
+            const img = container.querySelector('img');
+            if (!img) return;
+
+            // Modal click listener
             container.addEventListener('click', () => {
-                const img = container.querySelector('img');
-                if (img) {
-                    modalImage.src = img.src;
-                    modal.classList.add('is-visible');
+                modalImage.src = img.src;
+                modal.classList.add('is-visible');
+            });
+
+            // Tooltip hover listeners
+            container.addEventListener('mouseenter', (e) => {
+                const altText = img.getAttribute('alt');
+                if (altText) {
+                    tooltip.textContent = altText;
+                    // Position tooltip near cursor before making it visible
+                    tooltip.style.left = `${e.pageX + 15}px`;
+                    tooltip.style.top = `${e.pageY + 15}px`;
+                    tooltip.classList.add('is-visible');
                 }
+            });
+
+            container.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('is-visible');
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                // Continuously update position to follow the cursor
+                tooltip.style.left = `${e.pageX + 15}px`;
+                tooltip.style.top = `${e.pageY + 15}px`;
             });
         });
 
+        // Close modal listener
         modal.addEventListener('click', (e) => {
             if (e.target === modal) modal.classList.remove('is-visible');
         });

@@ -6,93 +6,7 @@
     <title>Hexfury - Portfolio</title>
     <link rel="icon" type="image/x-icon" href="/assets/icons/PRSG.ico">
     <link href="/public/output.css" rel="stylesheet">
-    <style>
-        /* * Site-wide theme properties. 
-         * Change these values to easily update the entire site's look and feel.
-         */
-        :root {
-            /* Color Palette */
-            --color-bg: rgb(15 23 42);            /* Main Background Color */
-            --color-bg-secondary: rgb(30 41 59);  /* Brighter background for containers */
-            --color-primary: rgb(21, 122, 216);       /* Main Color */
-            --color-primary-light: rgb(108, 180, 247);/* Brighter Than Main Color */
-            --color-primary-dark: rgb(15, 61, 104);  /* Darker Than Main Color */
-
-            --color-text: rgb(226 232 240);       /* Primary Text Color */
-            --color-text-muted: rgb(151, 178, 216); /* Secondary Text Color */
-            
-            /* Shadow colors for elements on the main background */
-            --shadow-color-dark: #0a101d;
-            --shadow-color-light: #141e37;
-
-            /* Neumorphic Shadow Styles */
-            --shadow-sm: 2px 2px 4px var(--color-primary-dark), -2px -2px 4px var(--color-primary-light);
-            --shadow-sm-inset: inset 2px 2px 4px var(--color-primary-dark), inset -2px -2px 4px var(--color-primary-light);
-            
-            --shadow-md: 2px 1px 4px var(--color-primary-dark), -2px -1px 4px var(--color-primary-light);
-            --shadow-md-inset: inset 3px 3px 6px var(--color-primary-dark), inset -3px -3px 6px var(--color-primary-light);
-
-            --shadow-lg: 2px 1px 4px var(--color-primary-dark), -2px -1px 4px var(--color-primary-light);
-            --shadow-lg-inset: inset 4px 4px 8px var(--color-primary-dark), inset -4px -4px 8px var(--color-primary-light);
-            
-            /* Shadow style for cards on the main background */
-            --shadow-card: 3px 3px 6px var(--shadow-color-dark), -3px -3px 6px var(--shadow-color-light);
-
-            /* Text Shadow Styles */
-            --text-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.4);
-            --text-shadow-glow: 0 0 12px var(--color-primary-dark/70);
-        }
-
-        /* Page Transition Animations */
-        @keyframes slide-out-to-left {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(-50px);
-                opacity: 0;
-            }
-        }
-        .page-is-exiting {
-            animation: slide-out-to-left 0.2s ease-in forwards;
-        }
-
-        /* Modal Animation */
-        #image-modal {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.75); /* Dark overlay */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-
-            opacity: 0;
-            visibility: hidden;
-            /* Delay visibility on close to allow fade-out */
-            transition: opacity 300ms ease-in-out, visibility 0ms 300ms;
-        }
-        #image-modal.is-visible {
-            opacity: 1;
-            visibility: visible;
-            transition-delay: 0ms;
-        }
-        #image-modal.is-visible .modal-content {
-            transform: scale(1);
-        }
-        .modal-content {
-            max-width: 90vw;
-            max-height: 90vh;
-            transform: scale(0.9);
-            transition: transform 300ms ease-in-out;
-        }
-
-        /* Prevents a flash of unstyled content before the page transition animation runs */
-        #page-container {
-            opacity: 0;
-        }
-    </style>
+    <link href="/assets/commonCss/repeatables.css" rel="stylesheet">
 </head>
 <body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
 
@@ -231,6 +145,10 @@
     <div id="image-modal">
         <img src="" alt="Enlarged gallery image" class="modal-content rounded-lg" id="modal-image-content">
     </div>
+
+    <!-- Tooltip for gallery images -->
+    <div id="image-tooltip"></div>
+
     <!-- This script will fetch and inject the navigation bar -->
     <script src="js/main.js" defer></script>
 </body>

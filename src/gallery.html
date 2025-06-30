@@ -6,102 +6,7 @@
     <title>Hexfury - Gallery</title>
     <link rel="icon" type="image/x-icon" href="/assets/icons/PRSG.ico">
     <link href="/public/output.css" rel="stylesheet">
-    <style>
-        /* * Site-wide theme properties. 
-         * Change these values to easily update the entire site's look and feel.
-         */
-        :root {
-            /* Color Palette */
-            --color-bg: rgb(15 23 42);            /* Main Background Color */
-            --color-bg-secondary: rgb(30 41 59);  /* Brighter background for containers */
-            --color-primary: rgb(21, 122, 216);       /* Main Color */
-            --color-primary-light: rgb(108, 180, 247);/* Brighter Than Main Color */
-            --color-primary-dark: rgb(15, 61, 104);  /* Darker Than Main Color */
-
-            --color-text: rgb(226 232 240);       /* Primary Text Color */
-            --color-text-muted: rgb(151, 178, 216); /* Secondary Text Color */
-            
-            /* Shadow colors for elements on the main background */
-            --shadow-color-dark: #0a101d;
-            --shadow-color-light: #141e37;
-
-            /* Neumorphic Shadow Styles */
-            --shadow-sm: 2px 2px 4px var(--color-primary-dark), -2px -2px 4px var(--color-primary-light);
-            --shadow-sm-inset: inset 2px 2px 4px var(--color-primary-dark), inset -2px -2px 4px var(--color-primary-light);
-            
-            --shadow-md: 2px 1px 4px var(--color-primary-dark), -2px -1px 4px var(--color-primary-light);
-            --shadow-md-inset: inset 3px 3px 6px var(--color-primary-dark), inset -3px -3px 6px var(--color-primary-light);
-
-            --shadow-lg: 2px 1px 4px var(--color-primary-dark), -2px -1px 4px var(--color-primary-light);
-            --shadow-lg-inset: inset 4px 4px 8px var(--color-primary-dark), inset -4px -4px 8px var(--color-primary-light);
-            
-            /* Shadow style for cards on the main background */
-            --shadow-card: 3px 3px 6px var(--shadow-color-dark), -3px -3px 6px var(--shadow-color-light);
-
-            /* Text Shadow Styles */
-            --text-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.4);
-            --text-shadow-glow: 0 0 12px var(--color-primary-dark/70);
-        }
-
-        /* Page Transition Animations */
-        @keyframes slide-out-to-left {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(-50px);
-                opacity: 0;
-            }
-        }
-        .page-is-exiting {
-            animation: slide-out-to-left 0.2s ease-in forwards;
-        }
-
-        /* Basic body styling */
-        body {
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            font-family: sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Modal Animation */
-        #image-modal {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.75); /* Dark overlay */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-
-            opacity: 0;
-            visibility: hidden;
-            /* Delay visibility on close to allow fade-out */
-            transition: opacity 300ms ease-in-out, visibility 0ms 300ms;
-        }
-        #image-modal.is-visible {
-            opacity: 1;
-            visibility: visible;
-            transition-delay: 0ms;
-        }
-        #image-modal.is-visible .modal-content {
-            transform: scale(1);
-        }
-        .modal-content {
-            max-width: 90vw;
-            max-height: 90vh;
-            transform: scale(0.9);
-            transition: transform 300ms ease-in-out;
-        }
-
-        /* Prevents a flash of unstyled content before the page transition animation runs */
-        #page-container {
-            opacity: 0;
-        }
-    </style>
+    <link href="/assets/commonCss/repeatables.css" rel="stylesheet">
 </head>
 <body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
 
@@ -114,7 +19,7 @@
             <main class="space-y-20 py-10">
             <!-- Intro Section -->
             <section id="gallery-intro" class="p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)] text-center">
-                <h1 class="text-4xl lg:text-5xl font-extrabold mb-4">My Gallery</h1>
+                <h1 class="text-4xl font-bold text-center mb-12">My Gallery</h1>
                 <p class="text-lg text-[--color-text-muted] max-w-4xl mx-auto">
                     Welcome to my personal gallery. This is a curated collection of artwork, commissions, and other visual projects I've had the pleasure of being a part of. Feel free to browse around and click on any image to see a larger version.
                 </p>
@@ -125,32 +30,35 @@
                 <h2 class="text-4xl font-bold text-center mb-12">Collection</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Repeat this card structure 9 times -->
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets/images/Hex_The_OrbWM.png" alt="Hex the Riolu, falling through a portal opened by an anomalous dark blue Orb.">
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets/images/Stargate_Hex.png" alt="Hex the Riolu turning on a Stargate.">
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets/images/HexFenaraOceansideCliff.png" alt="Hex the Riolu and a friendly Fennekin both overlooking the ocean from atop a scenic cliff.">
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets/images/HexLucario.png" alt="Hex as a Lucario, waving at the viewer.">
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets/images/Hex_AI_test_unit.png" alt="A pretty drawing depicting a starry night sky and mountains in the distance.">
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-contain pointer-events-none rounded-lg" src="/assets/images/Hex-LabCoat.png" alt="Hex the Riolu wearing a snazzy blue lab coat.">
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets//images/HexBackrooms.png" alt="Hex the Riolu is lost in the backrooms!">
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets/images/Hex_-_Rememberance_1.png" alt="Hex overlooking the ruins of a city he once called home.">
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
                         <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets/icons/ttmp-Logo.png" alt="The logo for Tome Tales Management Panel.">
+                    </div>
+                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
+                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="/assets/images/projects/WATERMARK -HEX- Alan Hexfury.png" alt="A fictional watermark for a fictional corporation.">
                     </div>
                 </div>
             </section>
@@ -161,10 +69,13 @@
         <div id="footer-placeholder"></div>
     </div>
 
-    <!-- Image Modal -->
+    <!-- Image Modal --> 
     <div id="image-modal">
         <img src="" alt="Enlarged gallery image" class="modal-content rounded-lg" id="modal-image-content">
     </div>
+
+    <!-- Tooltip for gallery images -->
+    <div id="image-tooltip"></div>
 
     <!-- This script will fetch and inject the navigation bar and handle modal logic -->
     <script src="js/main.js" defer></script>
