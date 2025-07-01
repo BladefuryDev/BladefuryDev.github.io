@@ -1028,7 +1028,7 @@ function getCookie(name) {
 function setupServiceWorker() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker
-            .register("/ttmp/service-worker.js") // Use absolute path for registration
+            .register("./service-worker.js") // Use absolute path for registration
             .then((registration) => console.log("[SW] Registered:", registration.scope))
             .catch((error) => console.error("[SW] Registration failed:", error));
     }

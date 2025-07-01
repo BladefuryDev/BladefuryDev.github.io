@@ -1,18 +1,16 @@
 // A new cache name is used to ensure the service worker updates correctly.
 const CACHE_NAME = "tome-tales-cache-v3"; 
 const urlsToCache = [
-  // The start URL is the rewritten path, which is what the user visits.
-  "/src/TTMP/", 
-  // The rest of the files must use their actual physical paths.
-  "/src/TTMP/index.html", // Main Page
-  "/src/TTMP/styles.css", // Base Theme
-  "/src/TTMP/src/output.css", // Required UI Library
-  "/src/TTMP/app.js", // Main App Script
-  "/src/TTMP/manifest.json", // req
-  "/src/TTMP/favicon.ico", // Icon for the tab and app
-  "/src/TTMP/icons/icon-192.png", // Icon but bigger
-  "/src/TTMP/icons/icon-512.png", // Icon but even bigger
-  "/src/TTMP/samples/sample_data.json" // Sample data for those that want to build.
+ "./",
+  "./index.html",
+  "./styles.css",
+  "./src/output.css", // This path is correct based on your index.html
+  "./app.js",
+  "./manifest.json",
+  "./favicon.ico",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "./samples/sample_data.json"
 ];
 
 // Install the service worker and cache all necessary assets
