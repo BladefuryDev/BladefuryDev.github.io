@@ -7,7 +7,7 @@
     <!-- Link to Manifest -->
     <link rel="manifest" href="./manifest.json" />
     <!-- Tailwind CSS for Styling -->
-    <link href="./src/output.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom Styles -->
     <link href="./styles.css" rel="stylesheet" />
     <!-- Favicon (Optional) -->
@@ -62,12 +62,13 @@
             </div>
           </div>
         </div>
-        <div class="h-10">
+        <!-- Text Crawl Container -->
+        <div class="h-10 hidden sm:block">
           <p
             id="logo-subtext"
-            class="text-sm text-main drop-shadow-sm cursor-default"
+            class="text-xs sm:text-sm text-main drop-shadow-sm cursor-default"
           >
-            If you can see this, the script broke. Lol
+            Loading assets and checking for updates...
           </p>
         </div>
       </div>
@@ -182,36 +183,34 @@
         <div
           class="flex flex-col md:flex-row card-bg rounded-lg p-4 drop-shadow-md md:space-x-4 md:space-y-0 space-y-4 mb-4"
         >
-          <!-- File System Panel -->
-          <div
-            class="flex-1 flex flex-col justify-between items-center rounded-md card-nested-bg p-6"
-            id="file-config"
+        <div
+        class="flex flex-col justify-center items-center rounded-md card-nested-bg p-6"
+        id="file-config"
+      >
+        <div class="text-center inline-block mb-16">
+            <h2 class="card-title text-lg font-bold">File System</h2>
+            <label id="load-file-ident" class="card-subtitle text-sm">ℹ️ no file loaded</label>
+        </div>
+        <div
+          class="p-2 nav-bg rounded-md flex flex-row justify-center items-center"
+        >
+          <a
+            href="./samples/sample_data.json"
+            download="sample_data.json"
+            class="btn btn-tertiary text-on-accent-hover w-28 text-center py-2 px-1"
           >
-            <div class="text-center">
-                <h2 class="card-title text-lg font-bold">File System</h2>
-                <label id="load-file-ident" class="card-subtitle text-sm">ℹ️ no file loaded</label>
-            </div>
-            <div
-              class="p-2 nav-bg rounded-md flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-2 justify-center items-center"
-            >
-              <a
-                href="./samples/sample_data.json"
-                download="sample_data.json"
-                class="btn btn-tertiary text-on-accent-hover w-28 text-center py-2 px-1"
-              >
-                New File
-              </a>
-              <button
-                id="load-file-button"
-                class="btn btn-secondary text-on-accent-hover w-28 py-2 px-1"
-              >
-                Load File
-              </button>
-            </div>
-            <!-- Hidden file input for the "Load File" button -->
-            <input type="file" id="file-loader" class="hidden" accept=".json" />
-          </div>
-          <!-- Diagnostics Panel -->
+            New File
+          </a>
+          <button
+            id="load-file-button"
+            class="btn btn-secondary text-on-accent-hover w-28 py-2 px-1"
+          >
+            Load File
+          </button>
+        </div>
+        <input type="file" id="file-loader" class="hidden" accept=".json" />
+      </div>
+          <!-- Diagnostics Panel (Restored to its original state) -->
           <div
             class="flex-1 flex flex-col items-center justify-center rounded-md card-nested-bg p-6 space-y-2 select-none"
           >
