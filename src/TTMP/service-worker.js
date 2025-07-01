@@ -1,15 +1,18 @@
-const CACHE_NAME = "tome-tales-cache-v1-1";
+// A new cache name is used to ensure the service worker updates correctly.
+const CACHE_NAME = "tome-tales-cache-v3"; 
 const urlsToCache = [
-  "./",
-  "./index.html",
-  "./styles.css",
-  "./src/output.css",
-  "./app.js",
-  "./manifest.json",
-  "./favicon.ico",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./samples/sample_data.json"
+  // The start URL is the rewritten path, which is what the user visits.
+  "/ttmp/", 
+  // The rest of the files must use their actual physical paths.
+  "/src/TTMP/index.html", // Main Page
+  "/src/TTMP/styles.css", // Base Theme
+  "/src/TTMP/src/output.css", // Required UI Library
+  "/src/TTMP/app.js", // Main App Script
+  "/src/TTMP/manifest.json", // req
+  "/src/TTMP/favicon.ico", // Icon for the tab and app
+  "/src/TTMP/icons/icon-192.png", // Icon but bigger
+  "/src/TTMP/icons/icon-512.png", // Icon but even bigger
+  "/src/TTMP/samples/sample_data.json" // Sample data for those that want to build.
 ];
 
 // Install the service worker and cache all necessary assets
@@ -17,9 +20,18 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log("Opened cache");
-      return cache.addAll(urlsToCache).catch((error) => {
-        console.error("Failed to cache:", error);
+      // Use no-cache to ensure we get the freshest files from the server during install
+      const cachePromises = urlsToCache.map(url => {
+        return fetch(new Request(url, {cache: 'no-cache'})).then(response => {
+          if (!response.ok) {
+            throw new TypeError('Bad response status ' + response.status);
+          }
+          return cache.put(url, response);
+        });
       });
+      return Promise.all(cachePromises);
+    }).catch((error) => {
+      console.error("Failed to cache:", error);
     })
   );
 });
