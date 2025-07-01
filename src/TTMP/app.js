@@ -17,12 +17,32 @@ const availableThemes = {};
 // App Initialization
 // =============================
 window.addEventListener("load", () => {
+    // --- MODIFICATION START ---
+    // 1. Load and apply the theme immediately so the intro animation is themed correctly.
+    let loadedTheme = defaultTheme; // Start with the default
+    const savedThemeJSON = getCookie("savedTheme");
+    if (savedThemeJSON) {
+        try {
+            const savedTheme = JSON.parse(savedThemeJSON);
+            // Basic validation to ensure the theme object is valid
+            if (savedTheme.name && savedTheme.colors) {
+                loadedTheme = savedTheme;
+            }
+        } catch (e) {
+            console.error("Failed to load theme from cookie, using default:", e);
+            // Falls back to defaultTheme if parsing fails
+        }
+    }
+    applyTheme(loadedTheme); // Apply the theme BEFORE the intro animation runs.
+    // --- MODIFICATION END ---
+
     runIntroAnimation().then(() => {
         // This block runs after the intro is complete and all elements are cleaned up.
         console.log("Intro complete. Initializing main application.");
         
-        loadDataFromStorage(); // <-- Renamed from loadDataFromCookie
-        setupThemeSystem();
+        loadDataFromStorage();
+        // 2. Pass the already-loaded theme to the setup function.
+        setupThemeSystem(loadedTheme);
         setupFileUpload();
         setupEventListeners();
         setupSettingsModal();
@@ -776,28 +796,28 @@ function registerTheme(theme) {
     }
 }
 
-function setupThemeSystem() {
+// --- MODIFICATION START ---
+// 3. This function now accepts the theme that was already applied on page load.
+// Its job is to set up the UI, not re-apply the theme.
+function setupThemeSystem(currentlyAppliedTheme) {
     const themeSelect = document.getElementById('theme-select');
     if (themeSelect) {
         themeSelect.innerHTML = ''; // Clear out any hardcoded options
     }
 
+    // Register the default theme so it's always an option.
     registerTheme(defaultTheme);
-    const savedThemeJSON = getCookie("savedTheme");
-    if (savedThemeJSON) {
-        try {
-            const savedTheme = JSON.parse(savedThemeJSON);
-            registerTheme(savedTheme);
-            applyTheme(savedTheme);
-        } catch (e) {
-            console.error("Failed to load theme from cookie:", e);
-            applyTheme(defaultTheme);
-        }
-    } else {
-        applyTheme(defaultTheme);
+
+    // If the currently applied theme is a custom one, register it too so it appears in the dropdown.
+    if (currentlyAppliedTheme && currentlyAppliedTheme.name !== defaultTheme.name) {
+        registerTheme(currentlyAppliedTheme);
     }
+    
+    // The `applyTheme` function already set the dropdown's value, so we're just
+    // ensuring the controls (upload, export, etc.) are wired up.
     setupThemeControls();
 }
+// --- MODIFICATION END ---
 
 function exportSampleTheme() {
     const jsonString = JSON.stringify(defaultTheme, null, 2);
