@@ -160,6 +160,8 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  /* Hint to the browser to prepare for animations on these properties */
+  will-change: transform, opacity;
 }
 .slide-out-to-right { animation: slide-out-to-right 0.3s forwards; }
 .slide-in-from-left { animation: slide-in-from-left 0.3s forwards; }

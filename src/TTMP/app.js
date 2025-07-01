@@ -748,17 +748,28 @@ function typeText(text, elementId, duration) {
     return new Promise((resolve) => {
         const element = document.getElementById(elementId);
         if (!element) return resolve();
-        const interval = (duration || 1000) / text.length;
-        let i = 0;
-        const typingInterval = setInterval(() => {
-            if (i < text.length) {
-                element.textContent = text.substring(0, i + 1);
-                i++;
+
+        let startTime = null;
+        const totalDuration = duration || 1000;
+
+        function animate(currentTime) {
+            if (!startTime) startTime = currentTime;
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / totalDuration, 1);
+            const charCount = Math.floor(progress * text.length);
+            
+            // Avoid unnecessary DOM updates
+            if (element.textContent.length !== charCount) {
+                element.textContent = text.substring(0, charCount);
+            }
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
             } else {
-                clearInterval(typingInterval);
                 resolve();
             }
-        }, interval);
+        }
+        requestAnimationFrame(animate);
     });
 }
 
@@ -766,20 +777,32 @@ function untypeText(elementId, duration) {
     return new Promise((resolve) => {
         const element = document.getElementById(elementId);
         if (!element) return resolve();
+        
         const text = element.textContent || "";
         if (text.length === 0) return resolve();
-        const interval = (duration || 1000) / text.length;
-        let i = text.length;
-        const untypingInterval = setInterval(() => {
-            if (i > 0) {
-                element.textContent = text.substring(0, i - 1);
-                i--;
+        
+        let startTime = null;
+        const totalDuration = duration || 1000;
+
+        function animate(currentTime) {
+            if (!startTime) startTime = currentTime;
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / totalDuration, 1);
+            const charCount = text.length - Math.floor(progress * text.length);
+
+            // Avoid unnecessary DOM updates
+            if (element.textContent.length !== charCount) {
+                 element.textContent = text.substring(0, charCount);
+            }
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
             } else {
                 element.textContent = "\u00A0"; // Non-breaking space
-                clearInterval(untypingInterval);
                 resolve();
             }
-        }, interval);
+        }
+        requestAnimationFrame(animate);
     });
 }
 
@@ -842,7 +865,7 @@ function getCookie(name) {
 function setupServiceWorker() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker
-            .register("./service-worker.js")
+            .register("/ttmp/service-worker.js") // Use absolute path for registration
             .then((registration) => console.log("[SW] Registered:", registration.scope))
             .catch((error) => console.error("[SW] Registration failed:", error));
     }
