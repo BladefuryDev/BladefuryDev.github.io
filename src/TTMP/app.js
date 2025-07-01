@@ -36,6 +36,70 @@ window.addEventListener("load", () => {
     });
 });
 
+// --- PWA Installation Logic ---
+
+let deferredPrompt;
+const installSection = document.getElementById('pwa-install-section');
+const installButton = document.getElementById('install-pwa-button');
+
+// Check if the app is already installed or running in standalone mode.
+// If so, we don't need to set up the install prompt.
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+  console.log('App is already installed (running in standalone mode). Install button will not be shown.');
+  // The button is hidden by default, so we don't need to do anything else.
+} else {
+  // The 'beforeinstallprompt' event is fired when the browser detects that the app is installable.
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the default mini-infobar from appearing on mobile.
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Show the install button.
+    if (installSection) {
+      installSection.classList.remove('hidden');
+    }
+  });
+
+  if (installButton) {
+    installButton.addEventListener('click', async () => {
+      if (!deferredPrompt) {
+        // The deferred prompt isn't available.
+        return;
+      }
+      // Show the browser's install prompt.
+      deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt.
+      const { outcome } = await deferredPrompt.userChoice;
+      
+      if (outcome === 'accepted') {
+        console.log('User accepted the PWA installation');
+      } else {
+        console.log('User dismissed the PWA installation');
+      }
+
+      // The prompt can only be used once.
+      deferredPrompt = null;
+      
+      // Hide the install button.
+      if (installSection) {
+        installSection.classList.add('hidden');
+      }
+    });
+  }
+
+  // This event fires when the PWA has been successfully installed.
+  window.addEventListener('appinstalled', () => {
+    // Hide the install button as the app is now installed.
+    if (installSection) {
+      installSection.classList.add('hidden');
+    }
+    // Clear the deferredPrompt so it can be garbage collected.
+    deferredPrompt = null;
+    console.log('PWA was installed');
+  });
+}
+
+
 // =============================
 // Intro Animation
 // =============================
