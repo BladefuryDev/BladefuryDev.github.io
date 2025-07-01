@@ -10,6 +10,7 @@ const urlsToCache = [
   "./favicon.ico",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
+  "./icons/icons8-settings-100.png",
   "./samples/sample_data.json"
 ];
 
