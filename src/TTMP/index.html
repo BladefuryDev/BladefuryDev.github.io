@@ -15,12 +15,20 @@
   </head>
 
   <body>
+    <!-- Intro Background -->
+    <div id="intro-bg" class="fixed inset-0"></div>
+
+    <!-- Intro Logo Container -->
+    <div id="intro-logo-container" class="fixed inset-0 z-50 flex items-center justify-center">
+        <img src="./icons/icon-512.png" alt="Logo" id="intro-logo" class="w-48 h-48" onerror="this.onerror=null;this.src='https://placehold.co/512x512/1f2937/ffffff?text=Logo';">
+    </div>
+
     <!-- Navbar -->
-    <nav class="nav-bg rounded-b-lg drop-shadow-md pb-2">
+    <nav id="navbar" class="nav-bg rounded-b-lg drop-shadow-md pb-2 opacity-0">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-10">
           <!-- Logo/Name Section -->
-          <div class="flex-shrink-0">
+          <div class="flex-shrink-0 nav-item opacity-0">
             <h1
               class="text-xl font-bold text-main drop-shadow-sm cursor-default"
             >
@@ -37,18 +45,18 @@
             <div class="ml-10 flex items-baseline space-x-4">
               <a
                 href="#dungeons"
-                class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-sm font-medium transition-colors drop-shadow-sm cursor-pointer"
+                class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-sm font-medium transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
                 >Dungeon Assets</a
               >
               <a
                 href="#overworld"
-                class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-sm font-medium transition-colors drop-shadow-sm cursor-pointer"
+                class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-sm font-medium transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
                 >Overworld</a
               >
               <a
                 id="settings-button"
                 href="#"
-                class="nav-text nav-settings-hover px-2 py-1 rounded-b-md text-sm font-bold transition-colors drop-shadow-sm cursor-pointer"
+                class="nav-text nav-settings-hover px-2 py-1 rounded-b-md text-sm font-bold transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
                 >S</a
               >
             </div>
@@ -67,7 +75,7 @@
     <!-- Nerd stuff is done -->
 
     <!-- Main Content -->
-    <main class="relative overflow-x-hidden" style="min-height: calc(100vh - 88px);">
+    <main id="main-content" class="relative overflow-x-hidden opacity-0" style="min-height: calc(100vh - 88px);">
       <!-- Overworld Page -->
       <div class="p-6 hidden page" id="overworld-page">
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
@@ -174,16 +182,17 @@
         <div
           class="flex flex-col md:flex-row card-bg rounded-lg p-4 drop-shadow-md md:space-x-4 md:space-y-0 space-y-4 mb-4"
         >
+          <!-- File System Panel -->
           <div
-            class="flex-1 flex flex-col items-center rounded-md card-nested-bg p-6 space-y-2"
+            class="flex-1 flex flex-col justify-between items-center rounded-md card-nested-bg p-6"
             id="file-config"
           >
-            <h2 class="card-title text-lg font-bold">File System</h2>
-            <label id="load-file-ident" class="card-subtitle text-sm -mt-6"
-              >ℹ️ no file loaded</label
-            >
+            <div class="text-center">
+                <h2 class="card-title text-lg font-bold">File System</h2>
+                <label id="load-file-ident" class="card-subtitle text-sm">ℹ️ no file loaded</label>
+            </div>
             <div
-              class="p-2 nav-bg rounded-md flex flex-col md:space-x-2 md:space-y-0 space-y-2 justify-center items-center md:flex-row"
+              class="p-2 nav-bg rounded-md flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-2 justify-center items-center"
             >
               <a
                 href="./samples/sample_data.json"
@@ -202,25 +211,26 @@
             <!-- Hidden file input for the "Load File" button -->
             <input type="file" id="file-loader" class="hidden" accept=".json" />
           </div>
+          <!-- Diagnostics Panel -->
           <div
-            class="flex-1 flex flex-col items-center rounded-md card-nested-bg p-6 space-y-2 select-none"
+            class="flex-1 flex flex-col items-center justify-center rounded-md card-nested-bg p-6 space-y-2 select-none"
           >
-            <h2 class="card-title text-lg font-bold">
+            <h2 class="card-title text-lg font-bold mb-2">
               The loaded file currently includes:
             </h2>
-            <label id="places-count" class="card-subtitle text-sm -mt-6"
+            <label id="places-count" class="card-subtitle text-sm"
               >0 - Places</label
             >
-            <label id="items-count" class="card-subtitle text-sm -mt-6"
+            <label id="items-count" class="card-subtitle text-sm"
               >0 - Items</label
             >
-            <label id="enemies-count" class="card-subtitle text-sm -mt-6"
+            <label id="enemies-count" class="card-subtitle text-sm"
               >0 - Enemies</label
             >
-            <label id="loot-boxes-count" class="card-subtitle text-sm -mt-6"
+            <label id="loot-boxes-count" class="card-subtitle text-sm"
               >0 - Loot Boxes</label
             >
-            <label id="quests-count" class="card-subtitle text-sm -mt-6"
+            <label id="quests-count" class="card-subtitle text-sm"
               >0 - Quest Assets</label
             >
           </div>
@@ -407,7 +417,7 @@
     <!-- Settings Modal (Initially Hidden) -->
     <div id="settings-modal" class="hidden fixed inset-0 z-10 flex items-center justify-center p-4 modal-overlay">
       <!-- Modal Panel -->
-      <div class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-md relative drop-shadow-lg">
+      <div id="settings-modal-panel" class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-md relative drop-shadow-lg">
         <!-- Close Button -->
         <button id="settings-close-button" class="absolute top-2 right-3 hover:text-white text-2xl font-bold modal-close-text">&times;</button>
         <h2 class="text-main text-xl font-bold mb-6 text-center">Settings</h2>

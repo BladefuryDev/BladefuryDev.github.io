@@ -51,11 +51,23 @@ body {
 }
 
 /* Navbar */
-.nav-bg { background-color: var(--color-bg-secondary); }
+.nav-bg { 
+    position: relative; /* For z-index stacking */
+    z-index: 30; /* Above intro-bg, below logo */
+    background-color: var(--color-bg-secondary); 
+    transform: translateY(-100%);
+    transition: transform 0.5s ease-out;
+}
+.nav-bg.slide-in {
+    transform: translateY(0);
+}
 .nav-text { color: var(--color-text-link); }
 .nav-link-hover:hover { background-color: var(--color-accent-primary); }
 .nav-settings-hover:hover { background-color: var(--color-bg-tertiary); }
 .nav-link-active { background-color: color-mix(in srgb, var(--color-accent-primary) 50%, transparent); }
+.nav-item {
+    transition: opacity 0.3s ease-in;
+}
 
 /* Main Content & Cards */
 .card-bg { background-color: var(--color-bg-secondary); }
@@ -131,13 +143,75 @@ body {
 .modal-close-text:hover { color: var(--color-text-primary); }
 .modal-border { border-color: var(--color-border); }
 
+/* =============================
+   Modal Animations
+   ============================= */
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modal-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes modal-panel-in {
+  from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes modal-panel-out {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to { opacity: 0; transform: scale(0.95) translateY(-10px); }
+}
+
+.modal-animate-fade-in { animation: modal-fade-in 0.2s ease-out forwards; }
+.modal-animate-fade-out { animation: modal-fade-out 0.2s ease-out forwards; }
+
+.modal-panel-animate-in { animation: modal-panel-in 0.2s ease-out forwards; }
+.modal-panel-animate-out { animation: modal-panel-out 0.2s ease-out forwards; }
+
+
 /* Toggle Switch */
 .toggle-bg { background-color: var(--color-toggle-bg); }
 .toggle-fg { background-color: var(--color-toggle-fg); }
 .toggle-peer:checked ~ .relative .toggle-bg { background-color: var(--color-toggle-bg-checked); }
 
 /* =============================
-   Animations
+   Intro Animations
+   ============================= */
+#intro-bg {
+    background-color: var(--color-bg-primary);
+    z-index: 20; /* Behind navbar, in front of content */
+    opacity: 0;
+    transition: opacity 0.5s ease-out; /* Match fade-out duration */
+}
+#intro-bg.fade-in {
+    opacity: 1;
+    transition-duration: 1s;
+    transition-timing-function: ease-in;
+}
+#intro-bg.fade-out {
+    opacity: 0;
+}
+
+#intro-logo-container {
+    transition: opacity 0.5s ease-out;
+}
+#intro-logo-container.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#intro-logo {
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+#intro-logo.shrink-fade {
+    transform: scale(0);
+    opacity: 0;
+}
+
+
+/* =============================
+   Page & Content Animations
    ============================= */
 @keyframes slide-out-to-right {
   from { transform: translateX(0); opacity: 1; }
@@ -155,6 +229,11 @@ body {
   from { transform: translateX(100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
+@keyframes fade-in-nav-item {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .page {
   width: 100%;
   position: absolute;
@@ -163,10 +242,17 @@ body {
   /* Hint to the browser to prepare for animations on these properties */
   will-change: transform, opacity;
 }
+
 .slide-out-to-right { animation: slide-out-to-right 0.3s forwards; }
 .slide-in-from-left { animation: slide-in-from-left 0.3s forwards; }
 .slide-out-to-left { animation: slide-out-to-left 0.3s forwards; }
 .slide-in-from-right { animation: slide-in-from-right 0.3s forwards; }
+.fade-in-nav { animation: fade-in-nav-item 0.5s forwards; }
+
+.main-content-enter {
+  animation: slide-in-from-left 0.5s ease-out forwards;
+}
+
 
 /* Notification Animation */
 @keyframes fade-in-out {

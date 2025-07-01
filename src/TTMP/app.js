@@ -17,18 +17,98 @@ const availableThemes = {};
 // App Initialization
 // =============================
 window.addEventListener("load", () => {
-    loadDataFromCookie();
-    setupThemeSystem();
-    setupFileUpload();
-    setupEventListeners();
-    setupSettingsModal();
-    setupNavigation();
-    setupServiceWorker();
+    runIntroAnimation().then(() => {
+        // This block runs after the intro is complete and all elements are cleaned up.
+        console.log("Intro complete. Initializing main application.");
+        
+        loadDataFromCookie();
+        setupThemeSystem();
+        setupFileUpload();
+        setupEventListeners();
+        setupSettingsModal();
+        setupNavigation();
+        setupServiceWorker();
 
-    typeText("ATLAS - Central - Authentication order recieved. Initializing assets...", "logo-subtext", 1500).then(() => {
-        setInterval(cycleSubtext, 10000);
+        // Start the text crawl now that the app is fully visible and ready.
+        typeText("ATLAS - Central - Authentication order recieved. Initializing assets...", "logo-subtext", 1500).then(() => {
+            setInterval(cycleSubtext, 10000);
+        });
     });
 });
+
+// =============================
+// Intro Animation
+// =============================
+function runIntroAnimation() {
+    return new Promise(resolve => {
+        const introLogoContainer = document.getElementById('intro-logo-container');
+        const introBg = document.getElementById('intro-bg');
+        const logo = document.getElementById('intro-logo');
+        const navbar = document.getElementById('navbar');
+        const navItems = document.querySelectorAll('.nav-item');
+        const mainContent = document.getElementById('main-content');
+        let resolved = false;
+
+        // This function cleans up the intro elements and resolves the promise.
+        const cleanupAndResolve = () => {
+            if (resolved) return;
+            resolved = true;
+            
+            clearTimeout(fallbackTimeout);
+            if (introLogoContainer) introLogoContainer.remove();
+            if (introBg) introBg.remove();
+            
+            if(mainContent) {
+                mainContent.classList.remove('opacity-0');
+                mainContent.classList.add('main-content-enter');
+            }
+            document.body.style.overflow = ''; 
+            resolve();
+        };
+        
+        const fallbackTimeout = setTimeout(cleanupAndResolve, 3500);
+
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+            if (introBg) introBg.classList.add('fade-in');
+        }, 100);
+
+        setTimeout(() => {
+            if (navbar) {
+                navbar.classList.add('slide-in');
+                navbar.classList.remove('opacity-0');
+            }
+        }, 500);
+
+        setTimeout(() => {
+            if (navItems) {
+                navItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        if(item) {
+                            item.classList.remove('opacity-0');
+                            item.classList.add('fade-in-nav');
+                        }
+                    }, index * 100);
+                });
+            }
+        }, 1000);
+        
+        setTimeout(() => {
+            if (logo) logo.classList.add('shrink-fade');
+        }, 2500);
+
+        setTimeout(() => {
+            if (introLogoContainer) {
+                introLogoContainer.classList.add('fade-out');
+                introLogoContainer.addEventListener('transitionend', cleanupAndResolve, { once: true });
+            } else {
+                cleanupAndResolve();
+            }
+            if (introBg) introBg.classList.add('fade-out');
+        }, 3000);
+    });
+}
 
 
 // =============================
@@ -69,8 +149,8 @@ function setupNavigation() {
         });
 
         if (isInitialLoad || !currentPageEl) {
-            Object.values(pages).forEach(p => p.classList.add('hidden'));
-            targetPageEl.classList.remove('hidden');
+            Object.values(pages).forEach(p => { if(p) p.classList.add('hidden')});
+            if(targetPageEl) targetPageEl.classList.remove('hidden');
             currentPageHash = targetHash;
             return;
         }
@@ -88,7 +168,7 @@ function setupNavigation() {
             inClass = 'slide-in-from-left';
         }
 
-        targetPageEl.classList.remove('hidden');
+        if(targetPageEl) targetPageEl.classList.remove('hidden');
         const onAnimationEnd = (event) => {
             if (event.target !== currentPageEl) return;
             currentPageEl.removeEventListener('animationend', onAnimationEnd);
@@ -99,11 +179,13 @@ function setupNavigation() {
             currentPageHash = targetHash;
         };
 
-        currentPageEl.addEventListener('animationend', onAnimationEnd);
-        requestAnimationFrame(() => {
-            currentPageEl.classList.add(outClass);
-            targetPageEl.classList.add(inClass);
-        });
+        if(currentPageEl) {
+            currentPageEl.addEventListener('animationend', onAnimationEnd);
+            requestAnimationFrame(() => {
+                currentPageEl.classList.add(outClass);
+                if(targetPageEl) targetPageEl.classList.add(inClass);
+            });
+        }
     }
 
     window.addEventListener('hashchange', () => showPage(window.location.hash, false));
@@ -133,11 +215,11 @@ function processGameData(jsonString, fileName) {
         const stringToEncode = JSON.stringify(cookieData);
         const encodedData = btoa(unescape(encodeURIComponent(stringToEncode)));
         setCookie("savedJsonFile", encodedData, 7);
-        fileLabel.textContent = `✅ ${fileName} loaded!`;
+        if(fileLabel) fileLabel.textContent = `✅ ${fileName} loaded!`;
 
     } catch (error) {
         console.error("Error parsing JSON file:", error);
-        fileLabel.textContent = "⚠️ Error parsing file.";
+        if(fileLabel) fileLabel.textContent = "⚠️ Error parsing file.";
         gameData = null;
     }
 }
@@ -174,7 +256,7 @@ function loadDataFromCookie() {
             const cookieData = JSON.parse(decodedString);
             if (cookieData.content && cookieData.fileName) {
                 const fileLabel = document.getElementById("load-file-ident");
-                fileLabel.textContent = `ℹ️ Loading ${cookieData.fileName} from memory...`;
+                if(fileLabel) fileLabel.textContent = `ℹ️ Loading ${cookieData.fileName} from memory...`;
                 processGameData(cookieData.content, cookieData.fileName);
             }
         } catch (e) {
@@ -549,12 +631,29 @@ const defaultTheme = {
 function setupSettingsModal() {
     const settingsButton = document.getElementById('settings-button');
     const settingsModal = document.getElementById('settings-modal');
+    const modalPanel = document.getElementById('settings-modal-panel');
     const closeButton = document.getElementById('settings-close-button');
 
-    if (!settingsButton || !settingsModal || !closeButton) return;
+    if (!settingsButton || !settingsModal || !modalPanel || !closeButton) return;
 
-    const openModal = () => settingsModal.classList.remove('hidden');
-    const closeModal = () => settingsModal.classList.add('hidden');
+    const openModal = () => {
+        settingsModal.classList.remove('hidden');
+        settingsModal.classList.remove('modal-animate-fade-out');
+        modalPanel.classList.remove('modal-panel-animate-out');
+        settingsModal.classList.add('modal-animate-fade-in');
+        modalPanel.classList.add('modal-panel-animate-in');
+    };
+
+    const closeModal = () => {
+        settingsModal.classList.remove('modal-animate-fade-in');
+        modalPanel.classList.remove('modal-panel-animate-in');
+        settingsModal.classList.add('modal-animate-fade-out');
+        modalPanel.classList.add('modal-panel-animate-out');
+
+        modalPanel.addEventListener('animationend', () => {
+            settingsModal.classList.add('hidden');
+        }, { once: true });
+    };
 
     settingsButton.addEventListener('click', (e) => {
         e.preventDefault();
