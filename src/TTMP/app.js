@@ -21,7 +21,7 @@ window.addEventListener("load", () => {
         // This block runs after the intro is complete and all elements are cleaned up.
         console.log("Intro complete. Initializing main application.");
         
-        loadDataFromCookie();
+        loadDataFromStorage(); // <-- Renamed from loadDataFromCookie
         setupThemeSystem();
         setupFileUpload();
         setupEventListeners();
@@ -269,16 +269,15 @@ function processGameData(jsonString, fileName) {
         // Update UI elements with new data
         updateDiagnostics(gameData);
         updateTitle(gameData.meta?.customTitleName || "Tome Tales Management Panel");
+        // CORRECTED: Was "game.meta", now "gameData.meta"
         activeTitleSubtext = gameData.meta?.textCrawl && gameData.meta.textCrawl.length > 0 ? gameData.meta.textCrawl : [...defaultTitleSubtext];
         currentTextIndex = -1;
         populateLocationDropdowns();
         populateOverworldDropdowns();
 
-        // Save loaded data to a cookie for persistence
-        const cookieData = { fileName, content: jsonString };
-        const stringToEncode = JSON.stringify(cookieData);
-        const encodedData = btoa(unescape(encodeURIComponent(stringToEncode)));
-        setCookie("savedJsonFile", encodedData, 7);
+        // Save loaded data to localStorage for persistence
+        const dataToStore = { fileName, content: jsonString };
+        localStorage.setItem("savedJsonFile", JSON.stringify(dataToStore));
         if(fileLabel) fileLabel.textContent = `✅ ${fileName} loaded!`;
 
     } catch (error) {
@@ -311,21 +310,20 @@ function setupFileUpload() {
     }
 }
 
-function loadDataFromCookie() {
-    const savedJsonFile = getCookie("savedJsonFile");
-    if (savedJsonFile) {
-        console.log("Found saved file in cookie, loading data...");
+function loadDataFromStorage() {
+    const savedJsonDataString = localStorage.getItem("savedJsonFile");
+    if (savedJsonDataString) {
+        console.log("Found saved file in localStorage, loading data...");
         try {
-            const decodedString = decodeURIComponent(escape(atob(savedJsonFile)));
-            const cookieData = JSON.parse(decodedString);
-            if (cookieData.content && cookieData.fileName) {
+            const savedJsonData = JSON.parse(savedJsonDataString);
+            if (savedJsonData.content && savedJsonData.fileName) {
                 const fileLabel = document.getElementById("load-file-ident");
-                if(fileLabel) fileLabel.textContent = `ℹ️ Loading ${cookieData.fileName} from memory...`;
-                processGameData(cookieData.content, cookieData.fileName);
+                if(fileLabel) fileLabel.textContent = `ℹ️ Loading ${savedJsonData.fileName} from memory...`;
+                processGameData(savedJsonData.content, savedJsonData.fileName);
             }
         } catch (e) {
-            console.error("Failed to load data from cookie:", e);
-            setCookie("savedJsonFile", "", -1);
+            console.error("Failed to load data from localStorage:", e);
+            localStorage.removeItem("savedJsonFile");
         }
     }
 }
