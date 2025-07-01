@@ -14,7 +14,7 @@
     <link rel="icon" href="favicon.ico" />
   </head>
 
-  <body>
+  <body class="flex flex-col min-h-screen">
     <!-- Intro Background -->
     <div id="intro-bg" class="fixed inset-0"></div>
 
@@ -42,21 +42,21 @@
           </div>
           <!-- Navigation Options -->
           <div>
-            <div class="ml-10 flex items-baseline space-x-4">
+            <div class="ml-10 flex items-baseline space-x-2 sm:ml-5">
               <a
                 href="#dungeons"
-                class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-sm font-medium transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
+                class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-xs sm:text-sm font-medium transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
                 >Dungeon Assets</a
               >
               <a
                 href="#overworld"
-                class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-sm font-medium transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
+                class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-xs sm:text-sm font-medium transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
                 >Overworld</a
               >
               <a
                 id="settings-button"
                 href="#"
-                class="nav-text nav-settings-hover px-2 py-1 rounded-b-md text-sm font-bold transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
+                class="nav-text nav-settings-hover px-2 py-1 rounded-b-md text-xs sm:text-sm font-bold transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
                 >S</a
               >
             </div>
@@ -76,7 +76,7 @@
     <!-- Nerd stuff is done -->
 
     <!-- Main Content -->
-    <main id="main-content" class="relative overflow-x-hidden opacity-0" style="min-height: calc(100vh - 88px);">
+    <main id="main-content" class="relative overflow-x-hidden opacity-0 flex-grow">
       <!-- Overworld Page -->
       <div class="p-6 hidden page" id="overworld-page">
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
@@ -385,6 +385,11 @@
         </div>
       </div>
     </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center p-2">
+      <p class="text-xs card-subtitle">&copy; 2024 Hexfury Games</p>
+    </footer>
     
     <!-- Output Card Template (Hidden) -->
     <div id="output-card-template" class="hidden">
