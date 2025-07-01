@@ -1,0 +1,196 @@
+/* =============================
+   Color Theme Variables
+   ============================= */
+:root {
+  /* Backgrounds */
+  --color-bg-primary: #1f2937; /* Original: gray-800 */
+  --color-bg-secondary: #111827; /* Original: gray-900 */
+  --color-bg-tertiary: #4b5563; /* Original: gray-600 */
+  --color-bg-interactive: #6b7280; /* Original: gray-500 */
+  --color-bg-interactive-hover: #e5e7eb; /* Original: gray-200 */
+  --color-bg-output-card: #4b5563; /* Original: gray-600 */
+  --color-bg-output-textarea: #f3f4f6; /* Original: gray-100 */
+  --color-bg-modal-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Text */
+  --color-text-primary: #ffffff; /* Original: white */
+  --color-text-secondary: #9ca3af; /* Original: gray-400 */
+  --color-text-tertiary: #6b7280; /* Original: gray-500 */
+  --color-text-accent: #000000; /* Original: black */
+  --color-text-link: #ffffff; /* Original: white */
+
+  /* Buttons & Accents */
+  --color-accent-primary: #3b82f6; /* Original: blue-500 */
+  --color-accent-primary-hover: #93c5fd; /* Original: blue-300 */
+  --color-accent-secondary: #22c55e; /* Original: green-500 */
+  --color-accent-secondary-hover: #86efac; /* Original: green-300 */
+  --color-accent-tertiary: #ca8a04; /* Original: yellow-600 */
+  --color-accent-tertiary-hover: #fde047; /* Original: yellow-300 */
+  --color-accent-discord: #6366f1; /* Original: indigo-500 */
+  --color-accent-discord-hover: #818cf8; /* Original: indigo-400 */
+  
+  /* Borders & Rings */
+  --color-border: #374151; /* Original: gray-700 */
+  --color-ring-primary: #93c5fd; /* Original: blue-300 */
+  --color-ring-discord: #a5b4fc; /* Original: indigo-300 */
+
+  /* Other */
+  --color-slider-thumb: #60a5fa; /* Original: blue-400 */
+  --color-toggle-bg: #4b5563; /* Original: gray-600 */
+  --color-toggle-bg-checked: #22c55e; /* Original: green-500 */
+  --color-toggle-fg: #ffffff; /* Original: white */
+}
+
+
+/* =============================
+   Base & Themed Elements
+   ============================= */
+
+body {
+  background-color: var(--color-bg-primary);
+}
+
+/* Navbar */
+.nav-bg { background-color: var(--color-bg-secondary); }
+.nav-text { color: var(--color-text-link); }
+.nav-link-hover:hover { background-color: var(--color-accent-primary); }
+.nav-settings-hover:hover { background-color: var(--color-bg-tertiary); }
+.nav-link-active { background-color: color-mix(in srgb, var(--color-accent-primary) 50%, transparent); }
+
+/* Main Content & Cards */
+.card-bg { background-color: var(--color-bg-secondary); }
+.card-nested-bg { background-color: var(--color-bg-primary); }
+.card-title { color: var(--color-text-primary); }
+.card-subtitle { color: var(--color-text-tertiary); }
+
+/* Text */
+.text-main { color: var(--color-text-primary); }
+.text-dim { color: var(--color-text-secondary); }
+.text-on-accent { color: var(--color-text-primary); }
+.text-on-accent-hover:hover { color: var(--color-text-accent); }
+
+/* Forms & Inputs */
+.input-bg { background-color: var(--color-bg-interactive); }
+.input-text { color: var(--color-text-primary); }
+.input-hover:hover { 
+  background-color: var(--color-bg-interactive-hover);
+  color: var(--color-text-accent);
+}
+.input-slider { accent-color: var(--color-slider-thumb); }
+
+/* Buttons */
+.btn {
+  padding: 0.5rem 1rem; /* Equivalent to py-2 px-4 */
+  border-radius: 0.375rem; /* Equivalent to rounded-md */
+  color: var(--color-text-primary);
+  font-weight: bold;
+  transition: background-color 0.2s, color 0.2s;
+}
+.btn-sm {
+  padding: 0.25rem 1rem; /* Equivalent to py-1 px-4 */
+}
+.btn-compact {
+  padding: 0.5rem 0.25rem; /* Equivalent to py-2 px-1 */
+}
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-bg-primary), 0 0 0 4px var(--color-ring-primary);
+}
+.btn-primary { background-color: var(--color-accent-primary); }
+.btn-primary:hover { background-color: var(--color-accent-primary-hover); }
+.btn-primary:hover, .btn-secondary:hover, .btn-tertiary:hover { color: var(--color-text-accent); }
+
+.btn-secondary { background-color: var(--color-accent-secondary); }
+.btn-secondary:hover { background-color: var(--color-accent-secondary-hover); }
+
+.btn-tertiary { background-color: var(--color-accent-tertiary); }
+.btn-tertiary:hover { background-color: var(--color-accent-tertiary-hover); }
+
+.btn-discord { background-color: var(--color-accent-discord); }
+.btn-discord:hover { background-color: var(--color-accent-discord-hover); }
+.btn-discord:focus {
+  box-shadow: 0 0 0 2px var(--color-bg-primary), 0 0 0 4px var(--color-ring-discord);
+}
+
+.btn-subtle { background-color: var(--color-bg-tertiary); }
+.btn-subtle:hover { background-color: var(--color-bg-interactive); }
+
+
+/* Output Stack */
+.output-stack-bg { background-color: var(--color-bg-primary); }
+.output-placeholder-text { color: var(--color-text-secondary); }
+.output-card-bg { background-color: var(--color-bg-output-card); }
+.output-textarea-bg { background-color: var(--color-bg-output-textarea); }
+.output-textarea-text { color: var(--color-text-accent); }
+.timestamp-text { color: var(--color-text-primary); }
+
+/* Modal */
+.modal-overlay { background-color: var(--color-bg-modal-overlay); }
+.modal-panel-bg { background-color: var(--color-bg-primary); }
+.modal-close-text { color: var(--color-text-secondary); }
+.modal-close-text:hover { color: var(--color-text-primary); }
+.modal-border { border-color: var(--color-border); }
+
+/* Toggle Switch */
+.toggle-bg { background-color: var(--color-toggle-bg); }
+.toggle-fg { background-color: var(--color-toggle-fg); }
+.toggle-peer:checked ~ .relative .toggle-bg { background-color: var(--color-toggle-bg-checked); }
+
+/* =============================
+   Animations
+   ============================= */
+@keyframes slide-out-to-right {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+@keyframes slide-in-from-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slide-out-to-left {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100%); opacity: 0; }
+}
+@keyframes slide-in-from-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.page {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.slide-out-to-right { animation: slide-out-to-right 0.3s forwards; }
+.slide-in-from-left { animation: slide-in-from-left 0.3s forwards; }
+.slide-out-to-left { animation: slide-out-to-left 0.3s forwards; }
+.slide-in-from-right { animation: slide-in-from-right 0.3s forwards; }
+
+/* Notification Animation */
+@keyframes fade-in-out {
+  0% { opacity: 0; transform: translateY(10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+.animate-fade-in-out {
+    animation: fade-in-out 4.5s ease-in-out forwards;
+}
+
+
+/* =============================
+   Custom Scrollbar (Themed)
+   ============================= */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-bg-tertiary);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-bg-interactive);
+}

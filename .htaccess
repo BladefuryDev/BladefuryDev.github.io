@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Rule for /ttmp
+RewriteRule ^ttmp/(.*)$ /src/TTMP/$1 [L]
+RewriteRule ^ttmp$ /ttmp/ [R=301,L]
+
+# Rule for /home
+RewriteRule ^home/?$ /src/home.html [L]

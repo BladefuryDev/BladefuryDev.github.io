@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "version": "1.1.0",
+    "author": "Your Name",
+    "customTitleName": "My Custom Game",
+    "description": "Sample data file for the Tome Tales Management Panel.",
+    "textCrawl": [
+      "Welcome to my custom game!",
+      "Beware the ducks of Anville Plains...",
+      "What treasures will you find in Eterna Forest?",
+      "This is a custom message from the JSON file."
+    ]
+  },
+  "locations": [
+    {
+      "id": "generic_plains",
+      "name": "Generic Plains",
+      "description": "Wide open plains teeming with wildlife and low-level monsters.",
+      "environmental_hazards": "Sudden sinkholes can appear, and the tall grass can hide predators.",
+      "enemy_types": ["rat", "duck"],
+      "boss_types": ["sp_rat"],
+      "berries": ["Healing Berry"],
+      "loot_boxes": ["common_chest"]
+    },
+    {
+      "id": "magic_forest",
+      "name": "Magic Forest",
+      "description": "An ancient forest with towering trees and mysterious ruins.",
+      "environmental_hazards": "Thick fog often rolls in, reducing visibility. Some plants release disorienting pollen.",
+      "enemy_types": ["forest_rat", "giant_rat"],
+      "boss_types": ["ancient_rat"],
+      "berries": ["Poison Cure", "Poison Berry"],
+      "loot_boxes": ["rare_chest"]
+    }
+  ],
+  "enemies": [
+    {
+      "id": "rat",
+      "name": "Rattata",
+      "is_boss": false,
+      "attacks": ["Vicious Bite", "Tail Whip", "Scratching Frenzy", "Diseased Nibble"],
+      "loot_table": ["Rat Tail", "Small Coin Pouch"]
+    },
+    {
+      "id": "duck",
+      "name": "Duck",
+      "is_boss": false,
+      "attacks": ["Aggressive Quack", "Wing Slap", "Peck", "Waddle Away"],
+      "loot_table": ["Duck Feather", "Stale Bread"]
+    },
+    {
+      "id": "sp_rat",
+      "name": "Super-Poison Rattata",
+      "is_boss": true,
+      "attacks": ["Toxic Fang", "Venomous Tail Lash", "Noxious Haze", "Frenzied Assault"],
+      "loot_table": ["Potent Venom Gland", "Large Coin Pouch"]
+    },
+    {
+      "id": "forest_rat",
+      "name": "Forest Rattata",
+      "is_boss": false,
+      "attacks": ["Gnaw", "Quick Attack", "Camouflage", "Leaf Scratch"],
+      "loot_table": ["Rat Tail", "Forest Berries"]
+    },
+    {
+      "id": "giant_rat",
+      "name": "Giant Rattata",
+      "is_boss": false,
+      "attacks": ["Crushing Bite", "Body Slam", "Fearsome Squeak", "Rending Claws"],
+      "loot_table": ["Giant Rat Tail", "Small Coin Pouch"]
+    },
+    {
+      "id": "ancient_rat",
+      "name": "Ancient Rattata",
+      "is_boss": true,
+      "attacks": ["Petrifying Gaze", "Earthen Stomp", "Ruinous Bite", "Summon Swarm"],
+      "loot_table": ["Ancient Rat Skull", "Gemstone"]
+    }
+  ],
+  "loot_boxes": [
+    {
+      "id": "common_chest",
+      "name": "Common Chest",
+      "contents": ["Small Coin Pouch", "Rat Tail", "Duck Feather", "Forest Berries"]
+    },
+    {
+      "id": "rare_chest",
+      "name": "Rare Chest",
+      "contents": ["Large Coin Pouch", "Gemstone", "Potent Venom Gland"]
+    }
+  ],
+  "quests": [
+    {
+      "id": "exterminator",
+      "name": "Town Exterminator",
+      "description": "The town is being overrun by giant rats! Clear them out.",
+      "objectives": [
+        { "type": "kill", "target_id": "rat", "count": 5 },
+        { "type": "collect", "target_id": "Rat Tail", "count": 3 }
+      ]
+    }
+  ],
+  "mission_types": [
+    {
+      "id": "delivery",
+      "name": "Delivery",
+      "template": "A package needs to be delivered urgently. The client, [CLIENT], has stressed the importance of this task. Be wary of [FACTION] patrols along the route."
+    },
+    {
+      "id": "extermination",
+      "name": "Extermination",
+      "template": "[CLIENT] is offering a [REWARD_TIER] reward for clearing out a den of monsters. The area has been infested by [FACTION], making it too dangerous for locals."
+    },
+    {
+      "id": "recon",
+      "name": "Reconnaissance",
+      "template": "We need eyes on [FACTION] movements. [CLIENT] requires information on their numbers and positions. Avoid direct engagement if possible. This is a stealth mission."
+    }
+  ],
+  "factions": [
+    {
+      "id": "raiders",
+      "name": "The Dust Devil Raiders"
+    },
+    {
+      "id": "goblins",
+      "name": "The Sneaky Goblin Tribe"
+    },
+    {
+      "id": "wildlife",
+      "name": "Aggressive Local Wildlife"
+    }
+  ],
+  "quest_givers": [
+    {
+      "id": "guild_master",
+      "name": "The Anville Guild Master"
+    },
+    {
+      "id": "local_merchant",
+      "name": "A Worried Local Merchant"
+    },
+    {
+      "id": "ocon_officer",
+      "name": "An OCON Intelligence Officer"
+    }
+  ]
+}
