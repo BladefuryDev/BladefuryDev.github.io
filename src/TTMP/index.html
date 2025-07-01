@@ -42,7 +42,7 @@
           </div>
           <!-- Navigation Options -->
           <div>
-            <div class="ml-10 flex items-baseline space-x-2 sm:ml-5">
+            <div class="ml-10 flex items-center space-x-2 sm:ml-5">
               <a
                 href="#dungeons"
                 class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-xs sm:text-sm font-medium transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
@@ -56,9 +56,10 @@
               <a
                 id="settings-button"
                 href="#"
-                class="nav-text nav-settings-hover px-2 py-1 rounded-b-md text-xs sm:text-sm font-bold transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
-                >S</a
+                class="nav-text nav-settings-hover px-2 py-2 rounded-b-md transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
               >
+                <img src="./icons/icons8-settings-100.png" alt="Settings" class="h-4 w-4 sm:h-5 sm:w-5" />
+              </a>
             </div>
           </div>
         </div>
@@ -197,13 +198,13 @@
           <a
             href="./samples/sample_data.json"
             download="sample_data.json"
-            class="btn btn-tertiary text-on-accent-hover w-28 text-center py-2 px-1"
+            class="btn-left btn-tertiary text-on-accent-hover w-28 text-center py-2 px-1"
           >
             New File
           </a>
           <button
             id="load-file-button"
-            class="btn btn-secondary text-on-accent-hover w-28 py-2 px-1"
+            class="btn-right btn-secondary text-on-accent-hover w-28 py-2 px-1"
           >
             Load File
           </button>
