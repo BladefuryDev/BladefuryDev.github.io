@@ -2,7 +2,7 @@
 const CACHE_NAME = "tome-tales-cache-v3"; 
 const urlsToCache = [
   // The start URL is the rewritten path, which is what the user visits.
-  "/ttmp/", 
+  "/src/TTMP/", 
   // The rest of the files must use their actual physical paths.
   "/src/TTMP/index.html", // Main Page
   "/src/TTMP/styles.css", // Base Theme
