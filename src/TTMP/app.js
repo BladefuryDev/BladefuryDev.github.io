@@ -129,24 +129,78 @@ function setupNavigation() {
         '#dungeons': document.getElementById('dungeons-page'),
         '#overworld': document.getElementById('overworld-page'),
     };
+    const pageOrder = ['#dungeons', '#overworld'];
     const defaultPage = '#dungeons';
+    let currentPageHash = null; // Keep track of the current page
 
-    function showPage(hash) {
-        const targetHash = Object.keys(pages).includes(hash) ? hash : defaultPage;
+    function showPage(newHash, isInitialLoad = false) {
+        const targetHash = Object.keys(pages).includes(newHash) ? newHash : defaultPage;
+        const oldPageHash = currentPageHash;
         
-        Object.values(pages).forEach(p => { 
-            if(p) p.classList.add('hidden');
-        });
-        if(pages[targetHash]) pages[targetHash].classList.remove('hidden');
+        if (targetHash === oldPageHash && !isInitialLoad) return;
 
+        const oldPage = pages[oldPageHash];
+        const newPage = pages[targetHash];
+
+        // Update active link style
         navLinks.forEach(link => {
             link.classList.toggle('nav-link-active', link.getAttribute('href') === targetHash);
         });
+
+        // On initial load, just show the page without animation
+        if (isInitialLoad || !oldPage) {
+            Object.values(pages).forEach(p => { 
+                if(p) p.classList.add('hidden');
+            });
+            if(newPage) newPage.classList.remove('hidden');
+            currentPageHash = targetHash;
+            return;
+        }
+
+        const oldIndex = pageOrder.indexOf(oldPageHash);
+        const newIndex = pageOrder.indexOf(targetHash);
+
+        let oldPageAnimation, newPageAnimation;
+
+        // Determine animation direction based on page order
+        if (newIndex > oldIndex) {
+            // Sliding left (e.g., Dungeons to Overworld)
+            oldPageAnimation = 'slide-out-to-left';
+            newPageAnimation = 'slide-in-from-right';
+        } else {
+            // Sliding right (e.g., Overworld to Dungeons)
+            oldPageAnimation = 'slide-out-to-right';
+            newPageAnimation = 'slide-in-from-left';
+        }
+
+        // Prepare new page and start animations
+        newPage.classList.remove('hidden');
+        oldPage.classList.add(oldPageAnimation);
+        newPage.classList.add(newPageAnimation);
+
+        // Clean up classes after animations complete
+        oldPage.addEventListener('animationend', function handler() {
+            oldPage.classList.add('hidden');
+            oldPage.classList.remove(oldPageAnimation);
+            oldPage.removeEventListener('animationend', handler);
+        });
+
+        newPage.addEventListener('animationend', function handler() {
+            newPage.classList.remove(newPageAnimation);
+            newPage.removeEventListener('animationend', handler);
+        });
+
+        currentPageHash = targetHash;
     }
 
+    // Set initial page on load
+    const initialHash = window.location.hash || defaultPage;
+    showPage(initialHash, true);
+
+    // Handle subsequent navigation
     window.addEventListener('hashchange', () => showPage(window.location.hash));
-    showPage(window.location.hash || defaultPage);
 }
+
 
 
 // =============================
@@ -1267,6 +1321,8 @@ function getCookie(name) {
     }
     return null;
 }
+
+
 
 // =============================
 // Service Worker Registration
