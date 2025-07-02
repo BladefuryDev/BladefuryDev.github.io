@@ -68,7 +68,7 @@ body {
 .nav-settings-hover:hover { background-color: var(--color-bg-tertiary); }
 .nav-link-active { background-color: color-mix(in srgb, var(--color-accent-primary) 50%, transparent); }
 .nav-item {
-    transition: opacity 0.3s ease-in;
+    transition: opacity 0.3s ease-in, background-color 0.3s ease-out;
 }
 
 /* Main Content & Cards */
@@ -318,4 +318,6 @@ body {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   background-color: var(--color-text-primary);
+  /* Add this line for a smooth color change when switching themes */
+  transition: background-color 0.2s;
 }

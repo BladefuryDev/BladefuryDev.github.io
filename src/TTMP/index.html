@@ -72,6 +72,9 @@
                 href="#"
                 class="nav-text nav-settings-hover p-1 rounded-b-md transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
               >
+                <!-- Use a div with the icon-mask class to allow for theming -->
+                <div class="h-6 w-6 icon-mask" aria-label="Settings"></div>
+              </a>
                 <img src="./icons/icons8-settings-100.png" class="h-6 w-6" alt="Settings" onerror="this.onerror=null;this.src='https://placehold.co/24x24/7f7f7f/ffffff?text=S';">
               </a>
             </div>
@@ -110,7 +113,7 @@
             <!-- Quantity -->
             <div class="w-full flex items-center justify-between">
                 <label for="loot-box-quantity" class="text-dim text-sm mr-2">Quantity:</label>
-                <input type="number" id="loot-box-quantity" min="1" max="99" value="1" class="w-20 rounded-lg p-1 text-center cursor-pointer transition-colors input-bg input-text input-hover" />
+                <input type="number" id="loot-box-quantity" min="1" max="999" value="1" class="w-20 rounded-lg p-1 text-center cursor-pointer transition-colors input-bg input-text input-hover" />
             </div>
 
             <!-- Execute Button -->
@@ -335,7 +338,7 @@
                   min="1"
                   max="99"
                   value="1"
-                  class="w-12 rounded-lg p-1 text-center cursor-pointer transition-colors input-bg input-text input-hover"
+                  class="w-14 rounded-lg p-1 text-center cursor-pointer transition-colors input-bg input-text input-hover"
                 />
               </div>
 
