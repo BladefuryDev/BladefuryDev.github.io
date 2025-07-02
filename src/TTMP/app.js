@@ -215,6 +215,31 @@ function loadDataFromStorage() {
     }
 }
 
+async function loadSampleFileAndOpenEditor() {
+    const fileLabel = document.getElementById("load-file-ident");
+    if (fileLabel) fileLabel.textContent = `ℹ️ sample_data.json loading...`;
+    try {
+        const response = await fetch('./samples/sample_data.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonString = await response.text();
+        processGameData(jsonString, 'sample_data.json');
+
+        const editFileButton = document.getElementById('edit-file-button');
+        if (editFileButton) {
+            editFileButton.click();
+        } else {
+            console.error("Edit button not found, cannot open editor.");
+            showNotification("Sample loaded, but failed to open editor.", "error");
+        }
+    } catch (error) {
+        console.error("Could not load sample file:", error);
+        if (fileLabel) fileLabel.textContent = `⚠️ Error loading sample.`;
+        showNotification("Error loading sample file.", "error");
+    }
+}
+
 
 // =============================
 // UI Population & Updates
@@ -295,12 +320,12 @@ function addCardWithFormattedText(standardText, discordText = null, stackId) {
     newCard.dataset.discordText = discordText || '';
 
     const textarea = newCard.querySelector('textarea');
-    const timestampLabel = newCard.querySelector('.timestamp');
+    const timestampLabel = newCard.querySelector('.timestamp-text'); // Corrected class
     const copyBtn = newCard.querySelector('.copy-btn');
     const discordToggleBtn = newCard.querySelector('.discord-copy-btn');
     
     textarea.value = standardText;
-    timestampLabel.textContent = new Date().toLocaleTimeString();
+    if (timestampLabel) timestampLabel.textContent = new Date().toLocaleTimeString(); // Check if element exists
     copyBtn.onclick = () => copyTextToClipboard(textarea.value);
 
     if (discordText) {
@@ -527,6 +552,7 @@ function generateJob() {
 // Event Listeners Setup
 // =============================
 function setupEventListeners() {
+    document.getElementById('new-file-button')?.addEventListener('click', loadSampleFileAndOpenEditor);
     document.getElementById('encounter-execute-button')?.addEventListener('click', generateEncounter);
     document.getElementById('enemy-execute-button')?.addEventListener('click', generateEnemies);
     document.getElementById('loot-box-execute-button')?.addEventListener('click', openLootBoxes);
