@@ -4,199 +4,303 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loot Box Opener 9000</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 90s Styling */
+        /* --- Theme Variables --- */
+        :root {
+            --font-family: 'Times New Roman', Times, serif;
+            --bg-color: #c0c0c0;
+            --bg-image: url('https://www.transparenttextures.com/patterns/brushed-alum.png');
+            --text-color: #000000;
+            --header-color: #000080;
+            --container-bg: #c0c0c0;
+            --container-border: 2px inset #808080;
+            --fieldset-border: 2px groove #f0f0f0;
+            --input-border: 2px inset #808080;
+            --input-bg: #ffffff;
+            --button-bg: #c0c0c0;
+            --button-border: 2px outset #f0f0f0;
+            --button-text: #000000;
+            --button-hover-bg: #d0d0d0;
+            --button-active-border-style: inset;
+            --button-disabled-text: #808080;
+            --button-disabled-border: #808080;
+            --results-bg: #ffffff;
+            --results-border: 2px inset #808080;
+            --editor-box-bg: #c0c0c0;
+            --editor-box-border: 2px outset #f0f0f0;
+            --modal-bg: #c0c0c0;
+            --modal-border: 2px outset #f0f0f0;
+            --danger-button-bg: #c0c0c0;
+            --danger-button-border: 2px outset #f0f0f0;
+            --danger-button-hover-bg: #d0d0d0;
+            --select-bg: #ffffff;
+        }
+
+        .theme-aero {
+            --font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+            --bg-color: #0078d4;
+            --bg-image: linear-gradient(135deg, #00c6ff, #0072ff);
+            --text-color: #2c3e50;
+            --header-color: #ffffff;
+            --container-bg: #f0f4f8;
+            --container-border: 1px solid #a7b6c4;
+            --fieldset-border: 1px solid #d1d9e3;
+            --input-border: 1px solid #a7b6c4;
+            --input-bg: #ffffff;
+            --button-bg: linear-gradient(to bottom, #29a4ff, #0078d4);
+            --button-border: 1px solid #005393;
+            --button-text: #ffffff;
+            --button-hover-bg: linear-gradient(to bottom, #4cb5ff, #208de0);
+            --button-active-border-style: inset;
+            --button-disabled-text: #999;
+            --button-disabled-border: 1px solid #ccc;
+            --results-bg: #ffffff;
+            --results-border: 1px solid #d1d9e3;
+            --editor-box-bg: #e9eef3;
+            --editor-box-border: 1px solid #c5d0db;
+            --modal-bg: #f0f4f8;
+            --modal-border: 1px solid #a7b6c4;
+            --danger-button-bg: linear-gradient(to bottom, #e78787, #d15353);
+            --danger-button-border: 1px solid #b94a4a;
+            --danger-button-hover-bg: linear-gradient(to bottom, #f09a9a, #e26464);
+            --select-bg: var(--input-bg);
+        }
+
+        .theme-scifi {
+            --font-family: 'Orbitron', sans-serif;
+            --bg-color: #0a0f1e;
+            --bg-image: linear-gradient(180deg, #0a0f1e 0%, #14182e 100%);
+            --text-color: #c0d0ff;
+            --header-color: #ffffff;
+            --container-bg: #101424;
+            --container-border: 1px solid #3a8dff;
+            --fieldset-border: 1px solid #ff3a8d;
+            --input-border: 1px solid #3a8dff;
+            --input-bg: #0a0f1e;
+            --button-bg: transparent;
+            --button-border: 1px solid #3a8dff;
+            --button-text: #3a8dff;
+            --button-hover-bg: rgba(58, 141, 255, 0.2);
+            --button-active-border-style: inset;
+            --button-disabled-text: #555;
+            --button-disabled-border: 1px solid #555;
+            --results-bg: #0a0f1e;
+            --results-border: 1px solid #3a8dff;
+            --editor-box-bg: #101424;
+            --editor-box-border: 1px solid #3a8dff;
+            --modal-bg: #101424;
+            --modal-border: 1px solid #3a8dff;
+            --danger-button-bg: transparent;
+            --danger-button-border: 1px solid #ff4d4d; /* Changed to red */
+            --danger-button-hover-bg: rgba(255, 77, 77, 0.2); /* Changed to red */
+            --select-bg: #0a0f1e;
+        }
+
+        /* Base Styling */
         body {
-            font-family: 'Times New Roman', Times, serif;
-            background-color: #c0c0c0; /* Classic grey */
-            background-image: url('https://www.transparenttextures.com/patterns/brushed-alum.png'); /* Tiled background */
-            color: #000000;
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            background-image: var(--bg-image);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
             margin: 0;
-            padding: 10px; /* Reduced for mobile */
+            padding: 10px;
             box-sizing: border-box;
         }
 
-        /* Main container with 3D inset border */
         .container {
-            background-color: #c0c0c0;
-            padding: 1rem; /* Simplified padding for mobile */
-            border: 2px inset #808080;
+            background: var(--container-bg);
+            padding: 1rem;
+            border: var(--container-border);
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 600px;
             text-align: center;
         }
 
-        h1, h2 {
-            color: #000080; /* Navy blue */
+        h1, h2, h3 {
+            color: var(--header-color);
             margin-top: 0;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px #c0c0c0;
         }
-
-        /* Control groups for layout */
-        .control-group {
-            margin-bottom: 1rem;
-            text-align: left;
-        }
+        .theme-aero h1, .theme-aero h2, .theme-aero h3 { text-shadow: 1px 1px #fff; }
+        .theme-scifi h1, .theme-scifi h2, .theme-scifi h3 { text-shadow: 0 0 5px var(--header-color); }
         
+        h1 .static-header { display: none; }
+        .theme-90s h1 .static-header { display: none; }
+        .theme-90s h1 marquee { display: block; }
+        .theme-aero h1 marquee, .theme-scifi h1 marquee { display: none; }
+        .theme-aero h1 .static-header, .theme-scifi h1 .static-header { display: block; }
+
+
+        .control-group { margin-bottom: 1rem; text-align: left; }
         .file-controls {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-bottom: 1.5rem;
             padding: 1rem;
-            border: 2px groove #f0f0f0;
+            border: var(--fieldset-border);
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
 
-        /* Input fields with inset border */
-        input[type="file"],
-        select,
-        input[type="number"],
-        input[type="text"] {
+        input[type="file"], select, input[type="number"], input[type="text"], input[type="password"] {
             width: 100%;
             padding: 0.5rem;
-            border: 2px inset #808080;
-            background-color: #ffffff;
+            border: var(--input-border);
+            background-color: var(--input-bg);
             font-size: 1rem;
             box-sizing: border-box;
             font-family: inherit;
+            color: var(--text-color);
         }
         
-        /* Custom cursor for the quantity input */
-        #loot-box-quantity {
-            cursor: ns-resize;
-        }
+        #loot-box-quantity { cursor: ns-resize; }
 
-        /* Classic 3D button style */
         button {
             width: 100%;
             padding: 0.75rem 1rem;
-            background-color: #c0c0c0;
-            color: #000000;
-            border: 2px outset #f0f0f0;
+            background: var(--button-bg);
+            color: var(--button-text);
+            border: var(--button-border);
             border-radius: 0;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             margin-top: 1rem;
             font-family: inherit;
+            transition: background-color 0.2s, box-shadow 0.2s;
         }
+        .theme-aero button { border-radius: 15px; text-shadow: 1px 1px rgba(0,0,0,0.2); }
+        .theme-scifi button { border-radius: 5px; text-shadow: 0 0 8px var(--button-text); }
         
-        button:active, button.active {
-             border-style: inset;
-        }
-
-        button:hover {
-            background-color: #d0d0d0;
-        }
-
+        button:active { border-style: var(--button-active-border-style); }
+        button:hover { background: var(--button-hover-bg); }
         button:disabled {
-            color: #808080;
-            border-color: #808080;
+            color: var(--button-disabled-text);
+            border: var(--button-disabled-border);
+            background: var(--bg-color);
             cursor: not-allowed;
         }
         
-        /* Results display area */
         #results {
             margin-top: 2rem;
             padding: 1.5rem;
-            background-color: #ffffff;
-            border: 2px inset #808080;
+            background-color: var(--results-bg);
+            border: var(--results-border);
             text-align: left;
             white-space: pre-wrap;
             font-family: 'Courier New', Courier, monospace;
             min-height: 50px;
-            overflow-x: auto; /* Add horizontal scroll if content overflows */
+            overflow-x: auto;
         }
         
-        /* Editor view specific styles */
-        .box-editor {
-            background: #c0c0c0;
-            border: 2px outset #f0f0f0;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .box-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border: 1px solid #808080;
-        }
-        .box-header h3 {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-        .item-list {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 1rem;
-        }
+        .result-item { display: flex; align-items: center; gap: 10px; }
+        .result-item button { width: auto; margin: 0; padding: 0.1rem 0.4rem; font-size: 0.7rem; line-height: 1; }
+        .flavor-text { font-style: italic; color: var(--header-color); font-size: 0.9rem; margin-left: 20px; }
+        
+        .box-editor { background: var(--editor-box-bg); border: var(--editor-box-border); padding: 1rem; margin-bottom: 1rem; }
+        .box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #808080; }
+        .box-header h3 { margin: 0; font-size: 1.2rem; }
+        .item-list { list-style: none; padding: 0; margin-bottom: 1rem; }
         .item-list li {
+            position: relative;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             background: #fff;
             padding: 0.5rem;
+            padding-right: 2.5rem; /* Make space for button */
             border: 1px solid #808080;
             margin-bottom: 0.5rem;
-            word-break: break-all; /* Prevent long items from overflowing */
         }
-        .add-item-form {
-            display: flex;
-            flex-wrap: wrap; /* Allow wrapping on small screens */
-            gap: 10px;
-        }
-        .add-item-form input {
-            flex-grow: 1;
-            margin: 0;
-            min-width: 150px; /* Prevent input from getting too tiny */
+        .item-list li span {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            margin-right: 0.5rem;
+            text-align: left;
         }
         
-        .add-item-form button {
-            width: auto;
-            flex-grow: 1;
-            margin: 0;
-            font-size: 1rem;
-            padding: 0.5rem;
-        }
+        .add-item-form { display: flex; flex-wrap: wrap; gap: 10px; }
+        .add-item-form input { flex-grow: 1; margin: 0; min-width: 150px; }
+        .add-item-form button { width: auto; flex-grow: 1; margin: 0; font-size: 1rem; padding: 0.5rem; }
 
-        button.danger {
-            width: auto;
-            flex-grow: 0; /* Prevent danger buttons from growing */
-            margin: 0;
-            font-size: 1rem;
-            padding: 0.5rem;
-        }
-        
-        /* Specific style for the small 'X' button on items */
+        button.danger { background: var(--danger-button-bg); border: var(--danger-button-border); color: var(--button-text); }
+        .theme-scifi button.danger { color: #ff4d4d; }
+        button.danger:hover { background: var(--danger-button-hover-bg); }
         .item-list li button.danger {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto; /* FIX: Override global button width */
             padding: 0.1rem 0.4rem;
             font-size: 0.7rem;
-            line-height: 1;
-            margin-left: 0.5rem;
+            line-height: 1.2;
+            margin: 0;
+        }
+        .editor-tip { font-size: 0.8rem; font-style: italic; color: var(--header-color); text-align: right; margin-top: 4px; }
+        
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4); }
+        .modal-content { background-color: var(--modal-bg); margin: 15% auto; padding: 20px; border: var(--modal-border); width: 80%; max-width: 500px; }
+        .close-button { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        select option { background-color: var(--select-bg); color: var(--text-color); }
+
+        /* Custom Dropdown Styling */
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .select-wrapper select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: var(--input-border);
+            padding-right: 2rem; /* Make space for arrow */
+        }
+        .select-wrapper::after {
+            content: '▼';
+            font-size: 1rem;
+            color: var(--text-color);
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
         }
 
-        .editor-tip {
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #000080;
-            text-align: right;
-            margin-top: 4px;
+        /* --- Overrides for Aero Theme --- */
+        .theme-aero .container { border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); padding: 0; }
+        .theme-aero #opener-view, .theme-aero #editor-view { padding: 1rem; }
+        .theme-aero h1, .theme-aero h2 { background: linear-gradient(to bottom, #4c4c4c 0%, #1a1a1a 100%); color: var(--header-color); padding: 10px; margin: 0 0 1rem 0; text-shadow: 0 -1px 0 #000; text-align: center; border-bottom: 1px solid #000; }
+        .theme-aero h1 { border-radius: 8px 8px 0 0; }
+        .theme-aero button { border-radius: 8px; text-shadow: 0 1px 1px rgba(0,0,0,0.4); box-shadow: 0 3px 5px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.5); }
+        .theme-aero input, .theme-aero select, .theme-aero .select-wrapper { border-radius: 5px; }
+        .theme-aero .select-wrapper::after { color: #333; }
+
+        /* --- Overrides for SciFi Theme --- */
+        .theme-scifi .container, .theme-scifi .box-editor, .theme-scifi #results, .theme-scifi .modal-content, .theme-scifi .file-controls { border-radius: 5px; }
+        .theme-scifi .box-header button.danger { background-color: rgba(0, 0, 0, 0.3); text-shadow: 0 0 5px #000; }
+        .theme-scifi .box-header button.danger:hover { background-color: rgba(0, 0, 0, 0.5); }
+        .theme-scifi #edit-loaded-button:not(:disabled) { border-color: #ffd700; color: #ffd700; text-shadow: 0 0 8px #ffd700; }
+        .theme-scifi #edit-loaded-button:not(:disabled):hover { background-color: rgba(255, 215, 0, 0.2); }
+        .theme-scifi .item-list li {
+            background-color: var(--input-bg);
+            border-color: var(--input-border);
+            border-radius: 3px;
         }
-        
+        .theme-scifi .select-wrapper::after { color: var(--button-text); text-shadow: 0 0 5px var(--button-text); }
+        .theme-scifi .select-wrapper select { border-radius: 5px; }
+
+
     </style>
 </head>
 <body>
@@ -204,41 +308,48 @@
     <div class="container">
         <!-- Opener View -->
         <div id="opener-view">
-            <h1><marquee>Loot Box Opener 9000</marquee></h1>
-            <img src="/assets/icons/ttmp-Logo.png" alt="treasure chest" width="96" style="margin-bottom: 1rem; image-rendering: pixelated;">
+            <h1>
+                <marquee>Loot Box Opener 9000</marquee>
+                <span class="static-header">Loot Box Opener</span>
+            </h1>
+            <img src="https://img.icons8.com/doodle/48/treasure-chest.png" alt="treasure chest" width="48" style="margin-bottom: 1rem;">
             
-            <!-- File Controls -->
             <fieldset class="file-controls">
                 <legend>File Options</legend>
                 <input type="file" id="file-loader" accept=".json" title="Load a JSON file">
                 <button id="edit-loaded-button" disabled>Edit Loaded File</button>
                 <button id="create-new-button">Create New File</button>
+                <button id="settings-button">Settings</button>
             </fieldset>
 
-            <!-- Loot Box Selection -->
             <div class="control-group">
                 <label for="loot-box-select">Select Loot Box:</label>
-                <select id="loot-box-select">
-                    <option value="">-- Load or create a file --</option>
-                </select>
+                <div class="select-wrapper">
+                    <select id="loot-box-select">
+                        <option value="">-- Load or create a file --</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- Quantity Input -->
             <div class="control-group">
                 <label for="loot-box-quantity">Quantity:</label>
                 <input type="number" id="loot-box-quantity" value="1" min="1">
             </div>
 
-            <!-- Open Button -->
             <button id="open-button">Open Box!</button>
-
-            <!-- Results Area -->
             <div id="results">Your loot will appear here...</div>
         </div>
         
         <!-- Editor View -->
         <div id="editor-view" style="display: none;">
             <h2>Loot Box Creator</h2>
+            <fieldset class="file-controls" id="ai-generation-fieldset">
+                <legend>✨ AI Generation</legend>
+                <div class="add-item-form">
+                     <input type="text" id="ai-theme-input" placeholder="e.g., Pirate Treasure, Sci-Fi Crate">
+                     <button id="ai-generate-button">✨ Generate with AI</button>
+                </div>
+            </fieldset>
             <div class="control-group">
                 <label for="new-box-name">New Loot Box Name:</label>
                 <div class="add-item-form">
@@ -246,58 +357,98 @@
                     <button id="add-box-button">Add Box</button>
                 </div>
             </div>
-            <div id="editor-container">
-                <!-- Loot box editors will be rendered here -->
-            </div>
+            <div id="editor-container"></div>
             <button id="download-button">Download .JSON File</button>
             <button id="back-to-opener-button">Back to Opener</button>
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Settings</h3>
+            
+            <fieldset class="file-controls">
+                <legend>Appearance</legend>
+                <div class="control-group">
+                    <label for="theme-select">UI Style:</label>
+                    <div class="select-wrapper">
+                        <select id="theme-select">
+                            <option value="theme-90s">90s Retro</option>
+                            <option value="theme-aero">2000s Aero</option>
+                            <option value="theme-scifi">Future Sci-Fi</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="file-controls">
+                <legend>AI Configuration</legend>
+                <div class="control-group">
+                    <label for="api-key-input">Gemini API Key:</label>
+                    <input type="password" id="api-key-input" placeholder="Enter your API Key">
+                </div>
+                <div class="control-group" style="display: flex; align-items: center; gap: 10px;">
+                    <label for="ai-toggle" style="margin-bottom: 0;">Enable AI Features:</label>
+                    <input type="checkbox" id="ai-toggle">
+                </div>
+            </fieldset>
+
+            <button id="save-settings-button">Save Settings</button>
+        </div>
+    </div>
+
     <script>
-        // Global variable to store the parsed game data from the JSON file
         let gameData = null;
-
-        // --- Color Coding ---
+        let apiKey = "";
+        let aiFeaturesEnabled = false;
         const pastelColors = ['#ffd1dc', '#ffecb3', '#dcedc8', '#c8e6c9', '#b3e5fc', '#e1bee7'];
+        const scifiColors = ['#0d3b66', '#f94144', '#f8961e', '#90be6d', '#43aa8b', '#577590'];
 
-        /**
-         * Creates a semi-random but consistent color based on a string.
-         * @param {string} str The string to hash (e.g., loot box name).
-         * @returns {string} A hex color code from the pastelColors array.
-         */
         function getColorForString(str) {
             let hash = 0;
+            const currentTheme = document.body.className;
+            const colors = currentTheme === 'theme-scifi' ? scifiColors : pastelColors;
             for (let i = 0; i < str.length; i++) {
                 hash = str.charCodeAt(i) + ((hash << 5) - hash);
             }
-            const index = Math.abs(hash % pastelColors.length);
-            return pastelColors[index];
+            return colors[Math.abs(hash % colors.length)];
         }
 
-        // Get references to all the interactive HTML elements
         const fileLoader = document.getElementById('file-loader');
         const lootBoxSelect = document.getElementById('loot-box-select');
         const quantityInput = document.getElementById('loot-box-quantity');
         const openButton = document.getElementById('open-button');
         const resultsDiv = document.getElementById('results');
-        
-        // View containers
         const openerView = document.getElementById('opener-view');
         const editorView = document.getElementById('editor-view');
-        
-        // Control buttons
         const createNewButton = document.getElementById('create-new-button');
         const editLoadedButton = document.getElementById('edit-loaded-button');
+        const settingsButton = document.getElementById('settings-button');
         const backToOpenerButton = document.getElementById('back-to-opener-button');
         const downloadButton = document.getElementById('download-button');
         const addBoxButton = document.getElementById('add-box-button');
-        
-        // Editor elements
         const newBoxNameInput = document.getElementById('new-box-name');
         const editorContainer = document.getElementById('editor-container');
+        const aiGenerationFieldset = document.getElementById('ai-generation-fieldset');
+        const aiThemeInput = document.getElementById('ai-theme-input');
+        const aiGenerateButton = document.getElementById('ai-generate-button');
+        const settingsModal = document.getElementById('settings-modal');
+        const closeButton = document.querySelector('.close-button');
+        const apiKeyInput = document.getElementById('api-key-input');
+        const aiToggle = document.getElementById('ai-toggle');
+        const saveSettingsButton = document.getElementById('save-settings-button');
+        const themeSelect = document.getElementById('theme-select');
         
-        // --- View Switching ---
+        function applyTheme(themeName) {
+            document.body.className = themeName;
+            // Re-populate dropdown to apply new theme colors to options
+            if (gameData) {
+                populateLootBoxSelect();
+            }
+        }
+
         function showOpenerView() {
             editorView.style.display = 'none';
             openerView.style.display = 'block';
@@ -309,123 +460,85 @@
             renderEditor();
         }
 
-        // --- Event Listeners ---
-        fileLoader.addEventListener('change', handleFileLoad);
-        openButton.addEventListener('click', handleOpenBox);
-        createNewButton.addEventListener('click', handleCreateNew);
-        editLoadedButton.addEventListener('click', handleEditLoaded);
-        backToOpenerButton.addEventListener('click', showOpenerView);
-        downloadButton.addEventListener('click', handleDownload);
-        addBoxButton.addEventListener('click', handleAddBox);
-        editorContainer.addEventListener('click', handleEditorClicks);
-        setupNumberInputWheel(); // Set up the mouse wheel listener
-
-        /**
-         * Adds mouse wheel support for the quantity input.
-         */
-        function setupNumberInputWheel() {
-            quantityInput.addEventListener('wheel', (event) => {
-                // Prevent the page from scrolling
-                event.preventDefault();
-
-                // Determine the direction of the scroll to set the step
-                const step = event.deltaY < 0 ? 1 : -1;
-
-                // Get the current value, default to 1 if it's not a valid number
-                let currentValue = parseInt(quantityInput.value, 10);
-                if (isNaN(currentValue)) {
-                    currentValue = 1;
-                }
-
-                // Calculate the new value
-                let newValue = currentValue + step;
-
-                // Ensure the new value is not less than the minimum (1)
-                if (newValue < 1) {
-                    newValue = 1;
-                }
-
-                quantityInput.value = newValue;
-            }, { passive: false }); // passive: false is required for preventDefault() to work
+        function setupEventListeners() {
+            fileLoader.addEventListener('change', handleFileLoad);
+            openButton.addEventListener('click', handleOpenBox);
+            createNewButton.addEventListener('click', handleCreateNew);
+            editLoadedButton.addEventListener('click', handleEditLoaded);
+            backToOpenerButton.addEventListener('click', showOpenerView);
+            downloadButton.addEventListener('click', handleDownload);
+            addBoxButton.addEventListener('click', handleAddBox);
+            editorContainer.addEventListener('click', handleEditorClicks);
+            resultsDiv.addEventListener('click', handleResultClicks);
+            aiGenerateButton.addEventListener('click', handleAiGenerateBox);
+            settingsButton.addEventListener('click', () => settingsModal.style.display = 'block');
+            closeButton.addEventListener('click', () => settingsModal.style.display = 'none');
+            window.addEventListener('click', (event) => {
+                if (event.target == settingsModal) settingsModal.style.display = 'none';
+            });
+            saveSettingsButton.addEventListener('click', saveSettings);
+            setupNumberInputWheel();
         }
 
-        /**
-         * Handles loading a user-selected file.
-         */
+        function setupNumberInputWheel() {
+            quantityInput.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                const step = event.deltaY < 0 ? 1 : -1;
+                let currentValue = parseInt(quantityInput.value, 10) || 1;
+                let newValue = currentValue + step;
+                if (newValue < 1) newValue = 1;
+                quantityInput.value = newValue;
+            }, { passive: false });
+        }
+
         function handleFileLoad(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = (e) => {
                 try {
                     gameData = JSON.parse(e.target.result);
-                    console.log("File loaded and parsed:", gameData);
                     populateLootBoxSelect();
-                    resultsDiv.textContent = `File "${file.name}" loaded successfully! Select a loot box to open.`;
-                    editLoadedButton.disabled = false; // Enable edit button
+                    resultsDiv.textContent = `File "${file.name}" loaded successfully!`;
+                    editLoadedButton.disabled = false;
                     showOpenerView();
                 } catch (error) {
-                    console.error("Error parsing JSON file:", error);
-                    resultsDiv.textContent = "Error: Could not parse the JSON file. Please check its format.";
+                    resultsDiv.textContent = "Error: Could not parse the JSON file.";
                     gameData = null;
-                    editLoadedButton.disabled = true; // Disable edit button on error
+                    editLoadedButton.disabled = true;
                 }
             };
             reader.readAsText(file);
         }
         
-        /**
-         * Initializes a new, empty data structure for the creator.
-         */
         function handleCreateNew() {
             gameData = { "loot_boxes": [] };
-            fileLoader.value = ''; // Clear file input
-            editLoadedButton.disabled = true; // Disable edit button
+            fileLoader.value = '';
+            editLoadedButton.disabled = true;
             populateLootBoxSelect();
-            resultsDiv.textContent = "Creating a new file. Add loot boxes in the creator.";
+            resultsDiv.textContent = "Creating a new file.";
             showEditorView();
         }
         
-        /**
-         * Switches to the editor view with the currently loaded data.
-         */
         function handleEditLoaded() {
-            if (gameData) {
-                showEditorView();
-            } else {
-                alert("You need to load a file before you can edit it!");
-            }
+            if (gameData) showEditorView();
+            else alert("You need to load a file to edit!");
         }
 
-        /**
-         * Triggers the main loot opening logic.
-         */
-        function handleOpenBox() {
+        async function handleOpenBox() {
             if (!gameData) {
                 resultsDiv.textContent = 'Please load or create a data file first.';
                 return;
             }
             const lootBoxId = lootBoxSelect.value;
             const quantity = parseInt(quantityInput.value, 10);
-
-            if (!lootBoxId) {
-                resultsDiv.textContent = 'Please select a loot box from the dropdown.';
+            if (!lootBoxId || isNaN(quantity) || quantity < 1) {
+                resultsDiv.textContent = 'Please select a loot box and enter a valid quantity.';
                 return;
             }
-            if (isNaN(quantity) || quantity < 1) {
-                resultsDiv.textContent = 'Please enter a valid quantity.';
-                return;
-            }
-
             const lootBox = gameData.loot_boxes.find(lb => lb.id === lootBoxId);
-            if (!lootBox) {
-                resultsDiv.textContent = 'Error: Could not find the selected loot box.';
-                return;
-            }
-
-            if (!lootBox.contents || lootBox.contents.length === 0) {
-                resultsDiv.textContent = `The ${lootBox.name} is empty.`;
+            if (!lootBox || !lootBox.contents || lootBox.contents.length === 0) {
+                resultsDiv.textContent = `The ${lootBox ? lootBox.name : 'selected box'} is empty.`;
                 return;
             }
 
@@ -435,21 +548,27 @@
                 const parsedItem = parseLootItem(randomItemString);
                 receivedItems[parsedItem.name] = (receivedItems[parsedItem.name] || 0) + parsedItem.quantity;
             }
+            
+            resultsDiv.innerHTML = '';
+            const header = document.createElement('div');
+            header.textContent = `Opened ${quantity} x ${lootBox.name}\n--------------------`;
+            resultsDiv.appendChild(header);
 
-            let outputText = `Opened ${quantity} x ${lootBox.name}\n--------------------\nReceived:\n`;
             if (Object.keys(receivedItems).length === 0) {
-                outputText += "Nothing of value.";
+                 const noItems = document.createElement('div');
+                 noItems.textContent = "Nothing of value.";
+                 resultsDiv.appendChild(noItems);
             } else {
                 for (const [item, count] of Object.entries(receivedItems)) {
-                    outputText += `  - ${item} (x${count})\n`;
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'result-item';
+                    const aiButtonHtml = aiFeaturesEnabled ? `<button data-action="get-flavor-text" data-item-name="${item}">✨</button>` : '';
+                    itemDiv.innerHTML = `<span>- ${item} (x${count})</span> ${aiButtonHtml}`;
+                    resultsDiv.appendChild(itemDiv);
                 }
             }
-            resultsDiv.textContent = outputText;
         }
         
-        /**
-         * Populates the loot box <select> dropdown and applies colors.
-         */
         function populateLootBoxSelect() {
             lootBoxSelect.innerHTML = '';
             if (!gameData || !gameData.loot_boxes || gameData.loot_boxes.length === 0) {
@@ -460,15 +579,11 @@
                 const option = document.createElement('option');
                 option.value = box.id;
                 option.textContent = box.name;
-                // Apply the color style
                 option.style.backgroundColor = getColorForString(box.name);
                 lootBoxSelect.appendChild(option);
             });
         }
         
-        /**
-         * Renders the entire editor UI based on the current gameData and applies colors.
-         */
         function renderEditor() {
             editorContainer.innerHTML = '';
             if (!gameData || !gameData.loot_boxes) return;
@@ -480,17 +595,10 @@
                 
                 let itemsHtml = '';
                 box.contents.forEach((item, itemIndex) => {
-                    itemsHtml += `
-                        <li>
-                            <span>${item}</span>
-                            <button class="danger" data-action="delete-item" data-item-index="${itemIndex}">X</button>
-                        </li>
-                    `;
+                    itemsHtml += `<li><span>${item}</span><button class="danger" data-action="delete-item" data-item-index="${itemIndex}">X</button></li>`;
                 });
                 
-                // Get the color for the box name
                 const boxColor = getColorForString(box.name);
-
                 boxDiv.innerHTML = `
                     <div class="box-header" style="background-color: ${boxColor};">
                         <h3>${box.name}</h3>
@@ -501,21 +609,14 @@
                         <input type="text" placeholder="e.g., 5x Potion, 1x Sword" class="add-item-input">
                         <button data-action="add-item">Add Item</button>
                     </div>
-                    <div class="editor-tip"><b>Tip:</b> Add multiple items with commas!</div>
-                `;
+                    <div class="editor-tip"><b>Tip:</b> Add multiple items with commas!</div>`;
                 editorContainer.appendChild(boxDiv);
             });
         }
         
-        /**
-         * Adds a new loot box to the gameData.
-         */
         function handleAddBox() {
             const name = newBoxNameInput.value.trim();
-            if (!name) {
-                alert("Please enter a name for the loot box.");
-                return;
-            }
+            if (!name) return alert("Please enter a name for the loot box.");
             gameData.loot_boxes.push({
                 id: name.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now(),
                 name: name,
@@ -526,9 +627,6 @@
             renderEditor();
         }
         
-        /**
-         * Handles all clicks inside the editor container (add/delete items/boxes).
-         */
         function handleEditorClicks(event) {
             const target = event.target;
             const action = target.dataset.action;
@@ -539,45 +637,24 @@
 
             if (action === 'delete-box') {
                 gameData.loot_boxes.splice(boxIndex, 1);
-                populateLootBoxSelect();
-                renderEditor();
             } else if (action === 'add-item') {
                 const input = boxDiv.querySelector('.add-item-input');
-                const fullInputText = input.value;
-                
-                // Split the input by commas to handle multiple items
-                const itemsToAdd = fullInputText.split(',');
-
-                let itemsWereAdded = false;
-                // Process each potential item
+                const itemsToAdd = input.value.split(',');
                 itemsToAdd.forEach(itemText => {
                     const trimmedItem = itemText.trim();
-                    if (trimmedItem) { // Make sure it's not an empty string after trimming
-                        gameData.loot_boxes[boxIndex].contents.push(trimmedItem);
-                        itemsWereAdded = true;
-                    }
+                    if (trimmedItem) gameData.loot_boxes[boxIndex].contents.push(trimmedItem);
                 });
-
-                // Clear input and re-render only if we actually added something
-                if (itemsWereAdded) {
-                    input.value = '';
-                    renderEditor();
-                }
+                if (input.value.trim()) input.value = '';
             } else if (action === 'delete-item') {
                 const itemIndex = target.dataset.itemIndex;
                 gameData.loot_boxes[boxIndex].contents.splice(itemIndex, 1);
-                renderEditor();
             }
+            populateLootBoxSelect();
+            renderEditor();
         }
         
-        /**
-         * Triggers a download of the current gameData as a JSON file.
-         */
         function handleDownload() {
-            if (!gameData) {
-                alert("No data to download!");
-                return;
-            }
+            if (!gameData) return alert("No data to download!");
             const jsonString = JSON.stringify(gameData, null, 2);
             const blob = new Blob([jsonString], { type: "application/json" });
             const url = URL.createObjectURL(blob);
@@ -590,28 +667,140 @@
             URL.revokeObjectURL(url);
         }
 
-        /**
-         * Parses a loot item string to extract its name and quantity.
-         * Handles formats like "x5 Item", "5 Item", "5-Item", etc.
-         * @param {string} itemString The string from the loot table.
-         * @returns {{name: string, quantity: number}} An object with the item's name and quantity.
-         */
         function parseLootItem(itemString) {
             const str = itemString.trim();
-            // Regex to find a number at the start, followed by an optional separator (x, space, or -), then the item name.
             const match = str.match(/^(\d+)\s*[x-]?\s*(.+)/);
-
-            if (match) {
-                // match[1] is the quantity (e.g., "9")
-                // match[2] is the item name (e.g., "Spicy Burritoes")
-                const quantity = parseInt(match[1], 10);
-                const name = match[2].trim();
-                return { name: name, quantity: quantity };
-            }
-
-            // If no quantity is found at the start, the whole string is the item name with quantity 1.
+            if (match) return { name: match[2].trim(), quantity: parseInt(match[1], 10) };
             return { name: str, quantity: 1 };
         }
+
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let c of ca) {
+                c = c.trim();
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function loadSettings() {
+            apiKey = getCookie("geminiApiKey") || "";
+            aiFeaturesEnabled = getCookie("aiFeaturesEnabled") === "true";
+            const savedTheme = getCookie("uiTheme") || "theme-90s";
+            
+            apiKeyInput.value = apiKey;
+            aiToggle.checked = aiFeaturesEnabled;
+            themeSelect.value = savedTheme;
+            applyTheme(savedTheme);
+        }
+
+        function saveSettings() {
+            apiKey = apiKeyInput.value.trim();
+            aiFeaturesEnabled = aiToggle.checked;
+            const selectedTheme = themeSelect.value;
+
+            setCookie("geminiApiKey", apiKey, 365);
+            setCookie("aiFeaturesEnabled", aiFeaturesEnabled, 365);
+            setCookie("uiTheme", selectedTheme, 365);
+            
+            alert("Settings saved!");
+            settingsModal.style.display = 'none';
+            applyTheme(selectedTheme);
+            updateAiFeatureVisibility();
+        }
+
+        function updateAiFeatureVisibility() {
+            aiGenerationFieldset.style.display = aiFeaturesEnabled ? 'block' : 'none';
+        }
+
+        async function callGeminiAPI(prompt) {
+            if (!apiKey) {
+                alert("Please set your Gemini API key in the Settings menu first.");
+                return null;
+            }
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error(`API request failed: ${response.statusText}`);
+                const result = await response.json();
+                if (result.candidates?.[0]?.content?.parts?.[0]) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Invalid API response structure.");
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                alert("An error occurred with the AI. Check your API key and network.");
+                return null;
+            }
+        }
+
+        async function handleAiGenerateBox() {
+            const theme = aiThemeInput.value.trim();
+            if (!theme) return alert("Please enter a theme for the AI.");
+            aiGenerateButton.textContent = "Generating...";
+            aiGenerateButton.disabled = true;
+            const prompt = `Generate a list of 8-10 fantasy-themed items for a loot box with the theme "${theme}". Items can have quantities. Return the list as a single comma-separated string. Example: 5x Gold Coins, 1x Rusty Sword, 2x Health Potion`;
+            const generatedItems = await callGeminiAPI(prompt);
+            aiGenerateButton.textContent = "✨ Generate with AI";
+            aiGenerateButton.disabled = false;
+            if (generatedItems) {
+                const newBoxName = `${theme} Box`;
+                gameData.loot_boxes.push({
+                    id: newBoxName.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now(),
+                    name: newBoxName,
+                    contents: generatedItems.split(',').map(item => item.trim())
+                });
+                aiThemeInput.value = '';
+                populateLootBoxSelect();
+                renderEditor();
+            }
+        }
+        
+        async function handleResultClicks(event) {
+            const target = event.target;
+            if (target.dataset.action !== 'get-flavor-text') return;
+            const itemName = target.dataset.itemName;
+            const itemDiv = target.closest('.result-item');
+            if (itemDiv.querySelector('.flavor-text')) return;
+            target.textContent = '...';
+            target.disabled = true;
+            const prompt = `Write a very short, one-sentence, flavorful description for a fantasy item called "${itemName}".`;
+            const flavorText = await callGeminiAPI(prompt);
+            if (flavorText) {
+                const flavorDiv = document.createElement('div');
+                flavorDiv.className = 'flavor-text';
+                flavorDiv.textContent = `"${flavorText.replace(/"/g, '')}"`;
+                itemDiv.appendChild(flavorDiv);
+            }
+            target.remove();
+        }
+        
+        // --- App Initialization ---
+        function initLootBoxApp() {
+            loadSettings();
+            setupEventListeners();
+            updateAiFeatureVisibility();
+        }
+
+        initLootBoxApp();
     </script>
 
 </body>
