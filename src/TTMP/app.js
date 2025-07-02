@@ -1204,24 +1204,6 @@ function typeText(text, elementId, duration) {
     });
 }
 
-function untypeText(elementId, duration) {
-    return new Promise((resolve) => {
-        const element = document.getElementById(elementId);
-        if (!element || !element.textContent) return resolve();
-        let text = element.textContent;
-        let i = text.length;
-        const timer = setInterval(() => {
-            if (i > 0) {
-                element.textContent = text.substring(0, i - 1);
-                i--;
-            } else {
-                clearInterval(timer);
-                resolve();
-            }
-        }, duration / text.length);
-    });
-}
-
 function cycleSubtext() {
     const subtextElement = document.getElementById("logo-subtext");
     if (!subtextElement || activeTitleSubtext.length === 0) return;
@@ -1230,13 +1212,26 @@ function cycleSubtext() {
     do {
         newIndex = Math.floor(Math.random() * activeTitleSubtext.length);
     } while (newIndex === currentTextIndex && activeTitleSubtext.length > 1);
-    
+
     currentTextIndex = newIndex;
     const newText = activeTitleSubtext[currentTextIndex];
 
-    untypeText("logo-subtext", 1000).then(() => {
+    const fadeDuration = 500; // 0.5 seconds
+
+    // Set transition for opacity for the fade-out
+    subtextElement.style.transition = `opacity ${fadeDuration / 1000}s ease-out`;
+    // Fade out
+    subtextElement.style.opacity = 0;
+
+    // After fade out, change text and make it visible before typing
+    setTimeout(() => {
+        // Remove the transition to make the opacity change instant
+        subtextElement.style.transition = 'none';
+        // Make the element fully visible
+        subtextElement.style.opacity = 1;
+        // Start the typing animation on the now-visible element
         typeText(newText, "logo-subtext", 1000);
-    });
+    }, fadeDuration);
 }
 
 function copyTextToClipboard(text) {
