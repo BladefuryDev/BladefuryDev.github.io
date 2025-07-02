@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TTMP</title>
     <!-- Link to Manifest -->
     <link rel="manifest" href="./manifest.json" />
@@ -12,9 +12,23 @@
     <link href="./styles.css" rel="stylesheet" />
     <!-- Favicon (Optional) -->
     <link rel="icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        #intro-bg {
+            background-color: var(--color-bg-secondary);
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .navbar-style {
+            position: relative;
+            z-index: 30;
+            background-color: var(--color-bg-secondary);
+        }
+    </style>
   </head>
 
-  <body class="flex flex-col min-h-screen">
+  <body class="flex flex-col min-h-screen text-main">
     <!-- Intro Background -->
     <div id="intro-bg" class="fixed inset-0"></div>
 
@@ -24,13 +38,13 @@
     </div>
 
     <!-- Navbar -->
-    <nav id="navbar" class="nav-bg rounded-b-lg drop-shadow-md pb-2 opacity-0">
+    <nav id="navbar" class="navbar-style rounded-b-lg shadow-md pb-2 opacity-0">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-10">
           <!-- Logo/Name Section -->
           <div class="flex-shrink-0 nav-item opacity-0">
             <h1
-              class="text-xl font-bold text-main drop-shadow-sm cursor-default"
+              class="text-xl font-bold drop-shadow-sm cursor-default text-main"
             >
               <span class="block sm:hidden">TTMP</span>
               <!-- Shown on small screens -->
@@ -56,9 +70,9 @@
               <a
                 id="settings-button"
                 href="#"
-                class="nav-text nav-settings-hover px-2 py-2 rounded-b-md transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
+                class="nav-text nav-settings-hover p-1 rounded-b-md transition-colors drop-shadow-sm cursor-pointer nav-item opacity-0"
               >
-                <div class="icon-mask h-4 w-4 sm:h-5 sm:w-5" aria-label="Settings"></div>
+                <img src="./icons/icons8-settings-100.png" class="h-6 w-6" alt="Settings" onerror="this.onerror=null;this.src='https://placehold.co/24x24/7f7f7f/ffffff?text=S';">
               </a>
             </div>
           </div>
@@ -67,7 +81,7 @@
         <div class="h-10 hidden sm:block">
           <p
             id="logo-subtext"
-            class="text-xs sm:text-sm text-main drop-shadow-sm cursor-default"
+            class="text-xs sm:text-sm drop-shadow-sm cursor-default text-dim"
           >
             Loading assets and checking for updates...
           </p>
@@ -82,12 +96,12 @@
       <div class="p-6 hidden page" id="overworld-page">
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
           <!-- Card 1: Loot Box Opener -->
-          <div class="card-bg rounded-lg p-4 drop-shadow-md flex flex-col space-y-4">
-            <h2 class="card-title text-lg font-bold text-center">Loot Box Opener</h2>
+          <div class="card-bg rounded-lg p-4 shadow-md flex flex-col space-y-4">
+            <h2 class="text-lg font-bold text-center card-title">Loot Box Opener</h2>
 
             <!-- Loot Box Selection -->
             <div class="w-full">
-                <label for="loot-box-select" class="text-main text-sm block mb-2">Select Loot Box:</label>
+                <label for="loot-box-select" class="text-dim text-sm block mb-2">Select Loot Box:</label>
                 <select id="loot-box-select" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
                     <option value="none">-- Load a file --</option>
                 </select>
@@ -95,25 +109,25 @@
 
             <!-- Quantity -->
             <div class="w-full flex items-center justify-between">
-                <label for="loot-box-quantity" class="text-main text-sm mr-2">Quantity:</label>
+                <label for="loot-box-quantity" class="text-dim text-sm mr-2">Quantity:</label>
                 <input type="number" id="loot-box-quantity" min="1" max="99" value="1" class="w-20 rounded-lg p-1 text-center cursor-pointer transition-colors input-bg input-text input-hover" />
             </div>
 
             <!-- Execute Button -->
             <div class="w-full mt-auto pt-2">
-                <button id="loot-box-execute-button" class="w-full btn btn-primary text-on-accent-hover focus:outline-none">
+                <button id="loot-box-execute-button" class="w-full btn btn-primary focus:outline-none focus:ring-2 focus:ring-blue-400">
                     Open
                 </button>
             </div>
           </div>
 
           <!-- Card 2: Job Builder -->
-          <div class="card-bg rounded-lg p-4 drop-shadow-md flex flex-col space-y-4">
-            <h2 class="card-title text-lg font-bold text-center">Job Builder</h2>
+          <div class="card-bg rounded-lg p-4 shadow-md flex flex-col space-y-4">
+            <h2 class="text-lg font-bold text-center card-title">Job Builder</h2>
 
             <!-- Client -->
             <div class="w-full">
-                <label for="job-client-select" class="text-main text-sm block mb-2">Client:</label>
+                <label for="job-client-select" class="text-dim text-sm block mb-2">Client:</label>
                 <select id="job-client-select" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
                     <option value="none">-- Load a file --</option>
                 </select>
@@ -121,7 +135,7 @@
             
             <!-- Mission Type -->
             <div class="w-full">
-                <label for="job-mission-type-select" class="text-main text-sm block mb-2">Mission Type:</label>
+                <label for="job-mission-type-select" class="text-dim text-sm block mb-2">Mission Type:</label>
                 <select id="job-mission-type-select" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
                     <option value="none">-- Load a file --</option>
                 </select>
@@ -129,7 +143,7 @@
             
             <!-- Destination -->
             <div class="w-full">
-                <label for="job-destination-select" class="text-main text-sm block mb-2">Destination:</label>
+                <label for="job-destination-select" class="text-dim text-sm block mb-2">Destination:</label>
                 <select id="job-destination-select" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
                     <option value="none">-- Load a file --</option>
                 </select>
@@ -137,7 +151,7 @@
             
             <!-- Hostile Faction -->
             <div class="w-full">
-                <label for="job-hostile-faction-select" class="text-main text-sm block mb-2">Hostile Faction:</label>
+                <label for="job-hostile-faction-select" class="text-dim text-sm block mb-2">Hostile Faction:</label>
                 <select id="job-hostile-faction-select" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
                     <option value="none">-- Load a file --</option>
                 </select>
@@ -145,32 +159,32 @@
 
             <!-- Reward Tier -->
             <div class="w-full space-y-2">
-                <label for="job-reward-tier" class="text-main text-sm block">Reward Tier:</label>
+                <label for="job-reward-tier" class="text-dim text-sm block">Reward Tier:</label>
                 <div class="flex items-center space-x-2">
                     <input id="job-reward-tier" type="range" min="1" max="5" value="3" class="w-full input-slider"/>
-                    <span id="job-reward-tier-label" class="text-main text-sm w-12 text-right">Tier 3</span>
+                    <span id="job-reward-tier-label" class="text-dim text-sm w-12 text-right">Tier 3</span>
                 </div>
             </div>
 
             <!-- Execute Button -->
             <div class="w-full mt-auto pt-2">
-                <button id="job-builder-execute-button" class="w-full btn btn-primary text-on-accent-hover focus:outline-none">
+                <button id="job-builder-execute-button" class="w-full btn btn-primary focus:outline-none focus:ring-2 focus:ring-blue-400">
                     Generate Job
                 </button>
             </div>
           </div>
 
           <!-- Overworld Output Column -->
-          <div class="card-bg rounded-lg p-4 drop-shadow-md flex flex-col md:col-span-1 lg:col-span-1">
+          <div class="card-bg rounded-lg p-4 shadow-md flex flex-col md:col-span-1 lg:col-span-1">
             <div class="flex justify-between items-center mb-4">
-              <h2 class="card-title text-lg font-bold">Output Stack</h2>
-              <button id="clear-overworld-output-button" class="btn btn-tertiary text-on-accent-hover text-xs py-1 px-2 focus:outline-none">Clear</button>
+              <h2 class="text-lg font-bold card-title">Output Stack</h2>
+              <button id="clear-overworld-output-button" class="btn btn-sm btn-tertiary text-on-accent-hover focus:outline-none">Clear</button>
             </div>
              <div
               id="overworld-output-stack"
-              class="w-full flex-grow max-h-96 overflow-y-auto output-stack-bg rounded-lg p-2 space-y-4 custom-scrollbar"
+              class="w-full flex-grow max-h-96 overflow-y-auto rounded-lg p-2 space-y-4 custom-scrollbar output-stack-bg"
             >
-              <div id="overworld-output-placeholder" class="text-center output-placeholder-text p-8">
+              <div id="overworld-output-placeholder" class="text-center p-8 output-placeholder-text">
                 Generated content will appear here...
               </div>
               <!-- New output cards will be prepended here -->
@@ -182,76 +196,76 @@
       <!-- Dungeons Page -->
       <div class="p-6 hidden page" id="dungeons-page">
         <div
-          class="flex flex-col md:flex-row card-bg rounded-lg p-4 drop-shadow-md md:space-x-4 md:space-y-0 space-y-4 mb-4"
+          class="flex flex-col md:flex-row card-bg rounded-lg p-4 shadow-md md:space-x-4 md:space-y-0 space-y-4 mb-4"
         >
         <div
-        class="flex flex-col justify-center items-center rounded-md card-nested-bg p-6"
+        class="flex flex-col justify-center items-center rounded-md p-6 card-nested-bg"
         id="file-config"
       >
         <div class="text-center inline-block mb-16">
-            <h2 class="card-title text-lg font-bold">File System</h2>
-            <label id="load-file-ident" class="card-subtitle text-sm">ℹ️ no file loaded</label>
+            <h2 class="text-lg font-bold card-title">File System</h2>
+            <label id="load-file-ident" class="text-sm text-dim">ℹ️ no file loaded</label>
         </div>
         <div
-          class="p-2 nav-bg rounded-md flex flex-row justify-center items-center"
+          class="p-2 card-bg rounded-md flex flex-row justify-center items-center space-x-2"
         >
           <a
-            href="./samples/sample_data.json"
+            href="./sample_data.json"
             download="sample_data.json"
-            class="btn-left btn-tertiary text-on-accent-hover w-28 text-center py-2 px-1"
+            class="btn btn-tertiary text-center text-on-accent-hover"
           >
             New File
           </a>
-          <button
-            id="load-file-button"
-            class="btn-right btn-secondary text-on-accent-hover w-28 py-2 px-1"
-          >
+          <button id="load-file-button" class="btn btn-secondary text-on-accent-hover">
             Load File
+          </button>
+          <button id="edit-file-button" class="btn btn-secondary text-on-accent-hover">
+            Edit File
           </button>
         </div>
         <input type="file" id="file-loader" class="hidden" accept=".json" />
       </div>
           <!-- Diagnostics Panel (Restored to its original state) -->
           <div
-            class="flex-1 flex flex-col items-center justify-center rounded-md card-nested-bg p-6 space-y-2 select-none"
+            class="flex-1 flex flex-col items-center justify-center rounded-md p-6 space-y-2 select-none card-nested-bg"
           >
             <h2 class="card-title text-lg font-bold mb-2">
               The loaded file currently includes:
             </h2>
-            <label id="places-count" class="card-subtitle text-sm"
+            <label id="places-count" class="text-sm text-dim"
               >0 - Places</label
             >
-            <label id="items-count" class="card-subtitle text-sm"
+            <label id="items-count" class="text-sm text-dim"
               >0 - Items</label
             >
-            <label id="enemies-count" class="card-subtitle text-sm"
+            <label id="enemies-count" class="text-sm text-dim"
               >0 - Enemies</label
             >
-            <label id="loot-boxes-count" class="card-subtitle text-sm"
+            <label id="loot-boxes-count" class="text-sm text-dim"
               >0 - Loot Boxes</label
             >
-            <label id="quests-count" class="card-subtitle text-sm"
+            <label id="quests-count" class="text-sm text-dim"
               >0 - Quest Assets</label
             >
           </div>
         </div>
 
         <div
-          class="flex flex-col md:flex-row card-bg rounded-lg p-4 drop-shadow-md space-y-6 md:space-y-0 md:space-x-6 justify-around"
+          class="flex flex-col md:flex-row card-bg rounded-lg p-4 shadow-md space-y-6 md:space-y-0 md:space-x-6 justify-around"
         >
           <!-- Encounter Config Column -->
           <div
-            class="flex-1 flex flex-col items-center rounded-md card-nested-bg p-6 space-y-6"
+            class="flex-1 flex flex-col items-center rounded-md p-6 space-y-6 card-nested-bg"
             id="encounter-config"
           >
-            <h2 class="card-title text-lg font-bold">
+            <h2 class="text-lg font-bold card-title">
               Encounter Configuration
             </h2>
 
             <div class="w-full">
               <label
                 for="environment-select"
-                class="text-main text-sm block mb-2"
+                class="text-dim text-sm block mb-2"
               >
                 Select Environment:
               </label>
@@ -264,22 +278,22 @@
             </div>
 
             <div class="w-full space-y-2">
-              <label class="text-main text-sm block"
+              <label class="text-dim text-sm block"
                 >Environmental Toggles:</label
               >
               <div class="flex items-center space-x-2">
-                <input type="checkbox" id="hazards" class="h-4 w-4" />
-                <label for="hazards" class="text-main text-sm"
+                <input type="checkbox" id="hazards" class="h-4 w-4 rounded text-blue-500 focus:ring-blue-400" />
+                <label for="hazards" class="text-dim text-sm"
                   >Environmental Hazards</label
                 >
               </div>
               <div class="flex items-center space-x-2">
-                <input type="checkbox" id="berries" class="h-4 w-4" />
-                <label for="berries" class="text-main text-sm">Berries</label>
+                <input type="checkbox" id="berries" class="h-4 w-4 rounded text-blue-500 focus:ring-blue-400" />
+                <label for="berries" class="text-dim text-sm">Berries</label>
               </div>
               <div class="flex items-center space-x-2">
-                <input type="checkbox" id="loot-boxes" class="h-4 w-4" />
-                <label for="loot-boxes" class="text-main text-sm"
+                <input type="checkbox" id="loot-boxes" class="h-4 w-4 rounded text-blue-500 focus:ring-blue-400" />
+                <label for="loot-boxes" class="text-dim text-sm"
                   >Loot Boxes</label
                 >
               </div>
@@ -288,7 +302,7 @@
             <div class="w-full mt-auto">
               <button
                 id="encounter-execute-button"
-                class="w-full btn btn-primary text-on-accent-hover focus:outline-none"
+                class="w-full btn btn-primary focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
                 Execute
               </button>
@@ -297,14 +311,14 @@
 
           <!-- Enemy Management Column -->
           <div
-            class="flex-1 flex flex-col items-center rounded-md card-nested-bg p-6 space-y-4"
+            class="flex-1 flex flex-col items-center rounded-md p-6 space-y-4 card-nested-bg"
             id="enemy-spawner-frame"
           >
-            <h2 class="card-title text-lg font-bold">Enemy Management</h2>
+            <h2 class="text-lg font-bold card-title">Enemy Management</h2>
             
             <div class="w-full space-y-4">
               <div class="w-full flex items-center justify-between">
-                <label for="mission-area-dropdown" class="text-main text-sm mr-2"
+                <label for="mission-area-dropdown" class="text-dim text-sm mr-2"
                   >Mission area is:</label
                 >
                 <select
@@ -316,7 +330,7 @@
               </div>
 
               <div class="w-full flex items-center justify-between">
-                <label for="num-foes" class="text-main text-sm mr-2"
+                <label for="num-foes" class="text-dim text-sm mr-2"
                   >Number of foes to spawn:</label
                 >
                 <input
@@ -333,9 +347,9 @@
                 <input
                   type="checkbox"
                   id="include-bosses"
-                  class="h-4 w-4"
+                  class="h-4 w-4 rounded text-blue-500 focus:ring-blue-400"
                 />
-                <label for="include-bosses" class="text-main text-sm"
+                <label for="include-bosses" class="text-dim text-sm"
                   >Include Bosses</label
                 >
               </div>
@@ -347,16 +361,16 @@
                   min="1"
                   max="100"
                   value="25"
-                  class="w-full input-slider disabled:opacity-50"
+                  class="w-full disabled:opacity-50 input-slider"
                   disabled
                 />
-                <span id="boss-spawn-chance-label" class="text-main text-sm w-12 text-right">25%</span>
+                <span id="boss-spawn-chance-label" class="text-dim text-sm w-12 text-right">25%</span>
               </div>
 
               <div class="w-full flex items-center justify-around mt-4">
                 <button
                   id="enemy-execute-button"
-                  class="btn btn-primary text-on-accent-hover w-full"
+                  class="w-full btn btn-primary focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   Execute
                 </button>
@@ -366,18 +380,18 @@
 
           <!-- Execution Output Column -->
           <div
-            class="flex-1 flex flex-col items-center rounded-md card-nested-bg p-6 space-y-4"
+            class="flex-1 flex flex-col items-center rounded-md p-6 space-y-4 card-nested-bg"
           >
             <div class="w-full flex justify-between items-center">
-              <h2 class="card-title text-lg font-bold">Output Stack</h2>
-              <button id="clear-dungeons-output-button" class="btn btn-tertiary text-on-accent-hover text-xs py-1 px-2 focus:outline-none">Clear</button>
+              <h2 class="text-lg font-bold card-title">Output Stack</h2>
+              <button id="clear-dungeons-output-button" class="btn btn-sm btn-tertiary text-on-accent-hover focus:outline-none">Clear</button>
             </div>
             <!-- Scrollable Frame -->
             <div
               id="output-stack"
-              class="w-full max-h-96 overflow-y-auto card-bg rounded-lg p-2 space-y-4 h-full custom-scrollbar"
+              class="w-full max-h-96 overflow-y-auto rounded-lg p-2 space-y-4 h-full custom-scrollbar output-stack-bg"
             >
-              <div id="output-placeholder" class="text-center output-placeholder-text p-8">
+              <div id="output-placeholder" class="text-center p-8 output-placeholder-text">
                 Generated content will appear here...
               </div>
               <!-- New output cards will be prepended here -->
@@ -389,7 +403,7 @@
 
     <!-- Footer -->
     <footer class="w-full text-center p-2 bg-transparent">
-      <p class="text-xs card-subtitle bg-transparent">&copy; 2024 Hexfury Games</p>
+      <p class="text-xs text-dim bg-transparent">&copy; 2025 Hexfury Games</p>
     </footer>
     
     <!-- Output Card Template (Hidden) -->
@@ -397,21 +411,21 @@
        <div class="output-card-bg rounded-lg p-2 shadow-md space-y-2 w-full">
         <textarea
           aria-label="generated text"
-          class="output-textarea w-full p-2 rounded-md resize-none overflow-hidden text-sm output-textarea-bg output-textarea-text"
+          class="w-full p-2 rounded-md resize-none overflow-hidden text-sm output-textarea-bg output-textarea-text"
           rows="3"
           readonly
         ></textarea>
         <div class="w-full flex justify-end items-center mt-2">
-          <label class="timestamp timestamp-text text-xs font-mono mr-auto">
+          <label class="timestamp-text text-xs font-mono mr-auto">
             <!-- Timestamp will be inserted here -->
           </label>
            <button
-            class="discord-copy-btn btn btn-discord font-bold py-1 px-4 rounded-md transition-colors focus:outline-none mr-2"
+            class="discord-copy-btn btn btn-sm btn-discord text-on-accent-hover focus:outline-none mr-2"
           >
             Discord
           </button>
           <button
-            class="copy-btn btn btn-primary text-on-accent-hover font-bold py-1 px-4 rounded-md transition-colors focus:outline-none"
+            class="copy-btn btn btn-sm btn-primary text-on-accent-hover focus:outline-none"
           >
             Copy
           </button>
@@ -422,61 +436,88 @@
     <!-- Settings Modal (Initially Hidden) -->
     <div id="settings-modal" class="hidden fixed inset-0 z-10 flex items-center justify-center p-4 modal-overlay">
       <!-- Modal Panel -->
-      <div id="settings-modal-panel" class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-md relative drop-shadow-lg">
+      <div id="settings-modal-panel" class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-md relative">
         <!-- Close Button -->
-        <button id="settings-close-button" class="absolute top-2 right-3 hover:text-white text-2xl font-bold modal-close-text">&times;</button>
-        <h2 class="text-main text-xl font-bold mb-6 text-center">Settings</h2>
+        <button id="settings-close-button" class="absolute top-2 right-3 text-2xl font-bold modal-close-text">&times;</button>
+        <h2 class="text-xl font-bold mb-6 text-center card-title">Settings</h2>
 
         <!-- Theme Settings -->
-        <div class="space-y-4 mb-6 border-b pb-6 modal-border">
-          <h3 class="text-lg text-main font-medium">Appearance</h3>
+        <div class="space-y-4 mb-6 pb-6 modal-border">
+          <h3 class="text-lg font-medium card-title">Appearance</h3>
           <div>
-            <label for="theme-select" class="text-main text-sm block mb-2">Theme:</label>
+            <label for="theme-select" class="text-dim text-sm block mb-2">Theme:</label>
             <select id="theme-select" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
               <!-- Options will be populated by JavaScript -->
             </select>
           </div>
           <div class="grid grid-cols-2 gap-2">
-              <button id="export-theme-button" class="w-full btn btn-subtle text-main font-bold py-2 px-4 rounded-md transition-colors">Export Sample</button>
-              <button id="upload-theme-button" class="w-full btn btn-subtle text-main font-bold py-2 px-4 rounded-md transition-colors">Upload Theme</button>
+              <button id="export-theme-button" class="w-full btn btn-subtle">Export Sample</button>
+              <button id="upload-theme-button" class="w-full btn btn-subtle">Upload Theme</button>
           </div>
           <input type="file" id="theme-loader" class="hidden" accept=".json" />
         </div>
-
+        
         <!-- AI Settings -->
-        <div class="relative group">
-          <div class="space-y-4">
-            <h3 class="text-lg text-main font-medium">AI Enhancements</h3>
-            <!-- Toggle Switch -->
-            <div class="flex items-center justify-between">
-              <label for="ai-toggle" class="text-main text-sm">Enable AI Features:</label>
-              <label for="ai-toggle" class="flex items-center cursor-pointer">
-                <input type="checkbox" id="ai-toggle" class="sr-only peer toggle-peer" />
-                <div class="relative">
-                  <div class="block w-11 h-6 rounded-full transition-colors toggle-bg"></div>
-                  <div class="absolute left-1 top-1 w-4 h-4 rounded-full transition-transform peer-checked:translate-x-5 toggle-fg"></div>
-                </div>
-              </label>
-            </div>
-            <div>
-              <label for="gemini-api-key" class="text-main text-sm block mb-2">Gemini API Key:</label>
-              <input type="password" id="gemini-api-key" class="w-full rounded-lg p-2 transition-colors input-bg input-text input-hover" placeholder="Enter your API key" />
-            </div>
+        <div class="space-y-4 mb-6 pb-6 modal-border">
+          <h3 class="text-lg font-medium card-title">AI Settings</h3>
+          <div>
+            <label for="api-key-input" class="text-dim text-sm block mb-2">API Key:</label>
+            <input type="password" id="api-key-input" class="w-full rounded-lg p-2 input-bg input-text border border-gray-600 focus:ring-2 focus:ring-blue-500" placeholder="Enter your API key">
           </div>
-
-          <!-- Hover Overlay -->
-          <div class="absolute inset-0 bg-yellow-400 rounded-lg flex items-center justify-center p-4 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-300">
-            <p class="text-gray-800 text-center font-semibold">This feature isn't quite ready yet.</p>
-              </div>
+          <button id="save-api-key-button" class="w-full btn btn-primary">Save Key</button>
         </div>
 
         <!-- PWA Installation -->
-        <div id="pwa-install-section" class="hidden mt-6 border-t pt-6 modal-border">
-            <button id="install-pwa-button" class="w-full btn btn-subtle text-main font-bold py-2 px-4 rounded-md transition-colors">Install App</button>
+        <div id="pwa-install-section" class="hidden mt-6">
+            <button id="install-pwa-button" class="w-full btn btn-secondary">Install App</button>
         </div>
       </div>
     </div>
     
+    <!-- File Editor Modal (Initially Hidden) -->
+    <div id="file-editor-modal" class="hidden fixed inset-0 z-10 flex items-center justify-center p-4 modal-overlay">
+      <!-- Modal Panel -->
+      <div id="file-editor-modal-panel" class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-5xl relative drop-shadow-lg flex flex-col" style="height: 85vh;">
+        <!-- Close Button -->
+        <button id="file-editor-close-button" class="absolute top-2 right-3 z-20 text-2xl font-bold modal-close-text">&times;</button>
+        <h2 class="text-xl font-bold mb-4 text-center card-title">File Editor</h2>
+        <p id="file-editor-filename" class="text-center text-sm mb-4 text-dim">No file loaded</p>
+
+        <!-- Visual Editor Container -->
+        <div id="visual-editor-container" class="flex-grow mb-4 overflow-y-auto custom-scrollbar p-2 space-y-6 rounded-lg output-stack-bg">
+            <!-- JavaScript will populate this with sections and cards -->
+            <div class="text-center p-8 output-placeholder-text">Load a file to begin editing...</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end space-x-4 pt-4 modal-border">
+            <button id="file-editor-save-button" class="btn btn-primary focus:outline-none">Save & Close</button>
+            <button id="file-editor-save-as-button" class="btn btn-subtle focus:outline-none">Download as JSON</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Asset Picker Modal (Initially Hidden) -->
+    <div id="asset-picker-modal" class="hidden fixed inset-0 z-20 flex items-center justify-center p-4 modal-overlay">
+      <div id="asset-picker-modal-panel" class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-2xl relative flex flex-col" style="height: 75vh;">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+            <h2 id="asset-picker-title" class="text-xl font-bold card-title">Select Asset</h2>
+            <button id="asset-picker-close-button" class="text-2xl font-bold modal-close-text">&times;</button>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="mb-4">
+            <input type="text" id="asset-picker-search" placeholder="Search..." class="w-full rounded-md p-2 input-bg input-text border modal-border">
+        </div>
+
+        <!-- Asset List -->
+        <div id="asset-picker-list" class="flex-grow overflow-y-auto custom-scrollbar p-2 space-y-2 rounded-lg output-stack-bg">
+            <!-- JS will populate this -->
+        </div>
+      </div>
+    </div>
+
     <!-- Notification Container -->
     <div id="notification-container" class="fixed bottom-4 right-4 z-50 space-y-2">
         <!-- Notifications will be appended here -->

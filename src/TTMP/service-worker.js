@@ -38,19 +38,25 @@ self.addEventListener("install", (event) => {
 // Fetch assets from the cache when offline
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request).catch((error) => {
-        console.error("Fetch failed; returning offline page instead.", error);
-        // Optionally return a fallback page here if needed
-      });
-    })
+    // Try the network first
+    fetch(event.request)
+      .then((networkResponse) => {
+        // If we get a valid response, update the cache and return it
+        if (networkResponse) {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        }
+      })
+      .catch(() => {
+        // If the network fails, try to serve from the cache
+        return caches.match(event.request);
+      })
   );
 });
 
-// Update the service worker and clear old caches
+// Update the service worker, clear old caches, and take control immediately
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -63,6 +69,6 @@ self.addEventListener("activate", (event) => {
           }
         })
       )
-    )
+    ).then(() => self.clients.claim())
   );
 });

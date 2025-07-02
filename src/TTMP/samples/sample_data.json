@@ -91,7 +91,6 @@
   ],
   "quests": [
     {
-      "id": "exterminator",
       "name": "Town Exterminator",
       "description": "The town is being overrun by giant rats! Clear them out.",
       "objectives": [

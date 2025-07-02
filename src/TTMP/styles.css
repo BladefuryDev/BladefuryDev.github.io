@@ -28,6 +28,8 @@
   --color-accent-tertiary-hover: #fde047; /* Original: yellow-300 */
   --color-accent-discord: #6366f1; /* Original: indigo-500 */
   --color-accent-discord-hover: #818cf8; /* Original: indigo-400 */
+  --color-accent-danger: #af3131; /* Original: red-500 */
+  --color-accent-danger-hover: #e05959; /* Original: red-400 */
   
   /* Borders & Rings */
   --color-border: #374151; /* Original: gray-700 */
@@ -130,7 +132,7 @@ body {
 }
 .btn-primary { background-color: var(--color-accent-primary); }
 .btn-primary:hover { background-color: var(--color-accent-primary-hover); }
-.btn-primary:hover, .btn-secondary:hover, .btn-tertiary:hover { color: var(--color-text-accent); }
+.btn-primary:hover, .btn-secondary:hover, .btn-tertiary:hover, .btn-danger:hover { color: var(--color-text-accent); }
 
 .btn-secondary { background-color: var(--color-accent-secondary); }
 .btn-secondary:hover { background-color: var(--color-accent-secondary-hover); }
@@ -143,6 +145,9 @@ body {
 .btn-discord:focus {
   box-shadow: 0 0 0 2px var(--color-bg-primary), 0 0 0 4px var(--color-ring-discord);
 }
+
+.btn-danger { background-color: var(--color-accent-danger); }
+.btn-danger:hover { background-color: var(--color-accent-danger-hover); }
 
 .btn-subtle { background-color: var(--color-bg-tertiary); }
 .btn-subtle:hover { background-color: var(--color-bg-interactive); }
