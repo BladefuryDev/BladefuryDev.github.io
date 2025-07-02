@@ -430,7 +430,7 @@
     </div>
 
     <!-- Settings Modal (Initially Hidden) -->
-    <div id="settings-modal" class="hidden fixed inset-0 z-10 flex items-center justify-center p-4 modal-overlay">
+    <div id="settings-modal" class="hidden fixed inset-0 z-40 flex items-center justify-center p-4 modal-overlay">
       <!-- Modal Panel -->
       <div id="settings-modal-panel" class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-md relative">
         <!-- Close Button -->
@@ -471,40 +471,40 @@
     </div>
     
     <!-- File Editor Modal (Initially Hidden) -->
-    <div id="file-editor-modal" class="hidden fixed inset-0 z-10 flex items-center justify-center p-4 modal-overlay">
+    <div id="file-editor-modal" class="hidden fixed inset-0 z-40 flex items-center justify-center p-2 sm:p-4 modal-overlay">
       <!-- Modal Panel -->
-      <div id="file-editor-modal-panel" class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-5xl relative drop-shadow-lg flex flex-col" style="height: 85vh;">
+      <div id="file-editor-modal-panel" class="modal-panel-bg rounded-lg p-2 sm:p-6 shadow-lg w-full max-w-full sm:max-w-5xl relative drop-shadow-lg flex flex-col h-[95vh] sm:h-[85vh]">
         <!-- Close Button -->
         <button id="file-editor-close-button" class="absolute top-2 right-3 z-20 text-2xl font-bold modal-close-text">&times;</button>
-        <h2 class="text-xl font-bold mb-4 text-center card-title">File Editor</h2>
-        <p id="file-editor-filename" class="text-center text-sm mb-4 text-dim">No file loaded</p>
+        <h2 class="text-lg sm:text-xl font-bold mb-2 sm:mb-4 text-center card-title">File Editor</h2>
+        <p id="file-editor-filename" class="text-center text-xs sm:text-sm mb-2 sm:mb-4 text-dim">No file loaded</p>
 
         <!-- Visual Editor Container -->
-        <div id="visual-editor-container" class="flex-grow mb-4 overflow-y-auto custom-scrollbar p-2 space-y-6 rounded-lg output-stack-bg">
+        <div id="visual-editor-container" class="flex-grow mb-2 sm:mb-4 overflow-y-auto custom-scrollbar p-1 sm:p-2 space-y-4 sm:space-y-6 rounded-lg output-stack-bg">
             <!-- JavaScript will populate this with sections and cards -->
             <div class="text-center p-8 output-placeholder-text">Load a file to begin editing...</div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex justify-end space-x-4 pt-4 modal-border">
-            <button id="file-editor-save-button" class="btn btn-primary focus:outline-none">Save & Close</button>
-            <button id="file-editor-save-as-button" class="btn btn-subtle focus:outline-none">Download as JSON</button>
+        <div class="flex justify-end space-x-2 sm:space-x-4 pt-2 sm:pt-4 modal-border">
+            <button id="file-editor-save-button" class="btn btn-primary focus:outline-none text-xs sm:text-sm py-1 px-2 sm:py-2 sm:px-3">Save & Close</button>
+            <button id="file-editor-save-as-button" class="btn btn-subtle focus:outline-none text-xs sm:text-sm py-1 px-2 sm:py-2 sm:px-3">Download as JSON</button>
         </div>
       </div>
     </div>
 
     <!-- Asset Picker Modal (Initially Hidden) -->
-    <div id="asset-picker-modal" class="hidden fixed inset-0 z-20 flex items-center justify-center p-4 modal-overlay">
-      <div id="asset-picker-modal-panel" class="modal-panel-bg rounded-lg p-6 shadow-lg w-full max-w-2xl relative flex flex-col" style="height: 75vh;">
+    <div id="asset-picker-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 modal-overlay">
+      <div id="asset-picker-modal-panel" class="modal-panel-bg rounded-lg p-2 sm:p-6 shadow-lg w-full max-w-full sm:max-w-2xl relative flex flex-col h-[90vh] sm:h-[75vh]">
         <!-- Header -->
         <div class="flex justify-between items-center mb-4">
-            <h2 id="asset-picker-title" class="text-xl font-bold card-title">Select Asset</h2>
+            <h2 id="asset-picker-title" class="text-lg sm:text-xl font-bold card-title">Select Asset</h2>
             <button id="asset-picker-close-button" class="text-2xl font-bold modal-close-text">&times;</button>
         </div>
         
         <!-- Search Bar -->
         <div class="mb-4">
-            <input type="text" id="asset-picker-search" placeholder="Search..." class="w-full rounded-md p-2 input-bg input-text border modal-border">
+            <input type="text" id="asset-picker-search" placeholder="Search..." class="w-full rounded-md p-1 sm:p-2 text-sm input-bg input-text border modal-border">
         </div>
 
         <!-- Asset List -->
@@ -515,7 +515,7 @@
     </div>
 
     <!-- Notification Container -->
-    <div id="notification-container" class="fixed bottom-4 right-4 z-50 space-y-2">
+    <div id="notification-container" class="fixed bottom-4 right-4 z-60 space-y-2">
         <!-- Notifications will be appended here -->
     </div>
 

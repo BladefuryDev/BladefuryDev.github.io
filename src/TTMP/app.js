@@ -859,10 +859,10 @@ function renderVisualEditor() {
     sectionOrder.filter(key => gameData.hasOwnProperty(key)).forEach(sectionKey => {
         const sectionData = gameData[sectionKey];
         const sectionWrapper = document.createElement('div');
-        sectionWrapper.className = 'card-nested-bg rounded-lg p-4';
+        sectionWrapper.className = 'card-nested-bg rounded-lg p-2 sm:p-4';
         
         let title = sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1).replace(/_/g, ' ');
-        let headerHTML = `<div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold card-title">${title}</h3>`;
+        let headerHTML = `<div class="flex justify-between items-center mb-2 sm:mb-4"><h3 class="text-lg sm:text-xl font-bold card-title">${title}</h3>`;
         if (Array.isArray(sectionData)) {
             headerHTML += `<button class="btn btn-sm btn-secondary text-on-accent-hover" data-action="add-asset" data-section="${sectionKey}">+ Add</button>`;
         }
@@ -884,13 +884,13 @@ function renderVisualEditor() {
 
 function createAssetCard(itemData, sectionKey, index) {
     const card = document.createElement('div');
-    card.className = 'relative card-bg p-4 rounded-lg shadow-inner';
+    card.className = 'relative card-bg p-2 sm:p-4 rounded-lg shadow-inner';
     if (index !== -1) {
         card.innerHTML = `<button class="absolute top-2 right-2 btn btn-danger btn-compact flex items-center justify-center w-6 h-6 leading-none text-xl" data-action="delete-asset" data-section="${sectionKey}" data-index="${index}" aria-label="Remove item">&minus;</button>`;
     }
 
     const formGrid = document.createElement('div');
-    formGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3 pr-8';
+    formGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-x-2 sm:gap-x-4 gap-y-2 sm:gap-y-3 pr-6 sm:pr-8';
     
     Object.keys(itemData).forEach(key => {
         if (key === 'id') return;
@@ -904,7 +904,7 @@ function createAssetCard(itemData, sectionKey, index) {
 function createFieldInput(value, sectionKey, index, key) {
     const fieldWrapper = document.createElement('div');
     const label = `<label class="block text-sm font-medium text-dim mb-1 capitalize">${key.replace(/_/g, ' ')}</label>`;
-    const baseAttributes = `class="w-full rounded-md p-2 input-bg input-text border modal-border" data-section="${sectionKey}" data-index="${index}" data-key="${key}"`;
+    const baseAttributes = `class="w-full rounded-md p-1 sm:p-2 text-sm input-bg input-text border modal-border" data-section="${sectionKey}" data-index="${index}" data-key="${key}"`;
 
     const linkableArrayKeys = { enemy_types: 'enemies', boss_types: 'enemies', loot_boxes: 'loot_boxes' };
 
@@ -915,7 +915,7 @@ function createFieldInput(value, sectionKey, index, key) {
         fieldWrapper.className = 'md:col-span-2';
         fieldWrapper.innerHTML = label + createLinkableArrayEditor(value, sectionKey, index, key, linkableArrayKeys[key]);
     } else if (typeof value === 'boolean') {
-        fieldWrapper.className = 'flex items-center space-x-2 pt-6';
+        fieldWrapper.className = 'flex items-center space-x-2 pt-4 sm:pt-6';
         const input = `<input type="checkbox" class="h-5 w-5 rounded text-blue-500 bg-gray-600 border-gray-500 focus:ring-blue-400" ${baseAttributes.replace('class="', 'class=" ')} ${value ? 'checked' : ''}>`;
         fieldWrapper.innerHTML = input + label;
     } else if (Array.isArray(value)) {
@@ -928,7 +928,7 @@ function createFieldInput(value, sectionKey, index, key) {
         fieldWrapper.innerHTML = label + input;
     } else {
         const input = (typeof value === 'string' && value.length > 60)
-            ? `<textarea ${baseAttributes} rows="3">${value}</textarea>`
+            ? `<textarea ${baseAttributes} rows="2" sm:rows="3">${value}</textarea>`
             : `<input type="text" ${baseAttributes} value="${value}">`;
         fieldWrapper.innerHTML = label + input;
     }
@@ -945,16 +945,16 @@ function createTextCrawlEditor(textArray, sectionKey, index, key) {
         itemWrapper.className = 'flex items-center gap-2';
         itemWrapper.innerHTML = `
             <input type="text" value="${text}" 
-                   class="flex-grow rounded-md p-2 input-bg input-text border modal-border"
+                   class="flex-grow rounded-md p-1 sm:p-2 text-sm input-bg input-text border modal-border"
                    data-section="${sectionKey}" data-index="${index}" data-key="${key}" data-text-index="${textIndex}">
-            <button class="btn btn-danger w-8 h-8 flex-shrink-0 flex items-center justify-center"
+            <button class="btn btn-danger w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0 flex items-center justify-center"
                     data-action="delete-text-crawl" data-section="${sectionKey}" data-index="${index}" data-key="${key}" data-text-index="${textIndex}">&times;</button>
         `;
         container.appendChild(itemWrapper);
     });
 
     const addButton = document.createElement('button');
-    addButton.className = 'btn btn-sm btn-secondary text-on-accent-hover mt-2';
+    addButton.className = 'btn btn-sm btn-secondary text-on-accent-hover mt-2 text-xs sm:text-sm';
     addButton.textContent = '+ Add Line';
     addButton.dataset.action = 'add-text-crawl';
     addButton.dataset.section = sectionKey;
@@ -977,13 +977,13 @@ function createLinkableArrayEditor(idArray, sectionKey, index, key, sourceSectio
         const sourceItem = gameData[sourceSectionKey]?.find(item => item.id === id);
         const name = sourceItem ? sourceItem.name : `[${id}]`;
         const tag = document.createElement('div');
-        tag.className = 'btn-primary text-on-accent text-sm font-medium px-2 py-1 rounded-full flex items-center gap-2';
+        tag.className = 'btn-primary text-on-accent text-xs sm:text-sm font-medium px-2 py-1 rounded-full flex items-center gap-1 sm:gap-2';
         tag.innerHTML = `<span>${name}</span><button data-action="remove-linked-asset" data-section="${sectionKey}" data-index="${index}" data-key="${key}" data-asset-id="${id}" class="text-on-accent hover:opacity-75">&times;</button>`;
         itemsContainer.appendChild(tag);
     });
 
     const addButton = document.createElement('button');
-    addButton.className = 'btn btn-secondary text-on-accent-hover w-8 h-8 rounded-full flex items-center justify-center text-lg';
+    addButton.className = 'btn btn-secondary text-on-accent-hover w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-base sm:text-lg';
     addButton.textContent = '+';
     addButton.dataset.action = 'open-asset-picker';
     addButton.dataset.section = sectionKey;
@@ -1143,13 +1143,13 @@ function openAssetPickerModal(section, index, key, sourceSectionKey) {
     sourceArray.forEach(item => {
         const isAlreadyAdded = targetArray.includes(item.id);
         const itemCard = document.createElement('div');
-        itemCard.className = 'asset-picker-item flex justify-between items-center card-nested-bg p-2 rounded-md';
+        itemCard.className = 'asset-picker-item flex justify-between items-center card-nested-bg p-1 sm:p-2 rounded-md';
         itemCard.dataset.name = item.name;
         
         itemCard.innerHTML = `
-            <span class="text-main">${item.name}</span>
+            <span class="text-main text-sm sm:text-base">${item.name}</span>
             <button 
-                class="btn btn-secondary btn-compact w-8 h-8 flex items-center justify-center text-lg disabled:opacity-50"
+                class="btn btn-secondary btn-compact w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-base sm:text-lg disabled:opacity-50"
                 data-action="add-linked-asset"
                 data-asset-id="${item.id}"
                 data-target-section="${section}"
