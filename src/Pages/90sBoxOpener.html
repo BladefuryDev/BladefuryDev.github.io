@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loot Box Opener 9000</title>
+    <style>
+        /* 90s Styling */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #c0c0c0; /* Classic grey */
+            background-image: url('https://www.transparenttextures.com/patterns/brushed-alum.png'); /* Tiled background */
+            color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px; /* Reduced for mobile */
+            box-sizing: border-box;
+        }
+
+        /* Main container with 3D inset border */
+        .container {
+            background-color: #c0c0c0;
+            padding: 1rem; /* Simplified padding for mobile */
+            border: 2px inset #808080;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #000080; /* Navy blue */
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px #c0c0c0;
+        }
+
+        /* Control groups for layout */
+        .control-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        .file-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 2px groove #f0f0f0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Input fields with inset border */
+        input[type="file"],
+        select,
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 2px inset #808080;
+            background-color: #ffffff;
+            font-size: 1rem;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        
+        /* Custom cursor for the quantity input */
+        #loot-box-quantity {
+            cursor: ns-resize;
+        }
+
+        /* Classic 3D button style */
+        button {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #c0c0c0;
+            color: #000000;
+            border: 2px outset #f0f0f0;
+            border-radius: 0;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-family: inherit;
+        }
+        
+        button:active, button.active {
+             border-style: inset;
+        }
+
+        button:hover {
+            background-color: #d0d0d0;
+        }
+
+        button:disabled {
+            color: #808080;
+            border-color: #808080;
+            cursor: not-allowed;
+        }
+        
+        /* Results display area */
+        #results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border: 2px inset #808080;
+            text-align: left;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 50px;
+            overflow-x: auto; /* Add horizontal scroll if content overflows */
+        }
+        
+        /* Editor view specific styles */
+        .box-editor {
+            background: #c0c0c0;
+            border: 2px outset #f0f0f0;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #808080;
+        }
+        .box-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .item-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+        .item-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 0.5rem;
+            border: 1px solid #808080;
+            margin-bottom: 0.5rem;
+            word-break: break-all; /* Prevent long items from overflowing */
+        }
+        .add-item-form {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            gap: 10px;
+        }
+        .add-item-form input {
+            flex-grow: 1;
+            margin: 0;
+            min-width: 150px; /* Prevent input from getting too tiny */
+        }
+        
+        .add-item-form button {
+            width: auto;
+            flex-grow: 1;
+            margin: 0;
+            font-size: 1rem;
+            padding: 0.5rem;
+        }
+
+        button.danger {
+            width: auto;
+            flex-grow: 0; /* Prevent danger buttons from growing */
+            margin: 0;
+            font-size: 1rem;
+            padding: 0.5rem;
+        }
+        
+        /* Specific style for the small 'X' button on items */
+        .item-list li button.danger {
+            padding: 0.1rem 0.4rem;
+            font-size: 0.7rem;
+            line-height: 1;
+            margin-left: 0.5rem;
+        }
+
+        .editor-tip {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #000080;
+            text-align: right;
+            margin-top: 4px;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Opener View -->
+        <div id="opener-view">
+            <h1><marquee>Loot Box Opener 9000</marquee></h1>
+            <img src="/assets/icons/ttmp-Logo.png" alt="treasure chest" width="96" style="margin-bottom: 1rem; image-rendering: pixelated;">
+            
+            <!-- File Controls -->
+            <fieldset class="file-controls">
+                <legend>File Options</legend>
+                <input type="file" id="file-loader" accept=".json" title="Load a JSON file">
+                <button id="edit-loaded-button" disabled>Edit Loaded File</button>
+                <button id="create-new-button">Create New File</button>
+            </fieldset>
+
+            <!-- Loot Box Selection -->
+            <div class="control-group">
+                <label for="loot-box-select">Select Loot Box:</label>
+                <select id="loot-box-select">
+                    <option value="">-- Load or create a file --</option>
+                </select>
+            </div>
+
+            <!-- Quantity Input -->
+            <div class="control-group">
+                <label for="loot-box-quantity">Quantity:</label>
+                <input type="number" id="loot-box-quantity" value="1" min="1">
+            </div>
+
+            <!-- Open Button -->
+            <button id="open-button">Open Box!</button>
+
+            <!-- Results Area -->
+            <div id="results">Your loot will appear here...</div>
+        </div>
+        
+        <!-- Editor View -->
+        <div id="editor-view" style="display: none;">
+            <h2>Loot Box Creator</h2>
+            <div class="control-group">
+                <label for="new-box-name">New Loot Box Name:</label>
+                <div class="add-item-form">
+                    <input type="text" id="new-box-name" placeholder="e.g., Rare Chest">
+                    <button id="add-box-button">Add Box</button>
+                </div>
+            </div>
+            <div id="editor-container">
+                <!-- Loot box editors will be rendered here -->
+            </div>
+            <button id="download-button">Download .JSON File</button>
+            <button id="back-to-opener-button">Back to Opener</button>
+        </div>
+    </div>
+
+    <script>
+        // Global variable to store the parsed game data from the JSON file
+        let gameData = null;
+
+        // --- Color Coding ---
+        const pastelColors = ['#ffd1dc', '#ffecb3', '#dcedc8', '#c8e6c9', '#b3e5fc', '#e1bee7'];
+
+        /**
+         * Creates a semi-random but consistent color based on a string.
+         * @param {string} str The string to hash (e.g., loot box name).
+         * @returns {string} A hex color code from the pastelColors array.
+         */
+        function getColorForString(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const index = Math.abs(hash % pastelColors.length);
+            return pastelColors[index];
+        }
+
+        // Get references to all the interactive HTML elements
+        const fileLoader = document.getElementById('file-loader');
+        const lootBoxSelect = document.getElementById('loot-box-select');
+        const quantityInput = document.getElementById('loot-box-quantity');
+        const openButton = document.getElementById('open-button');
+        const resultsDiv = document.getElementById('results');
+        
+        // View containers
+        const openerView = document.getElementById('opener-view');
+        const editorView = document.getElementById('editor-view');
+        
+        // Control buttons
+        const createNewButton = document.getElementById('create-new-button');
+        const editLoadedButton = document.getElementById('edit-loaded-button');
+        const backToOpenerButton = document.getElementById('back-to-opener-button');
+        const downloadButton = document.getElementById('download-button');
+        const addBoxButton = document.getElementById('add-box-button');
+        
+        // Editor elements
+        const newBoxNameInput = document.getElementById('new-box-name');
+        const editorContainer = document.getElementById('editor-container');
+        
+        // --- View Switching ---
+        function showOpenerView() {
+            editorView.style.display = 'none';
+            openerView.style.display = 'block';
+        }
+        
+        function showEditorView() {
+            openerView.style.display = 'none';
+            editorView.style.display = 'block';
+            renderEditor();
+        }
+
+        // --- Event Listeners ---
+        fileLoader.addEventListener('change', handleFileLoad);
+        openButton.addEventListener('click', handleOpenBox);
+        createNewButton.addEventListener('click', handleCreateNew);
+        editLoadedButton.addEventListener('click', handleEditLoaded);
+        backToOpenerButton.addEventListener('click', showOpenerView);
+        downloadButton.addEventListener('click', handleDownload);
+        addBoxButton.addEventListener('click', handleAddBox);
+        editorContainer.addEventListener('click', handleEditorClicks);
+        setupNumberInputWheel(); // Set up the mouse wheel listener
+
+        /**
+         * Adds mouse wheel support for the quantity input.
+         */
+        function setupNumberInputWheel() {
+            quantityInput.addEventListener('wheel', (event) => {
+                // Prevent the page from scrolling
+                event.preventDefault();
+
+                // Determine the direction of the scroll to set the step
+                const step = event.deltaY < 0 ? 1 : -1;
+
+                // Get the current value, default to 1 if it's not a valid number
+                let currentValue = parseInt(quantityInput.value, 10);
+                if (isNaN(currentValue)) {
+                    currentValue = 1;
+                }
+
+                // Calculate the new value
+                let newValue = currentValue + step;
+
+                // Ensure the new value is not less than the minimum (1)
+                if (newValue < 1) {
+                    newValue = 1;
+                }
+
+                quantityInput.value = newValue;
+            }, { passive: false }); // passive: false is required for preventDefault() to work
+        }
+
+        /**
+         * Handles loading a user-selected file.
+         */
+        function handleFileLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    gameData = JSON.parse(e.target.result);
+                    console.log("File loaded and parsed:", gameData);
+                    populateLootBoxSelect();
+                    resultsDiv.textContent = `File "${file.name}" loaded successfully! Select a loot box to open.`;
+                    editLoadedButton.disabled = false; // Enable edit button
+                    showOpenerView();
+                } catch (error) {
+                    console.error("Error parsing JSON file:", error);
+                    resultsDiv.textContent = "Error: Could not parse the JSON file. Please check its format.";
+                    gameData = null;
+                    editLoadedButton.disabled = true; // Disable edit button on error
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        /**
+         * Initializes a new, empty data structure for the creator.
+         */
+        function handleCreateNew() {
+            gameData = { "loot_boxes": [] };
+            fileLoader.value = ''; // Clear file input
+            editLoadedButton.disabled = true; // Disable edit button
+            populateLootBoxSelect();
+            resultsDiv.textContent = "Creating a new file. Add loot boxes in the creator.";
+            showEditorView();
+        }
+        
+        /**
+         * Switches to the editor view with the currently loaded data.
+         */
+        function handleEditLoaded() {
+            if (gameData) {
+                showEditorView();
+            } else {
+                alert("You need to load a file before you can edit it!");
+            }
+        }
+
+        /**
+         * Triggers the main loot opening logic.
+         */
+        function handleOpenBox() {
+            if (!gameData) {
+                resultsDiv.textContent = 'Please load or create a data file first.';
+                return;
+            }
+            const lootBoxId = lootBoxSelect.value;
+            const quantity = parseInt(quantityInput.value, 10);
+
+            if (!lootBoxId) {
+                resultsDiv.textContent = 'Please select a loot box from the dropdown.';
+                return;
+            }
+            if (isNaN(quantity) || quantity < 1) {
+                resultsDiv.textContent = 'Please enter a valid quantity.';
+                return;
+            }
+
+            const lootBox = gameData.loot_boxes.find(lb => lb.id === lootBoxId);
+            if (!lootBox) {
+                resultsDiv.textContent = 'Error: Could not find the selected loot box.';
+                return;
+            }
+
+            if (!lootBox.contents || lootBox.contents.length === 0) {
+                resultsDiv.textContent = `The ${lootBox.name} is empty.`;
+                return;
+            }
+
+            const receivedItems = {};
+            for (let i = 0; i < quantity; i++) {
+                const randomItemString = lootBox.contents[Math.floor(Math.random() * lootBox.contents.length)];
+                const parsedItem = parseLootItem(randomItemString);
+                receivedItems[parsedItem.name] = (receivedItems[parsedItem.name] || 0) + parsedItem.quantity;
+            }
+
+            let outputText = `Opened ${quantity} x ${lootBox.name}\n--------------------\nReceived:\n`;
+            if (Object.keys(receivedItems).length === 0) {
+                outputText += "Nothing of value.";
+            } else {
+                for (const [item, count] of Object.entries(receivedItems)) {
+                    outputText += `  - ${item} (x${count})\n`;
+                }
+            }
+            resultsDiv.textContent = outputText;
+        }
+        
+        /**
+         * Populates the loot box <select> dropdown and applies colors.
+         */
+        function populateLootBoxSelect() {
+            lootBoxSelect.innerHTML = '';
+            if (!gameData || !gameData.loot_boxes || gameData.loot_boxes.length === 0) {
+                lootBoxSelect.innerHTML = '<option value="">-- No loot boxes available --</option>';
+                return;
+            }
+            gameData.loot_boxes.forEach(box => {
+                const option = document.createElement('option');
+                option.value = box.id;
+                option.textContent = box.name;
+                // Apply the color style
+                option.style.backgroundColor = getColorForString(box.name);
+                lootBoxSelect.appendChild(option);
+            });
+        }
+        
+        /**
+         * Renders the entire editor UI based on the current gameData and applies colors.
+         */
+        function renderEditor() {
+            editorContainer.innerHTML = '';
+            if (!gameData || !gameData.loot_boxes) return;
+            
+            gameData.loot_boxes.forEach((box, index) => {
+                const boxDiv = document.createElement('div');
+                boxDiv.className = 'box-editor';
+                boxDiv.dataset.boxIndex = index;
+                
+                let itemsHtml = '';
+                box.contents.forEach((item, itemIndex) => {
+                    itemsHtml += `
+                        <li>
+                            <span>${item}</span>
+                            <button class="danger" data-action="delete-item" data-item-index="${itemIndex}">X</button>
+                        </li>
+                    `;
+                });
+                
+                // Get the color for the box name
+                const boxColor = getColorForString(box.name);
+
+                boxDiv.innerHTML = `
+                    <div class="box-header" style="background-color: ${boxColor};">
+                        <h3>${box.name}</h3>
+                        <button class="danger" data-action="delete-box">Delete Box</button>
+                    </div>
+                    <ul class="item-list">${itemsHtml}</ul>
+                    <div class="add-item-form">
+                        <input type="text" placeholder="e.g., 5x Potion, 1x Sword" class="add-item-input">
+                        <button data-action="add-item">Add Item</button>
+                    </div>
+                    <div class="editor-tip"><b>Tip:</b> Add multiple items with commas!</div>
+                `;
+                editorContainer.appendChild(boxDiv);
+            });
+        }
+        
+        /**
+         * Adds a new loot box to the gameData.
+         */
+        function handleAddBox() {
+            const name = newBoxNameInput.value.trim();
+            if (!name) {
+                alert("Please enter a name for the loot box.");
+                return;
+            }
+            gameData.loot_boxes.push({
+                id: name.toLowerCase().replace(/\s+/g, '_') + '_' + Date.now(),
+                name: name,
+                contents: []
+            });
+            newBoxNameInput.value = '';
+            populateLootBoxSelect();
+            renderEditor();
+        }
+        
+        /**
+         * Handles all clicks inside the editor container (add/delete items/boxes).
+         */
+        function handleEditorClicks(event) {
+            const target = event.target;
+            const action = target.dataset.action;
+            if (!action) return;
+
+            const boxDiv = target.closest('.box-editor');
+            const boxIndex = boxDiv.dataset.boxIndex;
+
+            if (action === 'delete-box') {
+                gameData.loot_boxes.splice(boxIndex, 1);
+                populateLootBoxSelect();
+                renderEditor();
+            } else if (action === 'add-item') {
+                const input = boxDiv.querySelector('.add-item-input');
+                const fullInputText = input.value;
+                
+                // Split the input by commas to handle multiple items
+                const itemsToAdd = fullInputText.split(',');
+
+                let itemsWereAdded = false;
+                // Process each potential item
+                itemsToAdd.forEach(itemText => {
+                    const trimmedItem = itemText.trim();
+                    if (trimmedItem) { // Make sure it's not an empty string after trimming
+                        gameData.loot_boxes[boxIndex].contents.push(trimmedItem);
+                        itemsWereAdded = true;
+                    }
+                });
+
+                // Clear input and re-render only if we actually added something
+                if (itemsWereAdded) {
+                    input.value = '';
+                    renderEditor();
+                }
+            } else if (action === 'delete-item') {
+                const itemIndex = target.dataset.itemIndex;
+                gameData.loot_boxes[boxIndex].contents.splice(itemIndex, 1);
+                renderEditor();
+            }
+        }
+        
+        /**
+         * Triggers a download of the current gameData as a JSON file.
+         */
+        function handleDownload() {
+            if (!gameData) {
+                alert("No data to download!");
+                return;
+            }
+            const jsonString = JSON.stringify(gameData, null, 2);
+            const blob = new Blob([jsonString], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'loot_boxes.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        /**
+         * Parses a loot item string to extract its name and quantity.
+         * Handles formats like "x5 Item", "5 Item", "5-Item", etc.
+         * @param {string} itemString The string from the loot table.
+         * @returns {{name: string, quantity: number}} An object with the item's name and quantity.
+         */
+        function parseLootItem(itemString) {
+            const str = itemString.trim();
+            // Regex to find a number at the start, followed by an optional separator (x, space, or -), then the item name.
+            const match = str.match(/^(\d+)\s*[x-]?\s*(.+)/);
+
+            if (match) {
+                // match[1] is the quantity (e.g., "9")
+                // match[2] is the item name (e.g., "Spicy Burritoes")
+                const quantity = parseInt(match[1], 10);
+                const name = match[2].trim();
+                return { name: name, quantity: quantity };
+            }
+
+            // If no quantity is found at the start, the whole string is the item name with quantity 1.
+            return { name: str, quantity: 1 };
+        }
+    </script>
+
+</body>
+</html>
