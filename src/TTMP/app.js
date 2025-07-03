@@ -28,6 +28,7 @@ window.addEventListener("load", () => {
         setupSettingsModal();
         setupFileEditorModal();
         setupAssetPickerModal();
+        setupThemeEditorModal();
         setupNavigation();
         setupServiceWorker();
 
@@ -995,6 +996,166 @@ function setupThemeControls() {
     }
 }
 
+// =============================
+// Theme Editor Modal Logic
+// =============================
+function setupThemeEditorModal() {
+    const openButton = document.getElementById('create-theme-button');
+    const modal = document.getElementById('theme-editor-modal');
+    const panel = document.getElementById('theme-editor-modal-panel');
+    const closeButton = document.getElementById('theme-editor-close-button');
+    const cancelButton = document.getElementById('theme-editor-cancel-button');
+    const saveButton = document.getElementById('theme-editor-save-button');
+    const colorsContainer = document.getElementById('theme-editor-colors');
+    const themeNameInput = document.getElementById('theme-editor-name');
+    const themeAuthorInput = document.getElementById('theme-editor-author');
+    const previewArea = document.getElementById('theme-editor-preview-area');
+
+    if (!openButton || !modal || !panel || !closeButton || !saveButton || !colorsContainer || !previewArea) return;
+
+    let activeEditingTheme = {};
+    let originalThemeBeforeEdit = {};
+
+    const openModal = () => {
+        const lastSelectedThemeName = localStorage.getItem("lastSelectedTheme") || defaultTheme.name;
+        const baseTheme = availableThemes[lastSelectedThemeName] || defaultTheme;
+
+        originalThemeBeforeEdit = JSON.parse(JSON.stringify(baseTheme));
+        activeEditingTheme = JSON.parse(JSON.stringify(baseTheme));
+        activeEditingTheme.name = "";
+        activeEditingTheme.author = "";
+
+        themeNameInput.value = '';
+        themeAuthorInput.value = '';
+
+        populateEditor(activeEditingTheme, previewArea);
+        applyThemeToPreview(activeEditingTheme, previewArea);
+
+        modal.classList.remove('hidden');
+        modal.classList.remove('modal-animate-fade-out');
+        panel.classList.remove('modal-panel-animate-out');
+        modal.classList.add('modal-animate-fade-in');
+        panel.classList.add('modal-panel-animate-in');
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('modal-animate-fade-in');
+        panel.classList.remove('modal-panel-animate-in');
+        modal.classList.add('modal-animate-fade-out');
+        panel.classList.add('modal-panel-animate-out');
+        setTimeout(() => modal.classList.add('hidden'), 200);
+
+        // Restore the original theme from before the editor was opened
+        applyTheme(originalThemeBeforeEdit);
+        // Clear inline styles from the preview area
+        previewArea.removeAttribute('style');
+        previewArea.style.backgroundColor = 'var(--color-bg-primary)';
+    };
+
+    const populateEditor = (theme, previewEl) => {
+        colorsContainer.innerHTML = '';
+        colorsContainer.className = 'flex-grow min-h-0 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-1 gap-y-3';
+        for (const key of Object.keys(defaultTheme.colors)) {
+            if (!theme.colors.hasOwnProperty(key)) continue;
+            const value = theme.colors[key];
+
+            const colorItem = document.createElement('div');
+            colorItem.className = 'flex flex-col space-y-1';
+
+            const labelText = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+            const label = `<label class="text-dim text-xs sm:text-sm mb-1 truncate" title="${labelText}">${labelText}</label>`;
+
+            const inputWrapper = document.createElement('div');
+            inputWrapper.className = 'flex items-center gap-2 p-1 rounded-lg input-bg border modal-border';
+
+            const colorPicker = document.createElement('input');
+            colorPicker.type = 'color';
+            colorPicker.value = value;
+            colorPicker.className = 'w-6 h-6 sm:w-8 sm:h-8 p-0 border-none rounded cursor-pointer bg-transparent';
+
+            const hexInput = document.createElement('input');
+            hexInput.type = 'text';
+            hexInput.value = value;
+            hexInput.className = 'flex-grow bg-transparent text-main text-xs sm:text-sm focus:outline-none font-mono';
+            hexInput.setAttribute('aria-label', `${labelText} hex value`);
+
+            colorPicker.addEventListener('input', (e) => {
+                hexInput.value = e.target.value;
+                activeEditingTheme.colors[key] = e.target.value;
+                applyThemeToPreview(activeEditingTheme, previewEl);
+            });
+            hexInput.addEventListener('change', (e) => {
+                let val = e.target.value.toLowerCase();
+                if (!val.startsWith('#')) val = '#' + val;
+
+                if (/^#([0-9a-f]{3}){1,2}$/i.test(val)) {
+                     if (val.length === 4) {
+                        val = '#' + val[1] + val[1] + val[2] + val[2] + val[3] + val[3];
+                    }
+                    colorPicker.value = val;
+                    hexInput.value = val;
+                    activeEditingTheme.colors[key] = val;
+                    applyThemeToPreview(activeEditingTheme, previewEl);
+                } else {
+                    hexInput.value = activeEditingTheme.colors[key];
+                }
+            });
+
+            inputWrapper.appendChild(colorPicker);
+            inputWrapper.appendChild(hexInput);
+            colorItem.innerHTML = label;
+            colorItem.appendChild(inputWrapper);
+            colorsContainer.appendChild(colorItem);
+        }
+    };
+
+    const saveTheme = () => {
+        const newName = themeNameInput.value.trim();
+        const newAuthor = themeAuthorInput.value.trim();
+
+        if (!newName) {
+            return showNotification("Theme name is required.", "error");
+        }
+        if (availableThemes[newName] && availableThemes[newName].author !== 'TTMP' && availableThemes[newName].author !== 'Gemini') {
+             return showNotification(`A custom theme named "${newName}" already exists.`, "error");
+        }
+
+        activeEditingTheme.name = newName;
+        activeEditingTheme.author = newAuthor || "Unknown";
+
+        let userThemes = JSON.parse(localStorage.getItem("userThemes")) || [];
+        userThemes = userThemes.filter(t => t.name !== newName);
+        userThemes.push(activeEditingTheme);
+        localStorage.setItem("userThemes", JSON.stringify(userThemes));
+
+        availableThemes[newName] = activeEditingTheme;
+        localStorage.setItem("lastSelectedTheme", newName);
+        populateThemeDropdown();
+        applyTheme(activeEditingTheme);
+
+        showNotification(`Theme "${newName}" saved and applied!`, "success");
+        modal.classList.remove('modal-animate-fade-in');
+        panel.classList.remove('modal-panel-animate-in');
+        modal.classList.add('modal-animate-fade-out');
+        panel.classList.add('modal-panel-animate-out');
+        setTimeout(() => modal.classList.add('hidden'), 200);
+    };
+
+    openButton.addEventListener('click', openModal);
+    closeButton.addEventListener('click', closeModal);
+    cancelButton.addEventListener('click', closeModal);
+    saveButton.addEventListener('click', saveTheme);
+}
+
+// Helper function to apply theme edit colors to the preview element
+function applyThemeToPreview(theme, previewElement) {
+    if (!theme || !theme.colors || !previewElement) return;
+    const root = previewElement.style;
+    for (const [key, value] of Object.entries(theme.colors)) {
+        const cssVarName = `--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+        root.setProperty(cssVarName, value);
+    }
+}
 
 // =============================
 // File Editor Modal Logic

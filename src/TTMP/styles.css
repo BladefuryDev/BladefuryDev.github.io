@@ -344,3 +344,62 @@ body {
 .theme-option-item:hover .delete-theme-btn {
     opacity: 1;
 }
+
+/* =============================
+   Theme Editor Additions
+   ============================= */
+input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 0.375rem; /* rounded-md */
+}
+input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 0.375rem; /* rounded-md */
+}
+
+/* =============================
+   Theme Editor Hardcoded Styles
+   ============================= */
+.theme-editor-sidebar {
+  background-color: #ffffff;
+  color: #111827;
+}
+.theme-editor-sidebar .card-title,
+.theme-editor-sidebar .input-text,
+.theme-editor-sidebar .modal-close-text {
+  color: #111827; /* Black text */
+}
+.theme-editor-sidebar .text-dim {
+  color: #6b7280; /* Gray text */
+}
+.theme-editor-sidebar .input-bg {
+  background-color: #f3f4f6; /* Light gray background */
+  border-color: #d1d5db;
+}
+.theme-editor-sidebar .modal-border {
+  border-color: #e5e7eb; /* Light gray border */
+}
+.theme-editor-sidebar .btn-subtle {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+.theme-editor-sidebar .btn-subtle:hover {
+  background-color: #d1d5db;
+}
+.theme-editor-sidebar .btn-primary {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+.theme-editor-sidebar .btn-primary:hover {
+  background-color: #60a5fa;
+  color: #111827;
+}
