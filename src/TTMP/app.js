@@ -676,11 +676,48 @@ const defaultTheme = {
         "bgInteractiveHover": "#e5e7eb", "bgOutputCard": "#4b5563", "bgOutputTextarea": "#f3f4f6",
         "bgModalOverlay": "rgba(0, 0, 0, 0.5)", "textPrimary": "#ffffff", "textSecondary": "#9ca3af",
         "textTertiary": "#6b7280", "textAccent": "#000000", "textLink": "#ffffff", "accentPrimary": "#3b82f6",
+        "textOutputTextarea": "#000000",
         "accentPrimaryHover": "#93c5fd", "accentSecondary": "#22c55e", "accentSecondaryHover": "#86efac",
         "accentTertiary": "#ca8a04", "accentTertiaryHover": "#fde047", "accentDiscord": "#6366f1",
         "accentDiscordHover": "#818cf8", "border": "#374151", "ringPrimary": "#93c5fd", "ringDiscord": "#a5b4fc",
         "sliderThumb": "#60a5fa", "toggleBg": "#4b5563", "toggleBgChecked": "#22c55e", "toggleFg": "#ffffff"
     }
+};
+
+const lightTheme = {
+  "name": "Light",
+  "author": "Gemini",
+  "colors": {
+    "bgPrimary": "#e5e7eb",
+    "bgSecondary": "#ffffff",
+    "bgTertiary": "#9ca3af",
+    "bgInteractive": "#d1d5db",
+    "bgInteractiveHover": "#9ca3af",
+    "bgOutputCard": "#d1d5db",
+    "bgOutputTextarea": "#ffffff",
+    "bgModalOverlay": "rgba(0, 0, 0, 0.4)",
+    "textPrimary": "#111827",
+    "textSecondary": "#4b5563",
+    "textTertiary": "#6b7280",
+    "textAccent": "#ffffff",
+    "textOutputTextarea": "#111827",
+    "textLink": "#111827",
+    "accentPrimary": "#3b82f6",
+    "accentPrimaryHover": "#60a5fa",
+    "accentSecondary": "#22c55e",
+    "accentSecondaryHover": "#86efac",
+    "accentTertiary": "#ca8a04",
+    "accentTertiaryHover": "#fde047",
+    "accentDiscord": "#6366f1",
+    "accentDiscordHover": "#818cf8",
+    "border": "#9ca3af",
+    "ringPrimary": "#3b82f6",
+    "ringDiscord": "#6366f1",
+    "sliderThumb": "#3b82f6",
+    "toggleBg": "#d1d5db",
+    "toggleBgChecked": "#22c55e",
+    "toggleFg": "#ffffff"
+  }
 };
 
 function setupSettingsModal() {
@@ -766,6 +803,7 @@ function registerTheme(theme) {
 
 function setupThemeSystem() {
     registerTheme(defaultTheme);
+    registerTheme(lightTheme);
     try {
         const savedTheme = JSON.parse(getCookie("savedTheme"));
         if (savedTheme && savedTheme.name && savedTheme.colors) {

@@ -17,6 +17,7 @@
   --color-text-secondary: #9ca3af; /* Original: gray-400 */
   --color-text-tertiary: #6b7280; /* Original: gray-500 */
   --color-text-accent: #000000; /* Original: black */
+  --color-text-output-textarea: #000000; /* Original: black */
   --color-text-link: #ffffff; /* Original: white */
 
   /* Buttons & Accents */
@@ -158,7 +159,7 @@ body {
 .output-placeholder-text { color: var(--color-text-secondary); }
 .output-card-bg { background-color: var(--color-bg-output-card); }
 .output-textarea-bg { background-color: var(--color-bg-output-textarea); }
-.output-textarea-text { color: var(--color-text-accent); }
+.output-textarea-text { color: var(--color-text-output-textarea); }
 .timestamp-text { color: var(--color-text-primary); }
 
 /* Modal */
