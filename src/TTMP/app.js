@@ -1034,11 +1034,10 @@ function setupThemeEditorModal() {
 
         originalThemeBeforeEdit = JSON.parse(JSON.stringify(baseTheme));
         activeEditingTheme = JSON.parse(JSON.stringify(baseTheme));
-        activeEditingTheme.name = "";
-        activeEditingTheme.author = "";
 
-        themeNameInput.value = '';
-        themeAuthorInput.value = '';
+        // Populate form fields with the data of the theme being edited
+        themeNameInput.value = activeEditingTheme.name || '';
+        themeAuthorInput.value = activeEditingTheme.author || '';
 
         populateEditor(activeEditingTheme, previewArea);
         applyThemeToPreview(activeEditingTheme, previewArea);
