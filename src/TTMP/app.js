@@ -917,13 +917,25 @@ function setupThemeSystem() {
     setupThemeControls();
 }
 
-function exportSampleTheme() {
-    const jsonString = JSON.stringify(defaultTheme, null, 2);
+function exportCurrentTheme() {
+    const lastSelectedThemeName = localStorage.getItem("lastSelectedTheme") || defaultTheme.name;
+    const themeToExport = availableThemes[lastSelectedThemeName] || defaultTheme;
+
+    if (!themeToExport) {
+        showNotification("Could not find current theme to export.", "error");
+        return;
+    }
+
+    // Construct filename as requested: TTMP-Theme-THEMENAME.json
+    const fileName = `TTMP-Theme-${themeToExport.name}.json`;
+
+    const jsonString = JSON.stringify(themeToExport, null, 2);
     const blob = new Blob([jsonString], { type: "application/json" });
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'sample_theme.json';
+    a.download = fileName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -940,7 +952,7 @@ function setupThemeControls() {
     const themeOptions = document.getElementById('theme-options');
     const themeChevron = document.getElementById('theme-chevron');
 
-    if (exportButton) exportButton.addEventListener('click', exportSampleTheme);
+    if (exportButton) exportButton.addEventListener('click', exportCurrentTheme);
     
     if (uploadButton && themeInput) {
         uploadButton.addEventListener('click', () => themeInput.click());

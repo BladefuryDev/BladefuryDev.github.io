@@ -187,10 +187,7 @@
               <h2 class="text-lg font-bold card-title">Output Stack</h2>
               <button id="clear-overworld-output-button" class="btn btn-sm btn-tertiary text-on-accent-hover focus:outline-none">Clear</button>
             </div>
-             <div
-              id="overworld-output-stack"
-              class="w-full flex-grow max-h-96 overflow-y-auto rounded-lg p-2 space-y-4 custom-scrollbar output-stack-bg"
-            >
+            <div id="overworld-output-stack" class="w-full h-[22rem] overflow-y-auto rounded-lg p-2 space-y-4 custom-scrollbar output-stack-bg">
               <div id="overworld-output-placeholder" class="text-center p-8 output-placeholder-text">
                 Generated content will appear here...
               </div>
@@ -202,206 +199,106 @@
 
       <!-- Dungeons Page -->
       <div class="p-6 hidden page" id="dungeons-page">
-        <div
-          class="flex flex-col md:flex-row card-bg rounded-lg p-4 shadow-md md:space-x-4 md:space-y-0 space-y-4 mb-4"
-        >
-        <div
-        class="flex flex-col justify-center items-center rounded-md p-6 card-nested-bg"
-        id="file-config"
-      >
-        <div class="text-center inline-block mb-16">
-            <h2 class="text-lg font-bold card-title">File System</h2>
-            <label id="load-file-ident" class="text-sm text-dim">ℹ️ no file loaded</label>
-        </div>
-        <div
-          class="p-2 card-bg rounded-md flex flex-row justify-center items-center space-x-2"
-        >
-          <button id="new-file-button" class="btn btn-tertiary text-center text-on-accent-hover">
-            New File
-          </button>
-          <button id="load-file-button" class="btn btn-secondary text-on-accent-hover">
-            Load File
-          </button>
-          <button id="edit-file-button" class="btn btn-secondary text-on-accent-hover">
-            Edit File
-          </button>
-        </div>
-        <input type="file" id="file-loader" class="hidden" accept=".json" />
-      </div>
-          <!-- Diagnostics Panel (Restored to its original state) -->
-          <div
-            class="flex-1 flex flex-col items-center justify-center rounded-md p-6 space-y-2 select-none card-nested-bg"
-          >
-            <h2 class="card-title text-lg font-bold mb-2">
-              The loaded file currently includes:
-            </h2>
-            <label id="places-count" class="text-sm text-dim"
-              >0 - Places</label
-            >
-            <label id="items-count" class="text-sm text-dim"
-              >0 - Items</label
-            >
-            <label id="enemies-count" class="text-sm text-dim"
-              >0 - Enemies</label
-            >
-            <label id="loot-boxes-count" class="text-sm text-dim"
-              >0 - Loot Boxes</label
-            >
-            <label id="quests-count" class="text-sm text-dim"
-              >0 - Quest Assets</label
-            >
-          </div>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <div
-          class="flex flex-col md:flex-row card-bg rounded-lg p-4 shadow-md space-y-6 md:space-y-0 md:space-x-6 justify-around"
-        >
-          <!-- Encounter Config Column -->
-          <div
-            class="flex-1 flex flex-col items-center rounded-md p-6 space-y-6 card-nested-bg"
-            id="encounter-config"
-          >
-            <h2 class="text-lg font-bold card-title">
-              Encounter Configuration
-            </h2>
-
-            <div class="w-full">
-              <label
-                for="environment-select"
-                class="text-dim text-sm block mb-2"
-              >
-                Select Environment:
-              </label>
-              <select
-                id="environment-select"
-                class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover"
-              >
-                <option value="none">-- Load a file --</option>
-              </select>
+            <!-- Merged File System & Diagnostics Card -->
+            <div class="card-bg rounded-lg p-4 shadow-md lg:col-span-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center h-full">
+                    <!-- Left Side: File Controls -->
+                    <div class="flex flex-col items-center justify-center space-y-4 text-center h-full">
+                        <div>
+                            <h2 class="text-lg font-bold card-title">File System</h2>
+                            <label id="load-file-ident" class="text-sm text-dim">ℹ️ no file loaded</label>
+                        </div>
+                        <div class="flex-grow"></div> <!-- This spacer pushes buttons to the bottom -->
+                        <div class="flex flex-row justify-center items-center space-x-2">
+                            <button id="new-file-button" class="btn btn-tertiary text-center text-on-accent-hover">New</button>
+                            <button id="load-file-button" class="btn btn-secondary text-on-accent-hover">Load</button>
+                            <button id="edit-file-button" class="btn btn-secondary text-on-accent-hover">Edit</button>
+                        </div>
+                        <input type="file" id="file-loader" class="hidden" accept=".json" />
+                    </div>
+                    <!-- Right Side: Diagnostics -->
+                    <div class="flex flex-col items-center justify-center space-y-2 select-none card-nested-bg p-4 rounded-lg h-full">
+                        <h3 class="card-title text-md font-bold mb-2 text-center">File Diagnostics</h3>
+                        <label id="places-count" class="text-sm text-dim">0 - Places</label>
+                        <label id="items-count" class="text-sm text-dim">0 - Items</label>
+                        <label id="enemies-count" class="text-sm text-dim">0 - Enemies</label>
+                        <label id="loot-boxes-count" class="text-sm text-dim">0 - Loot Boxes</label>
+                        <label id="quests-count" class="text-sm text-dim">0 - Quest Assets</label>
+                    </div>
+                </div>
             </div>
 
-            <div class="w-full space-y-2">
-              <label class="text-dim text-sm block"
-                >Environmental Toggles:</label
-              >
-              <div class="flex items-center space-x-2">
-                <input type="checkbox" id="hazards" class="h-4 w-4 rounded text-blue-500 focus:ring-blue-400" />
-                <label for="hazards" class="text-dim text-sm"
-                  >Environmental Hazards</label
-                >
-              </div>
-              <div class="flex items-center space-x-2">
-                <input type="checkbox" id="berries" class="h-4 w-4 rounded text-blue-500 focus:ring-blue-400" />
-                <label for="berries" class="text-dim text-sm">Berries</label>
-              </div>
-              <div class="flex items-center space-x-2">
-                <input type="checkbox" id="loot-boxes" class="h-4 w-4 rounded text-blue-500 focus:ring-blue-400" />
-                <label for="loot-boxes" class="text-dim text-sm"
-                  >Loot Boxes</label
-                >
-              </div>
+            <!-- Card 3: Encounter Configuration -->
+            <div class="card-bg rounded-lg p-4 shadow-md flex flex-col space-y-4 h-full">
+                <h2 class="text-lg font-bold card-title text-center">Encounter Configuration</h2>
+                <div class="w-full">
+                    <label for="environment-select" class="text-dim text-sm block mb-2">Select Environment:</label>
+                    <select id="environment-select" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
+                        <option value="none">-- Load a file --</option>
+                    </select>
+                </div>
+                <div class="w-full space-y-2">
+                    <label class="text-dim text-sm block">Environmental Toggles:</label>
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="hazards" class="h-4 w-4 rounded text-accent-primary focus:ring-accent-primary" />
+                        <label for="hazards" class="text-dim text-sm">Environmental Hazards</label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="berries" class="h-4 w-4 rounded text-accent-primary focus:ring-accent-primary" />
+                        <label for="berries" class="text-dim text-sm">Berries</label>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="loot-boxes" class="h-4 w-4 rounded text-accent-primary focus:ring-accent-primary" />
+                        <label for="loot-boxes" class="text-dim text-sm">Loot Boxes</label>
+                    </div>
+                </div>
+                <div class="w-full mt-auto pt-2">
+                    <button id="encounter-execute-button" class="w-full btn btn-primary focus:outline-none">Execute</button>
+                </div>
             </div>
 
-            <div class="w-full mt-auto">
-              <button
-                id="encounter-execute-button"
-                class="w-full btn btn-primary focus:outline-none focus:ring-2 focus:ring-blue-400"
-              >
-                Execute
-              </button>
+            <!-- Card 4: Enemy Management -->
+            <div class="card-bg rounded-lg p-4 shadow-md flex flex-col space-y-4 h-full">
+                <h2 class="text-lg font-bold card-title text-center">Enemy Management</h2>
+                <div class="w-full flex items-center justify-between">
+                    <label for="mission-area-dropdown" class="text-dim text-sm mr-2">Mission area is:</label>
+                    <select id="mission-area-dropdown" class="w-48 rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
+                        <option value="none">-- Load a file --</option>
+                    </select>
+                </div>
+                <div class="w-full flex items-center justify-between">
+                    <label for="num-foes" class="text-dim text-sm mr-2">Number of foes:</label>
+                    <input type="number" id="num-foes" min="1" max="99" value="1" class="w-14 rounded-lg p-1 text-center cursor-pointer transition-colors input-bg input-text input-hover" />
+                </div>
+                <div class="w-full flex items-center space-x-2">
+                    <input type="checkbox" id="include-bosses" class="h-4 w-4 rounded text-accent-primary focus:ring-accent-primary" />
+                    <label for="include-bosses" class="text-dim text-sm">Include Bosses</label>
+                </div>
+                <div class="w-full flex items-center space-x-2">
+                    <input id="boss-spawn-slider" type="range" min="1" max="100" value="25" class="w-full disabled:opacity-50 input-slider" disabled />
+                    <span id="boss-spawn-chance-label" class="text-dim text-sm w-12 text-right">25%</span>
+                </div>
+                <div class="w-full mt-auto pt-2">
+                    <button id="enemy-execute-button" class="w-full btn btn-primary focus:outline-none">Execute</button>
+                </div>
             </div>
-          </div>
-
-          <!-- Enemy Management Column -->
-          <div
-            class="flex-1 flex flex-col items-center rounded-md p-6 space-y-4 card-nested-bg"
-            id="enemy-spawner-frame"
-          >
-            <h2 class="text-lg font-bold card-title">Enemy Management</h2>
             
-            <div class="w-full space-y-4">
-              <div class="w-full flex items-center justify-between">
-                <label for="mission-area-dropdown" class="text-dim text-sm mr-2"
-                  >Mission area is:</label
-                >
-                <select
-                  id="mission-area-dropdown"
-                  class="w-48 rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover"
-                >
-                  <option value="none">-- Load a file --</option>
-                </select>
-              </div>
-
-              <div class="w-full flex items-center justify-between">
-                <label for="num-foes" class="text-dim text-sm mr-2"
-                  >Number of foes to spawn:</label
-                >
-                <input
-                  type="number"
-                  id="num-foes"
-                  min="1"
-                  max="99"
-                  value="1"
-                  class="w-14 rounded-lg p-1 text-center cursor-pointer transition-colors input-bg input-text input-hover"
-                />
-              </div>
-
-              <div class="w-full flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  id="include-bosses"
-                  class="h-4 w-4 rounded text-blue-500 focus:ring-blue-400"
-                />
-                <label for="include-bosses" class="text-dim text-sm"
-                  >Include Bosses</label
-                >
-              </div>
-
-              <div class="w-full flex items-center space-x-2">
-                <input
-                  id="boss-spawn-slider"
-                  type="range"
-                  min="1"
-                  max="100"
-                  value="25"
-                  class="w-full disabled:opacity-50 input-slider"
-                  disabled
-                />
-                <span id="boss-spawn-chance-label" class="text-dim text-sm w-12 text-right">25%</span>
-              </div>
-
-              <div class="w-full flex items-center justify-around mt-4">
-                <button
-                  id="enemy-execute-button"
-                  class="w-full btn btn-primary focus:outline-none focus:ring-2 focus:ring-blue-400"
-                >
-                  Execute
-                </button>
-              </div>
+            <!-- Card 5: Output Stack -->
+            <div class="card-bg rounded-lg p-4 shadow-md flex flex-col md:col-span-2 lg:col-span-2 h-full">
+                <div class="w-full flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold card-title">Output Stack</h2>
+                    <button id="clear-dungeons-output-button" class="btn btn-sm btn-tertiary text-on-accent-hover focus:outline-none">Clear</button>
+                </div>
+                <div id="output-stack" class="w-full h-[22rem] overflow-y-auto rounded-lg p-2 space-y-4 custom-scrollbar output-stack-bg">
+                    <div id="output-placeholder" class="text-center p-8 output-placeholder-text">
+                        Generated content will appear here...
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <!-- Execution Output Column -->
-          <div
-            class="flex-1 flex flex-col items-center rounded-md p-6 space-y-4 card-nested-bg"
-          >
-            <div class="w-full flex justify-between items-center">
-              <h2 class="text-lg font-bold card-title">Output Stack</h2>
-              <button id="clear-dungeons-output-button" class="btn btn-sm btn-tertiary text-on-accent-hover focus:outline-none">Clear</button>
-            </div>
-            <!-- Scrollable Frame -->
-            <div
-              id="output-stack"
-              class="w-full max-h-96 overflow-y-auto rounded-lg p-2 space-y-4 h-full custom-scrollbar output-stack-bg"
-            >
-              <div id="output-placeholder" class="text-center p-8 output-placeholder-text">
-                Generated content will appear here...
-              </div>
-              <!-- New output cards will be prepended here -->
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
     </main>
 
     <!-- Footer -->
@@ -465,10 +362,10 @@
                 </div>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-3 gap-2">
               <button id="export-theme-button" class="w-full btn btn-subtle">Export</button>
-              <button id="create-theme-button" class="w-full btn btn-subtle hidden">Create</button>
-              <button id="upload-theme-button" class="w-full btn btn-subtle">Upload</button>
+              <button id="create-theme-button" class="w-full btn btn-secondary">Edit</button>
+              <button id="upload-theme-button" class="w-full btn btn-primary">Upload</button>
           </div>
           <input type="file" id="theme-loader" class="hidden" accept=".json" />
         </div>
@@ -565,76 +462,95 @@
           </div>
 
           <!-- Main Area: Preview -->
-          <div id="theme-editor-preview-area" class="flex-grow min-h-0 overflow-y-auto custom-scrollbar rounded-lg p-4 sm:p-6" style="background-color: var(--color-bg-primary);">
-            <div class="max-w-lg mx-auto">
-                <h3 class="text-lg font-bold text-center mb-6 text-main">Live Preview</h3>
-                
-                <!-- Wrapper for Mockup Card to test bg-tertiary -->
-                <div class="rounded-lg p-4 shadow-inner" style="background-color: var(--color-bg-tertiary);">
-                  <!-- Mockup Card -->
-                  <div class="relative card-bg rounded-lg p-4 pt-16 shadow-md flex flex-col space-y-4">
-                  <!-- Mockup Header -->
-                  <nav class="absolute top-0 left-0 right-0 z-10 rounded-t-lg shadow-md p-2" style="background-color: var(--color-bg-secondary);">
-                      <div class="flex items-center justify-between h-8">
-                          <div class="flex-shrink-0">
-                              <h1 class="text-lg font-bold text-main">App Name</h1>
-                          </div>
-                          <div class="flex items-center space-x-2">
-                              <a href="#" class="nav-text nav-link-active nav-link-hover px-2 py-1 rounded-md text-xs font-medium">Page 1</a>
-                              <a href="#" class="nav-text nav-link-hover px-2 py-1 rounded-md text-xs font-medium">Page 2</a>
-                              <a href="#" class="nav-settings-hover p-1 rounded-md">
-                                  <div class="h-5 w-5 icon-mask"></div>
-                              </a>
-                          </div>
+          <div id="theme-editor-preview-area" class="flex-grow min-h-0 overflow-y-auto custom-scrollbar rounded-lg" style="background-color: var(--color-bg-primary);">
+            <!-- Mockup Navbar -->
+            <nav class="sticky top-0 z-10 rounded-t-lg shadow-md p-2" style="background-color: var(--color-bg-secondary);">
+                <div class="flex items-center justify-between h-10 px-4">
+                    <h1 class="text-lg font-bold text-main">Site Preview</h1>
+                    <div class="flex items-center space-x-2">
+                        <a href="#" class="nav-text nav-link-active nav-link-hover px-3 py-2 rounded-b-md text-sm font-medium">Overworld</a>
+                        <a href="#" class="nav-text nav-link-hover px-3 py-2 rounded-b-md text-sm font-medium">Dungeons</a>
+                        <a href="#" class="nav-settings-hover p-1 rounded-b-md">
+                            <div class="h-6 w-6 icon-mask" style="background-color: var(--color-text-link);"></div>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        
+            <!-- Mockup Main Content -->
+            <main class="p-4 sm:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Left Column: Controls -->
+                    <div class="card-bg rounded-lg p-4 shadow-md flex flex-col space-y-4">
+                        <h2 class="text-lg font-bold text-center card-title">Interactive Elements</h2>
+                        
+                        <!-- Dropdown -->
+                        <div>
+                            <label class="text-dim text-sm block mb-2">Sample Dropdown:</label>
+                            <select class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
+                                <option>An option</option>
+                                <option>Another option</option>
+                            </select>
                         </div>
-                  </nav>
-                  <h2 class="text-lg font-bold card-title">Sample Card Title</h2>
-                  <p class="text-main">This is primary text color. It should be easily readable.</p>
-                  <p class="text-dim">This is dimmed text, for subtitles or less important information.</p>
-
-                  <!-- Buttons -->
-                  <div class="flex flex-wrap gap-2 pt-2">
-                      <button class="btn btn-primary text-on-accent-hover">Primary</button>
-                      <button class="btn btn-secondary text-on-accent-hover">Secondary</button>
-                      <button class="btn btn-tertiary text-on-accent-hover">Tertiary</button>
-                      <button class="btn btn-discord text-on-accent-hover">Discord</button>
-                  </div>
-
-                  <!-- Input -->
-                  <div>
-                      <label for="theme-preview-input" class="text-dim text-sm block mb-2">Sample Input:</label>
-                      <input type="text" id="theme-preview-input" placeholder="Type here..." class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
-                  </div>
-                  
-                  <!-- Output Card Mockup -->
-                  <div class="output-card-bg rounded-lg p-2 shadow-inner space-y-2 w-full">
-                    <textarea aria-label="generated text" class="w-full p-2 rounded-md resize-none overflow-hidden text-sm output-textarea-bg output-textarea-text" rows="2" readonly>This is an output card, like in the main app.</textarea>
-                  </div>
-
-                  <div class="pt-4">
-                      <label for="theme-preview-dropdown" class="text-dim text-sm block mb-2">Sample Dropdown:</label>
-                      <select id="theme-preview-dropdown" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
-                          <option>Option 1</option>
-                          <option>Option 2</option>
-                      </select>
-                  </div>
-
-                  <div class="w-full space-y-2 pt-4">
-                      <label class="text-dim text-sm block">Sample Slider:</label>
-                      <div class="flex items-center space-x-2">
-                          <input type="range" class="w-full input-slider"/>
-                          <span class="text-dim text-sm w-12 text-right">50%</span>
-                      </div>
-                  </div>
-
-                  <!-- Toggle -->
-                  <div class="flex items-center gap-x-3 pt-2">
-                      <span class="text-dim text-sm">A Checkbox</span>
-                      <input type="checkbox" id="toggle-preview" class="h-5 w-5 rounded cursor-pointer input-bg border-transparent text-accent-primary focus:ring-accent-primary" checked>
-                  </div>
+        
+                        <!-- Input -->
+                        <div>
+                            <label class="text-dim text-sm block mb-2">Text Input:</label>
+                            <input type="text" placeholder="Styled placeholder text..." class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover" style="--tw-placeholder-opacity: 1; color: var(--color-text-tertiary);">
+                        </div>
+        
+                        <!-- Slider -->
+                        <div class="w-full space-y-2">
+                            <label class="text-dim text-sm block">Styled Slider:</label>
+                            <div class="flex items-center space-x-2">
+                                <input type="range" min="1" max="5" value="3" class="w-full input-slider" style="accent-color: var(--color-slider-thumb);"/>
+                                <span class="text-dim text-sm w-12 text-right">Tier 3</span>
+                            </div>
+                        </div>
+        
+                        <!-- Checkbox -->
+                        <div class="flex items-center space-x-2 pt-2">
+                            <input type="checkbox" id="preview-checkbox" class="h-4 w-4 rounded" style="color: var(--color-accent-primary); background-color: var(--color-bg-interactive);" checked/>
+                            <label for="preview-checkbox" class="text-dim text-sm">Styled Checkbox</label>
+                        </div>
+        
+                        <!-- Buttons -->
+                        <div class="w-full pt-4 space-y-2">
+                            <button class="w-full btn btn-primary text-on-accent-hover">Primary Button</button>
+                            <button class="w-full btn btn-secondary text-on-accent-hover">Secondary Button</button>
+                            <button class="w-full btn btn-tertiary text-on-accent-hover">Tertiary Button</button>
+                        </div>
+                    </div>
+        
+                    <!-- Right Column: Output -->
+                    <div class="card-bg rounded-lg p-4 shadow-md flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-bold card-title">Output Preview</h2>
+                            <button class="btn btn-sm btn-subtle">Clear</button>
+                        </div>
+                        <div class="w-full flex-grow rounded-lg p-2 space-y-4 custom-scrollbar" style="background-color: var(--color-bg-primary);">
+                            <!-- Mockup Output Card -->
+                            <div class="rounded-lg p-2 shadow-md space-y-2 w-full" style="background-color: var(--color-bg-output-card);">
+                                <textarea aria-label="generated text" class="w-full p-2 rounded-md resize-none overflow-hidden text-sm" style="background-color: var(--color-bg-output-textarea); color: var(--color-text-output-textarea);" rows="3" readonly>This is a sample output card. It uses different background and text colors.</textarea>
+                                <div class="w-full flex justify-end items-center mt-2">
+                                    <label class="timestamp-text text-xs font-mono mr-auto" style="color: var(--color-text-primary);">12:34:56 PM</label>
+                                    <button class="discord-copy-btn btn btn-sm btn-discord text-on-accent-hover focus:outline-none mr-2">Discord</button>
+                                    <button class="copy-btn btn btn-sm btn-primary text-on-accent-hover focus:outline-none">Copy</button>
+                                </div>
+                            </div>
+                            <!-- Placeholder -->
+                             <div class="text-center p-8" style="color: var(--color-text-secondary);">
+                                Generated content will appear here...
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- Tertiary BG test -->
+                <div class="mt-6 rounded-lg p-4 text-center" style="background-color: var(--color-bg-tertiary);">
+                    <p class="font-semibold" style="color: var(--color-text-primary);">This area uses the 'Tertiary' background color.</p>
                 </div>
-            </div>
+            </main>
           </div>
         </div>
 
