@@ -322,3 +322,25 @@ body {
   /* Add this line for a smooth color change when switching themes */
   transition: background-color 0.2s;
 }
+
+/* Styles for the custom theme dropdown items */
+.theme-option-item:hover {
+    background-color: var(--color-bg-interactive);
+}
+
+/* Change text color on hover for better visibility */
+.theme-option-item:hover .text-dim,
+.theme-option-item:hover .delete-theme-btn {
+    color: var(--color-text-accent);
+}
+
+/* Hide the delete button by default */
+.delete-theme-btn {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+/* Show the delete button when hovering over a theme item */
+.theme-option-item:hover .delete-theme-btn {
+    opacity: 1;
+}

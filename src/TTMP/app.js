@@ -782,9 +782,10 @@ function applyTheme(theme) {
         root.style.setProperty(cssVarName, value);
     }
     
-    const themeSelect = document.getElementById('theme-select');
-    if (themeSelect) {
-        themeSelect.value = theme.name;
+    // Update the custom dropdown button text instead of a select element
+    const selectedThemeNameEl = document.getElementById('selected-theme-name');
+    if (selectedThemeNameEl) {
+        selectedThemeNameEl.textContent = theme.name;
     }
     console.log(`Theme "${theme.name}" applied.`);
 }
@@ -801,21 +802,117 @@ function registerTheme(theme) {
     }
 }
 
-function setupThemeSystem() {
-    registerTheme(defaultTheme);
-    registerTheme(lightTheme);
-    try {
-        const savedTheme = JSON.parse(getCookie("savedTheme"));
-        if (savedTheme && savedTheme.name && savedTheme.colors) {
-            registerTheme(savedTheme);
-            applyTheme(savedTheme);
-        } else { 
-            applyTheme(defaultTheme); 
+function populateThemeDropdown() {
+    const themeOptionsContainer = document.getElementById('theme-options');
+    if (!themeOptionsContainer) return;
+
+    themeOptionsContainer.innerHTML = ''; // Clear existing options
+
+    const userThemeNames = (JSON.parse(localStorage.getItem("userThemes")) || []).map(t => t.name);
+
+    Object.values(availableThemes).forEach(theme => {
+        const isUserTheme = userThemeNames.includes(theme.name);
+        // Built-in themes should not be deletable
+        const isDefaultTheme = theme.name === defaultTheme.name || theme.name === lightTheme.name;
+
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'theme-option-item text-main cursor-pointer p-2 flex justify-between items-center';
+        optionDiv.dataset.themeName = theme.name;
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = theme.name;
+        optionDiv.appendChild(nameSpan);
+
+        // Add a delete button only for user-uploaded themes
+        if (isUserTheme && !isDefaultTheme) {
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerHTML = '&times;'; // A simple 'X' character
+            deleteBtn.className = 'delete-theme-btn btn btn-danger rounded-full w-6 h-6 flex items-center justify-center text-base leading-none';
+            deleteBtn.title = `Delete ${theme.name}`;
+            deleteBtn.dataset.themeName = theme.name;
+            
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation(); // Prevent the click from also applying the theme
+                deleteTheme(theme.name);
+            };
+            optionDiv.appendChild(deleteBtn);
         }
-    } catch (e) {
-        console.error("Failed to load theme from cookie, using default:", e);
+        
+        // Event listener to apply the theme when an option is clicked
+        optionDiv.addEventListener('click', () => {
+            const themeToApply = availableThemes[theme.name];
+            if (themeToApply) {
+                applyTheme(themeToApply);
+                localStorage.setItem("lastSelectedTheme", theme.name);
+                showNotification(`Theme set to ${theme.name}`, 'info');
+                // Hide the dropdown after selection
+                document.getElementById('theme-options').classList.add('hidden');
+                document.getElementById('theme-chevron').classList.remove('rotate-180');
+            }
+        });
+
+        themeOptionsContainer.appendChild(optionDiv);
+    });
+}
+
+function deleteTheme(themeName) {
+    // 1. Remove the theme from localStorage
+    let userThemes = JSON.parse(localStorage.getItem("userThemes")) || [];
+    userThemes = userThemes.filter(t => t.name !== themeName);
+    localStorage.setItem("userThemes", JSON.stringify(userThemes));
+
+    // 2. Remove the theme from the runtime `availableThemes` object
+    delete availableThemes[themeName];
+
+    // 3. Check if the deleted theme was the currently active one
+    const lastSelected = localStorage.getItem("lastSelectedTheme");
+    if (lastSelected === themeName) {
+        // If so, revert to the default theme
+        localStorage.setItem("lastSelectedTheme", defaultTheme.name);
         applyTheme(defaultTheme);
     }
+
+    // 4. Repopulate the dropdown to reflect the deletion
+    populateThemeDropdown();
+
+    showNotification(`Theme "${themeName}" deleted.`, 'info');
+}
+
+function setupThemeSystem() {
+    // 1. Register built-in themes by adding them to the availableThemes object.
+    availableThemes[defaultTheme.name] = defaultTheme;
+    availableThemes[lightTheme.name] = lightTheme;
+
+    // 2. Load user-uploaded themes from storage.
+    try {
+        const userThemes = JSON.parse(localStorage.getItem("userThemes"));
+        if (Array.isArray(userThemes)) {
+            // Add user themes to the availableThemes object.
+            userThemes.forEach(theme => {
+                if (theme && theme.name) {
+                    availableThemes[theme.name] = theme;
+                }
+            });
+        }
+    } catch (e) {
+        console.error("Failed to load user themes from localStorage:", e);
+        localStorage.removeItem("userThemes"); // Clear corrupted data.
+    }
+
+    // 3. Populate the new custom dropdown UI
+    populateThemeDropdown();
+
+    // 4. Load and apply the last-selected theme.
+    try {
+        const lastSelectedThemeName = localStorage.getItem("lastSelectedTheme");
+        const themeToApply = availableThemes[lastSelectedThemeName] || defaultTheme;
+        applyTheme(themeToApply);
+    } catch (e) {
+        console.error("Failed to load last selected theme, using default:", e);
+        applyTheme(defaultTheme);
+    }
+
+    // 5. Set up event listeners for theme controls.
     setupThemeControls();
 }
 
@@ -836,9 +933,14 @@ function setupThemeControls() {
     const exportButton = document.getElementById('export-theme-button');
     const uploadButton = document.getElementById('upload-theme-button');
     const themeInput = document.getElementById('theme-loader');
-    const themeSelect = document.getElementById('theme-select');
+    
+    // Custom dropdown elements
+    const dropdownButton = document.getElementById('theme-select-button');
+    const themeOptions = document.getElementById('theme-options');
+    const themeChevron = document.getElementById('theme-chevron');
 
     if (exportButton) exportButton.addEventListener('click', exportSampleTheme);
+    
     if (uploadButton && themeInput) {
         uploadButton.addEventListener('click', () => themeInput.click());
         themeInput.addEventListener('change', (event) => {
@@ -847,12 +949,18 @@ function setupThemeControls() {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     try {
-                        const theme = JSON.parse(e.target.result);
-                        if (theme.name && theme.colors) {
-                            registerTheme(theme);
-                            applyTheme(theme);
-                            setCookie("savedTheme", JSON.stringify(theme), 365);
-                            showNotification(`Theme "${theme.name}" loaded successfully!`, 'success');
+                        const newTheme = JSON.parse(e.target.result);
+                        if (newTheme.name && newTheme.colors) {
+                            let userThemes = JSON.parse(localStorage.getItem("userThemes")) || [];
+                            userThemes = userThemes.filter(t => t.name !== newTheme.name);
+                            userThemes.push(newTheme);
+                            localStorage.setItem("userThemes", JSON.stringify(userThemes));
+
+                            availableThemes[newTheme.name] = newTheme; // Add to runtime object
+                            populateThemeDropdown(); // Re-draw the dropdown
+                            applyTheme(newTheme);
+                            localStorage.setItem("lastSelectedTheme", newTheme.name);
+                            showNotification(`Theme "${newTheme.name}" loaded and saved!`, 'success');
                         } else {
                             showNotification("Invalid theme file.", 'error');
                         }
@@ -867,13 +975,21 @@ function setupThemeControls() {
             themeInput.value = '';
         });
     }
-    if (themeSelect) {
-        themeSelect.addEventListener('change', () => {
-            const themeToApply = availableThemes[themeSelect.value];
-            if (themeToApply) {
-                applyTheme(themeToApply);
-                setCookie("savedTheme", JSON.stringify(themeToApply), 365);
-                showNotification(`Theme set to ${themeSelect.value}`, 'info');
+
+    // Logic for custom dropdown interactivity
+    if (dropdownButton && themeOptions && themeChevron) {
+        // Toggle dropdown visibility on button click
+        dropdownButton.addEventListener('click', () => {
+            const isHidden = themeOptions.classList.toggle('hidden');
+            themeChevron.classList.toggle('rotate-180', !isHidden);
+        });
+
+        // Close dropdown if clicking anywhere else on the page
+        window.addEventListener('click', (e) => {
+            const container = document.getElementById('theme-dropdown-container');
+            if (container && !container.contains(e.target)) {
+                themeOptions.classList.add('hidden');
+                themeChevron.classList.remove('rotate-180');
             }
         });
     }

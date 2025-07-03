@@ -443,10 +443,21 @@
         <div class="space-y-4 mb-6 pb-6 modal-border">
           <h3 class="text-lg font-medium card-title">Appearance</h3>
           <div>
-            <label for="theme-select" class="text-dim text-sm block mb-2">Theme:</label>
-            <select id="theme-select" class="w-full rounded-lg p-2 cursor-pointer transition-colors input-bg input-text input-hover">
-              <!-- Options will be populated by JavaScript -->
-            </select>
+            <label for="theme-select-button" class="text-dim text-sm block mb-2">Theme:</label>
+            <div class="relative" id="theme-dropdown-container">
+                <!-- This button shows the currently selected theme and opens the dropdown -->
+                <button id="theme-select-button" class="w-full rounded-lg p-2 text-left transition-colors input-bg input-text input-hover flex justify-between items-center">
+                    <span id="selected-theme-name"></span>
+                    <!-- Chevron icon to indicate it's a dropdown -->
+                    <svg class="w-5 h-5 text-dim transform transition-transform" id="theme-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <!-- This panel contains the list of themes and will be shown/hidden with JS -->
+                <div id="theme-options" class="hidden absolute z-10 mt-1 w-full rounded-md shadow-lg output-stack-bg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-40 overflow-y-auto border border-white custom-scrollbar">
+                    <!-- Theme items will be populated by JavaScript -->
+                </div>
+            </div>
           </div>
           <div class="grid grid-cols-2 gap-2">
               <button id="export-theme-button" class="w-full btn btn-subtle">Export Sample</button>
