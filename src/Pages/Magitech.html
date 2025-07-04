@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Magitech Starship Tech Tree</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Paradigm Blue -->
+    <!-- Application Structure Plan: The SPA is structured as a vertical timeline, with each Tier represented as a major section. This linear progression is intuitive for a tech tree. Users can scroll through the Tiers or use the sticky top navigation to jump to a specific Tier. Within each Tier, technologies are displayed as interactive cards. Clicking a card opens a modal window with detailed information (Description and Unlocks), preventing clutter and allowing users to focus on one piece of information at a time. This structure is user-friendly, encourages exploration, and logically organizes the report's hierarchical content into a browsable, interactive format. -->
+    <!-- Visualization & Content Choices: The core of the application is an interactive timeline/flowchart built with HTML and Tailwind CSS, which effectively visualizes the progression through Tiers. Report Info (e.g., "Basic Metallurgy") is presented in a card format (Goal: Inform). The interaction is a click-to-reveal modal (Method: JS dynamic content), providing detailed descriptions and a list of unlocked constructs. The list of unlocks uses icons (Unicode characters) for better visual parsing. This approach was chosen to make the dense, text-based information digestible and engaging, turning a static document into an explorable guide. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-link.active {
+            color: #0369a1; /* Sky 700 */
+            background-color: #e0f2fe; /* Sky 100 */
+        }
+        .dark .nav-link.active {
+            color: #ffffff;
+            background-color: #0ea5e9; /* Sky 500 */
+        }
+        .tech-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .tech-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .dark .tech-card:hover {
+             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+        }
+        #modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        #modal-panel {
+            transition: all 0.3s ease;
+        }
+    </style>
+    <script>
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark')
+            } else {
+                document.documentElement.classList.remove('dark')
+            }
+        });
+    </script>
+</head>
+<body class="antialiased bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300">
+    <div id="app" class="relative">
+
+        <!-- Header & Navigation -->
+        <header class="sticky top-0 z-30 bg-sky-600/95 dark:bg-sky-800/95 backdrop-blur-md shadow-lg">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col items-center py-4">
+                    <h1 class="text-2xl md:text-3xl font-bold text-white">Magitech Starship Tech Tree</h1>
+                    <p class="text-sm text-sky-100 dark:text-sky-200 mt-1">An interactive guide to technological advancement.</p>
+                </div>
+                <nav id="tier-nav" class="flex flex-wrap justify-center border-t border-sky-500/50 dark:border-sky-600/50">
+                    <a href="#tier-0" class="nav-link text-sm font-medium text-sky-100 hover:bg-sky-500/50 dark:text-sky-200 dark:hover:bg-sky-700/50 px-4 py-3 md:px-6 transition-colors duration-300">Tier 0</a>
+                    <a href="#tier-1" class="nav-link text-sm font-medium text-sky-100 hover:bg-sky-500/50 dark:text-sky-200 dark:hover:bg-sky-700/50 px-4 py-3 md:px-6 transition-colors duration-300">Tier 1</a>
+                    <a href="#tier-2" class="nav-link text-sm font-medium text-sky-100 hover:bg-sky-500/50 dark:text-sky-200 dark:hover:bg-sky-700/50 px-4 py-3 md:px-6 transition-colors duration-300">Tier 2</a>
+                    <a href="#tier-3" class="nav-link text-sm font-medium text-sky-100 hover:bg-sky-500/50 dark:text-sky-200 dark:hover:bg-sky-700/50 px-4 py-3 md:px-6 transition-colors duration-300">Tier 3</a>
+                    <a href="#tier-4" class="nav-link text-sm font-medium text-sky-100 hover:bg-sky-500/50 dark:text-sky-200 dark:hover:bg-sky-700/50 px-4 py-3 md:px-6 transition-colors duration-300">Tier 4</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto p-4 md:p-8">
+            <div id="tech-tree-container" class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-4 -ml-px h-full w-0.5 bg-slate-300 dark:bg-slate-700"></div>
+                
+                <!-- Tiers will be dynamically injected here -->
+            </div>
+        </main>
+        
+        <!-- Modal -->
+        <div id="modal" class="hidden fixed inset-0 z-40 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-60 transition-opacity"></div>
+            <div class="flex items-center justify-center min-h-screen px-4 text-center">
+                <div id="modal-panel" class="relative bg-white dark:bg-slate-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-2xl sm:w-full">
+                    <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 dark:bg-sky-900/50 sm:mx-0 sm:h-10 sm:w-10">
+                                <span id="modal-icon" class="text-xl text-sky-600 dark:text-sky-400"></span>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                <h3 class="text-xl leading-6 font-bold text-slate-900 dark:text-slate-100" id="modal-title"></h3>
+                                <div class="mt-4">
+                                    <p class="text-sm text-slate-600 dark:text-slate-400" id="modal-description"></p>
+                                </div>
+                                <div class="mt-6">
+                                    <h4 class="text-md font-semibold text-slate-800 dark:text-slate-200">Unlocks:</h4>
+                                    <ul id="modal-unlocks" class="mt-2 list-none space-y-2 text-sm text-slate-700 dark:text-slate-300">
+                                        <!-- Unlocks will be dynamically injected here -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-900/50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button id="close-modal-btn" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-slate-300 dark:border-slate-600 shadow-sm px-4 py-2 bg-white dark:bg-slate-700 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const techTreeData = {
+            "tier-0": {
+                title: "Foundational Principles & Existing Technology",
+                description: "This tier focuses on understanding and replicating the established magitech of the world.",
+                icon: "🏛️",
+                technologies: [
+                    { name: "Basic Metallurgy & Forging", icon: "🛠️", description: "The ability to smelt and work with common metals found in the world.", unlocks: ["Hand tools (hammers, tongs)", "Gears, pistons", "Basic structural frames", "Simple armor & weapons"] },
+                    { name: "Orb Material Science", icon: "🔮", description: "The discovery that the crystalline material of Orbs can be ground into a fine powder.", unlocks: ["Orb Dust (raw material)", "Orb Grinders", "Enchanting Ink/Paint"] },
+                    { name: "Applied Alchemy & Essence Capture", icon: "�", description: "Analyzing the process of capturing an item's core properties by accelerating its natural decay.", unlocks: ["Bottled Essences (potions, antidotes)", "Enchantment Catalysts", "Foundational knowledge for enchantment"] },
+                    { name: "Controlled Energy Release", icon: "🔥", description: "Developing methods to release the energy of volatile items like Blast Seeds in a controlled manner.", unlocks: ["Magitech Soldering Iron", "Controlled Heat Lances"] },
+                    { name: "Replication of Enchanting Technology", icon: "✨", description: "Building and refining common enchanting tools like the Enchanting Station and Orb Ring.", unlocks: ["Mass-produced Enchanted Apparel", "Basic Enchanted Tools", "Guild Badge Mark II"] }
+                ]
+            },
+            "tier-1": {
+                title: "Reverse-Engineering & Prototyping",
+                description: "This tier focuses on rediscovering lost arts and creating the first new, large-scale systems.",
+                icon: "⚙️",
+                technologies: [
+                    { name: "Reverse-Engineering Lost Tech (Enter Cards)", icon: "🗺️", description: "Studying rare artifacts to understand and adapt their principles for targeted teleportation using Escape Orbs.", unlocks: ["Prototype Teleportation Pads", "Subspace Scanners"] },
+                    { name: "Multi-Orb Power Core", icon: "🔋", description: "A power core capable of harnessing energy from multiple Orbs simultaneously for significantly higher output.", unlocks: ["Workshop Power Grids", "Static Defense Turrets", "Heavy-Duty Magitech Machinery"] },
+                    { name: "Repulsorlift Technology (Atmospheric)", icon: "✈️", description: "Utilizing gravity manipulation to create localized anti-gravity fields for atmospheric flight.", unlocks: ["Magitech Elevators", "Cargo Skiffs", "Personal Hover-platforms", "Basic atmospheric vehicles"] }
+                ]
+            },
+            "tier-2": {
+                title: "System Integration & The 'Intent' Problem",
+                description: "This tier focuses on developing advanced ship systems and solving the core problems of magitech operation.",
+                icon: "🧩",
+                technologies: [
+                    { name: "Regenerative Hull Plating", icon: "🛡️", description: "A metallic alloy with a subsurface matrix of Orb Dust enchanted with the regenerative essence of Oran Berries.", unlocks: ["Self-Repairing Infrastructure", "Regenerative Armor", "Advanced atmospheric vehicle hulls"] },
+                    { name: "Basic AI (The 'Intent' Problem)", icon: "🧠", description: "Developing a rudimentary 'system consciousness' based on Connection Orb principles to manage autonomous systems.", unlocks: ["Automated Workshop Assistants", "'Smart Home' systems", "Autonomous Environmental Systems"] },
+                    { name: "Haptic-Aura Bridge", icon: "🕹️", description: "A physical control interface that translates user actions into 'intent' signals the ship's systems can understand.", unlocks: ["Intuitive Control Consoles", "Remote Piloting Stations", "Accessible Magitech Interfaces"] }
+                ]
+            },
+            "tier-3": {
+                title: "Starship Systems & FTL",
+                description: "This tier focuses on the final components needed for a true starship.",
+                icon: "🚀",
+                technologies: [
+                    { name: "Jump Drive (Reverse-Engineered)", icon: "🌌", description: "A propulsion system using an array of synchronized Escape Orbs to create a massive portal for an instantaneous jump.", unlocks: ["Starship Jump Drive Module", "Stationary Interplanetary Portal Network", "Emergency Escape Teleporters"] },
+                    { name: "Zero-Point Tap (Subspace Manifold)", icon: "⚡", description: "Harnessing vacuum energy from a stable, microscopic rift into subspace for a near-limitless power supply.", unlocks: ["City-Wide Power Grids", "Planetary Defense Shields", "Terraforming power sources"] },
+                    { name: "Life Support (Reviver Seed Integration)", icon: "🌿", description: "A system that circulates air and water through conduits enchanted with the essence of Reviver Seeds.", unlocks: ["Sealed Habitat Life Support", "Advanced Med-bay systems", "Environmental Purifiers"] },
+                    { name: "Advanced AI (Emergent Evolution)", icon: "🤖", description: "Evolving the basic AI into a true sentient being by vastly expanding its internal Connection Orb network.", unlocks: ["Sentient Ship/Station Managers", "Advanced Research & Tactical AIs", "AI-driven Diplomatic Envoys"] },
+                    { name: "Personnel & Cargo Transporters", icon: "🌀", description: "A refined, short-range application of the Jump Drive's principles to teleport objects and individuals without harm.", unlocks: ["Personnel Transporter Pads", "Cargo Transporters", "Short-range tactical insertion systems"] }
+                ]
+            },
+            "tier-4": {
+                title: "The First Starship",
+                description: "This tier represents the culmination of all previous research and development.",
+                icon: "🌟",
+                technologies: [
+                    { name: 'The "Hex-Class" Starship', icon: "🛰️", description: "A fully functional starship incorporating all of the technologies from the previous tiers. It is a true fusion of magic and technology, capable of interstellar travel and exploration.", unlocks: ["The first prototype starship, capable of independent, long-range interstellar missions."] }
+                ]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('tech-tree-container');
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const modalUnlocks = document.getElementById('modal-unlocks');
+            const modalIcon = document.getElementById('modal-icon');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const modalBackdrop = document.getElementById('modal-backdrop');
+
+            // Populate the tech tree
+            Object.keys(techTreeData).forEach(tierId => {
+                const tier = techTreeData[tierId];
+                const tierElement = document.createElement('div');
+                tierElement.id = tierId;
+                tierElement.className = 'mb-12';
+                
+                tierElement.innerHTML = `
+                    <div class="relative pl-12">
+                        <div class="absolute top-0 left-0 flex items-center h-full">
+                            <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center z-10 -ml-4 bg-sky-500 dark:bg-sky-600 rounded-full text-white">
+                                ${tier.icon}
+                            </div>
+                        </div>
+                        <div class="pt-1">
+                            <h2 class="text-xl lg:text-2xl font-bold text-slate-800 dark:text-slate-100">${tier.title}</h2>
+                            <p class="text-sm lg:text-md text-slate-500 dark:text-slate-400 mt-1">${tier.description}</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                                ${tier.technologies.map(tech => `
+                                    <div class="tech-card bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 cursor-pointer flex items-start" data-tier-id="${tierId}" data-tech-name="${tech.name}">
+                                        <div class="flex-shrink-0">
+                                            <span class="text-2xl mr-4">${tech.icon}</span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <h3 class="font-semibold text-slate-800 dark:text-slate-200 leading-snug break-words">${tech.name}</h3>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(tierElement);
+            });
+
+            // Modal logic
+            const openModal = (tierId, techName) => {
+                const tech = techTreeData[tierId].technologies.find(t => t.name === techName);
+                if (!tech) return;
+
+                modalTitle.textContent = tech.name;
+                modalIcon.textContent = tech.icon;
+                modalDescription.textContent = tech.description;
+                
+                modalUnlocks.innerHTML = tech.unlocks.map(unlock => `
+                    <li class="flex items-start">
+                        <span class="text-sky-500 dark:text-sky-400 mr-2 mt-1">✓</span>
+                        <span>${unlock}</span>
+                    </li>
+                `).join('');
+
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            };
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            };
+
+            document.querySelectorAll('.tech-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    openModal(card.dataset.tierId, card.dataset.techName);
+                });
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', closeModal);
+
+            // Active nav link scrolling
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('[id^="tier-"]');
+            
+            const onScroll = () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.scrollY >= sectionTop - 120) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', onScroll);
+        });
+    </script>
+</body>
+</html>
+�
