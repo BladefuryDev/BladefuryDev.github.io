@@ -41,6 +41,7 @@
         }
     </style>
     <script>
+        // Basic dark mode handling based on user's system preference
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark')
         } else {
@@ -75,6 +76,15 @@
         </header>
 
         <main class="container mx-auto p-4 md:p-8">
+            <div class="mb-8 p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 space-y-4">
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Eterna is a world that finds itself constantly under attack by various factions, both magical and technological - and more concerningly, extraterrestrial. The Paradigm Research Group is a collective of researchers, engineers, and adventurers dedicated to advancing the understanding and application of magitech to create a new era of exploration and defense. Striving to enable us to finally be able to effectively fight back to protect our skies and beyond.
+                </p>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Welcome to the interactive technology tree for the Paradigm Research Group's starship replication project. This document outlines the planned progression of research and development, from foundational principles to the construction of our first interstellar vessel. Click on any technology card to view more details, including its description and what it unlocks - and if it's already unlocked, who unlocked it and how.
+                </p>
+            </div>
+
             <div id="tech-tree-container" class="relative">
                 <div class="absolute left-4 top-0 h-full w-0.5 bg-slate-300 dark:bg-slate-700"></div>
                 
@@ -100,6 +110,13 @@
                                     <ul id="modal-unlocks" class="mt-2 list-none space-y-2 text-sm text-slate-700 dark:text-slate-300">
                                         </ul>
                                 </div>
+                                <div id="modal-research-info" class="hidden mt-6 p-4 rounded-lg bg-emerald-50 dark:bg-emerald-900/60 border border-emerald-300 dark:border-emerald-700">
+                                    <h4 class="text-md font-semibold text-emerald-900 dark:text-emerald-100">Research Details</h4>
+                                    <div class="mt-2 text-sm text-emerald-800 dark:text-emerald-200">
+                                        <p><strong>Researcher:</strong> <span id="modal-researcher"></span></p>
+                                        <p class="mt-1"><strong>Method:</strong> <span id="modal-research-method"></span></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,17 +132,18 @@
     </div>
 
     <script>
+        // The central data object for the entire tech tree
         const techTreeData = {
             "tier-0": {
                 title: "Foundational Principles & Existing Technology",
                 description: "This tier focuses on understanding and replicating the established magitech of the world.",
                 icon: "🏛️",
                 technologies: [
-                    { name: "Basic Metallurgy & Forging", icon: "🛠️", description: "The ability to smelt and work with common metals found in the world.", unlocks: ["Hand tools (hammers, tongs)", "Gears, pistons", "Basic structural frames", "Simple armor & weapons"] },
-                    { name: "Orb Material Science", icon: "🔮", description: "The discovery that the crystalline material of Orbs can be ground into a fine powder.", unlocks: ["Orb Dust (raw material)", "Orb Grinders", "Enchanting Ink/Paint"] },
-                    { name: "Applied Alchemy & Essence Capture", icon: "🧪", description: "Analyzing the process of capturing an item's core properties by accelerating its natural decay.", unlocks: ["Bottled Essences (potions, antidotes)", "Enchantment Catalysts", "Foundational knowledge for enchantment"] },
-                    { name: "Controlled Energy Release", icon: "🔥", description: "Developing methods to release the energy of volatile items like Blast Seeds in a controlled manner.", unlocks: ["Magitech Soldering Iron", "Controlled Heat Lances"] },
-                    { name: "Replication of Enchanting Technology", icon: "✨", description: "Building and refining common enchanting tools like the Enchanting Station and Orb Ring.", unlocks: ["Mass-produced Enchanted Apparel", "Basic Enchanted Tools", "Guild Badge Mark II"] }
+                    { name: "Basic Metallurgy & Forging", icon: "🛠️", description: "The ability to smelt and work with common metals found in the world.", unlocks: ["Hand tools (hammers, tongs)", "Gears, pistons", "Basic structural frames", "Simple armor & weapons"], isResearched: true, researcher: "Common Knowledge", researchMethod: "Perfected over generations by blacksmiths and artisans worldwide." },
+                    { name: "Orb Material Science", icon: "🔮", description: "The discovery that the crystalline material of Orbs can be ground into a fine powder.", unlocks: ["Orb Dust (raw material)", "Orb Grinders", "Enchanting Ink/Paint"], isResearched: true, researcher: "Alchemist Guild", researchMethod: "Initial discovery made through accidental shattering of an Escape Orb, followed by systematic testing of its powdered form." },
+                    { name: "Applied Alchemy & Essence Capture", icon: "🧪", description: "Analyzing the process of capturing an item's core properties by accelerating its natural decay.", unlocks: ["Bottled Essences (potions, antidotes)", "Enchantment Catalysts", "Foundational knowledge for enchantment"], isResearched: true, researcher: "Common Knowledge", researchMethod: "A core tenet of alchemy, refined through centuries of experimentation with various reagents and distillation techniques." },
+                    { name: "Controlled Energy Release", icon: "🔥", description: "Developing methods to release the energy of volatile items like Blast Seeds in a controlled manner.", unlocks: ["Magitech Soldering Iron", "Controlled Heat Lances"], isResearched: true, researcher: "Tinkers' Collective", researchMethod: "Achieved by creating containment fields using inscribed copper wiring, allowing for the slow, siphoned release of energy." },
+                    { name: "Replication of Enchanting Technology", icon: "✨", description: "Building and refining common enchanting tools like the Enchanting Station and Orb Ring.", unlocks: ["Mass-produced Enchanted Apparel", "Basic Enchanted Tools", "Guild Badge Mark II"], isResearched: true, researcher: "Paradigm Research Group", researchMethod: "A collaborative effort to standardize and improve upon existing, often inconsistent, enchanting apparatuses for reliable replication." }
                 ]
             },
             "tier-1": {
@@ -133,9 +151,9 @@
                 description: "This tier focuses on rediscovering lost arts and creating the first new, large-scale systems.",
                 icon: "⚙️",
                 technologies: [
-                    { name: "Reverse-Engineering Lost Tech (Enter Cards)", icon: "🗺️", description: "Studying rare artifacts to understand and adapt their principles for targeted teleportation using Escape Orbs.", unlocks: ["Prototype Teleportation Pads", "Subspace Scanners"] },
-                    { name: "Multi-Orb Power Core", icon: "🔋", description: "A power core capable of harnessing energy from multiple Orbs simultaneously for significantly higher output.", unlocks: ["Workshop Power Grids", "Static Defense Turrets", "Heavy-Duty Magitech Machinery"] },
-                    { name: "Repulsorlift Technology (Atmospheric)", icon: "✈️", description: "Utilizing gravity manipulation to create localized anti-gravity fields for atmospheric flight.", unlocks: ["Magitech Elevators", "Cargo Skiffs", "Personal Hover-platforms", "Basic atmospheric vehicles"] }
+                    { name: "Reverse-Engineering Lost Tech (Enter Cards)", icon: "🗺️", description: "Studying rare artifacts to understand and adapt their principles for targeted teleportation using Escape Orbs.", unlocks: ["Prototype Fixed Portal Systems", "Subspace Scanners"], isResearched: true, researcher: "Paradigm Research Group - Hex", researchMethod: "By meticulously reverse-engineering the core matrix of a recovered Enter Card artifact and interfacing it with a modified Escape Orb." },
+                    { name: "Multi-Orb Power Core", icon: "🔋", description: "A power core capable of harnessing energy from multiple Orbs simultaneously for significantly higher output.", unlocks: ["Workshop Power Grids", "Static Defense Turrets", "Heavy-Duty Magitech Machinery", "Light Energy Weapons"], isResearched: false },
+                    { name: "Repulsorlift Technology (Atmospheric)", icon: "✈️", description: "Utilizing gravity manipulation to create localized anti-gravity fields for atmospheric flight.", unlocks: ["Magitech Elevators", "Cargo Skiffs", "Personal Hover-platforms", "Basic atmospheric vehicles"], isResearched: false }
                 ]
             },
             "tier-2": {
@@ -143,9 +161,9 @@
                 description: "This tier focuses on developing advanced ship systems and solving the core problems of magitech operation.",
                 icon: "🧩",
                 technologies: [
-                    { name: "Regenerative Hull Plating", icon: "🛡️", description: "A metallic alloy with a subsurface matrix of Orb Dust enchanted with the regenerative essence of Oran Berries.", unlocks: ["Self-Repairing Infrastructure", "Regenerative Armor", "Advanced atmospheric vehicle hulls"] },
-                    { name: "Basic AI (The 'Intent' Problem)", icon: "�", description: "Developing a rudimentary 'system consciousness' based on Connection Orb principles to manage autonomous systems.", unlocks: ["Automated Workshop Assistants", "'Smart Home' systems", "Autonomous Environmental Systems"] },
-                    { name: "Haptic-Aura Bridge", icon: "🕹️", description: "A physical control interface that translates user actions into 'intent' signals the ship's systems can understand.", unlocks: ["Intuitive Control Consoles", "Remote Piloting Stations", "Accessible Magitech Interfaces"] }
+                    { name: "Regenerative Hull Plating", icon: "🛡️", description: "A metallic alloy with a subsurface matrix of Orb Dust enchanted with the regenerative essence of Oran Berries.", unlocks: ["Self-Repairing Infrastructure", "Regenerative Armor", "Advanced atmospheric vehicle hulls"], isResearched: false },
+                    { name: "Basic AI (The 'Intent' Problem)", icon: "🖥️", description: "Developing a rudimentary 'system consciousness' based on numerous magical systems interacting with each other at a point to form a neural network to manage autonomous systems. Not fully a machine, still crystalline and technically organic - a soul tries to live within it.", unlocks: ["Automated Workshop Assistants", "'Smart Home' systems", "Autonomous Environmental Systems"], isResearched: false },
+                    { name: "Haptic-Aura Bridge", icon: "🕹️", description: "A physical control interface that translates user actions into 'intent' signals the ship's systems can understand.", unlocks: ["Intuitive Control Consoles", "Remote Piloting Stations", "Accessible Magitech Interfaces"], isResearched: false }
                 ]
             },
             "tier-3": {
@@ -153,22 +171,22 @@
                 description: "This tier focuses on the final components needed for a true starship.",
                 icon: "🚀",
                 technologies: [
-                    { name: "Jump Drive (Reverse-Engineered)", icon: "🌌", description: "A propulsion system using an array of synchronized Escape Orbs to create a massive portal for an instantaneous jump.", unlocks: ["Starship Jump Drive Module", "Stationary Interplanetary Portal Network", "Emergency Escape Teleporters"] },
-                    { name: "Zero-Point Tap (Subspace Manifold)", icon: "⚡", description: "Harnessing vacuum energy from a stable, microscopic rift into subspace for a near-limitless power supply.", unlocks: ["City-Wide Power Grids", "Planetary Defense Shields", "Terraforming power sources"] },
-                    { name: "Directed Energy Weaponry", icon: "💥", description: "Adapting the Multi-Orb Power Core principle to channel immense energy from a Zero-Point Tap into focused offensive beams, replicating Turbolasers and Ion Batteries.", unlocks: ["Ship-mounted Turbolaser analogs", "Ion Cannon analogs", "Handheld energy rifles"] },
-                    { name: "Reactive 'Protect' Emitters", icon: "💠", description: "An active defense system that replicates the move 'Protect'. Panels on the ship's exterior, patched into the AI, project a powerful, temporary energy barrier in a specific area just before impact.", unlocks: ["AI-controlled point-defense shielding", "Personal 'Protect' Emitter gear", "Area-denial force fields"] },
-                    { name: "Aura/Magic Dampening", icon: "🔇", description: "A specialized field generator that disrupts the flow of aura and magical energies in a targeted area, replicating the ATLAS's HRDFG. This is a last-resort tool that can also interfere with friendly magitech systems.", unlocks: ["Ship-mounted Magic Disruption Field", "Anti-magic grenades", "Secure containment cells"] },
-                    { name: "Life Support (Reviver Seed Integration)", icon: "🌿", description: "A system that circulates air and water through conduits enchanted with the essence of Reviver Seeds.", unlocks: ["Sealed Habitat Life Support", "Advanced Med-bay systems", "Environmental Purifiers"] },
-                    { name: "Advanced AI (Emergent Evolution)", icon: "🤖", description: "Evolving the basic AI into a true sentient being by vastly expanding its internal Connection Orb network.", unlocks: ["Sentient Ship/Station Managers", "Advanced Research & Tactical AIs", "AI-driven Diplomatic Envoys"] },
-                    { name: "Personnel & Cargo Transporters", icon: "🌀", description: "A refined, short-range application of the Jump Drive's principles to teleport objects and individuals without harm.", unlocks: ["Personnel Transporter Pads", "Cargo Transporters", "Short-range tactical insertion systems"] }
+                    { name: "Jump Drive (Reverse-Engineered)", icon: "🌌", description: "A propulsion system using an array of synchronized Escape Orbs to create a massive portal for an instantaneous jump.", unlocks: ["Starship Jump Drive Module", "Stationary Interplanetary Portal Network", "Emergency Escape Teleporters"], isResearched: false },
+                    { name: "Zero-Point Tap (Subspace Manifold)", icon: "⚡", description: "Harnessing vacuum energy from a stable, microscopic rift into subspace for a near-limitless power supply.", unlocks: ["City-Wide Power Grids", "Planetary Defense Shields", "Terraforming power sources"], isResearched: false },
+                    { name: "Directed Energy Weaponry", icon: "💥", description: "Adapting the Multi-Orb Power Core principle to channel immense energy from a Zero-Point Tap into focused offensive beams, replicating Turbolasers and Ion Batteries.", unlocks: ["Ship-mounted Turbolaser analogs", "Ion Cannon analogs", "Heavy Energy Weapons"], isResearched: false },
+                    { name: "Reactive 'Protect' Emitters", icon: "💠", description: "An active defense system that replicates the move 'Protect'. Panels on the ship's exterior, patched into the AI, project a powerful, temporary energy barrier in a specific area just before impact.", unlocks: ["AI-controlled point-defense shielding", "Personal 'Protect' Emitter gear", "Area-denial force fields"], isResearched: false },
+                    { name: "Aura/Magic Dampening", icon: "🔇", description: "A specialized field generator that disrupts the flow of aura and magical energies in a targeted area, replicating the ATLAS's HRDFG. This is a last-resort tool that can also interfere with friendly magitech systems.", unlocks: ["Ship-mounted Magic Disruption Field", "Anti-magic grenades", "Secure containment cells"], isResearched: false },
+                    { name: "Life Support (Reviver Seed Integration)", icon: "🌿", description: "A system that circulates air and water through conduits enchanted with the essence of Reviver Seeds.", unlocks: ["Sealed Habitat Life Support", "Advanced Med-bay systems", "Environmental Purifiers"], isResearched: false },
+                    { name: "Advanced AI (Emergent Evolution)", icon: "🤖", description: "Evolving the basic AI into a true sentient being by vastly expanding its internal Connection Orb network.", unlocks: ["Sentient Ship/Station Managers", "Advanced Research & Tactical AIs", "AI-driven Diplomatic Envoys"], isResearched: false },
+                    { name: "Personnel & Cargo Transporters", icon: "🌀", description: "A refined, short-range application of the Jump Drive's principles to teleport objects and individuals without harm.", unlocks: ["Personnel Transporter Pads", "Cargo Transporters", "Short-range tactical insertion systems"], isResearched: false }
                 ]
             },
             "tier-4": {
                 title: "The First Starship",
                 description: "This tier represents the culmination of all previous research and development.",
-                icon: "🌟",
+                icon: "⭐",
                 technologies: [
-                    { name: 'The "Hex-Class" Starship', icon: "🛰️", description: "A fully functional starship incorporating all of the technologies from the previous tiers. It is a true fusion of magic and technology, capable of interstellar travel and exploration.", unlocks: ["The first prototype starship, capable of independent, long-range interstellar missions."] }
+                    { name: 'The ? ? ?-Class Starship', icon: "🛰️", description: "A fully functional starship incorporating all of the technologies from the previous tiers. It is a true fusion of magic and technology, capable of interstellar travel and exploration.", unlocks: ["The first prototype starship, capable of independent, long-range interstellar missions."], isResearched: false }
                 ]
             }
         };
@@ -182,8 +200,11 @@
             const modalIcon = document.getElementById('modal-icon');
             const closeModalBtn = document.getElementById('close-modal-btn');
             const modalBackdrop = document.getElementById('modal-backdrop');
+            const modalResearchInfo = document.getElementById('modal-research-info');
+            const modalResearcher = document.getElementById('modal-researcher');
+            const modalResearchMethod = document.getElementById('modal-research-method');
 
-            // Populate the tech tree
+            // Populate the tech tree on page load
             Object.keys(techTreeData).forEach(tierId => {
                 const tier = techTreeData[tierId];
                 const tierElement = document.createElement('div');
@@ -203,12 +224,15 @@
                             <p class="text-sm lg:text-md text-slate-500 dark:text-slate-400 mt-1">${tier.description}</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                                 ${tier.technologies.map(tech => `
-                                    <div class="tech-card bg-white dark:bg-slate-800 p-4 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 cursor-pointer flex items-start" data-tier-id="${tierId}" data-tech-name="${tech.name}">
+                                    <div class="tech-card p-4 rounded-lg shadow-md border cursor-pointer flex items-start ${tech.isResearched 
+                                        ? 'bg-emerald-50 dark:bg-emerald-900/60 border-emerald-300 dark:border-emerald-700' 
+                                        : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}" 
+                                        data-tier-id="${tierId}" data-tech-name="${tech.name}">
                                         <div class="flex-shrink-0">
                                             <span class="text-2xl mr-4">${tech.icon}</span>
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-semibold text-slate-800 dark:text-slate-200 leading-snug break-words">${tech.name}</h3>
+                                            <h3 class="font-semibold ${tech.isResearched ? 'text-emerald-900 dark:text-emerald-100' : 'text-slate-800 dark:text-slate-200'} leading-snug break-words">${tech.name}</h3>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -219,22 +243,34 @@
                 container.appendChild(tierElement);
             });
 
-            // Modal logic
+            // --- Modal Logic ---
             const openModal = (tierId, techName) => {
                 const tech = techTreeData[tierId].technologies.find(t => t.name === techName);
                 if (!tech) return;
 
+                // Populate basic info
                 modalTitle.textContent = tech.name;
                 modalIcon.textContent = tech.icon;
                 modalDescription.textContent = tech.description;
                 
+                // Populate unlocks list
                 modalUnlocks.innerHTML = tech.unlocks.map(unlock => `
                     <li class="flex items-start">
-                        <span class="text-sky-500 dark:text-sky-400 mr-2 mt-1">✓</span>
+                        <svg class="flex-shrink-0 h-5 w-5 text-sky-500 dark:text-sky-400 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                         <span>${unlock}</span>
                     </li>
                 `).join('');
 
+                // NEW: Handle the research info section
+                if (tech.isResearched && tech.researcher && tech.researchMethod) {
+                    modalResearcher.textContent = tech.researcher;
+                    modalResearchMethod.textContent = tech.researchMethod;
+                    modalResearchInfo.classList.remove('hidden');
+                } else {
+                    modalResearchInfo.classList.add('hidden');
+                }
+
+                // Show the modal
                 modal.classList.remove('hidden');
                 document.body.classList.add('overflow-hidden');
             };
@@ -244,16 +280,25 @@
                 document.body.classList.remove('overflow-hidden');
             };
 
+            // Add event listeners to all tech cards
             document.querySelectorAll('.tech-card').forEach(card => {
                 card.addEventListener('click', () => {
                     openModal(card.dataset.tierId, card.dataset.techName);
                 });
             });
 
+            // Add event listeners for closing the modal
             closeModalBtn.addEventListener('click', closeModal);
             modalBackdrop.addEventListener('click', closeModal);
+            // Also close modal on 'Escape' key press
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
 
-            // --- MOUSE-BASED NAVIGATION TRACKING LOGIC ---
+
+            // --- Mouse-based Navigation Tracking Logic ---
             const sections = document.querySelectorAll('div[id^="tier-"]');
             const navLinks = document.querySelectorAll('.nav-link');
             const mainContainer = document.querySelector('main');
@@ -285,4 +330,3 @@
     </script>
 </body>
 </html>
-�
