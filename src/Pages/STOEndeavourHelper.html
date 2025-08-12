@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Trek Online - Endeavor Guide</title>
+    <link href="/public/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@700&family=Antonio:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Base & Default Theme Styles --- */
+        :root {
+            --default-bg: #0a0f1e;
+            --default-text: #c0c5d1;
+            --default-primary: #2a3a5e;
+            --default-secondary: #4a6fbd;
+            --default-accent: #87a2d9;
+            --lcars-bg: #000000;
+            --lcars-orange: #ff9900;
+            --lcars-purple: #cc99cc;
+            --lcars-blue: #9999ff;
+            --lcars-tan: #ffcc99;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--default-bg);
+            color: var(--default-text);
+            transition: background-color 0.5s ease;
+        }
+        #warp-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(2px);
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+        }
+        .title-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background-color: rgba(22, 30, 53, 0.7);
+            border: 1px solid var(--default-primary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s forwards;
+            display: flex;
+            flex-direction: column;
+        }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 20px rgba(74, 111, 189, 0.5);
+        }
+        .card-content { flex-grow: 1; }
+        .category-tag {
+            background-color: var(--default-primary);
+            color: var(--default-accent);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .category-icon {
+            width: 1em;
+            height: 1em;
+        }
+        .location-info {
+            font-size: 0.8rem;
+            color: #9ab5f5;
+            padding-left: 1.25rem;
+            position: relative;
+            margin-top: 0.75rem;
+            list-style: none;
+        }
+        .location-info::before {
+            content: '⚬';
+            font-size: 1.2em;
+            position: absolute;
+            left: 0; top: 50%;
+            transform: translateY(-50%);
+            color: var(--default-secondary);
+        }
+        .filter-btn {
+            transition: all 0.2s ease;
+            border: 1px solid var(--default-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .filter-btn.active {
+            background-color: var(--default-secondary);
+            color: #ffffff;
+            border-color: var(--default-secondary);
+            transform: translateY(0);
+        }
+        .filter-btn:not(.active):hover {
+            background-color: #314575;
+            transform: translateY(-2px);
+            border-color: var(--default-secondary);
+        }
+        .search-input, #sort-select {
+            background-color: rgba(22, 30, 53, 0.7);
+            border: 1px solid var(--default-primary);
+            color: var(--default-text);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+        .search-input:focus, #sort-select:focus {
+            outline: none;
+            border-color: var(--default-secondary);
+            box-shadow: 0 0 0 3px rgba(74, 111, 189, 0.3);
+        }
+        
+        /* --- Filter Bar Logic --- */
+        @media (max-width: 767px) {
+            #filterBarContainer { position: sticky; top: 1rem; z-index: 20; }
+            #searchSortWrapper { flex-direction: column; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+             #filterBar { flex-direction: column !important; align-items: stretch !important; }
+             #searchSortWrapper { flex-direction: row !important; }
+             #filtersWrapper { margin-top: 1rem; }
+        }
+        @media (min-width: 1024px) {
+            #filterBar { flex-direction: row !important; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0f1e; }
+        ::-webkit-scrollbar-thumb { background: #2a3a5e; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4a6fbd; }
+
+        /* --- LCARS Theme Styles --- */
+        .lcars-theme {
+            background-color: var(--lcars-bg);
+            color: var(--lcars-tan);
+            font-family: 'Antonio', sans-serif;
+        }
+        .lcars-theme #warp-background { opacity: 0; }
+        .lcars-theme .title-font { font-family: 'Antonio', sans-serif; letter-spacing: 2px; }
+        .lcars-theme #filterBarContainer { background-color: transparent; border: none; backdrop-filter: none; }
+        .lcars-theme #filterBar { background-color: var(--lcars-purple); border-radius: 15px 0 0 15px; padding: 0.5rem; padding-left: 120px; position: relative; }
+        .lcars-theme #filterBar::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0;
+            width: 100px;
+            height: 100%;
+            background-color: var(--lcars-orange);
+            border-radius: 15px 0 0 15px;
+        }
+        .lcars-theme .search-input, .lcars-theme #sort-select {
+            background-color: var(--lcars-bg);
+            border: none;
+            border-radius: 0;
+            color: var(--lcars-tan);
+            font-family: 'Antonio', sans-serif;
+            text-transform: uppercase;
+        }
+        .lcars-theme .search-input:focus, .lcars-theme #sort-select:focus { box-shadow: none; }
+        .lcars-theme .filter-btn {
+            background-color: var(--lcars-blue);
+            color: var(--lcars-bg);
+            border: none;
+            border-radius: 5px;
+            text-transform: uppercase;
+            padding: 0.25rem 1rem;
+        }
+        .lcars-theme .filter-btn:not(.active):hover { background-color: var(--lcars-tan); transform: translateY(0); }
+        .lcars-theme .filter-btn.active { background-color: var(--lcars-orange); color: var(--lcars-bg); }
+        .lcars-theme .card {
+            background-color: transparent;
+            border: none;
+            border-left: 5px solid var(--lcars-blue);
+            border-bottom: 5px solid var(--lcars-blue);
+            border-radius: 0;
+            padding: 1rem;
+            backdrop-filter: none;
+        }
+        .lcars-theme .card:hover { transform: translateY(0); box-shadow: none; border-color: var(--lcars-orange); }
+        .lcars-theme .category-tag {
+            background-color: var(--lcars-purple);
+            color: var(--lcars-bg);
+            border-radius: 5px;
+            padding: 0.25rem 0.5rem;
+            text-transform: uppercase;
+        }
+        .lcars-theme .location-info { color: var(--lcars-blue); }
+        .lcars-theme .location-info::before { content: '::'; color: var(--lcars-orange); }
+        
+        /* --- Theme Toggle Button --- */
+        #theme-toggle-btn {
+            background-color: var(--default-primary);
+            color: var(--default-text);
+            border: 1px solid var(--default-secondary);
+            transition: all 0.3s ease;
+        }
+        #theme-toggle-btn:hover { background-color: var(--default-secondary); color: white; }
+        .lcars-theme #theme-toggle-btn {
+            background-color: var(--lcars-orange);
+            color: var(--lcars-bg);
+            border: none;
+            border-radius: 5px;
+            font-family: 'Antonio', sans-serif;
+            text-transform: uppercase;
+        }
+        .lcars-theme #theme-toggle-btn:hover { background-color: var(--lcars-tan); }
+
+        /* --- Footer Styles --- */
+        .app-footer { text-align: center; padding: 2rem 1rem; font-size: 0.875rem; color: var(--default-primary); }
+        .lcars-theme .app-footer { color: var(--lcars-purple); font-family: 'Antonio', sans-serif; text-transform: uppercase; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <canvas id="warp-background"></canvas>
+
+    <div class="relative z-10 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+        
+        <div class="absolute top-4 right-4 z-50">
+            <button id="theme-toggle-btn" class="px-4 py-2 rounded-full text-sm font-medium">Toggle LCARS</button>
+        </div>
+
+        <!-- Header -->
+        <header class="text-center mb-8 pt-12">
+            <h1 class="title-font text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2 tracking-wider">STAR TREK ONLINE</h1>
+            <p class="text-lg sm:text-xl text-blue-300">Personal Endeavor Guide</p>
+        </header>
+
+        <!-- Search and Filters -->
+        <div id="filterBarContainer" class="mb-8 p-4 bg-black bg-opacity-20 rounded-lg backdrop-filter backdrop-blur-md border border-gray-700/50 transition-all duration-300">
+            <div id="filterBar" class="flex flex-col lg:flex-row gap-4 items-center">
+                <div id="searchSortWrapper" class="flex items-center gap-4 w-full lg:w-2/5 xl:w-1/3">
+                    <input type="text" id="searchInput" placeholder="Search endeavors..." class="search-input w-full flex-grow">
+                    <select id="sort-select" class="w-auto flex-shrink-0">
+                        <option value="alpha-asc">Sort A-Z</option>
+                        <option value="alpha-desc">Sort Z-A</option>
+                    </select>
+                </div>
+                <div id="filtersWrapper" class="flex flex-wrap gap-2 items-center w-full lg:w-3/5 xl:w-2/3 lg:justify-end">
+                    <div id="categoryFilters" class="flex flex-wrap gap-2 items-center">
+                        <!-- Filter buttons will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Endeavor Cards -->
+        <main id="endeavorContainer" class="card-container">
+            <!-- Endeavor cards will be injected here -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>This guide was developed with assistance from Gemini. All information has been reviewed and proofread by gamers for accuracy and reliable use.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- Icon Mapping ---
+        const iconMap = {
+            'Space: Deal Damage': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M233.35,109.26,146.74,22.65a14,14,0,0,0-19.8,0L40.33,109.26a14,14,0,0,0,0,19.8l86.61,86.61a14,14,0,0,0,19.8,0l86.61-86.61a14,14,0,0,0,0-19.8ZM156,128a28,28,0,1,1-28-28A28,28,0,0,1,156,128Z"/></svg>`,
+            'Space: Destroy Targets': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M227.87,73.1a14,14,0,0,0-15.74-2.3L155,95.58V54a14,14,0,0,0-27-2.3L94,144.38,36.93,121.1a14,14,0,0,0-17.8,4.06L2.2,152.55a14,14,0,0,0,11.73,23.32l58,11.89,34,68a14,14,0,0,0,25.9-11.73V180.22l57.13,24.72A13.9,13.9,0,0,0,202,214a14,14,0,0,0,13.87-16.13l-16.14-64.5L227.87,90.9A14,14,0,0,0,227.87,73.1Z"/></svg>`,
+            'Space: Healing': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M236.88,103.22,153.6,20a14,14,0,0,0-19.8,0L50.48,103.22a14,14,0,0,0,0,19.8L133.8,206.3a14,14,0,0,0,19.8,0l83.28-83.28a14,14,0,0,0,0-19.8ZM164,136H136v28a8,8,0,0,1-16,0V136H92a8,8,0,0,1,0-16h28V92a8,8,0,0,1,16,0v28h28a8,8,0,0,1,0,16Z"/></svg>`,
+            'Ground: Deal Damage': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M239.81,191.82,192,144.06V96a8,8,0,0,0-8-8H160a8,8,0,0,0-8,8v22.63l-18.1-18.1A94,94,0,1,0,32.48,199.52a93.63,93.63,0,0,0,26.45,19.85,8,8,0,0,0,8.24-13.37,77.89,77.89,0,1,1,110.15,0,8,8,0,0,0,8.24,13.37,93.63,93.63,0,0,0,26.45-19.85l47.76,47.77a8,8,0,0,0,11.32-11.32ZM184,112v16.06l40,40V200a8,8,0,0,1-8,8H192a8,8,0,0,1-8-8V179.31l-16-16V144a8,8,0,0,0-8-8H136a8,8,0,0,0-8,8v19.31l-16-16V128a8,8,0,0,0-8-8H80a8,8,0,0,0,0,16h16v16H80a8,8,0,0,0,0,16h32v16H80a8,8,0,0,0,0,16h48v16H80a8,8,0,0,0-5.66,13.66l-1.37,1.2,1.37-1.2A78.11,78.11,0,0,1,48,128a77.4,77.4,0,0,1,22.78-55.22A78,78,0,0,1,128,48a77.4,77.4,0,0,1,55.22,22.78,8,8,0,0,0,13.37-8.24A94,94,0,0,0,128,32,93.42,93.42,0,0,0,62.37,62.37,94,94,0,0,0,88.52,184.52l18.1-18.1V144h16v-2.63l16-16V112Z"/></svg>`,
+            'Ground: Defeat Enemies': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M128,24a104,104,0,1,0,104,104A104.11,104.11,0,0,0,128,24ZM72,128a56,56,0,0,1,56-56,8,8,0,0,1,0,16,40,40,0,0,0-40,40,8,8,0,0,1-16,0Zm88,40a8,8,0,0,1-8,8,40,40,0,0,0-40-40,8,8,0,0,1,0-16,56,56,0,0,1,56,56Z"/></svg>`,
+            'Ground: Healing': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M128,24A104,104,0,1,0,104,104,104.11,104.11,0,0,0,128,24Zm40,112H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32a8,8,0,0,1,0,16Z"/></svg>`,
+            'TFOs': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M239.12,111.2,144.8,92.41l32.27-71.18a14,14,0,0,0-24.14-14.9L128,52.5,103.07,6.33a14,14,0,0,0-24.14,14.9L111.2,92.41,16.88,111.2a14,14,0,0,0,0,25.6l94.32,18.79-32.27,71.18a14,14,0,0,0,24.14,14.9L128,195.5l24.93,46.17a14,14,0,0,0,24.14-14.9L144.8,155.59l94.32-18.79a14,14,0,0,0,0-25.6ZM128,142a14,14,0,1,1,14-14A14,14,0,0,1,128,142Z"/></svg>`,
+            'Other': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M240.26,183.3l-22.12-38.31a14,14,0,0,0-12.14-7H160.33l-4.57-23.36a14,14,0,0,0-13.78-11.66H112a14,14,0,0,0-13.78,11.66L93.67,138H48a14,14,0,0,0-12.14,7L13.74,183.3a14,14,0,0,0,12.14,21H228.12a14,14,0,0,0,12.14-21ZM128,74a34,34,0,1,1-34,34A34,34,0,0,1,128,74Z"/></svg>`,
+        };
+
+        // --- Endeavor Guide Logic ---
+        const endeavorData = [
+            // Data remains the same...
+            { id: 'deal-antiproton-damage-space', name: "Deal Antiproton Damage", category: "Space: Deal Damage", tip: "Equip Antiproton-based weaponry. Pets dealing Antiproton damage, such as Swarmers, also contribute." },
+            { id: 'deal-disruptor-damage-space', name: "Deal Disruptor Damage", category: "Space: Deal Damage", tip: "Equip Disruptor-based weaponry. Effective pets include the To’Duj or Stinger Fighter. KDF-aligned characters can also use Fleet Support." },
+            { id: 'deal-kinetic-damage-space', name: "Deal Kinetic Damage", category: "Space: Deal Damage", tip: "Utilize torpedoes, the Gravity Well science ability, or other kinetic-damage sources. Fleet Support and certain pets also contribute." },
+            { id: 'deal-phaser-damage-space', name: "Deal Phaser Damage", category: "Space: Deal Damage", tip: "Equip Phaser-based weaponry. Pets like Peregrine Fighters are effective. Federation-aligned characters can also use Fleet Support." },
+            { id: 'deal-physical-damage-space', name: "Deal Physical Damage", category: "Space: Deal Damage", tip: "Use the Destabilized Resonance Beam (an episode reward) or various Temporal Operative bridge officer abilities." },
+            { id: 'deal-plasma-damage-space', name: "Deal Plasma Damage", category: "Space: Deal Damage", tip: "Equip Plasma-based weaponry. Pets like Scorpion Fighters are effective. Romulan-aligned characters can also use Fleet Support." },
+            { id: 'deal-polaron-damage-space', name: "Deal Polaron Damage", category: "Space: Deal Damage", tip: "Equip Polaron-based weaponry. Vanguard Wingmen pets are effective. Jem'Hadar-aligned characters can also use Fleet Support." },
+            { id: 'deal-tetryon-damage-space', name: "Deal Tetryon Damage", category: "Space: Deal Damage", tip: "Activate the reputation ability from the Nukara Strikeforce T5/T6 reputation. Tetryon weapons or pets like the Tholian Mesh Weaver also work." },
+            { id: 'destroy-targetable-torpedos', name: "Destroy Targetable Torpedos", category: "Space: Destroy Targets", tip: "The most reliable method is a private PvP match with a friend using targetable torpedoes (e.g., Hyper-Plasma). Alternatively, target torpedoes in the Carraya System patrol or during the final phases of the 'Undine Assault' and 'Crystalline Catastrophe' TFOs.", location: "Carraya System is in the Tau Dewa Sector Block (Beta Quadrant)." },
+            { id: 'destroy-terran-empire-ships', name: "Destroy Terran Empire Ships", category: "Space: Destroy Targets", tip: "Engage Terran forces in the Badlands Battlezone or within the 'Counterpoint' TFO.", location: "Badlands Battlezone is in the Cardassia Sector (Alpha Quadrant)." },
+            { id: 'destroy-terran-empire-ships-in-battlezone', name: "Destroy Terran Empire Ships in Battlezone", category: "Space: Destroy Targets", tip: "Focus on defeating Terran ships specifically within the Badlands Battlezone.", location: "Location: Cardassia Sector (Alpha Quadrant, left of DS9)." },
+            { id: 'destroy-voth-ships', name: "Destroy Voth Ships", category: "Space: Destroy Targets", tip: "Voth ships can be found in the 'Aftermath' patrol or the Dyson Sphere Space Battlezone (especially after the Voth Citadel phase).", location: "Dyson Sphere is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
+            { id: 'destroy-tzenkethi-ships', name: "Destroy Tzenkethi Ships", category: "Space: Destroy Targets", tip: "Engage Tzenkethi forces in their Battlezone, the 'Gravity Kills' TFO, or during related story episodes.", location: "Tzenkethi Battlezone is in the Gon'cra Sector (Alpha Quadrant)." },
+            { id: 'destroy-tzenkethi-ship-in-goncra-battlezone', name: "Destroy Tzenkethi Ship in Gon’Cra Battlezone", category: "Space: Destroy Targets", tip: "Focus on defeating Tzenkethi ships specifically within the Tzenkethi Battlezone located in the Gon'cra Sector.", location: "Location: Gon’Cra Sector (Alpha Quadrant, top left)." },
+            { id: 'destroy-undine-ships', name: "Destroy Undine Ships", category: "Space: Destroy Targets", tip: "Engage Undine (Species 8472) ships in the Dyson Sphere Space Battlezone, the 'Undine Assault' TFO, or the 'Surface Tension' episode.", location: "Dyson Battlezone is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
+            { id: 'destroy-undine-ships-in-the-dyson-battlezone', name: "Destroy Undine Ships in the Dyson Battlezone", category: "Space: Destroy Targets", tip: "Focus on defeating Undine ships specifically within the Dyson Sphere Space Battlezone.", location: "Location: Solanae Sector Block (Alpha/Beta Quadrant access)." },
+            { id: 'destroy-hurq-frigates', name: "Destroy Hur’q Frigates", category: "Space: Destroy Targets", tip: "These specific targets are found during the 'Home' story episode." },
+            { id: 'destroy-borg-ships', name: "Destroy Borg Ships", category: "Space: Destroy Targets", tip: "The 'Infected: The Conduit' (Advanced) TFO offers a high density of Borg targets." },
+            { id: 'destroy-herald-ships', name: "Destroy Herald Ships", category: "Space: Destroy Targets", tip: "Herald ships are the primary enemy type in the 'Midnight' story episode." },
+            { id: 'destroy-dreadnaughts', name: "Destroy Dreadnaughts", category: "Space: Destroy Targets", tip: "Dreadnought-class ships can be found in the 'Hive Onslaught' TFO, 'Dranuur Gauntlet' TFO, or by destroying the Voth Planet Killers in the Dyson Sphere." },
+            { id: 'destroy-tholians-space', name: "Destroy Tholians", category: "Space: Destroy Targets", tip: "Engage Tholian ships in the 'Crystalline Catastrophe' TFO or the Archer System patrol.", location: "Archer System is in the Narendra Sector (Beta Quadrant)." },
+            { id: 'hull-healing-space', name: "Hull Healing (Space)", category: "Space: Healing", tip: "Use abilities like Hazard Emitters, Engineering Team, and Auxiliary to Structural. Healing consoles are also very effective." },
+            { id: 'shield-healing-space', name: "Shield Healing (Space)", category: "Space: Healing", tip: "Use abilities such as Science Team, Transfer Shield Strength, or the Biomolecular Shield Generator console." },
+            { id: 'deal-antiproton-damage-ground', name: "Deal Antiproton Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Antiproton damage, such as the Omega Reputation Carbine or various Antiproton rifles." },
+            { id: 'deal-disruptor-damage-ground', name: "Deal Disruptor Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Disruptor damage, such as the Boolean Cannon or standard Disruptor rifles." },
+            { id: 'deal-kinetic-damage-ground', name: "Deal Kinetic Damage (Ground)", category: "Ground: Deal Damage", tip: "Use abilities and equipment that deal kinetic damage, including grenades, mines, mortars, and the TR-116B rifle." },
+            { id: 'deal-phaser-damage-ground', name: "Deal Phaser Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip any standard ground weapon that deals Phaser damage, such as a Phaser Split Beam or Full Auto Rifle." },
+            { id: 'deal-physical-damage-ground', name: "Deal Physical Damage (Ground)", category: "Ground: Deal Damage", tip: "Utilize melee weapons, Temporal Operative abilities, the Harmonic Resonance Device, or Zefram Cochrane's Shotgun." },
+            { id: 'deal-plasma-damage-ground', name: "Deal Plasma Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Plasma damage, such as Romulan reputation weapons or standard Plasma rifles." },
+            { id: 'deal-polaron-damage-ground', name: "Deal Polaron Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Polaron damage, such as the Jem'Hadar rifle, or use kit modules like the Polaron Bombardment." },
+            { id: 'deal-tetryon-damage-ground', name: "Deal Tetryon Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip any standard ground weapon that deals Tetryon damage, such as a Tetryon Split Beam or Full Auto Rifle." },
+            { id: 'defeat-hurq-attendants', name: "Defeat Hur’q Attendants", category: "Ground: Defeat Enemies", tip: "These specific ground targets are found during the 'Home' story episode." },
+            { id: 'defeat-gorn-on-nimbus', name: "Defeat Gorn on Nimbus", category: "Ground: Defeat Enemies", tip: "Travel to the Gorn Canyon area on the Nimbus III adventure zone to find Gorn enemies.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
+            { id: 'defeat-terran-empire-ground', name: "Defeat Terran Empire (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Terran Empire ground forces in the 'Assault on Terok Nor' TFO or during the 'Future Proof' story arc." },
+            { id: 'defeat-captains', name: "Defeat Captains", category: "Ground: Defeat Enemies", tip: "Captain-rank enemies are common in the Dyson Ground Battlezone, Defera Adventure Zone, or 'Hive Onslaught' (Ground) TFO on Advanced/Elite difficulty." },
+            { id: 'defeat-elachi-captain', name: "Defeat Elachi Captain", category: "Ground: Defeat Enemies", tip: "This specific captain-rank enemy is found within the 'Mycelial Realm' TFO." },
+            { id: 'defeat-tholians-ground', name: "Defeat Tholians (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Tholian ground forces in the Nukara Prime Adventure Zone or related TFOs.", location: "Nukara is in the Boreth Sector (Beta Quadrant)." },
+            { id: 'defeat-tholians-ground-adventure-zone', name: "Defeat Tholians (Ground Adventure Zone)", category: "Ground: Defeat Enemies", tip: "Focus on defeating Tholians specifically within the Nukara Prime Adventure Zone.", location: "Location: Boreth Sector (Beta Quadrant, below Drozana Station)." },
+            { id: 'defeat-borg-ground', name: "Defeat Borg (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Borg ground forces in the Defera Adventure Zone or within Borg-specific TFOs.", location: "Defera Zone is in the Orellius Sector Block (Beta Quadrant)." },
+            { id: 'defeat-dewan-arthropods', name: "Defeat Dewan Arthropods", category: "Ground: Defeat Enemies", tip: "These scorpion-like creatures are found throughout the desert areas of the Nimbus III adventure zone.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
+            { id: 'defeat-voth-ground', name: "Defeat Voth (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Voth ground forces within the Dyson Sphere Ground Battlezone.", location: "Dyson Battlezone is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
+            { id: 'defeat-voth-in-battlezone', name: "Defeat Voth in Battlezone", category: "Ground: Defeat Enemies", tip: "Focus on defeating Voth specifically within the Dyson Sphere Ground Battlezone.", location: "Location: Solanae Sector Block (Alpha/Beta Quadrant access, Part of Solanae Dyson Sphere)." },
+            { id: 'defeat-tzenkethi-ground', name: "Defeat Tzenkethi (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Tzenkethi ground forces during the 'Of Signs and Portents' or 'Brushfire' episodes." },
+            { id: 'defeat-vaadwaur', name: "Defeat Vaadwaur", category: "Ground: Defeat Enemies", tip: "Engage Vaadwaur forces throughout the Kobali Prime Adventure Zone.", location: "Kobali Prime is in the Delta Quadrant (Kobali System)." },
+            { id: 'defeat-gorn-on-nimbus-3', name: "Defeat Gorn on Nimbus 3", category: "Ground: Defeat Enemies", tip: "Travel to the Gorn Canyon area on the Nimbus III adventure zone to find Gorn enemies.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
+            { id: 'hull-healing-ground', name: "Hull Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Medical Generator, abilities like Rally Cry, or consumables like Large Hyposprays. You can safely damage yourself by falling from heights on social hubs." },
+            { id: 'shield-healing-ground', name: "Shield Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Shield Generator, the Shield Recharge ability, or consumables like Large Shield Charges." },
+            { id: 'complete-competitive-wargames-tfos', name: "Complete Competitive Wargames TFOs", category: "TFOs", tip: "The 'Binary Circuit' TFO on Elite difficulty is a fast and reliable option for completion." },
+            { id: 'complete-lukari-tfos', name: "Complete Lukari TFOs", category: "TFOs", tip: "The 'Dranuur Gauntlet' TFO on Normal difficulty is a straightforward option for completion." },
+            { id: 'complete-borg-tfos', name: "Complete Borg TFOs", category: "TFOs", tip: "The 'Infected: The Conduit' (Advanced) TFO is a popular and efficient option for completion." },
+            { id: 'complete-iconian-tfos', name: "Complete Iconian TFOs", category: "TFOs", tip: "'Brotherhood of the Sword' is a common and direct option for completion." },
+            { id: 'gain-salvage', name: "Gain Salvage", category: "Other", tip: "Purchase and salvage Mark IX ground equipment from any standard gear vendor (e.g., on Earth Spacedock) for a cost-effective method." },
+            { id: 'harvest-materials-ground', name: "Harvest Materials (Ground)", category: "Other", tip: "The 'Sphere of Influence' mission offers repeatable nodes. Federation characters can also use the 'Diplomatic Order' mission for multiple nodes." },
+            { id: 'harvest-materials-space', name: "Harvest Materials (Space)", category: "Other", tip: "Enter patrols in the Tau Dewa Sector Block (e.g., Carraya, Archer System), harvest the anomaly nodes, and leave without fighting to repeat quickly.", location: "These patrols are in/near the Tau Dewa Sector Block (Beta Quadrant)." },
+            { id: 'win-gold-pressed-latinum', name: "Win Gold Pressed Latinum", category: "Other", tip: "Play the Dabo mini-game, available at locations like Drozana Station or Deep Space 9." }
+        ];
+
+        const container = document.getElementById('endeavorContainer');
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sort-select');
+        const filtersContainer = document.getElementById('categoryFilters');
+        const filterBar = document.getElementById('filterBar');
+        const filtersWrapper = document.getElementById('filtersWrapper');
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        let activeFilter = 'All';
+        let currentSort = 'alpha-asc';
+        
+        const renderEndeavors = (items) => {
+            container.innerHTML = '';
+            if (items.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-400 col-span-full">No endeavors found matching your criteria.</p>`;
+                return;
+            }
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.animationDelay = `${index * 0.05}s`;
+                let locationInfo = '';
+                if (item.location) {
+                    locationInfo = `<li class="location-info">${item.location}</li>`;
+                }
+                card.innerHTML = `
+                    <div class="card-content">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-white pr-4">${item.name}</h3>
+                            <span class="category-tag">
+                                ${iconMap[item.category] || ''}
+                                ${item.category}
+                            </span>
+                        </div>
+                        <p class="text-gray-300">${item.tip}</p>
+                    </div>
+                    ${locationInfo}
+                `;
+                container.appendChild(card);
+            });
+        };
+
+        const renderFilters = () => {
+            const categories = ['All', ...new Set(endeavorData.map(item => item.category))];
+            filtersContainer.innerHTML = categories.map(cat => `
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium ${activeFilter === cat ? 'active' : ''}" data-category="${cat}">
+                    ${iconMap[cat] || ''}
+                    <span>${cat}</span>
+                </button>
+            `).join('');
+        };
+
+        const filterAndRender = () => {
+            let filteredData = [...endeavorData];
+            const searchTerm = searchInput.value.toLowerCase();
+
+            // Filter
+            if (activeFilter !== 'All') {
+                filteredData = filteredData.filter(item => item.category === activeFilter);
+            }
+            if (searchTerm) {
+                filteredData = filteredData.filter(item => 
+                    item.name.toLowerCase().includes(searchTerm) || 
+                    item.tip.toLowerCase().includes(searchTerm) ||
+                    (item.location && item.location.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            // Sort
+            if (currentSort === 'alpha-asc') {
+                filteredData.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (currentSort === 'alpha-desc') {
+                filteredData.sort((a, b) => b.name.localeCompare(a.name));
+            }
+            
+            renderEndeavors(filteredData);
+        };
+
+        searchInput.addEventListener('input', filterAndRender);
+        sortSelect.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            filterAndRender();
+        });
+        filtersContainer.addEventListener('click', (e) => {
+            const button = e.target.closest('.filter-btn');
+            if (button) {
+                activeFilter = button.dataset.category;
+                document.querySelectorAll('#categoryFilters .filter-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                filterAndRender();
+            }
+        });
+        
+        themeToggleBtn.addEventListener('click', () => {
+            const isLcars = document.body.classList.toggle('lcars-theme');
+            localStorage.setItem('theme', isLcars ? 'lcars' : 'default');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'lcars') {
+                document.body.classList.add('lcars-theme');
+            }
+            renderFilters();
+            filterAndRender();
+        });
+
+        // --- Warp Drive Background Logic ---
+        const canvas = document.getElementById('warp-background');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        const numStars = 1000;
+        const speed = 4;
+
+        function setup() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: (Math.random() - 0.5) * canvas.width,
+                    y: (Math.random() - 0.5) * canvas.height,
+                    z: Math.random() * canvas.width
+                });
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(10, 15, 30, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.fillStyle = 'white';
+            for (let i = 0; i < stars.length; i++) {
+                let star = stars[i];
+                star.z -= speed;
+                if (star.z < 1) {
+                    star.z = canvas.width;
+                    star.x = (Math.random() - 0.5) * canvas.width;
+                    star.y = (Math.random() - 0.5) * canvas.height;
+                }
+                const sx = star.x / star.z * canvas.width / 10;
+                const sy = star.y / star.z * canvas.height / 10;
+                const r = Math.max(0.1, (1 - star.z / canvas.width) * 2);
+                ctx.beginPath();
+                ctx.arc(sx, sy, r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', setup);
+        setup();
+        draw();
+    </script>
+</body>
+</html>
