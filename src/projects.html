@@ -7,6 +7,49 @@
     <link rel="icon" type="image/x-icon" href="/assets/icons/PRSG.ico">
     <link href="/public/output.css" rel="stylesheet">
     <link href="/assets/commonCss/repeatables.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&display=swap" rel="stylesheet">
+    <style>
+        #sto-card.lcars-card {
+            background-color: black;
+            border: none;
+            border-left: 5px solid #9999ff;
+            border-bottom: 5px solid #9999ff;
+            border-radius: 0;
+            padding: 1rem;
+            backdrop-filter: none;
+        }
+        #sto-card.lcars-card:hover {
+            transform: translateY(0);
+            box-shadow: none;
+            border-color: #ff9900;
+        }
+        #sto-card.lcars-card h3 {
+            font-family: 'Antonio', sans-serif;
+            letter-spacing: 2px;
+            color: #ffcc99;
+        }
+        #sto-card.lcars-card p {
+            font-family: 'Antonio', sans-serif;
+            color: #ffcc99;
+        }
+        #sto-card.lcars-card a {
+            background-color: #ff9900;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Antonio', sans-serif;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s ease;
+            box-shadow: none;
+        }
+        #sto-card.lcars-card a:hover {
+            background-color: #cc8800;
+            box-shadow: none;
+        }
+    </style>
 </head>
 <body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
 
@@ -53,7 +96,7 @@
                                 <p class="text-sm text-center text-[--color-text-muted] mb-4">Sole Developer - Passion Project</p>
                             </div>
                             <div class="px-6">
-                                <img class="w-full h-[35vh] object-contain rounded-lg" src="/assets/images/projects/TTMPnew.png" alt="Tome Tales Management Panel Thumbnail">
+                                <img class="w-full h-[35vh] object-contain rounded-lg" src="/assets/images/projects/TTMPNewer.png" alt="Tome Tales Management Panel Thumbnail">
                             </div>
                             <div class="p-6">
                                 <p class="text-[--color-text-muted] mb-6">TTMP (Tome Tales Management Panel) is a passion project I developed to streamline managing tabletop RPG sessions, specifically for Dungeons & Dragons. What started as a simple randomizer for enemies and locations grew into a comprehensive tool for game masters. It handles complex systems like currency tracking, loot box generation, and dynamic encounter creation. The front-end is built with HTML and styled with Tailwind CSS, while the core logic is powered by Lua running in the browser via the Fengari VM. This project was a fantastic learning experience in bridging different technologies to create a practical and fun application for my friends and me.</p>
@@ -67,8 +110,28 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Add more cards here by duplicating the block above -->
+                        <!-- Project Card: STO Endeavour Helper -->
+                        <div id="sto-card" class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
+                            <div class="px-6 pt-6">
+                                <h3 class="text-2xl font-bold mb-2 text-center">Star Trek Endeavor Guide</h3>
+                                <p class="text-sm text-center text-[--color-text-muted] mb-4">Community Tool</p>
+                            </div>
+                            <div class="px-6">
+                                <img class="w-full h-[35vh] object-contain rounded-lg" src="/assets/images/projects/STOEndevourguide.png" alt="Star Trek Endeavor Guide Thumbnail">
+                            </div>
+                            <div class="p-6">
+                                <p class="text-[--color-text-muted] mb-6">A comprehensive guide for the Endeavor system in Star Trek Online. This tool helps players quickly find information on how to complete any given endeavor challenge, with tips and locations for each. It's a community resource designed to be fast, efficient, and easy to use.</p>
+                                <div class="flex justify-center">
+                                    <a href="/src/Pages/STOEndeavourHelper.html" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                        </svg>
+                                        <span>View Project</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </section>
@@ -84,5 +147,14 @@
     </div>
     <!-- This script will fetch and inject the navigation bar -->
     <script src="js/main.js" defer></script>
+    <script>
+        const stoCard = document.getElementById('sto-card');
+        stoCard.addEventListener('mouseenter', () => {
+            stoCard.classList.add('lcars-card');
+        });
+        stoCard.addEventListener('mouseleave', () => {
+            stoCard.classList.remove('lcars-card');
+        });
+    </script>
 </body>
 </html>

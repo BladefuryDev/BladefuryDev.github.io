@@ -962,10 +962,6 @@ video {
   width: 100%;
 }
 
-.w-16 {
-  width: 4rem;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -2228,22 +2224,6 @@ video {
     width: 25%;
   }
 
-  .lg\:w-auto {
-    width: auto;
-  }
-
-  .lg\:w-20 {
-    width: 5rem;
-  }
-
-  .lg\:w-7 {
-    width: 1.75rem;
-  }
-
-  .lg\:w-72 {
-    width: 18rem;
-  }
-
   .lg\:w-2\/5 {
     width: 40%;
   }
@@ -2254,10 +2234,6 @@ video {
 
   .lg\:max-w-6xl {
     max-width: 72rem;
-  }
-
-  .lg\:flex-grow {
-    flex-grow: 1;
   }
 
   .lg\:grid-cols-3 {
