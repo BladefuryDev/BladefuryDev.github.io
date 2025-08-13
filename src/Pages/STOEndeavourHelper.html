@@ -272,19 +272,27 @@
     <script>
         // --- Icon Mapping ---
         const iconMap = {
-            'Space: Deal Damage': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M233.35,109.26,146.74,22.65a14,14,0,0,0-19.8,0L40.33,109.26a14,14,0,0,0,0,19.8l86.61,86.61a14,14,0,0,0,19.8,0l86.61-86.61a14,14,0,0,0,0-19.8ZM156,128a28,28,0,1,1-28-28A28,28,0,0,1,156,128Z"/></svg>`,
-            'Space: Destroy Targets': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M227.87,73.1a14,14,0,0,0-15.74-2.3L155,95.58V54a14,14,0,0,0-27-2.3L94,144.38,36.93,121.1a14,14,0,0,0-17.8,4.06L2.2,152.55a14,14,0,0,0,11.73,23.32l58,11.89,34,68a14,14,0,0,0,25.9-11.73V180.22l57.13,24.72A13.9,13.9,0,0,0,202,214a14,14,0,0,0,13.87-16.13l-16.14-64.5L227.87,90.9A14,14,0,0,0,227.87,73.1Z"/></svg>`,
-            'Space: Healing': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M236.88,103.22,153.6,20a14,14,0,0,0-19.8,0L50.48,103.22a14,14,0,0,0,0,19.8L133.8,206.3a14,14,0,0,0,19.8,0l83.28-83.28a14,14,0,0,0,0-19.8ZM164,136H136v28a8,8,0,0,1-16,0V136H92a8,8,0,0,1,0-16h28V92a8,8,0,0,1,16,0v28h28a8,8,0,0,1,0,16Z"/></svg>`,
-            'Ground: Deal Damage': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M239.81,191.82,192,144.06V96a8,8,0,0,0-8-8H160a8,8,0,0,0-8,8v22.63l-18.1-18.1A94,94,0,1,0,32.48,199.52a93.63,93.63,0,0,0,26.45,19.85,8,8,0,0,0,8.24-13.37,77.89,77.89,0,1,1,110.15,0,8,8,0,0,0,8.24,13.37,93.63,93.63,0,0,0,26.45-19.85l47.76,47.77a8,8,0,0,0,11.32-11.32ZM184,112v16.06l40,40V200a8,8,0,0,1-8,8H192a8,8,0,0,1-8-8V179.31l-16-16V144a8,8,0,0,0-8-8H136a8,8,0,0,0-8,8v19.31l-16-16V128a8,8,0,0,0-8-8H80a8,8,0,0,0,0,16h16v16H80a8,8,0,0,0,0,16h32v16H80a8,8,0,0,0,0,16h48v16H80a8,8,0,0,0-5.66,13.66l-1.37,1.2,1.37-1.2A78.11,78.11,0,0,1,48,128a77.4,77.4,0,0,1,22.78-55.22A78,78,0,0,1,128,48a77.4,77.4,0,0,1,55.22,22.78,8,8,0,0,0,13.37-8.24A94,94,0,0,0,128,32,93.42,93.42,0,0,0,62.37,62.37,94,94,0,0,0,88.52,184.52l18.1-18.1V144h16v-2.63l16-16V112Z"/></svg>`,
-            'Ground: Defeat Enemies': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M128,24a104,104,0,1,0,104,104A104.11,104.11,0,0,0,128,24ZM72,128a56,56,0,0,1,56-56,8,8,0,0,1,0,16,40,40,0,0,0-40,40,8,8,0,0,1-16,0Zm88,40a8,8,0,0,1-8,8,40,40,0,0,0-40-40,8,8,0,0,1,0-16,56,56,0,0,1,56,56Z"/></svg>`,
-            'Ground: Healing': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M128,24A104,104,0,1,0,104,104,104.11,104.11,0,0,0,128,24Zm40,112H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32a8,8,0,0,1,0,16Z"/></svg>`,
-            'TFOs': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M239.12,111.2,144.8,92.41l32.27-71.18a14,14,0,0,0-24.14-14.9L128,52.5,103.07,6.33a14,14,0,0,0-24.14,14.9L111.2,92.41,16.88,111.2a14,14,0,0,0,0,25.6l94.32,18.79-32.27,71.18a14,14,0,0,0,24.14,14.9L128,195.5l24.93,46.17a14,14,0,0,0,24.14-14.9L144.8,155.59l94.32-18.79a14,14,0,0,0,0-25.6ZM128,142a14,14,0,1,1,14-14A14,14,0,0,1,128,142Z"/></svg>`,
-            'Other': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="category-icon" fill="currentColor"><path d="M240.26,183.3l-22.12-38.31a14,14,0,0,0-12.14-7H160.33l-4.57-23.36a14,14,0,0,0-13.78-11.66H112a14,14,0,0,0-13.78,11.66L93.67,138H48a14,14,0,0,0-12.14,7L13.74,183.3a14,14,0,0,0,12.14,21H228.12a14,14,0,0,0,12.14-21ZM128,74a34,34,0,1,1-34,34A34,34,0,0,1,128,74Z"/></svg>`,
+            // A classic cannon
+            'Space: Deal Damage': `<img src="https://img.icons8.com/ios-filled/100/cannon.png" class="category-icon" alt="Cannon Icon">`,
+            // A simple spaceship
+            'Space: Destroy Targets': `<img src="https://img.icons8.com/ios-filled/100/rocket.png" class="category-icon" alt="Rocket Icon">`,
+            // A wrench for repairs
+            'Space: Healing': `<img src="https://img.icons8.com/ios-filled/100/wrench.png" class="category-icon" alt="Wrench Icon">`,
+            // A sword
+            'Ground: Deal Damage': `<img src="https://img.icons8.com/ios-filled/100/sword.png" class="category-icon" alt="Sword Icon">`,
+            // A crosshair
+            'Ground: Defeat Enemies': `<img src="https://img.icons8.com/ios-filled/100/center-diretion-2.png" class="category-icon" alt="Crosshair Icon">`,
+            // A medical plus icon
+            'Ground: Healing': `<img src="https://img.icons8.com/ios-filled/100/medical-id.png" class="category-icon" alt="Medical Icon">`,
+            // User silhouettes
+            'TFOs': `<img src="https://img.icons8.com/ios-filled/100/groups.png" class="category-icon" alt="Group Icon">`,
+            // A question mark
+            'Other': `<img src="https://img.icons8.com/ios-filled/100/question-mark.png" class="category-icon" alt="Question Mark Icon">`,
         };
 
         // --- Endeavor Guide Logic ---
         const endeavorData = [
-            // Data remains the same...
+            // --- Space: Deal Damage ---
             { id: 'deal-antiproton-damage-space', name: "Deal Antiproton Damage", category: "Space: Deal Damage", tip: "Equip Antiproton-based weaponry. Pets dealing Antiproton damage, such as Swarmers, also contribute." },
             { id: 'deal-disruptor-damage-space', name: "Deal Disruptor Damage", category: "Space: Deal Damage", tip: "Equip Disruptor-based weaponry. Effective pets include the To’Duj or Stinger Fighter. KDF-aligned characters can also use Fleet Support." },
             { id: 'deal-kinetic-damage-space', name: "Deal Kinetic Damage", category: "Space: Deal Damage", tip: "Utilize torpedoes, the Gravity Well science ability, or other kinetic-damage sources. Fleet Support and certain pets also contribute." },
@@ -292,11 +300,16 @@
             { id: 'deal-physical-damage-space', name: "Deal Physical Damage", category: "Space: Deal Damage", tip: "Use the Destabilized Resonance Beam (an episode reward) or various Temporal Operative bridge officer abilities." },
             { id: 'deal-plasma-damage-space', name: "Deal Plasma Damage", category: "Space: Deal Damage", tip: "Equip Plasma-based weaponry. Pets like Scorpion Fighters are effective. Romulan-aligned characters can also use Fleet Support." },
             { id: 'deal-polaron-damage-space', name: "Deal Polaron Damage", category: "Space: Deal Damage", tip: "Equip Polaron-based weaponry. Vanguard Wingmen pets are effective. Jem'Hadar-aligned characters can also use Fleet Support." },
-            { id: 'deal-tetryon-damage-space', name: "Deal Tetryon Damage", category: "Space: Deal Damage", tip: "Activate the reputation ability from the Nukara Strikeforce T5/T6 reputation. Tetryon weapons or pets like the Tholian Mesh Weaver also work." },
-            { id: 'destroy-targetable-torpedos', name: "Destroy Targetable Torpedos", category: "Space: Destroy Targets", tip: "The most reliable method is a private PvP match with a friend using targetable torpedoes (e.g., Hyper-Plasma). Alternatively, target torpedoes in the Carraya System patrol or during the final phases of the 'Undine Assault' and 'Crystalline Catastrophe' TFOs.", location: "Carraya System is in the Tau Dewa Sector Block (Beta Quadrant)." },
+            // Corrected: Added 'Tholian Widow Fighter' pet.
+            { id: 'deal-tetryon-damage-space', name: "Deal Tetryon Damage", category: "Space: Deal Damage", tip: "Activate the reputation ability from the Nukara Strikeforce T5/T6 reputation. Tetryon weapons or pets like the Tholian Mesh Weaver or Tholian Widow Fighter also work." },
+
+            // --- Space: Destroy Targets ---
+            // Corrected: Added 'Point Defense Console' tip.
+            { id: 'destroy-targetable-torpedos', name: "Destroy Targetable Torpedos", category: "Space: Destroy Targets", tip: "The most reliable method is a private PvP match with a friend using targetable torpedoes (e.g., Hyper-Plasma). Alternatively, target torpedoes in the Carraya System patrol or during the final phases of the 'Undine Assault' and 'Crystalline Catastrophe' TFOs. The Point Defense Console can be helpful.", location: "Carraya System is in the Tau Dewa Sector Block (Beta Quadrant)." },
             { id: 'destroy-terran-empire-ships', name: "Destroy Terran Empire Ships", category: "Space: Destroy Targets", tip: "Engage Terran forces in the Badlands Battlezone or within the 'Counterpoint' TFO.", location: "Badlands Battlezone is in the Cardassia Sector (Alpha Quadrant)." },
             { id: 'destroy-terran-empire-ships-in-battlezone', name: "Destroy Terran Empire Ships in Battlezone", category: "Space: Destroy Targets", tip: "Focus on defeating Terran ships specifically within the Badlands Battlezone.", location: "Location: Cardassia Sector (Alpha Quadrant, left of DS9)." },
-            { id: 'destroy-voth-ships', name: "Destroy Voth Ships", category: "Space: Destroy Targets", tip: "Voth ships can be found in the 'Aftermath' patrol or the Dyson Sphere Space Battlezone (especially after the Voth Citadel phase).", location: "Dyson Sphere is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
+            // Corrected: Added tip about the second Dyson space zone.
+            { id: 'destroy-voth-ships', name: "Destroy Voth Ships", category: "Space: Destroy Targets", tip: "Voth ships can be found in the 'Aftermath' patrol, the Dyson Sphere Space Battlezone (after the Voth Citadel phase), or in the contested space zone above the ground battlezone.", location: "Dyson Sphere is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
             { id: 'destroy-tzenkethi-ships', name: "Destroy Tzenkethi Ships", category: "Space: Destroy Targets", tip: "Engage Tzenkethi forces in their Battlezone, the 'Gravity Kills' TFO, or during related story episodes.", location: "Tzenkethi Battlezone is in the Gon'cra Sector (Alpha Quadrant)." },
             { id: 'destroy-tzenkethi-ship-in-goncra-battlezone', name: "Destroy Tzenkethi Ship in Gon’Cra Battlezone", category: "Space: Destroy Targets", tip: "Focus on defeating Tzenkethi ships specifically within the Tzenkethi Battlezone located in the Gon'cra Sector.", location: "Location: Gon’Cra Sector (Alpha Quadrant, top left)." },
             { id: 'destroy-undine-ships', name: "Destroy Undine Ships", category: "Space: Destroy Targets", tip: "Engage Undine (Species 8472) ships in the Dyson Sphere Space Battlezone, the 'Undine Assault' TFO, or the 'Surface Tension' episode.", location: "Dyson Battlezone is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
@@ -306,20 +319,30 @@
             { id: 'destroy-herald-ships', name: "Destroy Herald Ships", category: "Space: Destroy Targets", tip: "Herald ships are the primary enemy type in the 'Midnight' story episode." },
             { id: 'destroy-dreadnaughts', name: "Destroy Dreadnaughts", category: "Space: Destroy Targets", tip: "Dreadnought-class ships can be found in the 'Hive Onslaught' TFO, 'Dranuur Gauntlet' TFO, or by destroying the Voth Planet Killers in the Dyson Sphere." },
             { id: 'destroy-tholians-space', name: "Destroy Tholians", category: "Space: Destroy Targets", tip: "Engage Tholian ships in the 'Crystalline Catastrophe' TFO or the Archer System patrol.", location: "Archer System is in the Narendra Sector (Beta Quadrant)." },
+
+            // --- Space: Healing ---
             { id: 'hull-healing-space', name: "Hull Healing (Space)", category: "Space: Healing", tip: "Use abilities like Hazard Emitters, Engineering Team, and Auxiliary to Structural. Healing consoles are also very effective." },
             { id: 'shield-healing-space', name: "Shield Healing (Space)", category: "Space: Healing", tip: "Use abilities such as Science Team, Transfer Shield Strength, or the Biomolecular Shield Generator console." },
-            { id: 'deal-antiproton-damage-ground', name: "Deal Antiproton Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Antiproton damage, such as the Omega Reputation Carbine or various Antiproton rifles." },
+
+            // --- Ground: Deal Damage ---
+            // Corrected: Added 'Herald Projector'.
+            { id: 'deal-antiproton-damage-ground', name: "Deal Antiproton Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Antiproton damage, such as the Omega Reputation Carbine, Herald Projector, or various Antiproton rifles." },
             { id: 'deal-disruptor-damage-ground', name: "Deal Disruptor Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Disruptor damage, such as the Boolean Cannon or standard Disruptor rifles." },
-            { id: 'deal-kinetic-damage-ground', name: "Deal Kinetic Damage (Ground)", category: "Ground: Deal Damage", tip: "Use abilities and equipment that deal kinetic damage, including grenades, mines, mortars, and the TR-116B rifle." },
+            // Corrected: Added more abilities.
+            { id: 'deal-kinetic-damage-ground', name: "Deal Kinetic Damage (Ground)", category: "Ground: Deal Damage", tip: "Use abilities and equipment that deal kinetic damage, including grenades, mines, mortars, Graviton Spike, Protomatter Deployment, and the TR-116B rifle." },
             { id: 'deal-phaser-damage-ground', name: "Deal Phaser Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip any standard ground weapon that deals Phaser damage, such as a Phaser Split Beam or Full Auto Rifle." },
             { id: 'deal-physical-damage-ground', name: "Deal Physical Damage (Ground)", category: "Ground: Deal Damage", tip: "Utilize melee weapons, Temporal Operative abilities, the Harmonic Resonance Device, or Zefram Cochrane's Shotgun." },
             { id: 'deal-plasma-damage-ground', name: "Deal Plasma Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Plasma damage, such as Romulan reputation weapons or standard Plasma rifles." },
             { id: 'deal-polaron-damage-ground', name: "Deal Polaron Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Polaron damage, such as the Jem'Hadar rifle, or use kit modules like the Polaron Bombardment." },
             { id: 'deal-tetryon-damage-ground', name: "Deal Tetryon Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip any standard ground weapon that deals Tetryon damage, such as a Tetryon Split Beam or Full Auto Rifle." },
+
+            // --- Ground: Defeat Enemies ---
             { id: 'defeat-hurq-attendants', name: "Defeat Hur’q Attendants", category: "Ground: Defeat Enemies", tip: "These specific ground targets are found during the 'Home' story episode." },
+            // Corrected: Merged two duplicate Gorn entries into one.
             { id: 'defeat-gorn-on-nimbus', name: "Defeat Gorn on Nimbus", category: "Ground: Defeat Enemies", tip: "Travel to the Gorn Canyon area on the Nimbus III adventure zone to find Gorn enemies.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
             { id: 'defeat-terran-empire-ground', name: "Defeat Terran Empire (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Terran Empire ground forces in the 'Assault on Terok Nor' TFO or during the 'Future Proof' story arc." },
-            { id: 'defeat-captains', name: "Defeat Captains", category: "Ground: Defeat Enemies", tip: "Captain-rank enemies are common in the Dyson Ground Battlezone, Defera Adventure Zone, or 'Hive Onslaught' (Ground) TFO on Advanced/Elite difficulty." },
+            // Corrected: Added more locations.
+            { id: 'defeat-captains', name: "Defeat Captains", category: "Ground: Defeat Enemies", tip: "Captain-rank enemies are common in the Dyson Ground Battlezone, Defera Adventure Zone, 'Hive Onslaught' (Ground) TFO on Advanced/Elite, Nimbus minibosses, and the 'Home' episode." },
             { id: 'defeat-elachi-captain', name: "Defeat Elachi Captain", category: "Ground: Defeat Enemies", tip: "This specific captain-rank enemy is found within the 'Mycelial Realm' TFO." },
             { id: 'defeat-tholians-ground', name: "Defeat Tholians (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Tholian ground forces in the Nukara Prime Adventure Zone or related TFOs.", location: "Nukara is in the Boreth Sector (Beta Quadrant)." },
             { id: 'defeat-tholians-ground-adventure-zone', name: "Defeat Tholians (Ground Adventure Zone)", category: "Ground: Defeat Enemies", tip: "Focus on defeating Tholians specifically within the Nukara Prime Adventure Zone.", location: "Location: Boreth Sector (Beta Quadrant, below Drozana Station)." },
@@ -327,18 +350,27 @@
             { id: 'defeat-dewan-arthropods', name: "Defeat Dewan Arthropods", category: "Ground: Defeat Enemies", tip: "These scorpion-like creatures are found throughout the desert areas of the Nimbus III adventure zone.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
             { id: 'defeat-voth-ground', name: "Defeat Voth (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Voth ground forces within the Dyson Sphere Ground Battlezone.", location: "Dyson Battlezone is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
             { id: 'defeat-voth-in-battlezone', name: "Defeat Voth in Battlezone", category: "Ground: Defeat Enemies", tip: "Focus on defeating Voth specifically within the Dyson Sphere Ground Battlezone.", location: "Location: Solanae Sector Block (Alpha/Beta Quadrant access, Part of Solanae Dyson Sphere)." },
-            { id: 'defeat-tzenkethi-ground', name: "Defeat Tzenkethi (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Tzenkethi ground forces during the 'Of Signs and Portents' or 'Brushfire' episodes." },
+            // Corrected: Added 'New Frontiers Arc' context.
+            { id: 'defeat-tzenkethi-ground', name: "Defeat Tzenkethi (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Tzenkethi ground forces during the 'Of Signs and Portents' or 'Brushfire' episodes (New Frontiers story arc)." },
             { id: 'defeat-vaadwaur', name: "Defeat Vaadwaur", category: "Ground: Defeat Enemies", tip: "Engage Vaadwaur forces throughout the Kobali Prime Adventure Zone.", location: "Kobali Prime is in the Delta Quadrant (Kobali System)." },
-            { id: 'defeat-gorn-on-nimbus-3', name: "Defeat Gorn on Nimbus 3", category: "Ground: Defeat Enemies", tip: "Travel to the Gorn Canyon area on the Nimbus III adventure zone to find Gorn enemies.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
-            { id: 'hull-healing-ground', name: "Hull Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Medical Generator, abilities like Rally Cry, or consumables like Large Hyposprays. You can safely damage yourself by falling from heights on social hubs." },
+            
+            // --- Ground: Healing ---
+            // Corrected: Added 'Medical Tricorder'.
+            { id: 'hull-healing-ground', name: "Hull Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Medical Generator, abilities like Rally Cry or Medical Tricorder, or consumables like Large Hyposprays. You can safely damage yourself by falling from heights on social hubs." },
             { id: 'shield-healing-ground', name: "Shield Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Shield Generator, the Shield Recharge ability, or consumables like Large Shield Charges." },
+
+            // --- TFOs ---
             { id: 'complete-competitive-wargames-tfos', name: "Complete Competitive Wargames TFOs", category: "TFOs", tip: "The 'Binary Circuit' TFO on Elite difficulty is a fast and reliable option for completion." },
             { id: 'complete-lukari-tfos', name: "Complete Lukari TFOs", category: "TFOs", tip: "The 'Dranuur Gauntlet' TFO on Normal difficulty is a straightforward option for completion." },
             { id: 'complete-borg-tfos', name: "Complete Borg TFOs", category: "TFOs", tip: "The 'Infected: The Conduit' (Advanced) TFO is a popular and efficient option for completion." },
             { id: 'complete-iconian-tfos', name: "Complete Iconian TFOs", category: "TFOs", tip: "'Brotherhood of the Sword' is a common and direct option for completion." },
-            { id: 'gain-salvage', name: "Gain Salvage", category: "Other", tip: "Purchase and salvage Mark IX ground equipment from any standard gear vendor (e.g., on Earth Spacedock) for a cost-effective method." },
+
+            // --- Other ---
+            // Corrected: Added cost information.
+            { id: 'gain-salvage', name: "Gain Salvage", category: "Other", tip: "Purchase and salvage Mark IX ground equipment (approx. 4,000 EC each) from any standard gear vendor (e.g., on Earth Spacedock) for a cost-effective method." },
             { id: 'harvest-materials-ground', name: "Harvest Materials (Ground)", category: "Other", tip: "The 'Sphere of Influence' mission offers repeatable nodes. Federation characters can also use the 'Diplomatic Order' mission for multiple nodes." },
-            { id: 'harvest-materials-space', name: "Harvest Materials (Space)", category: "Other", tip: "Enter patrols in the Tau Dewa Sector Block (e.g., Carraya, Archer System), harvest the anomaly nodes, and leave without fighting to repeat quickly.", location: "These patrols are in/near the Tau Dewa Sector Block (Beta Quadrant)." },
+            // Corrected: Added more patrol examples.
+            { id: 'harvest-materials-space', name: "Harvest Materials (Space)", category: "Other", tip: "Enter patrols in the Tau Dewa Sector Block (e.g., Carraya, Beta Thoridor, Archer System, Starbase 234), harvest the anomaly nodes, and leave without fighting to repeat quickly.", location: "These patrols are in/near the Tau Dewa Sector Block (Beta Quadrant)." },
             { id: 'win-gold-pressed-latinum', name: "Win Gold Pressed Latinum", category: "Other", tip: "Play the Dabo mini-game, available at locations like Drozana Station or Deep Space 9." }
         ];
 
