@@ -485,7 +485,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'lcars') {
+            if (savedTheme !== 'default') { // Default to LCARS
                 document.body.classList.add('lcars-theme');
             }
             renderFilters();
