@@ -92,6 +92,7 @@
         .category-icon {
             width: 1em;
             height: 1em;
+            filter: invert(1);
         }
         .location-info {
             font-size: 0.8rem;
@@ -209,6 +210,9 @@
             border-radius: 5px;
             padding: 0.25rem 0.5rem;
             text-transform: uppercase;
+        }
+        .lcars-theme .category-icon {
+            filter: none;
         }
         .lcars-theme .location-info { color: var(--lcars-blue); }
         .lcars-theme .location-info::before { content: '::'; color: var(--lcars-orange); }
