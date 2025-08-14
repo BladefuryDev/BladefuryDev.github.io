@@ -483,6 +483,7 @@
         let activeFilter = 'All';
         let currentSort = 'alpha-asc';
         let canRenderCards = false; // Control rendering
+        let isIntroAnimation = true;
         
         const renderEndeavors = (items) => {
             container.innerHTML = '';
@@ -490,7 +491,7 @@
                 container.innerHTML = `<p class="text-center text-gray-400 col-span-full">No endeavors found matching your criteria.</p>`;
                 return;
             }
-            const isIntro = document.body.classList.contains('lcars-intro');
+            const isIntro = document.body.classList.contains('lcars-intro') && isIntroAnimation;
             const baseDelay = isIntro ? 1.2 : 0;
             items.forEach((item, index) => {
                 const card = document.createElement('div');
@@ -515,11 +516,14 @@
                 `;
                 container.appendChild(card);
             });
+            if (isIntro) {
+                isIntroAnimation = false;
+            }
         };
 
         const renderFilters = () => {
             const categories = ['All', ...new Set(endeavorData.map(item => item.category))];
-            const isIntro = document.body.classList.contains('lcars-intro');
+            const isIntro = document.body.classList.contains('lcars-intro') && isIntroAnimation;
             const baseDelay = isIntro ? 1.1 : 0;
 
             filtersContainer.innerHTML = categories.map((cat, index) => {
@@ -601,7 +605,7 @@
                     // Now it's safe to render cards
                     canRenderCards = true;
                     filterAndRender();
-                }, 1500); // Show loader for 1.5s
+                }, 750); // Show loader for 1000 = 1 second
             } else {
                 // If not LCARS intro, render immediately
                 canRenderCards = true;
