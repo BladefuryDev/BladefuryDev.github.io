@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCARS UI Framework</title>
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for the 'Antonio' font, characteristic of LCARS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* * ===============================================
+         * LCARS UI FRAMEWORK
+         * Inspired by the STO Endeavor Helper by Hexfury
+         * ===============================================
+         * This framework provides a reusable set of styles
+         * for creating web interfaces in the LCARS style.
+         * Key features include a CSS variable-based color
+         * palette for easy theming, responsive layout
+         * components, and pre-styled common UI elements.
+         */
+
+        /* --- LCARS Color Palette --- */
+        /* CSS variables are used for easy theme management. 
+           Changing a color here will update it across the entire UI. */
+        :root {
+            --lcars-bg: #000000;
+            --lcars-text: #FFCC99; /* Tan */
+            --lcars-primary: #6699FF; /* Primary Blue */
+            --lcars-secondary: #3366CC; /* Darker Blue */
+            --lcars-accent: #FF9900;   /* Orange */
+            --lcars-alert-bg: #CC0000; /* Red for alerts */
+            --lcars-deco: #996699;     /* Darker Purple for minor details */
+        }
+
+        /* --- Base Styles --- */
+        /* These styles define the default look and feel for the entire page. */
+        body {
+            font-family: 'Antonio', sans-serif;
+            background-color: var(--lcars-bg);
+            color: var(--lcars-text);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* --- Page Wrapper --- */
+        /* This new container wraps the entire application to provide screen padding. */
+        .page-wrapper {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            max-width: 1600px; /* Constrains the maximum width on very large screens */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- Main Layout Container --- */
+        /* This is the primary flex container that organizes the page structure vertically. */
+        .lcars-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Header Container --- */
+        /* This wrapper contains the navbar and the alert banner to group them logically. */
+        .lcars-header-group {
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Header: Traditional Navbar Component --- */
+        .lcars-navbar {
+            display: flex;
+            width: 100%;
+            height: 30px; /* Reduced height */
+            border-radius: 0 10px 0 0;
+            overflow: hidden;
+        }
+
+        /* The orange "elbow" shape on the left of the header. */
+        .navbar-elbow {
+            width: 120px;
+            background-color: var(--lcars-accent);
+            border-radius: 15px 0 0 0;
+            flex-shrink: 0;
+            transition: width 0.3s ease; /* Smooth transition for resizing */
+        }
+        
+        /* The main blue bar of the header that contains the links and system ID. */
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            width: 100%;
+            background-color: var(--lcars-primary);
+        }
+        
+        /* Container for the navigation buttons. */
+        .navbar-links {
+            display: flex;
+            flex-grow: 1; /* Allows the container to fill space */
+            justify-content: space-between; /* Evenly spaces the buttons */
+        }
+        
+        /* Individual navigation button styling. */
+        .lcars-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            color: var(--lcars-bg);
+            background-color: var(--lcars-secondary);
+            transition: background-color 0.2s ease, padding 0.3s ease; /* Smooth transition */
+            white-space: nowrap;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .lcars-nav-link:hover, .lcars-nav-link.active {
+            background-color: var(--lcars-text);
+            color: var(--lcars-bg);
+        }
+
+        .lcars-nav-link:last-child {
+            border-radius: 0 10px 0 0;
+        }
+
+        /* The system ID text on the far right of the header. */
+        .system-id {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            color: var(--lcars-bg);
+        }
+
+
+        /* --- Alert Banner Component --- */
+        .lcars-alert-banner {
+            height: auto;
+            padding: 0.25rem 0.5rem;
+            text-align: center;
+            /* margin-bottom is removed and handled by the parent .lcars-header-group */
+            cursor: pointer;
+        }
+
+        /* This class triggers the blinking animation. */
+        .lcars-alert {
+            animation: blink-background 1s steps(1, start) infinite;
+        }
+
+        /* The @keyframes rule defines the blinking animation by alternating the background color. */
+        @keyframes blink-background {
+            0% {
+                background-color: var(--lcars-alert-bg);
+                color: var(--lcars-text);
+            }
+            50% {
+                background-color: var(--lcars-deco);
+                color: var(--lcars-bg);
+            }
+            100% {
+                background-color: var(--lcars-alert-bg);
+                color: var(--lcars-text);
+            }
+        }
+
+        /* --- Main Content Area --- */
+        /* This flex container holds the main content panel. */
+        .lcars-main-content {
+            display: flex;
+            flex-grow: 1;
+            gap: 1.5rem; /* 24px */
+        }
+        
+        /* --- Content Panel Component --- */
+        /* This panel holds the different pages that are switched between. */
+        .lcars-content-panel {
+            flex-grow: 1;
+            padding: 1.5rem; /* 24px */
+            border-top: 5px solid var(--lcars-secondary);
+            border-right: 5px solid var(--lcars-secondary);
+            position: relative; /* Required for positioning pages inside */
+            overflow: hidden; /* Hides pages as they animate in/out */
+        }
+
+        /* --- Page Content & Transitions --- */
+        .page-content {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            bottom: 1.5rem; /* Constrain height to enable scrolling within the panel */
+            opacity: 0; /* Pages are invisible by default */
+            transform: translateX(20px); /* Pages start slightly to the right */
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            pointer-events: none; /* Inactive pages cannot be interacted with */
+            overflow-y: auto; /* Enable vertical scrolling if content overflows */
+            padding-right: 1rem; /* Creates space for the scrollbar */
+        }
+
+        /* This class is added by JavaScript to make a page visible and animate it into view. */
+        .page-content.is-active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        
+        /* Custom Scrollbar for page content areas */
+        .page-content::-webkit-scrollbar { width: 8px; }
+        .page-content::-webkit-scrollbar-track { background: var(--lcars-bg); }
+        .page-content::-webkit-scrollbar-thumb { background: var(--lcars-secondary); }
+        .page-content::-webkit-scrollbar-thumb:hover { background: var(--lcars-primary); }
+
+
+        /* --- General UI Element Styling --- */
+        .lcars-header {
+            background-color: var(--lcars-primary);
+            color: var(--lcars-bg);
+            padding: 0.5rem 1rem;
+            margin-bottom: 1rem;
+            display: block; /* Changed from inline-block */
+            text-align: center; /* Centered the text */
+        }
+
+        .lcars-text {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .lcars-btn {
+            background-color: var(--lcars-secondary);
+            color: var(--lcars-text);
+            padding: 0.75rem 1rem;
+            text-align: center;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px; /* Rounded corners for general buttons */
+        }
+        
+        .lcars-btn.btn-accent {
+            background-color: var(--lcars-accent);
+            color: var(--lcars-bg);
+        }
+
+        .lcars-btn:hover {
+            background-color: var(--lcars-text);
+            color: var(--lcars-bg);
+        }
+
+        .lcars-card {
+            border-left: 5px solid var(--lcars-primary);
+            border-bottom: 5px solid var(--lcars-primary);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .lcars-card:hover {
+            border-color: var(--lcars-accent);
+        }
+
+        .lcars-card h3 {
+            color: var(--lcars-primary);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lcars-card img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Input & Form Elements --- */
+        .lcars-scroll-frame {
+            height: 200px;
+            overflow-y: auto;
+            background-color: #111;
+            padding: 1rem;
+            border-left: 5px solid var(--lcars-secondary);
+        }
+        
+        /* Custom Scrollbar for specific scrollable frames */
+        .lcars-scroll-frame::-webkit-scrollbar { width: 8px; }
+        .lcars-scroll-frame::-webkit-scrollbar-track { background: var(--lcars-bg); }
+        .lcars-scroll-frame::-webkit-scrollbar-thumb { background: var(--lcars-secondary); }
+        .lcars-scroll-frame::-webkit-scrollbar-thumb:hover { background: var(--lcars-primary); }
+
+        .settings-array { display: flex; flex-direction: column; gap: 1rem; }
+        .setting-item { display: flex; align-items: center; gap: 1rem; }
+        .setting-item label { width: 200px; flex-shrink: 0; }
+        
+        .lcars-input, .lcars-select, .lcars-textarea {
+            background-color: var(--lcars-bg);
+            border: 2px solid var(--lcars-secondary);
+            color: var(--lcars-text);
+            font-family: 'Antonio', sans-serif;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            flex-grow: 1;
+            width: 100%;
+        }
+        .lcars-input:focus, .lcars-select:focus, .lcars-textarea:focus {
+            outline: none;
+            border-color: var(--lcars-primary);
+        }
+        
+        .lcars-textarea { min-height: 100px; }
+        
+        .lcars-card .lcars-textarea {
+            border: none;
+            background-color: #111;
+            margin-top: 0.5rem;
+        }
+
+        /* Custom Checkbox styles */
+        .lcars-checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        /* The actual checkbox is hidden, and we style a 'span' to create a custom look. */
+        .lcars-checkbox-wrapper input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .lcars-checkbox-box {
+            width: 24px;
+            height: 24px;
+            background-color: var(--lcars-bg);
+            border: 2px solid var(--lcars-secondary);
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        /* When the hidden checkbox is checked, the styled span changes color. */
+        .lcars-checkbox-wrapper input:checked + .lcars-checkbox-box {
+            background-color: var(--lcars-accent);
+        }
+
+        /* Custom File Upload Button */
+        input[type="file"].hidden-file-input {
+            display: none;
+        }
+        .file-upload-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .search-filter-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .lcars-filter-btn {
+            background-color: var(--lcars-secondary);
+            color: var(--lcars-text);
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            white-space: nowrap;
+            border-radius: 5px; /* Rounded corners for filter buttons */
+        }
+
+
+        /* --- Progress Bar Component --- */
+        .lcars-progress-bar {
+            background-color: #111;
+            border: 2px solid var(--lcars-secondary);
+            padding: 0.25rem;
+            margin-bottom: 1rem;
+        }
+        .progress-fill {
+            background-color: var(--lcars-primary);
+            height: 24px; /* Increased height for text */
+            width: 0%; /* Initial width is 0, animated by JavaScript */
+            transition: width 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            padding-left: 0.5rem;
+            color: var(--lcars-bg);
+            overflow: hidden; /* Hide text until bar is wide enough */
+        }
+        .progress-fill.accent {
+             background-color: var(--lcars-accent);
+        }
+
+        /* --- Modal Component --- */
+        .lcars-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .lcars-modal {
+            width: 90%;
+            max-width: 600px;
+            background-color: var(--lcars-bg);
+            border-top: 10px solid var(--lcars-primary);
+            border-left: 10px solid var(--lcars-primary);
+            padding: 1.5rem;
+        }
+
+        /* --- Footer Component --- */
+        .lcars-footer {
+            display: flex;
+            justify-content: space-between; /* Aligns items to the ends */
+            align-items: center;
+            height: 30px; /* Reduced height */
+            background-color: var(--lcars-accent);
+            color: var(--lcars-bg);
+            padding: 0 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0 0 10px 10px; /* Added border radius */
+        }
+        
+        /* --- Utility Classes --- */
+        .hidden { display: none; }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 1024px) {
+            .navbar-elbow {
+                width: 40px; /* Reduce elbow width on smaller screens */
+            }
+            .lcars-nav-link {
+                padding: 0 0.75rem; /* Reduce button padding */
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar-content {
+                flex-direction: column;
+                height: auto;
+            }
+            .lcars-navbar {
+                height: auto;
+            }
+            .navbar-links {
+                width: 100%;
+            }
+            .lcars-nav-link {
+                flex-grow: 1;
+                justify-content: center;
+            }
+            .lcars-nav-link:last-child {
+                margin-left: 0; /* Reset margin for mobile layout */
+                border-radius: 0; /* Reset border radius */
+            }
+            .system-id {
+                justify-content: center;
+                background-color: var(--lcars-secondary);
+                padding: 0.5rem;
+            }
+            .setting-item { 
+                flex-direction: column; 
+                align-items: flex-start; 
+            }
+            .setting-item label { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Welcome Modal -->
+    <div id="lcars-modal-overlay" class="lcars-modal-overlay">
+        <div class="lcars-modal">
+            <h1 class="lcars-header">UI Framework Demonstration</h1>
+            <p class="lcars-text">
+                This is a UI sample for a futuristic, high-contrast interface. The design is particularly effective on OLED displays due to the extensive use of a true black background.
+            </p>
+            <button id="modal-close-btn" class="lcars-btn btn-accent">Acknowledge</button>
+        </div>
+    </div>
+    
+    <div class="page-wrapper">
+        <div class="lcars-container">
+            <header class="lcars-header-group">
+                <!-- Traditional Navigation Bar -->
+                <nav class="lcars-navbar">
+                    <div class="navbar-elbow"></div>
+                    <div class="navbar-content">
+                        <div class="navbar-links">
+                            <button class="lcars-nav-link nav-btn" data-page="systems-page">Home</button>
+                            <button class="lcars-nav-link nav-btn" data-page="diagnostics-page">Settings</button>
+                            <button class="lcars-nav-link nav-btn" data-page="database-page">Data Entry</button>
+                            <button class="lcars-nav-link nav-btn" data-page="data-page">Reports</button>
+                            <button class="lcars-nav-link nav-btn" data-page="components-page">Components</button>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Alert Banner -->
+                <div id="lcars-alert-banner" class="lcars-alert-banner lcars-alert">
+                    <span>System Alert: An example of a dismissible notification. Click to dismiss.</span>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="lcars-main-content">
+                <!-- Main Information Panel -->
+                <section class="lcars-content-panel">
+                    <!-- Page 1: Home -->
+                    <div id="systems-page" class="page-content">
+                        <h1 class="lcars-header">Home Page</h1>
+                        <p id="statusText" class="lcars-text">
+                            This is the main content area. It can be used to display status information, summaries, or welcome messages. The button below demonstrates a simple state change.
+                        </p>
+                        <button id="statusBtn" class="lcars-btn btn-accent">Toggle Status</button>
+                        <div class="lcars-card mt-4">
+                            <h3>Example Card</h3>
+                            <p class="lcars-text">
+                                Card components are useful for grouping related information into distinct, bordered sections.
+                            </p>
+                        </div>
+                        <div class="lcars-card mt-4">
+                            <h3>Card with Image</h3>
+                            <img src="https://placehold.co/600x200/000000/FFCC99?text=Placeholder+Image" alt="Placeholder Image">
+                            <p class="lcars-text">This card demonstrates how an image can be embedded within the UI.</p>
+                        </div>
+                        <div class="lcars-card mt-4">
+                            <h3>Additional Content Card 1</h3>
+                            <p class="lcars-text">This card is added to increase the page height and demonstrate the scrolling functionality. When the total height of the content exceeds the panel's visible area, a scrollbar will appear.</p>
+                        </div>
+                         <div class="lcars-card mt-4">
+                            <h3>Additional Content Card 2</h3>
+                            <p class="lcars-text">Further content to ensure the scrollbar is necessary. Each card adds to the total vertical space used by the page.</p>
+                        </div>
+                    </div>
+
+                    <!-- Page 2: Settings -->
+                    <div id="diagnostics-page" class="page-content">
+                        <h1 class="lcars-header">Settings & Inputs</h1>
+                        <div class="settings-array">
+                            <div class="setting-item">
+                                <label for="sensor-calibration">Example Range Slider</label>
+                                <input type="range" id="sensor-calibration" class="lcars-input" min="0" max="100" value="75">
+                            </div>
+                            <div class="setting-item">
+                                <label for="subspace-freq">Example Text Input</label>
+                                <input type="text" id="subspace-freq" class="lcars-input" value="Sample Value">
+                            </div>
+                            <div class="setting-item">
+                                <label for="routing-protocol">Example Dropdown</label>
+                                <select id="routing-protocol" class="lcars-select">
+                                    <option>Option 1</option>
+                                    <option>Option 2</option>
+                                    <option>Option 3</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label for="enable-feature" class="lcars-checkbox-wrapper">
+                                    <input type="checkbox" id="enable-feature">
+                                    <span class="lcars-checkbox-box"></span>
+                                    Example Checkbox
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page 3: Data Entry -->
+                    <div id="database-page" class="page-content">
+                        <h1 class="lcars-header">Data Entry & Scrollable Area</h1>
+                        <h2 class="lcars-header mt-4">Scrollable Content</h2>
+                        <div class="lcars-scroll-frame mb-4">
+                            <p>Item 1: This container demonstrates a scrollable area.</p>
+                            <p>Item 2: When content exceeds the container's height, a scrollbar appears.</p>
+                            <p>Item 3: This is useful for logs, lists, or long text passages.</p>
+                            <p>Item 4: The scrollbar is custom-styled to match the UI theme.</p>
+                            <p>Item 5: More sample text to ensure scrolling is necessary.</p>
+                            <p>Item 6: End of list.</p>
+                        </div>
+                        <div class="lcars-card mt-4">
+                            <h3>Text Area Input</h3>
+                            <textarea id="log-entry" class="lcars-textarea" placeholder="Enter text here..."></textarea>
+                        </div>
+                        <div class="lcars-card mt-4">
+                            <h3>File Upload</h3>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="file-upload" class="hidden-file-input">
+                                <label for="file-upload" class="lcars-btn">Select File</label>
+                                <span id="file-name-display">No file selected</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Page 4: Reports -->
+                    <div id="data-page" class="page-content">
+                        <h1 class="lcars-header">Reports & Progress Bars</h1>
+                        <div class="lcars-card">
+                            <h3>Progress Bar Examples</h3>
+                            <label>Data Point 1</label>
+                            <div class="lcars-progress-bar">
+                                <div id="progress-warp" class="progress-fill accent">
+                                    <span class="progress-text"></span>
+                                </div>
+                            </div>
+                            <label>Data Point 2</label>
+                            <div class="lcars-progress-bar">
+                                <div id="progress-shields" class="progress-fill">
+                                    <span class="progress-text"></span>
+                                </div>
+                            </div>
+                            <label>Data Point 3</label>
+                            <div class="lcars-progress-bar">
+                                <div id="progress-life-support" class="progress-fill">
+                                    <span class="progress-text"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Page 5: Components -->
+                    <div id="components-page" class="page-content">
+                        <h1 class="lcars-header">Component Samples</h1>
+                        <div class="lcars-card">
+                            <h3>Search & Filter</h3>
+                            <div class="search-filter-wrapper">
+                                <input type="text" class="lcars-input" placeholder="Search...">
+                                <button class="lcars-filter-btn">FILTER A</button>
+                                <button class="lcars-filter-btn">FILTER B</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </main>
+
+            <!-- Footer Bar -->
+            <footer class="lcars-footer">
+                <span id="system-id-footer">UI FRAMEWORK V2.1</span>
+                <span id="local-time"></span>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // This script block contains all the JavaScript logic for making the UI interactive.
+
+        // --- Element Selections ---
+        // It's good practice to select all necessary DOM elements once at the top.
+        const modalOverlay = document.getElementById('lcars-modal-overlay');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const alertBanner = document.getElementById('lcars-alert-banner');
+        const navBtns = document.querySelectorAll('.nav-btn'); // Selects all nav buttons
+        const contentPages = document.querySelectorAll('.page-content');
+        const timeDisplay = document.getElementById('local-time');
+        const statusBtn = document.getElementById('statusBtn');
+        const statusText = document.getElementById('statusText');
+        const fileUploadInput = document.getElementById('file-upload');
+        const fileNameDisplay = document.getElementById('file-name-display');
+
+        // --- Modal Logic ---
+        // This handles the display of the initial pop-up window.
+        modalCloseBtn.addEventListener('click', () => {
+            modalOverlay.classList.add('hidden');
+        });
+
+        // --- Alert Banner Logic ---
+        // This allows the user to dismiss the blinking alert banner.
+        alertBanner.addEventListener('click', () => {
+            alertBanner.classList.remove('lcars-alert');
+            // Set a static background color after dismissing the alert
+            alertBanner.style.backgroundColor = 'var(--lcars-deco)';
+            alertBanner.style.color = 'var(--lcars-bg)';
+        });
+
+        // --- Page Navigation Logic ---
+        // This function controls the visibility and animation of the content pages.
+        const switchPage = (pageId) => {
+            // Find the currently visible page and hide it.
+            const activePage = document.querySelector('.page-content.is-active');
+            if (activePage) {
+                activePage.classList.remove('is-active');
+            }
+            
+            // Find the page that should be shown and make it visible.
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('is-active');
+            }
+
+            // Update the visual state of all navigation buttons to show which page is active.
+            navBtns.forEach(btn => {
+                if (btn.dataset.page === pageId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // If the user navigates to the "Reports" page, trigger the progress bar animation.
+            if (pageId === 'data-page') {
+                animateProgressBars();
+            }
+        };
+
+        // Attach a click event listener to every navigation button.
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchPage(btn.dataset.page);
+            });
+        });
+
+        // --- Local Time Update Logic ---
+        // This function updates the time in the footer every second.
+        const updateTime = () => {
+            const now = new Date();
+            timeDisplay.textContent = now.toLocaleTimeString();
+        };
+
+        // --- File Upload Logic ---
+        // This updates the display text when a file is selected.
+        if (fileUploadInput) {
+            fileUploadInput.addEventListener('change', () => {
+                if (fileUploadInput.files.length > 0) {
+                    fileNameDisplay.textContent = fileUploadInput.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'No file selected';
+                }
+            });
+        }
+
+        // --- Initialization ---
+        // This runs when the entire page has loaded.
+        document.addEventListener('DOMContentLoaded', () => {
+            // Find the first navigation button and programmatically "click" it to show the default page.
+            const firstNavButton = document.querySelector('.nav-btn');
+            if(firstNavButton) {
+                switchPage(firstNavButton.dataset.page);
+            }
+            // Display the time immediately and then set it to update every second.
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+
+
+        // --- Home Page: Toggle Status Button Logic ---
+        let isNominal = true; // A variable to track the state of the toggle button.
+        if (statusBtn) {
+            statusBtn.addEventListener('click', () => {
+                isNominal = !isNominal; // Invert the state on each click.
+                if (isNominal) {
+                    statusBtn.textContent = 'Toggle Status';
+                    statusBtn.classList.add('btn-accent');
+                    statusText.textContent = 'This is the main content area. It can be used to display status information, summaries, or welcome messages. The button below demonstrates a simple state change.';
+                } else {
+                    statusBtn.textContent = 'Toggle Status';
+                    statusBtn.classList.remove('btn-accent');
+                    statusText.textContent = 'The status has been toggled. This could represent an alternate state, like an alert or a different mode of operation.';
+                }
+            });
+        }
+
+        // --- Reports Page: Progress Bar Animation Logic ---
+        const animateProgressBars = () => {
+            // Define the target percentages for each bar.
+            const targets = {
+                'progress-warp': 95,
+                'progress-shields': 78,
+                'progress-life-support': 100
+            };
+
+            // Helper function to update a single bar.
+            const updateBar = (id, percentage) => {
+                const barFill = document.getElementById(id);
+                const barText = barFill.querySelector('.progress-text');
+                barFill.style.width = '0%';
+                if(barText) barText.textContent = '';
+                
+                setTimeout(() => {
+                    barFill.style.width = `${percentage}%`;
+                    if(barText) barText.textContent = `${percentage}%`;
+                }, 100);
+            };
+            
+            // Update all bars.
+            updateBar('progress-warp', targets['progress-warp']);
+            updateBar('progress-shields', targets['progress-shields']);
+            updateBar('progress-life-support', targets['progress-life-support']);
+        };
+    </script>
+
+</body>
+</html>

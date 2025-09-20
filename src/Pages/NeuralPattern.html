@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCARS Binaural Beat Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lcars-bg: #000000;
+            --lcars-text: #FFCC99;
+            --lcars-primary: #6699FF;
+            --lcars-secondary: #3366CC;
+            --lcars-accent: #FF9900;
+        }
+        body {
+            font-family: 'Antonio', sans-serif;
+            background-color: var(--lcars-bg);
+            color: var(--lcars-text);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .page-wrapper {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .lcars-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .lcars-navbar {
+            display: flex;
+            width: 100%;
+            height: 40px;
+            border-radius: 0 10px 0 0;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .navbar-elbow {
+            width: 120px;
+            background-color: var(--lcars-accent);
+            border-radius: 20px 0 0 0;
+            flex-shrink: 0;
+        }
+        .navbar-content {
+            display: flex;
+            justify-content: flex-end;
+            align-items: stretch;
+            width: 100%;
+            background-color: var(--lcars-primary);
+        }
+        .system-id {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            color: var(--lcars-bg);
+            font-size: 1.2rem;
+        }
+        .lcars-main-content {
+            flex-grow: 1;
+        }
+        .lcars-content-panel {
+            padding: 1.5rem;
+            border-top: 5px solid var(--lcars-secondary);
+            border-right: 5px solid var(--lcars-secondary);
+        }
+        .setting-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .setting-item label {
+            width: 250px;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+        .lcars-input, .lcars-select {
+            background-color: var(--lcars-bg);
+            border: 2px solid var(--lcars-secondary);
+            color: var(--lcars-text);
+            font-family: 'Antonio', sans-serif;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            flex-grow: 1;
+            width: 100%;
+        }
+        .lcars-input:focus, .lcars-select:focus {
+            outline: none;
+            border-color: var(--lcars-primary);
+        }
+        .lcars-btn {
+            background-color: var(--lcars-secondary);
+            color: var(--lcars-text);
+            padding: 0.75rem 1rem;
+            text-align: center;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.25rem;
+            border-radius: 5px;
+        }
+        .lcars-btn.btn-accent {
+            background-color: var(--lcars-accent);
+            color: var(--lcars-bg);
+        }
+        .lcars-btn:hover {
+            background-color: var(--lcars-text);
+            color: var(--lcars-bg);
+        }
+        .frequency-display {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+            background-color: #111;
+            padding: 1rem;
+            border-left: 5px solid var(--lcars-primary);
+        }
+        .freq-box { text-align: center; }
+        .freq-box .label { font-size: 0.9rem; color: var(--lcars-primary); }
+        .freq-box .value { font-size: 1.5rem; }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: var(--lcars-secondary);
+            border-radius: 0;
+            outline: none;
+            flex-grow: 1;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 30px;
+            background: var(--lcars-accent);
+            cursor: pointer;
+        }
+         input[type="range"]::-moz-range-thumb {
+            width: 12px;
+            height: 30px;
+            background: var(--lcars-accent);
+            cursor: pointer;
+        }
+        .notice {
+            background-color: #330000;
+            border-left: 5px solid #CC0000;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 0.5rem;
+            }
+            .lcars-navbar {
+                margin-bottom: 1rem;
+                height: 30px;
+            }
+            .navbar-elbow {
+                width: 80px;
+                border-radius: 15px 0 0 0;
+            }
+            .system-id {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            .lcars-content-panel {
+                padding: 1rem;
+            }
+            .setting-item {
+                margin-bottom: 1.25rem;
+                gap: 0.75rem;
+            }
+            .setting-item label {
+                font-size: 1rem;
+                width: 180px;
+            }
+            .lcars-input, .lcars-select {
+                padding: 0.4rem 0.8rem;
+            }
+            #play-stop-btn {
+                margin-top: 1.5rem;
+                padding: 0.6rem 1rem;
+                font-size: 1.1rem;
+            }
+            .frequency-display {
+                margin-top: 1.5rem;
+                padding: 0.75rem;
+            }
+            .freq-box .label {
+                font-size: 0.8rem;
+            }
+            .freq-box .value {
+                font-size: 1.2rem;
+            }
+            .notice {
+                padding: 0.75rem;
+                margin-bottom: 1.5rem;
+                font-size: 0.9rem;
+            }
+            #brainwave-state {
+                margin-top: -0.75rem !important;
+                margin-bottom: 1rem !important;
+            }
+            input[type="range"]::-webkit-slider-thumb {
+                height: 24px;
+            }
+            input[type="range"]::-moz-range-thumb {
+                height: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="lcars-container">
+            <header>
+                <nav class="lcars-navbar">
+                    <div class="navbar-elbow"></div>
+                    <div class="navbar-content">
+                        <div class="system-id">BINAURAL BEAT GENERATOR</div>
+                    </div>
+                </nav>
+            </header>
+
+            <main class="lcars-main-content">
+                <section class="lcars-content-panel">
+                    <div class="notice">
+                        <strong>ATTENTION:</strong> Stereo headphones are required for proper auditory effect.
+                    </div>
+
+                    <div class="settings-array">
+                        <!-- Presets -->
+                        <div class="setting-item">
+                            <label for="preset-select">Select Preset</label>
+                            <select id="preset-select" class="lcars-select">
+                                <option value="custom">Custom</option>
+                                <option value="delta">Delta (2 Hz) - Deep Sleep</option>
+                                <option value="theta">Theta (6 Hz) - Meditation</option>
+                                <option value="alpha">Alpha (10 Hz) - Relaxation</option>
+                                <option value="beta">Beta (20 Hz) - Focus</option>
+                                <option value="gamma">Gamma (40 Hz) - Concentration</option>
+                            </select>
+                        </div>
+
+                        <!-- Base Frequency -->
+                        <div class="setting-item">
+                            <label for="base-freq">Base Frequency</label>
+                            <input type="range" id="base-freq" min="100" max="1000" value="300" class="lcars-input">
+                            <span id="base-freq-value" class="w-24 text-center">300 HZ</span>
+                        </div>
+
+                        <!-- Binaural Beat Frequency -->
+                        <div class="setting-item">
+                            <label for="binaural-freq">Binaural Beat</label>
+                            <input type="range" id="binaural-freq" min="1" max="50" value="10" step="0.5" class="lcars-input">
+                            <span id="binaural-freq-value" class="w-24 text-center">10.0 HZ</span>
+                        </div>
+                         <div id="brainwave-state" class="text-center text-sm text-gray-500 dark:text-gray-400 mt-[-1rem] mb-4 font-medium uppercase">Alpha State</div>
+
+                        <!-- Volume -->
+                        <div class="setting-item">
+                            <label for="volume">Volume</label>
+                            <input type="range" id="volume" min="-40" max="0" value="-10" step="1" class="lcars-input">
+                            <span id="volume-value" class="w-24 text-center">-10 DB</span>
+                        </div>
+                    </div>
+
+                    <button id="play-stop-btn" class="lcars-btn btn-accent mt-8">
+                        Engage Audio Stream
+                    </button>
+
+                    <div class="frequency-display">
+                        <div class="freq-box">
+                            <div class="label">Left Channel</div>
+                            <div id="left-freq-display" class="value">300.0 HZ</div>
+                        </div>
+                        <div class="freq-box">
+                            <div class="label">Right Channel</div>
+                            <div id="right-freq-display" class="value">310.0 HZ</div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const playStopBtn = document.getElementById('play-stop-btn');
+            const baseFreqSlider = document.getElementById('base-freq');
+            const binauralFreqSlider = document.getElementById('binaural-freq');
+            const volumeSlider = document.getElementById('volume');
+            const presetSelect = document.getElementById('preset-select');
+
+            const baseFreqValue = document.getElementById('base-freq-value');
+            const binauralFreqValue = document.getElementById('binaural-freq-value');
+            const volumeValue = document.getElementById('volume-value');
+            const brainwaveState = document.getElementById('brainwave-state');
+            const leftFreqDisplay = document.getElementById('left-freq-display');
+            const rightFreqDisplay = document.getElementById('right-freq-display');
+
+            let isPlaying = false;
+            let oscL, oscR, pannerL, pannerR;
+
+            const presets = {
+                delta: { beat: 2, base: 130 },
+                theta: { beat: 6, base: 180 },
+                alpha: { beat: 10, base: 250 },
+                beta: { beat: 20, base: 300 },
+                gamma: { beat: 40, base: 350 },
+            };
+
+            function setupAudio() {
+                pannerL = new Tone.Panner(-1).toDestination();
+                pannerR = new Tone.Panner(1).toDestination();
+                oscL = new Tone.Oscillator({ type: 'sine' }).connect(pannerL);
+                oscR = new Tone.Oscillator({ type: 'sine' }).connect(pannerR);
+                updateFrequencies();
+                updateVolume();
+            }
+
+            function getBrainwaveState(freq) {
+                if (freq < 4) return 'Delta State';
+                if (freq < 8) return 'Theta State';
+                if (freq < 13) return 'Alpha State';
+                if (freq < 38) return 'Beta State';
+                return 'Gamma State';
+            }
+            
+            function updateFrequencies() {
+                const baseFreq = parseFloat(baseFreqSlider.value);
+                const binauralFreq = parseFloat(binauralFreqSlider.value);
+                const leftFreq = baseFreq;
+                const rightFreq = baseFreq + binauralFreq;
+
+                if (oscL && oscR) {
+                    oscL.frequency.rampTo(leftFreq, 0.1);
+                    oscR.frequency.rampTo(rightFreq, 0.1);
+                }
+
+                baseFreqValue.textContent = `${baseFreq.toFixed(0)} HZ`;
+                binauralFreqValue.textContent = `${binauralFreq.toFixed(1)} HZ`;
+                brainwaveState.textContent = getBrainwaveState(binauralFreq);
+                leftFreqDisplay.textContent = `${leftFreq.toFixed(1)} HZ`;
+                rightFreqDisplay.textContent = `${rightFreq.toFixed(1)} HZ`;
+            }
+
+            function updateVolume() {
+                const volume = parseFloat(volumeSlider.value);
+                if (oscL && oscR) {
+                    oscL.volume.value = volume;
+                    oscR.volume.value = volume;
+                }
+                volumeValue.textContent = `${volume.toFixed(0)} DB`;
+            }
+
+            function applyPreset() {
+                const selected = presetSelect.value;
+                if (selected !== 'custom' && presets[selected]) {
+                    const preset = presets[selected];
+                    binauralFreqSlider.value = preset.beat;
+                    baseFreqSlider.value = preset.base;
+                    updateFrequencies();
+                }
+            }
+            
+            playStopBtn.addEventListener('click', async () => {
+                if (Tone.context.state !== 'running') {
+                    await Tone.start();
+                }
+
+                if (!isPlaying) {
+                    if (!oscL) setupAudio();
+                    oscL.start();
+                    oscR.start();
+                    playStopBtn.textContent = 'Disengage Audio Stream';
+                    playStopBtn.style.backgroundColor = '#CC0000';
+                } else {
+                    if (oscL && oscR) {
+                       oscL.stop();
+                       oscR.stop();
+                       oscL.dispose();
+                       oscR.dispose();
+                       pannerL.dispose();
+                       pannerR.dispose();
+                       oscL = null;
+                       oscR = null;
+                    }
+                    playStopBtn.textContent = 'Engage Audio Stream';
+                    playStopBtn.style.backgroundColor = 'var(--lcars-accent)';
+                }
+                isPlaying = !isPlaying;
+            });
+            
+            baseFreqSlider.addEventListener('input', () => {
+                presetSelect.value = 'custom';
+                updateFrequencies();
+            });
+            binauralFreqSlider.addEventListener('input', () => {
+                 presetSelect.value = 'custom';
+                updateFrequencies();
+            });
+            volumeSlider.addEventListener('input', updateVolume);
+            presetSelect.addEventListener('change', applyPreset);
+            
+            updateFrequencies();
+            updateVolume();
+        });
+    </script>
+</body>
+</html>
+
