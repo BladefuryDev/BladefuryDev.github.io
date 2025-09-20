@@ -3,69 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found - Hexfury</title>
+    <title>Hexfury - Portfolio</title>
+    <meta name="description" content="The portfolio of a self-taught and versatile developer with experience spanning from LUA-based game development and QA testing to web design and PC hardware repair.">
+    <meta name="keywords" content="Hexfury, portfolio, developer, LUA, game development, QA testing, web design, PC hardware repair, projects, gallery">
+    <meta name="author" content="Hexfury">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Hexfury - Portfolio">
+    <meta property="og:description" content="The portfolio of a self-taught and versatile developer with experience spanning from LUA-based game development and QA testing to web design and PC hardware repair.">
+    <meta property="og:url" content="https://www.hexfury.com/index.html">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/x-icon" href="/assets/icons/PRSG.ico">
     <link href="/public/output.css" rel="stylesheet">
-
-    <!-- Fallback redirect for non-JS clients -->
-    <meta http-equiv="refresh" content="0; url=/src/home.html">
-
-    <style>
-        /* * Site-wide theme properties. 
-         * This ensures the 404 page matches the rest of the site's theme.
-         */
-        :root {
-            /* Color Palette */
-            --color-bg: rgb(15 23 42);            /* Main Background Color */
-            --color-bg-secondary: rgb(30 41 59);  /* Brighter background for containers */
-            --color-primary: rgb(21, 122, 216);       /* Main Color */
-            --color-primary-light: rgb(108, 180, 247);/* Brighter Than Main Color */
-            --color-text: rgb(226 232 240);       /* Primary Text Color */
-            --color-text-muted: rgb(151, 178, 216); /* Secondary Text Color */
-            
-            /* Shadow colors for elements on the main background */
-            --shadow-color-dark: #0a101d;
-            --shadow-color-light: #141e37;
-            
-            /* Shadow style for cards on the main background */
-            --shadow-card: 3px 3px 6px var(--shadow-color-dark), -3px -3px 6px var(--shadow-color-light);
-        }
-
-        /* Hide fallback content by default. It will be shown by JS if the redirect fails. */
-        #fallback-content {
-            display: none;
-        }
-    </style>
-
-    <!-- Primary redirect method. This will likely execute before the meta refresh. -->
-    <script>
-        window.location.replace('/src/home.html');
-    </script>
+    <link href="/assets/commonCss/repeatables.css" rel="stylesheet">
 </head>
 <body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
-    <!-- This content is hidden and only shown if the redirect fails after a timeout -->
-    <main id="fallback-content" class="flex items-center justify-center h-screen p-4">
-        <div class="p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)] text-center max-w-lg w-full">
-            <h1 class="text-5xl font-extrabold">404 - Page Not Found</h1>
-            <p class="mt-4 text-lg text-[--color-text-muted]">
-                Sorry, the page you are looking for could not be found.
-            </p>
-            <p class="mt-8 text-md text-[--color-text-muted]">
-                We tried to redirect you to the <a href="/src/home.html" class="text-[--color-primary-light] hover:underline font-semibold">homepage</a>, but it seems to have failed. Please click the link to go there manually.
-            </p>
-        </div>
-    </main>
 
-    <script>
-        // This script will show the fallback content if the page is still open after 10 seconds.
-        // This indicates that both the JS and meta-refresh redirects have failed.
-        setTimeout(() => {
-            const fallback = document.getElementById('fallback-content');
-            if (fallback) {
-                // To make it visible, we change its display property.
-                // 'flex' is used because the parent <main> has flexbox classes.
-                fallback.style.display = 'flex';
-            }
-        }, 10000); // 10 seconds
-    </script>
+    <div class="container mx-auto px-2 sm:px-4">
+        <!-- Placeholder for the navigation bar -->
+        <div id="navbar-placeholder"></div>
+
+        <!-- This container will be animated -->
+        <div id="page-container">
+            <main class="space-y-20 py-10">
+            <!-- Hero Section -->
+            <section id="hero" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)] text-center">
+                <h1 class="text-4xl font-bold text-center mb-12">Welcome to My Portfolio</h1>
+                <p class="mt-4 text-lg text-[--color-text-muted]">I'm a self taught and versatile developer with experience spanning from LUA-based game development and QA testing to web design and PC hardware repair.</p>
+                <a href="/src/projects.html" class="mt-8 inline-block px-8 py-3 rounded-xl bg-[--color-primary] text-lg font-semibold transition-all duration-300 [box-shadow:var(--shadow-lg)] hover:[box-shadow:var(--shadow-lg-inset)]">
+                    View My Work
+                </a>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
+                <h2 class="text-4xl font-bold text-center mb-12">My Projects</h2>
+                <p class="text-lg text-center text-[--color-text-muted] mb-12">I primarily create these projects as a way to further my learning, and sometimes to create tools for niche use cases that don't exist yet. Making them look pretty is always a bonus!</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Card Example -->
+                    <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2">
+                        <div class="px-6 pt-6">
+                            <h3 class="text-2xl font-bold mb-2 text-center">Aeronautica</h3>
+                            <p class="text-sm text-center text-[--color-text-muted] mb-4">Administrative Tools / Backend Developer</p>
+                        </div>
+                        <div class="px-6">
+                            <img class="w-full h-48 object-cover rounded-lg" src="/assets/images/projects/Aeronautica.gif" alt="Project One Thumbnail">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[--color-text-muted] mb-6">Train, Buy, Fly - Aeronautica is an open-world flight simulator with economy elements where the goal is entirely up to you. Earn money by completing unique jobs or flights between distant islands and continents. You can even create an airline for your friends to join! Train and earn licenses to unlock new exciting vehicles. Customize and maintain your planes as you work your way up from the smallest Ultralights to the world’s largest Airliners like the Airbus A380 Superjumbo.</p>
+                            <div class="flex justify-center">
+                                <a href="https://www.roblox.com/games/6647962258/Aeronautica" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    <span>Play Game!</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2">
+                        <div class="px-6 pt-6">
+                            <h3 class="text-2xl font-bold mb-2 text-center">TTMP 2</h3>
+                            <p class="text-sm text-center text-[--color-text-muted] mb-4">Sole Developer - Passion Project</p>
+                        </div>
+                        <div class="px-6">
+                            <img class="w-full h-48 object-cover rounded-lg" src="/assets/images/projects/TTMPNewer.png" alt="Tome Tales Management Panel Thumbnail">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[--color-text-muted] mb-6">TTMP, or Tome Tales Management Panel is a program I developed to aid in the randomization of enemies, jobs and locations for some of the DnD games I played with my friends. Seeing as we wanted to introduce currency keeping and a whole lot more complicated systems that needed tracking, we eventually wanted a program that handled these things for us, or at least helped us in that regard. With that, the seed for this thing was born, a seed I'd happily cultivate into this handy little tool for us all. Quite the learning process too!</p>
+                            <div class="flex justify-center">
+                                <a href="/src/TTMP/index.html" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    <span>View Project</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2">
+                        <div class="px-6 pt-6">
+                            <h3 class="text-2xl font-bold mb-2 text-center">Star Trek Online Endeavor Helper</h3>
+                            <p class="text-sm text-center text-[--color-text-muted] mb-4">Sole Developer - Passion Project</p>
+                        </div>
+                        <div class="px-6">
+                            <img class="w-full h-48 object-cover rounded-lg" src="/assets/images/projects/STOEndevourguide.png" alt="Star Trek Online Endeavor Helper Thumbnail">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[--color-text-muted] mb-6">A simple tool to help Star Trek Online players complete their daily endeavors. It provides a list of all possible endeavors and their locations, as well as a search function to quickly find what you're looking for.</p>
+                            <div class="flex justify-center">
+                                <a href="/src/Pages/STOEndeavourHelper.html" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    <span>View Project</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 text-center">
+                    <a href="/src/projects.html" class="inline-block px-8 py-3 rounded-xl bg-[--color-primary] text-lg font-semibold transition-all duration-300 [box-shadow:var(--shadow-lg)] hover:[box-shadow:var(--shadow-lg-inset)]">
+                        See More
+                    </a>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section id="gallery" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
+                <h2 class="text-4xl font-bold text-center mb-12">My Gallery</h2>
+                <p class="text-lg text-center text-[--color-text-muted] mb-12">Besides coding, I enjoy bringing my characters and ideas to life through digital art. I often create illustrations for my written roleplay stories and design logos for my various projects. For digital painting and scenes, I primarily use Krita and Photoshop, while Adobe Illustrator is my go-to for vector-based icons and logos.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/Hex_The_OrbWM.png" alt="Hex the Riolu, falling through a portal opened by an anomalous dark blue Orb.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/Stargate_Hex.png" alt="Hex the Riolu turning on a Stargete.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/HexFenaraOceansideCliff.png" alt="Hex the Riolu and a friendly Fennekin both overlooking the ocean from atop a scenic cliff.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/HexLucario.png" alt="Hex as a Lucario, waving at the viewer.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-full h-64 object-cover pointer-events-none" src="/assets/images/Hex_AI_test_unit.png" alt="A pretty drawing depicting a starry night sky and mountains in the distance.">
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="gallery-image-container rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                        <img class="w-[90%] h-64 object-contain mx-auto pointer-events-none" src="/assets/icons/ttmp-Logo.png" alt="The logo for Tome Tales Management Panel.">
+                    </div>
+                </div>
+                <div class="mt-12 text-center">
+                    <a href="/src/gallery.html" class="inline-block px-8 py-3 rounded-xl bg-[--color-primary] text-lg font-semibold transition-all duration-300 [box-shadow:var(--shadow-lg)] hover:[box-shadow:var(--shadow-lg-inset)]">
+                        See More
+                    </a>
+                </div>
+            </section>
+
+            </main>
+        </div>
+
+        <!-- Placeholder for the footer -->
+        <div id="footer-placeholder"></div>
+    </div>
+    <!-- Image Modal -->
+    <div id="image-modal">
+        <img src="" alt="Enlarged gallery image" class="modal-content rounded-lg" id="modal-image-content">
+    </div>
+
+    <!-- Tooltip for gallery images -->
+    <div id="image-tooltip"></div>
+
+    <!-- This script will fetch and inject the navigation bar -->
+    <script src="/src/js/main.js" defer></script>
 </body>
 </html>
