@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Binaural Beat Generator</title>
+    <title>Neural Pattern Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
         }
         .page-wrapper {
             padding: 1rem;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: auto;
         }
         .lcars-container {
@@ -62,6 +62,11 @@
             color: var(--lcars-bg);
             font-size: 1.2rem;
         }
+        @media (max-width: 640px) {
+            .system-id {
+                font-size: 0.8rem;
+            }
+        }
         .lcars-main-content {
             flex-grow: 1;
         }
@@ -72,14 +77,11 @@
         }
         .setting-item {
             display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem; /* Reduced vertical space */
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
         .setting-item label {
-            width: 250px;
-            flex-shrink: 0;
             font-size: 1.1rem;
         }
         .lcars-input, .lcars-select {
@@ -182,7 +184,7 @@
                 <nav class="lcars-navbar">
                     <div class="navbar-elbow"></div>
                     <div class="navbar-content">
-                        <div class="system-id">BINAURAL BEAT GENERATOR</div>
+                        <div class="system-id">NEURAL PATTERN GENERATOR</div>
                     </div>
                 </nav>
             </header>
@@ -209,24 +211,30 @@
 
                         <!-- Base Frequency -->
                         <div class="setting-item">
-                            <label for="base-freq">Base Frequency</label>
-                            <input type="range" id="base-freq" min="100" max="1000" value="300" class="lcars-input">
-                            <span id="base-freq-value" class="w-24 text-center">300 HZ</span>
+                            <div class="flex justify-between w-full">
+                                <label>Base Frequency</label>
+                                <span id="base-freq-value" class="text-right">300 HZ</span>
+                            </div>
+                            <input type="range" id="base-freq" min="100" max="1000" value="300" class="lcars-input w-full">
                         </div>
 
                         <!-- Binaural Beat Frequency -->
                         <div class="setting-item">
-                            <label for="binaural-freq">Binaural Beat</label>
-                            <input type="range" id="binaural-freq" min="1" max="50" value="10" step="0.5" class="lcars-input">
-                            <span id="binaural-freq-value" class="w-24 text-center">10.0 HZ</span>
+                            <div class="flex justify-between w-full">
+                                <label>Binaural Beat</label>
+                                <span id="binaural-freq-value" class="text-right">10.0 HZ</span>
+                            </div>
+                            <input type="range" id="binaural-freq" min="1" max="50" value="10" step="0.5" class="lcars-input w-full">
                         </div>
                         <div id="brainwave-state" class="text-center text-sm text-gray-500 dark:text-gray-400 mt-[-0.5rem] mb-2 font-medium uppercase">Alpha State</div>
 
                         <!-- Volume -->
                         <div class="setting-item">
-                            <label for="volume">Volume</label>
-                            <input type="range" id="volume" min="-40" max="0" value="-10" step="1" class="lcars-input">
-                            <span id="volume-value" class="w-24 text-center">-10 DB</span>
+                            <div class="flex justify-between w-full">
+                                <label>Volume</label>
+                                <span id="volume-value" class="text-right">-10 DB</span>
+                            </div>
+                            <input type="range" id="volume" min="-40" max="0" value="-10" step="1" class="lcars-input w-full">
                         </div>
 
                         <!-- Timer -->
@@ -461,6 +469,30 @@
             hoursSelect.addEventListener('wheel', (e) => handleTimeScroll(e, hoursSelect));
             minutesSelect.addEventListener('wheel', (e) => handleTimeScroll(e, minutesSelect));
             secondsSelect.addEventListener('wheel', (e) => handleTimeScroll(e, secondsSelect));
+
+            function handleSliderScroll(event, sliderElement) {
+                event.preventDefault();
+                const direction = Math.sign(event.deltaY);
+                let currentValue = parseFloat(sliderElement.value);
+                let step = parseFloat(sliderElement.step) || 1;
+                let newValue = currentValue - direction * step; // Inverted scrolling
+                let min = parseFloat(sliderElement.min);
+                let max = parseFloat(sliderElement.max);
+
+                if (newValue < min) {
+                    newValue = min;
+                } else if (newValue > max) {
+                    newValue = max;
+                }
+
+                sliderElement.value = newValue;
+                // Trigger the input event to update the UI and audio
+                sliderElement.dispatchEvent(new Event('input'));
+            }
+
+            baseFreqSlider.addEventListener('wheel', (e) => handleSliderScroll(e, baseFreqSlider));
+            binauralFreqSlider.addEventListener('wheel', (e) => handleSliderScroll(e, binauralFreqSlider));
+            volumeSlider.addEventListener('wheel', (e) => handleSliderScroll(e, volumeSlider));
         });
     </script>
 </body>
