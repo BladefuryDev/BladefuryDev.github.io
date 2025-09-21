@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCARS Binaural Beat Generator</title>
+    <title>Binaural Beat Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -302,7 +302,7 @@
                     minutesSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
                     secondsSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
                 }
-                minutesSelect.value = "5"; // Default to 5 minutes
+                minutesSelect.value = "20"; // Default to 20 minutes
             }
 
             // --- Audio Functions ---
