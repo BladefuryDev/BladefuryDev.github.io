@@ -74,7 +74,7 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem; /* Reduced vertical space */
             flex-wrap: wrap;
         }
         .setting-item label {
@@ -92,7 +92,16 @@
             flex-grow: 1;
             width: 100%;
         }
-        .lcars-input:focus, .lcars-select:focus {
+        .timer-select {
+             background-color: var(--lcars-bg);
+            border: 2px solid var(--lcars-secondary);
+            color: var(--lcars-text);
+            font-family: 'Antonio', sans-serif;
+            text-transform: uppercase;
+            padding: 0.5rem;
+            width: auto;
+        }
+        .lcars-input:focus, .lcars-select:focus, .timer-select:focus {
             outline: none;
             border-color: var(--lcars-primary);
         }
@@ -119,7 +128,7 @@
         .frequency-display {
             display: flex;
             justify-content: space-around;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             background-color: #111;
             padding: 1rem;
             border-left: 5px solid var(--lcars-primary);
@@ -156,76 +165,13 @@
             background-color: #330000;
             border-left: 5px solid #CC0000;
             padding: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
-
-        @media (max-width: 768px) {
-            .page-wrapper {
-                padding: 0.5rem;
-            }
-            .lcars-navbar {
-                margin-bottom: 1rem;
-                height: 30px;
-            }
-            .navbar-elbow {
-                width: 80px;
-                border-radius: 15px 0 0 0;
-            }
-            .system-id {
-                font-size: 1rem;
-                padding: 0 1rem;
-            }
-            .lcars-content-panel {
-                padding: 1rem;
-            }
-            .setting-item {
-                margin-bottom: 1.25rem;
-                gap: 0.75rem;
-            }
-            .setting-item label {
-                font-size: 1rem;
-                width: 180px;
-            }
-            .lcars-input, .lcars-select {
-                padding: 0.4rem 0.8rem;
-            }
-            #play-stop-btn {
-                margin-top: 1.5rem;
-                padding: 0.6rem 1rem;
-                font-size: 1.1rem;
-            }
-            .frequency-display {
-                margin-top: 1.5rem;
-                padding: 0.75rem;
-            }
-            .freq-box .label {
-                font-size: 0.8rem;
-            }
-            .freq-box .value {
-                font-size: 1.2rem;
-            }
-            .notice {
-                padding: 0.75rem;
-                margin-bottom: 1.5rem;
-                font-size: 0.9rem;
-            }
-            #brainwave-state {
-                margin-top: -0.75rem !important;
-                margin-bottom: 1rem !important;
-            }
-            input[type="range"]::-webkit-slider-thumb {
-                height: 24px;
-            }
-            input[type="range"]::-moz-range-thumb {
-                height: 24px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .page-wrapper {
-                padding-left: 4rem;
-                padding-right: 4rem;
-            }
+        .timer-display {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            color: var(--lcars-accent);
         }
     </style>
 </head>
@@ -274,7 +220,7 @@
                             <input type="range" id="binaural-freq" min="1" max="50" value="10" step="0.5" class="lcars-input">
                             <span id="binaural-freq-value" class="w-24 text-center">10.0 HZ</span>
                         </div>
-                         <div id="brainwave-state" class="text-center text-sm text-gray-500 dark:text-gray-400 mt-[-1rem] mb-4 font-medium uppercase">Alpha State</div>
+                        <div id="brainwave-state" class="text-center text-sm text-gray-500 dark:text-gray-400 mt-[-0.5rem] mb-2 font-medium uppercase">Alpha State</div>
 
                         <!-- Volume -->
                         <div class="setting-item">
@@ -282,11 +228,23 @@
                             <input type="range" id="volume" min="-40" max="0" value="-10" step="1" class="lcars-input">
                             <span id="volume-value" class="w-24 text-center">-10 DB</span>
                         </div>
+
+                        <!-- Timer -->
+                        <div class="setting-item">
+                            <label>Duration</label>
+                            <div class="flex items-center gap-2">
+                                <select id="hours" class="timer-select"></select><span>H</span>
+                                <select id="minutes" class="timer-select"></select><span>M</span>
+                                <select id="seconds" class="timer-select"></select><span>S</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <button id="play-stop-btn" class="lcars-btn btn-accent mt-8">
+                    <button id="play-stop-btn" class="lcars-btn btn-accent mt-4">
                         Engage Audio Stream
                     </button>
+
+                    <div id="timer-display" class="timer-display">00:00:00</div>
 
                     <div class="frequency-display">
                         <div class="freq-box">
@@ -310,6 +268,10 @@
             const binauralFreqSlider = document.getElementById('binaural-freq');
             const volumeSlider = document.getElementById('volume');
             const presetSelect = document.getElementById('preset-select');
+            const hoursSelect = document.getElementById('hours');
+            const minutesSelect = document.getElementById('minutes');
+            const secondsSelect = document.getElementById('seconds');
+            const timerDisplay = document.getElementById('timer-display');
 
             const baseFreqValue = document.getElementById('base-freq-value');
             const binauralFreqValue = document.getElementById('binaural-freq-value');
@@ -320,6 +282,8 @@
 
             let isPlaying = false;
             let oscL, oscR, pannerL, pannerR;
+            let timerInterval;
+            let remainingSeconds = 0;
 
             const presets = {
                 delta: { beat: 2, base: 130 },
@@ -329,6 +293,19 @@
                 gamma: { beat: 40, base: 350 },
             };
 
+            // --- Initialization ---
+            function populateTimeSelects() {
+                for (let i = 0; i < 24; i++) {
+                    hoursSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
+                }
+                for (let i = 0; i < 60; i++) {
+                    minutesSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
+                    secondsSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
+                }
+                minutesSelect.value = "5"; // Default to 5 minutes
+            }
+
+            // --- Audio Functions ---
             function setupAudio() {
                 pannerL = new Tone.Panner(-1).toDestination();
                 pannerR = new Tone.Panner(1).toDestination();
@@ -382,7 +359,46 @@
                     updateFrequencies();
                 }
             }
+
+            // --- Timer Functions ---
+            function formatTime(seconds) {
+                const h = Math.floor(seconds / 3600);
+                const m = Math.floor((seconds % 3600) / 60);
+                const s = seconds % 60;
+                return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            }
+
+            function startTimer() {
+                const hours = parseInt(hoursSelect.value);
+                const minutes = parseInt(minutesSelect.value);
+                const seconds = parseInt(secondsSelect.value);
+                remainingSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+                if (remainingSeconds <= 0) {
+                    timerDisplay.textContent = "00:00:00";
+                    return;
+                }
+
+                timerDisplay.textContent = formatTime(remainingSeconds);
+
+                timerInterval = setInterval(() => {
+                    remainingSeconds--;
+                    timerDisplay.textContent = formatTime(remainingSeconds);
+                    if (remainingSeconds <= 0) {
+                        stopTimer();
+                        if (isPlaying) {
+                            playStopBtn.click(); // Programmatically stop playback
+                        }
+                    }
+                }, 1000);
+            }
+
+            function stopTimer() {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "00:00:00";
+            }
             
+            // --- Event Listeners ---
             playStopBtn.addEventListener('click', async () => {
                 if (Tone.context.state !== 'running') {
                     await Tone.start();
@@ -392,6 +408,7 @@
                     if (!oscL) setupAudio();
                     oscL.start();
                     oscR.start();
+                    startTimer();
                     playStopBtn.textContent = 'Disengage Audio Stream';
                     playStopBtn.style.backgroundColor = '#CC0000';
                 } else {
@@ -405,6 +422,7 @@
                        oscL = null;
                        oscR = null;
                     }
+                    stopTimer();
                     playStopBtn.textContent = 'Engage Audio Stream';
                     playStopBtn.style.backgroundColor = 'var(--lcars-accent)';
                 }
@@ -422,8 +440,27 @@
             volumeSlider.addEventListener('input', updateVolume);
             presetSelect.addEventListener('change', applyPreset);
             
+            // --- Initial Setup Calls ---
+            populateTimeSelects();
             updateFrequencies();
             updateVolume();
+
+            function handleTimeScroll(event, selectElement) {
+                event.preventDefault();
+                const direction = Math.sign(event.deltaY);
+                let currentIndex = selectElement.selectedIndex;
+                let newIndex = currentIndex - direction; // Inverted scrolling
+                if (newIndex < 0) {
+                    newIndex = selectElement.options.length - 1;
+                } else if (newIndex >= selectElement.options.length) {
+                    newIndex = 0;
+                }
+                selectElement.selectedIndex = newIndex;
+            }
+
+            hoursSelect.addEventListener('wheel', (e) => handleTimeScroll(e, hoursSelect));
+            minutesSelect.addEventListener('wheel', (e) => handleTimeScroll(e, minutesSelect));
+            secondsSelect.addEventListener('wheel', (e) => handleTimeScroll(e, secondsSelect));
         });
     </script>
 </body>
