@@ -9,18 +9,22 @@
         .pre-wrap {
             white-space: pre-wrap;
         }
+        /* Added for the floating controls */
+        #viewerPage {
+            padding-bottom: 80px; /* Add padding to prevent content from being hidden by the fixed bar */
+        }
     </style>
 </head>
-<body class="bg-[#0A0B1C] text-[#E0E0F0] font-mono p-5">
+<body class="bg-[#0A0B1C] text-[#E0E0F0] font-mono p-2 sm:p-5">
 
-    <div class="container mx-auto max-w-4xl bg-[#0F1023] bg-opacity-90 p-8 rounded-xl shadow-xl border border-blue-600/30">
+    <div class="container mx-auto max-w-4xl bg-[#0F1023] bg-opacity-90 px-4 md:px-8 py-8 rounded-xl shadow-xl border border-blue-600/30">
         <!-- Landing Page for Chapter List -->
         <div id="landingPage">
-            <div class="bg-[#0F1023] bg-opacity-90 p-8 rounded-xl shadow-xl border border-blue-600/30 mb-8">
+            <div class="mb-8">
                 <h1 class="text-center text-3xl font-bold text-[#55AAFF] drop-shadow-lg">Pokemon Mystery Dungeon: Starfall Legacy</h1>
                 <p class="text-center mt-4 mb-4">When the U.S.S. Sagittarius is mysteriously pulled from warp and torn across realities, its bridge crew finds themselves stranded on an alien world, transformed into creatures with strange new powers. Stripped of their technology and facing a cosmic threat that defies all known science, they must adapt to a reality where magic is real, gods walk the earth, and their only hope for survival lies in a legacy left behind by another lost soul. Their journey to find a way home becomes a desperate race against an encroaching darkness, forcing them to become more than just a crew—they must become the unexpected heroes this new world needs.</p>
             </div>
-            <div class="bg-[#0F1023] bg-opacity-90 p-8 rounded-xl shadow-xl border border-blue-600/30">
+            <div>
                 <h2 class="text-center text-xl mt-2 mb-4">Select a Chapter</h2>
                 <div class="flex flex-wrap items-center gap-2 mb-4">
                     <input type="text" id="chapterSearch" placeholder="Search by chapter name or number" class="flex-grow p-3 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
@@ -37,41 +41,55 @@
             <h1 class="text-center text-3xl font-bold text-[#55AAFF] drop-shadow-lg" id="storyTitle">Pokemon Mystery Dungeon: Starfall Legacy</h1>
             <h2 class="text-center text-xl mt-2 mb-4" id="chapterInfo"></h2>
 
-            <!-- Top Navigation Buttons -->
-            <div class="flex flex-wrap justify-between items-center my-6 gap-3">
-                <div class="flex items-center gap-2">
-                    <button id="prevBtn" onclick="goToPreviousChapter()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all disabled:bg-gray-800 disabled:text-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed">Previous</button>
-                    <input type="number" id="chapterSelector" min="1" onchange="goToSelectedChapter()" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    <button id="nextBtn" onclick="goToNextChapter()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all disabled:bg-gray-800 disabled:text-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed">Next</button>
-                </div>
-                <div class="flex items-center gap-2">
-                    <label for="fontSizeSelector" class="text-sm">Font Size:</label>
-                    <button id="decreaseFontBtn" onclick="adjustFontSize(-1)" class="px-3 py-1 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">-</button>
-                    <input type="number" id="fontSizeSelector" value="16" min="10" max="30" onchange="setFontSize()" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    <button id="increaseFontBtn" onclick="adjustFontSize(1)" class="px-3 py-1 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">+</button>
-                </div>
-                <button onclick="toggleFullscreen()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">Full Screen</button>
-            </div>
-
             <div id="chapterContent" class="pre-wrap text-lg leading-relaxed"></div>
-
-            <!-- Bottom Navigation Buttons -->
-            <div class="flex flex-wrap justify-between items-center my-6 gap-3">
-                <div class="flex items-center gap-2">
-                    <button id="bottomPrevBtn" onclick="goToPreviousChapter()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all disabled:bg-gray-800 disabled:text-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed">Previous</button>
-                    <input type="number" id="bottomChapterSelector" min="1" onchange="goToSelectedChapter()" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    <button id="bottomNextBtn" onclick="goToNextChapter()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all disabled:bg-gray-800 disabled:text-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed">Next</button>
-                </div>
-                <div class="flex items-center gap-2">
-                    <label for="bottomFontSizeSelector" class="text-sm">Font Size:</label>
-                    <button id="bottomDecreaseFontBtn" onclick="adjustFontSize(-1)" class="px-3 py-1 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">-</button>
-                    <input type="number" id="bottomFontSizeSelector" value="16" min="10" max="30" onchange="setFontSize()" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    <button id="bottomIncreaseFontBtn" onclick="adjustFontSize(1)" class="px-3 py-1 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">+</button>
-                </div>
-                <button onclick="toggleFullscreen()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">Full Screen</button>
-            </div>
             
-            <a href="#" id="backBtn" class="block mt-6 p-4 text-center rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">Back to Chapters</a>
+            <!-- New Floating Control Bar -->
+            <div id="mobileControlBar" class="fixed bottom-0 left-0 right-0 bg-[#1A1B32] border-t border-blue-600/50 shadow-lg p-2 flex justify-around items-center z-50">
+                <button id="backBtn" class="p-3 rounded-lg hover:bg-[#2A2B42] transition-all" title="Back to Chapters">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E0E0F0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <button id="prevBtn" class="p-3 rounded-lg hover:bg-[#2A2B42] transition-all disabled:opacity-50 disabled:cursor-not-allowed" title="Previous Chapter">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E0E0F0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <div id="chapterDisplay" class="text-center text-[#E0E0F0] font-semibold">
+                    <!-- Chapter X / Y -->
+                </div>
+                <button id="nextBtn" class="p-3 rounded-lg hover:bg-[#2A2B42] transition-all disabled:opacity-50 disabled:cursor-not-allowed" title="Next Chapter">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E0E0F0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <button id="settingsBtn" class="p-3 rounded-lg hover:bg-[#2A2B42] transition-all" title="Settings">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E0E0F0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+            </div>
+
+             <!-- Settings Modal -->
+            <div id="settingsModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
+                <div class="bg-[#0F1023] p-6 rounded-lg shadow-xl border border-blue-600/50 w-11/12 max-w-sm">
+                    <h3 class="text-xl font-bold text-center mb-6 text-[#55AAFF]">Settings</h3>
+                    <!-- Font Size Control -->
+                    <div class="flex items-center justify-between mb-4">
+                        <label for="fontSizeSelector" class="text-sm">Font Size:</label>
+                        <div class="flex items-center gap-2">
+                            <button id="decreaseFontBtn" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42]">-</button>
+                            <input type="number" id="fontSizeSelector" value="16" min="10" max="30" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50">
+                            <button id="increaseFontBtn" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42]">+</button>
+                        </div>
+                    </div>
+                     <!-- Fullscreen Control -->
+                    <button id="fullscreenBtn" class="w-full mt-4 px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42]">Toggle Full Screen</button>
+                    <!-- Close Button -->
+                    <button id="closeSettingsBtn" class="w-full mt-6 px-4 py-2 rounded-lg bg-[#55AAFF] text-[#1A1B32] font-bold hover:bg-[#4499FF]">Close</button>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -84,35 +102,30 @@
         const chapterContent = document.getElementById('chapterContent');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const chapterSelector = document.getElementById('chapterSelector');
-        const bottomPrevBtn = document.getElementById('bottomPrevBtn');
-        const bottomNextBtn = document.getElementById('bottomNextBtn');
-        const bottomChapterSelector = document.getElementById('bottomChapterSelector');
+        const chapterDisplay = document.getElementById('chapterDisplay');
         const chapterSearch = document.getElementById('chapterSearch');
         const continueReadingBtn = document.getElementById('continueReadingBtn');
         const backBtn = document.getElementById('backBtn');
 
-        // Font size controls
+        // New UI controls
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const decreaseFontBtn = document.getElementById('decreaseFontBtn');
+        const increaseFontBtn = document.getElementById('increaseFontBtn');
         const fontSizeSelector = document.getElementById('fontSizeSelector');
-        const bottomFontSizeSelector = document.getElementById('bottomFontSizeSelector');
-
-        // Manually set variable for the number of chapters to scan.
+        
         const totalChapters = 10;
         let chaptersLoaded = [];
         let currentChapterNumber = 0;
         let inactivityTimer;
 
-        /**
-         * Clears any existing inactivity timers and sets a new one.
-         */
         function resetInactivityTimer() {
             clearTimeout(inactivityTimer);
-            inactivityTimer = setTimeout(saveReadingProgress, 5000); // 5 seconds
+            inactivityTimer = setTimeout(saveReadingProgress, 5000);
         }
 
-        /**
-         * Saves the current chapter number and font size to localStorage.
-         */
         function saveReadingProgress() {
             const progress = {
                 chapter: currentChapterNumber,
@@ -122,15 +135,10 @@
             console.log(`Reading progress saved for Chapter ${progress.chapter} with font size ${progress.fontSize}.`);
         }
 
-        /**
-         * Asynchronously fetches chapter metadata and populates the chapter list.
-         * The loop will break when a chapter file is not found, providing a simple way to
-         * detect the end of the chapter list.
-         */
         async function displayLandingPage() {
             viewerPage.classList.add('hidden');
             landingPage.classList.remove('hidden');
-            continueReadingBtn.classList.add('hidden'); // Hide button by default
+            continueReadingBtn.classList.add('hidden');
 
             chapterList.innerHTML = '<li class="text-center">Loading chapters...</li>';
             chaptersLoaded = [];
@@ -138,10 +146,7 @@
             for (let i = 1; i <= totalChapters; i++) {
                 try {
                     const response = await fetch(`SFLcontent/${i}.json`);
-                    if (!response.ok) {
-                        // Stop scanning when a chapter file is not found
-                        break;
-                    }
+                    if (!response.ok) break;
                     const metadata = await response.json();
                     chaptersLoaded.push({
                         number: metadata.chapter_number,
@@ -150,17 +155,14 @@
                     });
                 } catch (error) {
                     console.error(`Failed to load metadata for chapter ${i}:`, error);
-                    // Stop on any fetch error
                     break;
                 }
             }
             
-            filterChapters(); // Initial render of all chapters
+            filterChapters();
 
-            // Add event listener to the search bar
             chapterSearch.addEventListener('input', filterChapters);
 
-            // Check for saved reading progress using the new key
             const savedProgress = localStorage.getItem('readingProgressV2');
             if (savedProgress) {
                 const progress = JSON.parse(savedProgress);
@@ -170,31 +172,15 @@
                     if (chapterToLoad) {
                         loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name, progress.fontSize);
                     } else {
-                        console.error("Saved chapter not found. Starting fresh.");
                         localStorage.removeItem('readingProgressV2');
-                        continueReadingBtn.classList.add('hidden'); // Hide the button
+                        continueReadingBtn.classList.add('hidden');
                     }
                 };
             } else {
                 continueReadingBtn.classList.add('hidden');
             }
-
-            // Scroll to the last opened chapter if available
-            const savedProgressData = localStorage.getItem('readingProgressV2');
-            if (savedProgressData) {
-                const progress = JSON.parse(savedProgressData);
-                const lastChapterElement = document.getElementById(`chapter-link-${progress.chapter}`);
-                if (lastChapterElement) {
-                    setTimeout(() => {
-                        lastChapterElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100); // Small delay to ensure the list has rendered
-                }
-            }
         }
 
-        /**
-         * Filters and displays the chapter list based on the search input.
-         */
         function filterChapters() {
             const query = chapterSearch.value.toLowerCase();
             const filteredChapters = chaptersLoaded.filter(chapter => 
@@ -202,7 +188,10 @@
                 String(chapter.number).includes(query)
             );
 
-            chapterList.innerHTML = ''; // Clear the existing list
+            const savedProgressData = localStorage.getItem('readingProgressV2');
+            const lastReadChapter = savedProgressData ? JSON.parse(savedProgressData).chapter : null;
+
+            chapterList.innerHTML = '';
             if (filteredChapters.length === 0) {
                 chapterList.innerHTML = '<li class="text-center text-gray-400">No matching chapters found.</li>';
             } else {
@@ -210,100 +199,83 @@
                     const listItem = document.createElement('li');
                     const link = document.createElement('a');
                     link.href = '#';
-                    link.textContent = `Chapter ${chapter.number}: ${chapter.name}`;
                     link.id = `chapter-link-${chapter.number}`;
                     link.onclick = (event) => {
                         event.preventDefault();
                         loadChapter(chapter.filename, chapter.number, chapter.name);
                     };
-                    link.className = 'block p-3 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:text-[#55AAFF] hover:drop-shadow-lg transition-all';
+
+                    const isLastRead = chapter.number === lastReadChapter;
+
+                    if (isLastRead) {
+                        link.className = 'flex items-center justify-between p-3 rounded-lg bg-[#1A2B32] text-[#55FFaa] border border-green-500/50 hover:bg-[#2A3B42] hover:text-[#55FFCC] hover:drop-shadow-lg transition-all';
+                        link.innerHTML = `
+                            <span>Chapter ${chapter.number}: ${chapter.name}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+                            </svg>
+                        `;
+                    } else {
+                        link.textContent = `Chapter ${chapter.number}: ${chapter.name}`;
+                        link.className = 'block p-3 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:text-[#55AAFF] hover:drop-shadow-lg transition-all';
+                    }
+
                     listItem.appendChild(link);
                     chapterList.appendChild(listItem);
                 });
             }
         }
 
-        /**
-         * Asynchronously loads and displays a chapter from a JSON file.
-         * @param {string} filename The name of the JSON file to load.
-         * @param {number} chapterNumber The chapter number.
-         * @param {string} chapterName The name of the chapter.
-         * @param {number} [fontSize] The font size to apply.
-         */
         async function loadChapter(filename, chapterNumber, chapterName, fontSize = null) {
             try {
-                // Fetch the JSON metadata file
                 const metadataResponse = await fetch(`SFLcontent/${filename}`);
-                if (!metadataResponse.ok) {
-                    throw new Error(`Error loading chapter metadata file: ${metadataResponse.statusText}`);
-                }
+                if (!metadataResponse.ok) throw new Error(`Error loading chapter metadata: ${metadataResponse.statusText}`);
                 const metadata = await metadataResponse.json();
 
-                // Use the metadata to fetch the text content file
                 const contentFilename = metadata.chapter_content_file;
                 const contentResponse = await fetch(`SFLcontent/${contentFilename}`);
-                if (!contentResponse.ok) {
-                    throw new Error(`Error loading chapter content file: ${contentResponse.statusText}`);
-                }
+                if (!contentResponse.ok) throw new Error(`Error loading chapter content: ${contentResponse.statusText}`);
                 const content = await contentResponse.text();
                 
-                // Update viewer page content and current chapter state
                 chapterInfo.textContent = `Chapter ${chapterNumber} - ${chapterName}`;
                 chapterContent.textContent = content;
                 currentChapterNumber = chapterNumber;
 
-                // Apply saved font size or default
                 if (fontSize) {
                     chapterContent.style.fontSize = `${fontSize}px`;
                     fontSizeSelector.value = fontSize;
-                    bottomFontSizeSelector.value = fontSize;
                 } else {
-                    chapterContent.style.fontSize = '16px'; // Default
+                    chapterContent.style.fontSize = '16px';
                     fontSizeSelector.value = 16;
-                    bottomFontSizeSelector.value = 16;
                 }
                 
-                // Update chapter selectors and button states
                 updateNavigationButtons();
 
-                // Switch to viewer page
                 landingPage.classList.add('hidden');
                 viewerPage.classList.remove('hidden');
 
-                // Set up inactivity timer
                 viewerPage.addEventListener('mousemove', resetInactivityTimer);
                 viewerPage.addEventListener('scroll', resetInactivityTimer);
                 viewerPage.addEventListener('click', resetInactivityTimer);
                 resetInactivityTimer();
 
-                // Update browser history
                 history.pushState({ page: 'viewer', chapter: currentChapterNumber }, `Chapter ${currentChapterNumber}`, `?chapter=${currentChapterNumber}`);
+                window.scrollTo(0, 0);
 
             } catch (error) {
                 console.error("Failed to load chapter:", error);
-                chapterContent.textContent = "Error: Could not load chapter content. Please check the file path and content.";
-                landingPage.classList.add('hidden');
-                viewerPage.classList.remove('hidden');
-                chapterInfo.textContent = `Chapter ${chapterNumber} - ${chapterName}`; // Still show info even if content fails
+                chapterContent.textContent = "Error: Could not load chapter content.";
             }
         }
 
-        /**
-         * Adjusts the font size by a given amount.
-         * @param {number} amount The amount to change the font size by (e.g., +1 or -1).
-         */
         function adjustFontSize(amount) {
-            let currentSize = parseInt(window.getComputedStyle(chapterContent).fontSize);
-            let newSize = Math.min(Math.max(currentSize + amount, 10), 30); // Clamp between 10 and 30
+            let currentSize = parseInt(chapterContent.style.fontSize);
+            let newSize = Math.min(Math.max(currentSize + amount, 10), 30);
             chapterContent.style.fontSize = `${newSize}px`;
             fontSizeSelector.value = newSize;
-            bottomFontSizeSelector.value = newSize;
             resetInactivityTimer();
         }
 
-        /**
-         * Sets the font size based on the input field's value.
-         */
         function setFontSize() {
             let newSize = parseInt(fontSizeSelector.value);
             if (isNaN(newSize) || newSize < 10) newSize = 10;
@@ -311,13 +283,9 @@
             
             chapterContent.style.fontSize = `${newSize}px`;
             fontSizeSelector.value = newSize;
-            bottomFontSizeSelector.value = newSize;
             resetInactivityTimer();
         }
 
-        /**
-         * Toggles full-screen mode for the entire page.
-         */
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
@@ -328,112 +296,80 @@
             }
         }
 
-        /**
-         * Updates the state of the navigation buttons.
-         */
         function updateNavigationButtons() {
-            // Update input fields
-            chapterSelector.value = currentChapterNumber;
-            bottomChapterSelector.value = currentChapterNumber;
-
-            // Enable/disable buttons based on chapter number
-            prevBtn.disabled = currentChapterNumber <= 1;
-            bottomPrevBtn.disabled = currentChapterNumber <= 1;
-
             const totalLoadedChapters = chaptersLoaded.length;
+            chapterDisplay.textContent = `Chapter ${currentChapterNumber} / ${totalLoadedChapters}`;
+            prevBtn.disabled = currentChapterNumber <= 1;
             nextBtn.disabled = currentChapterNumber >= totalLoadedChapters;
-            bottomNextBtn.disabled = currentChapterNumber >= totalLoadedChapters;
         }
 
-        /**
-         * Goes to the previous chapter, if available.
-         */
         function goToPreviousChapter() {
             if (currentChapterNumber > 1) {
                 const prevChapter = chaptersLoaded.find(c => c.number === currentChapterNumber - 1);
-                if (prevChapter) {
-                    loadChapter(prevChapter.filename, prevChapter.number, prevChapter.name);
-                }
+                if (prevChapter) loadChapter(prevChapter.filename, prevChapter.number, prevChapter.name);
             }
         }
 
-        /**
-         * Goes to the next chapter, if available.
-         */
         function goToNextChapter() {
             const totalLoadedChapters = chaptersLoaded.length;
             if (currentChapterNumber < totalLoadedChapters) {
                 const nextChapter = chaptersLoaded.find(c => c.number === currentChapterNumber + 1);
-                if (nextChapter) {
-                    loadChapter(nextChapter.filename, nextChapter.number, nextChapter.name);
-                }
-            }
-        }
-
-        /**
-         * Loads the chapter selected in the number input field.
-         */
-        function goToSelectedChapter() {
-            const selectedNumber = parseInt(chapterSelector.value);
-            const totalLoadedChapters = chaptersLoaded.length;
-            if (selectedNumber >= 1 && selectedNumber <= totalLoadedChapters) {
-                const selectedChapter = chaptersLoaded.find(c => c.number === selectedNumber);
-                if (selectedChapter) {
-                    loadChapter(selectedChapter.filename, selectedChapter.number, selectedChapter.name);
-                }
-            } else {
-                console.warn(`Invalid chapter number: ${selectedNumber}. Please enter a number between 1 and ${totalLoadedChapters}.`);
-                // Reset the input field to the current chapter if invalid
-                updateNavigationButtons();
+                if (nextChapter) loadChapter(nextChapter.filename, nextChapter.number, nextChapter.name);
             }
         }
         
-        // This function handles the back navigation from the viewer page to the landing page.
         function goBackToLanding() {
             history.back();
         }
 
-        // Add event listener for the popstate event to handle browser back/forward buttons
         window.addEventListener('popstate', (event) => {
             if (event.state && event.state.page === 'viewer') {
                 const chapterToLoad = chaptersLoaded.find(c => c.number === event.state.chapter);
-                if (chapterToLoad) {
-                    loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
-                }
+                if (chapterToLoad) loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
             } else {
                 displayLandingPage();
             }
         });
 
-        // Initialize the page on load
         window.onload = () => {
             displayLandingPage();
-            // This is a new feature to handle initial load with a chapter parameter in the URL.
             const urlParams = new URLSearchParams(window.location.search);
             const chapterParam = urlParams.get('chapter');
             if (chapterParam) {
                 const chapterNumber = parseInt(chapterParam);
                 if (!isNaN(chapterNumber)) {
-                     // Wait for chapters to load, then load the specific chapter.
                     const checkInterval = setInterval(() => {
                         if (chaptersLoaded.length > 0) {
                             const chapterToLoad = chaptersLoaded.find(c => c.number === chapterNumber);
-                            if (chapterToLoad) {
-                                loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
-                            } else {
-                                console.error(`Chapter ${chapterNumber} not found.`);
-                            }
+                            if (chapterToLoad) loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
                             clearInterval(checkInterval);
                         }
                     }, 50);
                 }
             }
         };
-        
-        // Update back button's onclick to use the new function
+
+        // Event Listeners for new UI
         backBtn.onclick = goBackToLanding;
+        prevBtn.onclick = goToPreviousChapter;
+        nextBtn.onclick = goToNextChapter;
+        
+        settingsBtn.onclick = () => settingsModal.classList.remove('hidden');
+        closeSettingsBtn.onclick = () => settingsModal.classList.add('hidden');
+        settingsModal.onclick = (e) => {
+             if(e.target === settingsModal) {
+                 settingsModal.classList.add('hidden');
+             }
+        };
+        
+        decreaseFontBtn.onclick = () => adjustFontSize(-1);
+        increaseFontBtn.onclick = () => adjustFontSize(1);
+        fontSizeSelector.onchange = setFontSize;
+        fullscreenBtn.onclick = toggleFullscreen;
 
     </script>
 
 </body>
 </html>
+
+
