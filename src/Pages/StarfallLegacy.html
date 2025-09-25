@@ -46,8 +46,8 @@
             <!-- New Floating Control Bar -->
             <div id="mobileControlBar" class="fixed bottom-0 left-0 right-0 bg-[#1A1B32] border-t border-blue-600/50 shadow-lg p-2 flex justify-around items-center z-50">
                 <button id="backBtn" class="p-3 rounded-lg hover:bg-[#2A2B42] transition-all" title="Back to Chapters">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E0E0F0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E0E0F0]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                     </svg>
                 </button>
                 <button id="prevBtn" class="p-3 rounded-lg hover:bg-[#2A2B42] transition-all disabled:opacity-50 disabled:cursor-not-allowed" title="Previous Chapter">
@@ -319,7 +319,9 @@
         }
         
         function goBackToLanding() {
-            history.back();
+            displayLandingPage();
+            const storyTitle = document.getElementById('storyTitle').textContent;
+            history.pushState({ page: 'landing' }, storyTitle, window.location.pathname.split('?')[0]);
         }
 
         window.addEventListener('popstate', (event) => {
@@ -371,5 +373,4 @@
 
 </body>
 </html>
-
 
