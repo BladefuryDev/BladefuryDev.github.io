@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starfall Legacy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .pre-wrap {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body class="bg-[#0A0B1C] text-[#E0E0F0] font-mono p-5">
+
+    <div class="container mx-auto max-w-4xl bg-[#0F1023] bg-opacity-90 p-8 rounded-xl shadow-xl border border-blue-600/30">
+        <!-- Landing Page for Chapter List -->
+        <div id="landingPage">
+            <div class="bg-[#0F1023] bg-opacity-90 p-8 rounded-xl shadow-xl border border-blue-600/30 mb-8">
+                <h1 class="text-center text-3xl font-bold text-[#55AAFF] drop-shadow-lg">Pokemon Mystery Dungeon: Starfall Legacy</h1>
+                <p class="text-center mt-4 mb-4">When the U.S.S. Sagittarius is mysteriously pulled from warp and torn across realities, its bridge crew finds themselves stranded on an alien world, transformed into creatures with strange new powers. Stripped of their technology and facing a cosmic threat that defies all known science, they must adapt to a reality where magic is real, gods walk the earth, and their only hope for survival lies in a legacy left behind by another lost soul. Their journey to find a way home becomes a desperate race against an encroaching darkness, forcing them to become more than just a crew—they must become the unexpected heroes this new world needs.</p>
+            </div>
+            <div class="bg-[#0F1023] bg-opacity-90 p-8 rounded-xl shadow-xl border border-blue-600/30">
+                <h2 class="text-center text-xl mt-2 mb-4">Select a Chapter</h2>
+                <div class="flex flex-wrap items-center gap-2 mb-4">
+                    <input type="text" id="chapterSearch" placeholder="Search by chapter name or number" class="flex-grow p-3 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <button id="continueReadingBtn" class="px-4 py-3 rounded-lg bg-[#55AAFF] text-[#1A1B32] font-bold hidden border border-blue-600/50 hover:bg-[#4499FF]">Continue Reading</button>
+                </div>
+                <ul id="chapterList" class="space-y-2">
+                    <!-- Chapter links will be dynamically inserted here by JavaScript -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Viewer Page for Reading Chapter Content -->
+        <div id="viewerPage" class="hidden">
+            <h1 class="text-center text-3xl font-bold text-[#55AAFF] drop-shadow-lg" id="storyTitle">Pokemon Mystery Dungeon: Starfall Legacy</h1>
+            <h2 class="text-center text-xl mt-2 mb-4" id="chapterInfo"></h2>
+
+            <!-- Top Navigation Buttons -->
+            <div class="flex flex-wrap justify-between items-center my-6 gap-3">
+                <div class="flex items-center gap-2">
+                    <button id="prevBtn" onclick="goToPreviousChapter()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all disabled:bg-gray-800 disabled:text-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed">Previous</button>
+                    <input type="number" id="chapterSelector" min="1" onchange="goToSelectedChapter()" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <button id="nextBtn" onclick="goToNextChapter()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all disabled:bg-gray-800 disabled:text-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed">Next</button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label for="fontSizeSelector" class="text-sm">Font Size:</label>
+                    <button id="decreaseFontBtn" onclick="adjustFontSize(-1)" class="px-3 py-1 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">-</button>
+                    <input type="number" id="fontSizeSelector" value="16" min="10" max="30" onchange="setFontSize()" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <button id="increaseFontBtn" onclick="adjustFontSize(1)" class="px-3 py-1 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">+</button>
+                </div>
+                <button onclick="toggleFullscreen()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">Full Screen</button>
+            </div>
+
+            <div id="chapterContent" class="pre-wrap text-lg leading-relaxed"></div>
+
+            <!-- Bottom Navigation Buttons -->
+            <div class="flex flex-wrap justify-between items-center my-6 gap-3">
+                <div class="flex items-center gap-2">
+                    <button id="bottomPrevBtn" onclick="goToPreviousChapter()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all disabled:bg-gray-800 disabled:text-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed">Previous</button>
+                    <input type="number" id="bottomChapterSelector" min="1" onchange="goToSelectedChapter()" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <button id="bottomNextBtn" onclick="goToNextChapter()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all disabled:bg-gray-800 disabled:text-gray-500 disabled:border-gray-700 disabled:cursor-not-allowed">Next</button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label for="bottomFontSizeSelector" class="text-sm">Font Size:</label>
+                    <button id="bottomDecreaseFontBtn" onclick="adjustFontSize(-1)" class="px-3 py-1 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">-</button>
+                    <input type="number" id="bottomFontSizeSelector" value="16" min="10" max="30" onchange="setFontSize()" class="w-16 text-center p-2 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <button id="bottomIncreaseFontBtn" onclick="adjustFontSize(1)" class="px-3 py-1 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">+</button>
+                </div>
+                <button onclick="toggleFullscreen()" class="px-4 py-2 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">Full Screen</button>
+            </div>
+            
+            <a href="#" id="backBtn" class="block mt-6 p-4 text-center rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:drop-shadow-lg transition-all">Back to Chapters</a>
+        </div>
+    </div>
+    
+    <script>
+        // System variable definition.
+        const landingPage = document.getElementById('landingPage');
+        const viewerPage = document.getElementById('viewerPage');
+        const chapterList = document.getElementById('chapterList');
+        const chapterInfo = document.getElementById('chapterInfo');
+        const chapterContent = document.getElementById('chapterContent');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const chapterSelector = document.getElementById('chapterSelector');
+        const bottomPrevBtn = document.getElementById('bottomPrevBtn');
+        const bottomNextBtn = document.getElementById('bottomNextBtn');
+        const bottomChapterSelector = document.getElementById('bottomChapterSelector');
+        const chapterSearch = document.getElementById('chapterSearch');
+        const continueReadingBtn = document.getElementById('continueReadingBtn');
+        const backBtn = document.getElementById('backBtn');
+
+        // Font size controls
+        const fontSizeSelector = document.getElementById('fontSizeSelector');
+        const bottomFontSizeSelector = document.getElementById('bottomFontSizeSelector');
+
+        // Manually set variable for the number of chapters to scan.
+        const totalChapters = 10;
+        let chaptersLoaded = [];
+        let currentChapterNumber = 0;
+        let inactivityTimer;
+
+        /**
+         * Clears any existing inactivity timers and sets a new one.
+         */
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(saveReadingProgress, 5000); // 5 seconds
+        }
+
+        /**
+         * Saves the current chapter number and font size to localStorage.
+         */
+        function saveReadingProgress() {
+            const progress = {
+                chapter: currentChapterNumber,
+                fontSize: parseInt(fontSizeSelector.value)
+            };
+            localStorage.setItem('readingProgressV2', JSON.stringify(progress));
+            console.log(`Reading progress saved for Chapter ${progress.chapter} with font size ${progress.fontSize}.`);
+        }
+
+        /**
+         * Asynchronously fetches chapter metadata and populates the chapter list.
+         * The loop will break when a chapter file is not found, providing a simple way to
+         * detect the end of the chapter list.
+         */
+        async function displayLandingPage() {
+            viewerPage.classList.add('hidden');
+            landingPage.classList.remove('hidden');
+            continueReadingBtn.classList.add('hidden'); // Hide button by default
+
+            chapterList.innerHTML = '<li class="text-center">Loading chapters...</li>';
+            chaptersLoaded = [];
+
+            for (let i = 1; i <= totalChapters; i++) {
+                try {
+                    const response = await fetch(`SFLcontent/${i}.json`);
+                    if (!response.ok) {
+                        // Stop scanning when a chapter file is not found
+                        break;
+                    }
+                    const metadata = await response.json();
+                    chaptersLoaded.push({
+                        number: metadata.chapter_number,
+                        name: metadata.chapter_name,
+                        filename: `${i}.json`
+                    });
+                } catch (error) {
+                    console.error(`Failed to load metadata for chapter ${i}:`, error);
+                    // Stop on any fetch error
+                    break;
+                }
+            }
+            
+            filterChapters(); // Initial render of all chapters
+
+            // Add event listener to the search bar
+            chapterSearch.addEventListener('input', filterChapters);
+
+            // Check for saved reading progress using the new key
+            const savedProgress = localStorage.getItem('readingProgressV2');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                continueReadingBtn.classList.remove('hidden');
+                continueReadingBtn.onclick = () => {
+                    const chapterToLoad = chaptersLoaded.find(c => c.number === progress.chapter);
+                    if (chapterToLoad) {
+                        loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name, progress.fontSize);
+                    } else {
+                        console.error("Saved chapter not found. Starting fresh.");
+                        localStorage.removeItem('readingProgressV2');
+                        continueReadingBtn.classList.add('hidden'); // Hide the button
+                    }
+                };
+            } else {
+                continueReadingBtn.classList.add('hidden');
+            }
+
+            // Scroll to the last opened chapter if available
+            const savedProgressData = localStorage.getItem('readingProgressV2');
+            if (savedProgressData) {
+                const progress = JSON.parse(savedProgressData);
+                const lastChapterElement = document.getElementById(`chapter-link-${progress.chapter}`);
+                if (lastChapterElement) {
+                    setTimeout(() => {
+                        lastChapterElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100); // Small delay to ensure the list has rendered
+                }
+            }
+        }
+
+        /**
+         * Filters and displays the chapter list based on the search input.
+         */
+        function filterChapters() {
+            const query = chapterSearch.value.toLowerCase();
+            const filteredChapters = chaptersLoaded.filter(chapter => 
+                chapter.name.toLowerCase().includes(query) || 
+                String(chapter.number).includes(query)
+            );
+
+            chapterList.innerHTML = ''; // Clear the existing list
+            if (filteredChapters.length === 0) {
+                chapterList.innerHTML = '<li class="text-center text-gray-400">No matching chapters found.</li>';
+            } else {
+                filteredChapters.forEach(chapter => {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.textContent = `Chapter ${chapter.number}: ${chapter.name}`;
+                    link.id = `chapter-link-${chapter.number}`;
+                    link.onclick = (event) => {
+                        event.preventDefault();
+                        loadChapter(chapter.filename, chapter.number, chapter.name);
+                    };
+                    link.className = 'block p-3 rounded-lg bg-[#1A1B32] text-[#E0E0F0] border border-blue-600/50 hover:bg-[#2A2B42] hover:text-[#55AAFF] hover:drop-shadow-lg transition-all';
+                    listItem.appendChild(link);
+                    chapterList.appendChild(listItem);
+                });
+            }
+        }
+
+        /**
+         * Asynchronously loads and displays a chapter from a JSON file.
+         * @param {string} filename The name of the JSON file to load.
+         * @param {number} chapterNumber The chapter number.
+         * @param {string} chapterName The name of the chapter.
+         * @param {number} [fontSize] The font size to apply.
+         */
+        async function loadChapter(filename, chapterNumber, chapterName, fontSize = null) {
+            try {
+                // Fetch the JSON metadata file
+                const metadataResponse = await fetch(`SFLcontent/${filename}`);
+                if (!metadataResponse.ok) {
+                    throw new Error(`Error loading chapter metadata file: ${metadataResponse.statusText}`);
+                }
+                const metadata = await metadataResponse.json();
+
+                // Use the metadata to fetch the text content file
+                const contentFilename = metadata.chapter_content_file;
+                const contentResponse = await fetch(`SFLcontent/${contentFilename}`);
+                if (!contentResponse.ok) {
+                    throw new Error(`Error loading chapter content file: ${contentResponse.statusText}`);
+                }
+                const content = await contentResponse.text();
+                
+                // Update viewer page content and current chapter state
+                chapterInfo.textContent = `Chapter ${chapterNumber} - ${chapterName}`;
+                chapterContent.textContent = content;
+                currentChapterNumber = chapterNumber;
+
+                // Apply saved font size or default
+                if (fontSize) {
+                    chapterContent.style.fontSize = `${fontSize}px`;
+                    fontSizeSelector.value = fontSize;
+                    bottomFontSizeSelector.value = fontSize;
+                } else {
+                    chapterContent.style.fontSize = '16px'; // Default
+                    fontSizeSelector.value = 16;
+                    bottomFontSizeSelector.value = 16;
+                }
+                
+                // Update chapter selectors and button states
+                updateNavigationButtons();
+
+                // Switch to viewer page
+                landingPage.classList.add('hidden');
+                viewerPage.classList.remove('hidden');
+
+                // Set up inactivity timer
+                viewerPage.addEventListener('mousemove', resetInactivityTimer);
+                viewerPage.addEventListener('scroll', resetInactivityTimer);
+                viewerPage.addEventListener('click', resetInactivityTimer);
+                resetInactivityTimer();
+
+                // Update browser history
+                history.pushState({ page: 'viewer', chapter: currentChapterNumber }, `Chapter ${currentChapterNumber}`, `?chapter=${currentChapterNumber}`);
+
+            } catch (error) {
+                console.error("Failed to load chapter:", error);
+                chapterContent.textContent = "Error: Could not load chapter content. Please check the file path and content.";
+                landingPage.classList.add('hidden');
+                viewerPage.classList.remove('hidden');
+                chapterInfo.textContent = `Chapter ${chapterNumber} - ${chapterName}`; // Still show info even if content fails
+            }
+        }
+
+        /**
+         * Adjusts the font size by a given amount.
+         * @param {number} amount The amount to change the font size by (e.g., +1 or -1).
+         */
+        function adjustFontSize(amount) {
+            let currentSize = parseInt(window.getComputedStyle(chapterContent).fontSize);
+            let newSize = Math.min(Math.max(currentSize + amount, 10), 30); // Clamp between 10 and 30
+            chapterContent.style.fontSize = `${newSize}px`;
+            fontSizeSelector.value = newSize;
+            bottomFontSizeSelector.value = newSize;
+            resetInactivityTimer();
+        }
+
+        /**
+         * Sets the font size based on the input field's value.
+         */
+        function setFontSize() {
+            let newSize = parseInt(fontSizeSelector.value);
+            if (isNaN(newSize) || newSize < 10) newSize = 10;
+            if (newSize > 30) newSize = 30;
+            
+            chapterContent.style.fontSize = `${newSize}px`;
+            fontSizeSelector.value = newSize;
+            bottomFontSizeSelector.value = newSize;
+            resetInactivityTimer();
+        }
+
+        /**
+         * Toggles full-screen mode for the entire page.
+         */
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        /**
+         * Updates the state of the navigation buttons.
+         */
+        function updateNavigationButtons() {
+            // Update input fields
+            chapterSelector.value = currentChapterNumber;
+            bottomChapterSelector.value = currentChapterNumber;
+
+            // Enable/disable buttons based on chapter number
+            prevBtn.disabled = currentChapterNumber <= 1;
+            bottomPrevBtn.disabled = currentChapterNumber <= 1;
+
+            const totalLoadedChapters = chaptersLoaded.length;
+            nextBtn.disabled = currentChapterNumber >= totalLoadedChapters;
+            bottomNextBtn.disabled = currentChapterNumber >= totalLoadedChapters;
+        }
+
+        /**
+         * Goes to the previous chapter, if available.
+         */
+        function goToPreviousChapter() {
+            if (currentChapterNumber > 1) {
+                const prevChapter = chaptersLoaded.find(c => c.number === currentChapterNumber - 1);
+                if (prevChapter) {
+                    loadChapter(prevChapter.filename, prevChapter.number, prevChapter.name);
+                }
+            }
+        }
+
+        /**
+         * Goes to the next chapter, if available.
+         */
+        function goToNextChapter() {
+            const totalLoadedChapters = chaptersLoaded.length;
+            if (currentChapterNumber < totalLoadedChapters) {
+                const nextChapter = chaptersLoaded.find(c => c.number === currentChapterNumber + 1);
+                if (nextChapter) {
+                    loadChapter(nextChapter.filename, nextChapter.number, nextChapter.name);
+                }
+            }
+        }
+
+        /**
+         * Loads the chapter selected in the number input field.
+         */
+        function goToSelectedChapter() {
+            const selectedNumber = parseInt(chapterSelector.value);
+            const totalLoadedChapters = chaptersLoaded.length;
+            if (selectedNumber >= 1 && selectedNumber <= totalLoadedChapters) {
+                const selectedChapter = chaptersLoaded.find(c => c.number === selectedNumber);
+                if (selectedChapter) {
+                    loadChapter(selectedChapter.filename, selectedChapter.number, selectedChapter.name);
+                }
+            } else {
+                console.warn(`Invalid chapter number: ${selectedNumber}. Please enter a number between 1 and ${totalLoadedChapters}.`);
+                // Reset the input field to the current chapter if invalid
+                updateNavigationButtons();
+            }
+        }
+        
+        // This function handles the back navigation from the viewer page to the landing page.
+        function goBackToLanding() {
+            history.back();
+        }
+
+        // Add event listener for the popstate event to handle browser back/forward buttons
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.page === 'viewer') {
+                const chapterToLoad = chaptersLoaded.find(c => c.number === event.state.chapter);
+                if (chapterToLoad) {
+                    loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
+                }
+            } else {
+                displayLandingPage();
+            }
+        });
+
+        // Initialize the page on load
+        window.onload = () => {
+            displayLandingPage();
+            // This is a new feature to handle initial load with a chapter parameter in the URL.
+            const urlParams = new URLSearchParams(window.location.search);
+            const chapterParam = urlParams.get('chapter');
+            if (chapterParam) {
+                const chapterNumber = parseInt(chapterParam);
+                if (!isNaN(chapterNumber)) {
+                     // Wait for chapters to load, then load the specific chapter.
+                    const checkInterval = setInterval(() => {
+                        if (chaptersLoaded.length > 0) {
+                            const chapterToLoad = chaptersLoaded.find(c => c.number === chapterNumber);
+                            if (chapterToLoad) {
+                                loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
+                            } else {
+                                console.error(`Chapter ${chapterNumber} not found.`);
+                            }
+                            clearInterval(checkInterval);
+                        }
+                    }, 50);
+                }
+            }
+        };
+        
+        // Update back button's onclick to use the new function
+        backBtn.onclick = goBackToLanding;
+
+    </script>
+
+</body>
+</html>
