@@ -33,6 +33,30 @@
         .fade-out {
             opacity: 0;
         }
+
+        /* Chapter transition animations */
+        @keyframes slide-out-left {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(-50%); opacity: 0; }
+        }
+        @keyframes slide-in-right {
+            from { transform: translateX(50%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slide-out-right {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(50%); opacity: 0; }
+        }
+        @keyframes slide-in-left {
+            from { transform: translateX(-50%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .slide-out-left { animation: slide-out-left 0.25s ease-in forwards; }
+        .slide-in-right { animation: slide-in-right 0.25s ease-out forwards; }
+        .slide-out-right { animation: slide-out-right 0.25s ease-in forwards; }
+        .slide-in-left { animation: slide-in-left 0.25s ease-out forwards; }
+
     </style>
 </head>
 <body class="bg-[#0A0B1C] text-[#E0E0F0] font-mono p-2 sm:p-5">
@@ -88,11 +112,11 @@
         </div>
 
         <!-- Viewer Page for Reading Chapter Content -->
-        <div id="viewerPage" class="hidden">
+        <div id="viewerPage" class="hidden overflow-hidden">
             <h1 class="text-center text-3xl font-bold text-[#55AAFF] drop-shadow-lg" id="storyTitle">Pokemon Mystery Dungeon: Starfall Legacy</h1>
             <h2 class="text-center text-xl mt-2 mb-4" id="chapterInfo"></h2>
 
-            <div id="chapterContent" class="pre-wrap text-lg leading-relaxed"></div>
+            <div id="chapterContent" class="pre-wrap text-lg leading-relaxed overflow-x-hidden"></div>
             
             <!-- New Floating Control Bar -->
             <div id="mobileControlBar" class="fixed bottom-0 left-0 right-0 bg-[#1A1B32] border-t border-blue-600/50 shadow-lg p-2 flex justify-around items-center z-50">
@@ -322,7 +346,7 @@
             }
         }
 
-        async function loadChapter(filename, chapterNumber, chapterName, fontSize = null) {
+        async function loadChapter(filename, chapterNumber, chapterName, fontSize = null, direction = null) {
             try {
                 const metadataResponse = await fetch(`SFLcontent/${filename}`);
                 if (!metadataResponse.ok) throw new Error(`Error loading chapter metadata: ${metadataResponse.statusText}`);
@@ -333,39 +357,58 @@
                 if (!contentResponse.ok) throw new Error(`Error loading chapter content: ${contentResponse.statusText}`);
                 const content = await contentResponse.text();
                 
-                chapterInfo.textContent = `Chapter ${chapterNumber} - ${chapterName}`;
-                chapterContent.textContent = content;
-                currentChapterNumber = chapterNumber;
+                const isNavigating = !viewerPage.classList.contains('hidden') && direction;
 
-                if (fontSize) {
-                    chapterContent.style.fontSize = `${fontSize}px`;
-                    fontSizeSelector.value = fontSize;
+                const updateContent = () => {
+                    chapterInfo.textContent = `Chapter ${chapterNumber} - ${chapterName}`;
+                    chapterContent.textContent = content;
+                    currentChapterNumber = chapterNumber;
+
+                    if (fontSize) {
+                        chapterContent.style.fontSize = `${fontSize}px`;
+                        fontSizeSelector.value = fontSize;
+                    } else {
+                        const savedProgress = localStorage.getItem('readingProgressV2');
+                        const savedFontSize = savedProgress ? JSON.parse(savedProgress).fontSize : 16;
+                        chapterContent.style.fontSize = `${savedFontSize}px`;
+                        fontSizeSelector.value = savedFontSize;
+                    }
+                    
+                    updateNavigationButtons();
+                    window.scrollTo(0, 0);
+                    resetInactivityTimer();
+                };
+
+                if (isNavigating) {
+                    const slideOutClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
+                    const slideInClass = direction === 'next' ? 'slide-in-right' : 'slide-in-left';
+
+                    chapterContent.classList.add(slideOutClass);
+
+                    chapterContent.addEventListener('animationend', () => {
+                        chapterContent.classList.remove(slideOutClass);
+                        updateContent();
+                        chapterContent.classList.add(slideInClass);
+                        chapterContent.addEventListener('animationend', () => {
+                            chapterContent.classList.remove(slideInClass);
+                        }, { once: true });
+                    }, { once: true });
                 } else {
-                    const savedProgress = localStorage.getItem('readingProgressV2');
-                    const savedFontSize = savedProgress ? JSON.parse(savedProgress).fontSize : 16;
-                    chapterContent.style.fontSize = `${savedFontSize}px`;
-                    fontSizeSelector.value = savedFontSize;
+                    updateContent();
+                    landingPage.classList.add('fade-out');
+                    setTimeout(() => {
+                        landingPage.classList.add('hidden');
+                        viewerPage.classList.add('fade-out');
+                        viewerPage.classList.remove('hidden');
+                        setTimeout(() => viewerPage.classList.remove('fade-out'), 10);
+                    }, 300);
+
+                    viewerPage.addEventListener('mousemove', resetInactivityTimer);
+                    viewerPage.addEventListener('scroll', resetInactivityTimer);
+                    viewerPage.addEventListener('click', resetInactivityTimer);
+
+                    history.pushState({ page: 'viewer', chapter: currentChapterNumber }, `Chapter ${currentChapterNumber}`, `?chapter=${currentChapterNumber}`);
                 }
-                
-                updateNavigationButtons();
-
-                landingPage.classList.add('fade-out');
-                setTimeout(() => {
-                    landingPage.classList.add('hidden');
-
-                    viewerPage.classList.add('fade-out');
-                    viewerPage.classList.remove('hidden');
-                    setTimeout(() => viewerPage.classList.remove('fade-out'), 10);
-                }, 300);
-
-
-                viewerPage.addEventListener('mousemove', resetInactivityTimer);
-                viewerPage.addEventListener('scroll', resetInactivityTimer);
-                viewerPage.addEventListener('click', resetInactivityTimer);
-                resetInactivityTimer();
-
-                history.pushState({ page: 'viewer', chapter: currentChapterNumber }, `Chapter ${currentChapterNumber}`, `?chapter=${currentChapterNumber}`);
-                window.scrollTo(0, 0);
 
             } catch (error) {
                 console.error("Failed to load chapter:", error);
@@ -411,7 +454,7 @@
         function goToPreviousChapter() {
             if (currentChapterNumber > 1) {
                 const prevChapter = chaptersLoaded.find(c => c.number === currentChapterNumber - 1);
-                if (prevChapter) loadChapter(prevChapter.filename, prevChapter.number, prevChapter.name);
+                if (prevChapter) loadChapter(prevChapter.filename, prevChapter.number, prevChapter.name, null, 'prev');
             }
         }
 
@@ -419,7 +462,7 @@
             const totalLoadedChapters = chaptersLoaded.length;
             if (currentChapterNumber < totalLoadedChapters) {
                 const nextChapter = chaptersLoaded.find(c => c.number === currentChapterNumber + 1);
-                if (nextChapter) loadChapter(nextChapter.filename, nextChapter.number, nextChapter.name);
+                if (nextChapter) loadChapter(nextChapter.filename, nextChapter.number, nextChapter.name, null, 'next');
             }
         }
         
@@ -484,6 +527,3 @@
 
 </body>
 </html>
-
-
-
