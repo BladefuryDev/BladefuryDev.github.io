@@ -13,6 +13,26 @@
         #viewerPage {
             padding-bottom: 80px; /* Add padding to prevent content from being hidden by the fixed bar */
         }
+        /* Styles for active/inactive tabs */
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background-color: #1A1B32;
+            color: #55AAFF;
+            border-bottom-color: #55AAFF;
+        }
+        .tab-btn:not(.active) {
+            border-bottom-color: transparent;
+        }
+
+        /* Transition Styles */
+        #landingPage, #viewerPage, .tab-content {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .fade-out {
+            opacity: 0;
+        }
     </style>
 </head>
 <body class="bg-[#0A0B1C] text-[#E0E0F0] font-mono p-2 sm:p-5">
@@ -22,13 +42,44 @@
         <div id="landingPage">
             <div class="mb-8">
                 <h1 class="text-center text-3xl font-bold text-[#55AAFF] drop-shadow-lg">Pokemon Mystery Dungeon: Starfall Legacy</h1>
-                <p class="text-center mt-4 mb-4">When the U.S.S. Sagittarius is mysteriously pulled from warp and torn across realities, its bridge crew finds themselves stranded on an alien world, transformed into creatures with strange new powers. Stripped of their technology and facing a cosmic threat that defies all known science, they must adapt to a reality where magic is real, gods walk the earth, and their only hope for survival lies in a legacy left behind by another lost soul. Their journey to find a way home becomes a desperate race against an encroaching darkness, forcing them to become more than just a crew—they must become the unexpected heroes this new world needs.</p>
             </div>
-            <div>
+
+            <!-- Tab Navigation -->
+            <div class="mb-4 border-b border-blue-600/30">
+                <div class="flex space-x-1">
+                    <button id="aboutTabBtn" class="tab-btn active px-4 py-2 rounded-t-lg border-b-2 font-semibold">About</button>
+                    <button id="chaptersTabBtn" class="tab-btn px-4 py-2 rounded-t-lg border-b-2 font-semibold">Chapters</button>
+                    <button id="loreTabBtn" class="tab-btn px-4 py-2 rounded-t-lg border-b-2 font-semibold">Lore</button>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="aboutContent" class="tab-content">
+                <p class="text-center mt-4 mb-6">When the U.S.S. Sagittarius is mysteriously pulled from warp and torn across realities, its bridge crew finds themselves stranded on an alien world, transformed into creatures with strange new powers. Stripped of their technology and facing a cosmic threat that defies all known science, they must adapt to a reality where magic is real, gods walk the earth, and their only hope for survival lies in a legacy left behind by another lost soul. Their journey to find a way home becomes a desperate race against an encroaching darkness, forcing them to become more than just a crew—they must become the unexpected heroes this new world needs.</p>
+                <div class="flex justify-center">
+                     <button id="continueReadingBtn" class="px-6 py-3 rounded-lg bg-[#55AAFF] text-[#1A1B32] font-bold border border-blue-600/50 hover:bg-[#4499FF]">Start Reading</button>
+                </div>
+            </div>
+
+            <div id="loreContent" class="tab-content hidden space-y-6">
+                <div class="p-4 rounded-lg bg-[#1A1B32] border border-blue-600/50">
+                    <h3 class="text-xl font-bold text-[#55AAFF] mb-2">Characters</h3>
+                    <p class="text-gray-400">Information about the key characters of Starfall Legacy will be detailed here.</p>
+                </div>
+                <div class="p-4 rounded-lg bg-[#1A1B32] border border-blue-600/50">
+                    <h3 class="text-xl font-bold text-[#55AAFF] mb-2">Magic</h3>
+                    <p class="text-gray-400">The principles and systems of magic that govern this new reality will be explained in this section.</p>
+                </div>
+                <div class="p-4 rounded-lg bg-[#1A1B32] border border-blue-600/50">
+                    <h3 class="text-xl font-bold text-[#55AAFF] mb-2">World</h3>
+                    <p class="text-gray-400">Discover the history, geography, and cultures of the world where the crew of the U.S.S. Sagittarius has found themselves stranded.</p>
+                </div>
+            </div>
+
+            <div id="chaptersContent" class="tab-content hidden">
                 <h2 class="text-center text-xl mt-2 mb-4">Select a Chapter</h2>
                 <div class="flex flex-wrap items-center gap-2 mb-4">
                     <input type="text" id="chapterSearch" placeholder="Search by chapter name or number" class="flex-grow p-3 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    <button id="continueReadingBtn" class="px-4 py-3 rounded-lg bg-[#55AAFF] text-[#1A1B32] font-bold hidden border border-blue-600/50 hover:bg-[#4499FF]">Continue Reading</button>
                 </div>
                 <ul id="chapterList" class="space-y-2">
                     <!-- Chapter links will be dynamically inserted here by JavaScript -->
@@ -107,6 +158,16 @@
         const continueReadingBtn = document.getElementById('continueReadingBtn');
         const backBtn = document.getElementById('backBtn');
 
+        // Tab variables
+        const aboutTabBtn = document.getElementById('aboutTabBtn');
+        const loreTabBtn = document.getElementById('loreTabBtn');
+        const chaptersTabBtn = document.getElementById('chaptersTabBtn');
+        const aboutContent = document.getElementById('aboutContent');
+        const loreContent = document.getElementById('loreContent');
+        const chaptersContent = document.getElementById('chaptersContent');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
         // New UI controls
         const settingsBtn = document.getElementById('settingsBtn');
         const settingsModal = document.getElementById('settingsModal');
@@ -120,6 +181,35 @@
         let chaptersLoaded = [];
         let currentChapterNumber = 0;
         let inactivityTimer;
+
+        function openTab(tabName) {
+            const activeTabBtn = document.querySelector('.tab-btn.active');
+            const activeContent = document.querySelector('.tab-content:not(.hidden)');
+            
+            if (activeTabBtn.id === `${tabName}TabBtn`) return;
+
+            const nextContent = document.getElementById(`${tabName}Content`);
+
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`${tabName}TabBtn`).classList.add('active');
+            
+            if (activeContent) {
+                activeContent.classList.add('fade-out');
+                setTimeout(() => {
+                    activeContent.classList.add('hidden');
+                    activeContent.classList.remove('fade-out');
+                    
+                    nextContent.classList.add('fade-out');
+                    nextContent.classList.remove('hidden');
+                    setTimeout(() => nextContent.classList.remove('fade-out'), 10);
+
+                }, 300);
+            }
+        }
+
+        aboutTabBtn.onclick = () => openTab('about');
+        loreTabBtn.onclick = () => openTab('lore');
+        chaptersTabBtn.onclick = () => openTab('chapters');
 
         function resetInactivityTimer() {
             clearTimeout(inactivityTimer);
@@ -135,10 +225,10 @@
             console.log(`Reading progress saved for Chapter ${progress.chapter} with font size ${progress.fontSize}.`);
         }
 
-        async function displayLandingPage() {
+        async function displayLandingPage(targetTab = 'about') {
             viewerPage.classList.add('hidden');
             landingPage.classList.remove('hidden');
-            continueReadingBtn.classList.add('hidden');
+            openTab(targetTab); 
 
             chapterList.innerHTML = '<li class="text-center">Loading chapters...</li>';
             chaptersLoaded = [];
@@ -166,18 +256,24 @@
             const savedProgress = localStorage.getItem('readingProgressV2');
             if (savedProgress) {
                 const progress = JSON.parse(savedProgress);
-                continueReadingBtn.classList.remove('hidden');
+                continueReadingBtn.textContent = 'Continue Reading';
                 continueReadingBtn.onclick = () => {
                     const chapterToLoad = chaptersLoaded.find(c => c.number === progress.chapter);
                     if (chapterToLoad) {
                         loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name, progress.fontSize);
                     } else {
                         localStorage.removeItem('readingProgressV2');
-                        continueReadingBtn.classList.add('hidden');
+                        continueReadingBtn.textContent = 'Start Reading';
                     }
                 };
             } else {
-                continueReadingBtn.classList.add('hidden');
+                continueReadingBtn.textContent = 'Start Reading';
+                continueReadingBtn.onclick = () => {
+                    if (chaptersLoaded.length > 0) {
+                        const firstChapter = chaptersLoaded[0];
+                        loadChapter(firstChapter.filename, firstChapter.number, firstChapter.name);
+                    }
+                };
             }
         }
 
@@ -245,14 +341,23 @@
                     chapterContent.style.fontSize = `${fontSize}px`;
                     fontSizeSelector.value = fontSize;
                 } else {
-                    chapterContent.style.fontSize = '16px';
-                    fontSizeSelector.value = 16;
+                    const savedProgress = localStorage.getItem('readingProgressV2');
+                    const savedFontSize = savedProgress ? JSON.parse(savedProgress).fontSize : 16;
+                    chapterContent.style.fontSize = `${savedFontSize}px`;
+                    fontSizeSelector.value = savedFontSize;
                 }
                 
                 updateNavigationButtons();
 
-                landingPage.classList.add('hidden');
-                viewerPage.classList.remove('hidden');
+                landingPage.classList.add('fade-out');
+                setTimeout(() => {
+                    landingPage.classList.add('hidden');
+
+                    viewerPage.classList.add('fade-out');
+                    viewerPage.classList.remove('hidden');
+                    setTimeout(() => viewerPage.classList.remove('fade-out'), 10);
+                }, 300);
+
 
                 viewerPage.addEventListener('mousemove', resetInactivityTimer);
                 viewerPage.addEventListener('scroll', resetInactivityTimer);
@@ -318,10 +423,16 @@
             }
         }
         
-        function goBackToLanding() {
-            displayLandingPage();
-            const storyTitle = document.getElementById('storyTitle').textContent;
-            history.pushState({ page: 'landing' }, storyTitle, window.location.pathname.split('?')[0]);
+        function goBackToLanding(targetTab = 'about') {
+            viewerPage.classList.add('fade-out');
+            setTimeout(() => {
+                viewerPage.classList.add('hidden');
+                landingPage.classList.remove('hidden');
+                landingPage.classList.remove('fade-out'); // Already visible
+                displayLandingPage(targetTab);
+                const storyTitle = document.getElementById('storyTitle').textContent;
+                history.pushState({ page: 'landing' }, storyTitle, window.location.pathname.split('?')[0]);
+            }, 300);
         }
 
         window.addEventListener('popstate', (event) => {
@@ -352,7 +463,7 @@
         };
 
         // Event Listeners for new UI
-        backBtn.onclick = goBackToLanding;
+        backBtn.onclick = () => goBackToLanding('chapters');
         prevBtn.onclick = goToPreviousChapter;
         nextBtn.onclick = goToNextChapter;
         
@@ -373,4 +484,6 @@
 
 </body>
 </html>
+
+
 
