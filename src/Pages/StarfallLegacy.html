@@ -358,7 +358,7 @@
             const activeTabBtn = document.querySelector('.tab-btn.active');
             const activeContent = document.querySelector('.tab-content:not(.hidden)');
             
-            if (activeTabBtn.id === `${tabName}TabBtn`) return;
+            if (activeTabBtn && activeTabBtn.id === `${tabName}TabBtn`) return;
 
             const nextContent = document.getElementById(`${tabName}Content`);
 
@@ -376,6 +376,8 @@
                     setTimeout(() => nextContent.classList.remove('fade-out'), 10);
 
                 }, 300);
+            } else if (nextContent) {
+                nextContent.classList.remove('hidden');
             }
         }
 
@@ -402,22 +404,23 @@
             landingPage.classList.remove('hidden');
             openTab(targetTab); 
 
-            chapterList.innerHTML = '<li class="text-center">Loading chapters...</li>';
-            chaptersLoaded = [];
-
-            for (let i = 1; i <= totalChapters; i++) {
-                try {
-                    const response = await fetch(`SFLcontent/${i}.json`);
-                    if (!response.ok) break;
-                    const metadata = await response.json();
-                    chaptersLoaded.push({
-                        number: metadata.chapter_number,
-                        name: metadata.chapter_name,
-                        filename: `${i}.json`
-                    });
-                } catch (error) {
-                    console.error(`Failed to load metadata for chapter ${i}:`, error);
-                    break;
+            // Only fetch chapters if they haven't been loaded yet.
+            if (chaptersLoaded.length === 0) {
+                chapterList.innerHTML = '<li class="text-center">Loading chapters...</li>';
+                for (let i = 1; i <= totalChapters; i++) {
+                    try {
+                        const response = await fetch(`SFLcontent/${i}.json`);
+                        if (!response.ok) break;
+                        const metadata = await response.json();
+                        chaptersLoaded.push({
+                            number: metadata.chapter_number,
+                            name: metadata.chapter_name,
+                            filename: `${i}.json`
+                        });
+                    } catch (error) {
+                        console.error(`Failed to load metadata for chapter ${i}:`, error);
+                        break;
+                    }
                 }
             }
             
@@ -543,13 +546,7 @@
                     }, { once: true });
                 } else {
                     updateContent();
-                    landingPage.classList.add('fade-out');
-                    setTimeout(() => {
-                        landingPage.classList.add('hidden');
-                        viewerPage.classList.add('fade-out');
-                        viewerPage.classList.remove('hidden');
-                        setTimeout(() => viewerPage.classList.remove('fade-out'), 10);
-                    }, 300);
+                    showViewerPage();
 
                     viewerPage.addEventListener('mousemove', resetInactivityTimer);
                     viewerPage.addEventListener('scroll', resetInactivityTimer);
@@ -613,39 +610,77 @@
                 if (nextChapter) loadChapter(nextChapter.filename, nextChapter.number, nextChapter.name, null, 'next');
             }
         }
-        
-        function goBackToLanding(targetTab = 'about') {
-            viewerPage.classList.add('fade-out');
+
+        function showViewerPage() {
+            landingPage.classList.add('fade-out');
             setTimeout(() => {
-                viewerPage.classList.add('hidden');
-                landingPage.classList.remove('hidden');
-                landingPage.classList.remove('fade-out'); // Already visible
-                displayLandingPage(targetTab);
-                const storyTitle = document.getElementById('storyTitle').textContent;
-                history.pushState({ page: 'landing' }, storyTitle, window.location.pathname.split('?')[0]);
+                landingPage.classList.add('hidden');
+                landingPage.classList.remove('fade-out');
+                viewerPage.classList.remove('hidden');
+                viewerPage.classList.add('fade-out');
+                setTimeout(() => viewerPage.classList.remove('fade-out'), 10);
             }, 300);
         }
 
+        function showLandingPage(targetTab = 'chapters') {
+            viewerPage.classList.add('fade-out');
+            setTimeout(() => {
+                viewerPage.classList.add('hidden');
+                viewerPage.classList.remove('fade-out');
+                landingPage.classList.remove('hidden');
+                landingPage.classList.add('fade-out');
+                setTimeout(() => landingPage.classList.remove('fade-out'), 10);
+                openTab(targetTab);
+                filterChapters();
+            }, 300);
+        }
+        
+        function goBackToLanding(targetTab = 'about', updateHistory = true) {
+            showLandingPage(targetTab);
+            if (updateHistory) {
+                const storyTitle = document.getElementById('storyTitle').textContent || "Starfall Legacy";
+                history.pushState({ page: 'landing' }, storyTitle, window.location.pathname.split('?')[0]);
+            }
+        }
+
         window.addEventListener('popstate', (event) => {
+            // Ensure chapters are loaded before trying to navigate.
+            if (chaptersLoaded.length === 0) {
+                 setTimeout(() => window.dispatchEvent(new PopStateEvent('popstate', { state: event.state })), 100);
+                 return;
+            }
+
             if (event.state && event.state.page === 'viewer') {
                 const chapterToLoad = chaptersLoaded.find(c => c.number === event.state.chapter);
                 if (chapterToLoad) loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
             } else {
-                displayLandingPage();
+                showLandingPage('chapters');
             }
         });
 
         window.onload = () => {
-            displayLandingPage();
+            // Check for initial state on load
+            if (history.state && history.state.page === 'viewer') {
+                 // Don't do anything, let popstate handle it after chapters load.
+            } else {
+                history.replaceState({ page: 'landing' }, "Starfall Legacy", window.location.pathname.split('?')[0]);
+            }
+
+            displayLandingPage(); // This will also start loading chapters
             const urlParams = new URLSearchParams(window.location.search);
             const chapterParam = urlParams.get('chapter');
+
             if (chapterParam) {
                 const chapterNumber = parseInt(chapterParam);
                 if (!isNaN(chapterNumber)) {
                     const checkInterval = setInterval(() => {
                         if (chaptersLoaded.length > 0) {
                             const chapterToLoad = chaptersLoaded.find(c => c.number === chapterNumber);
-                            if (chapterToLoad) loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
+                            if (chapterToLoad) {
+                                loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
+                                // Correct the history state which was initially 'landing'
+                                history.replaceState({ page: 'viewer', chapter: chapterNumber }, `Chapter ${chapterNumber}`, `?chapter=${chapterNumber}`);
+                            }
                             clearInterval(checkInterval);
                         }
                     }, 50);
@@ -675,3 +710,4 @@
 
 </body>
 </html>
+
