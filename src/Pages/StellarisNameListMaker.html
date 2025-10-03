@@ -215,6 +215,31 @@
         #apiKeySection a {
             color: #4da6ff;
         }
+        .try-mode-banner {
+            background-color: #3a4a6a;
+            border: 1px solid #4da6ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .try-mode-banner p {
+            margin: 0 0 10px 0;
+            font-size: 1em;
+            color: #e0e0e0;
+        }
+        .try-mode-banner a {
+            font-weight: bold;
+            text-decoration: none;
+            background-color: #4da6ff;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .try-mode-banner a:hover {
+            background-color: #3b8bde;
+        }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -459,6 +484,10 @@
                 <div class="loading-spinner"></div>
             </div>
             <div id="apiKeySection" style="display: none;">
+                <div class="try-mode-banner">
+                    <p>Don't have an API Key?</p>
+                    <a href="https://g.co/gemini/share/b2265b29f8c9" target="_blank">Click here to "try it out" in Google's Gemini Canvas. </a>
+                </div>
                 <h3>API Key Required</h3>
                 <p>To use the AI generation feature outside of the original environment, you need to provide your own Google Gemini API Key.</p>
                 <label for="apiKeyInput">Gemini API Key</label>
