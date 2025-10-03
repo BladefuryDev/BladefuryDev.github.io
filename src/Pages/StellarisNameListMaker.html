@@ -500,18 +500,24 @@
         // --- AI Modal Logic ---
         const aiModal = document.getElementById('aiModal');
         document.getElementById('generateAiButton').addEventListener('click', () => {
-            // Check for API key when opening modal if outside original env
-            // This check determines if the app is running as a local file vs. a hosted environment.
-            if (window.location.protocol === 'file:') { 
-                 if (!userApiKey) {
+            // Enhanced environment detection.
+            // This check presumes that a "Canvas" environment will expose a global `google.generativeai` object.
+            // When this object is not present, the app will assume it's running on a standard website or locally.
+            const isCanvasEnvironment = typeof google !== 'undefined' && typeof google.generativeai !== 'undefined';
+
+            // If we are not in the special environment, a user-provided API key is required.
+            if (!isCanvasEnvironment) {
+                if (!userApiKey) {
+                    // If no key is stored, show the input section.
                     document.getElementById('apiKeySection').style.display = 'block';
                     document.getElementById('aiGenerateButton').disabled = true;
-                 } else {
+                } else {
+                    // If a key exists, we're good to go.
                     document.getElementById('apiKeySection').style.display = 'none';
                     document.getElementById('aiGenerateButton').disabled = false;
-                 }
+                }
             } else {
-                // If not a local file, assume environment provides the key.
+                // In the Canvas environment, assume the key is handled automatically.
                 document.getElementById('apiKeySection').style.display = 'none';
                 document.getElementById('aiGenerateButton').disabled = false;
             }
