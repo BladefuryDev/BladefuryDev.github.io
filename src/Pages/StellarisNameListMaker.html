@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellaris Name List Creator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #2a2a2a;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        h1, h2, h3 {
+            color: #4da6ff;
+            border-bottom: 2px solid #4da6ff;
+            padding-bottom: 10px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .section {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ccc;
+        }
+        input[type="text"], input[type="password"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background-color: #222;
+            color: #e0e0e0;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4da6ff;
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3b8bde;
+        }
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        .export-button {
+            background-color: #28a745; /* Green */
+        }
+        .export-button:hover {
+            background-color: #218838; /* Darker Green */
+        }
+        .tooltip {
+            font-size: 0.9em;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background-color: #2c2c2c;
+            border-left: 4px solid #4da6ff;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        .info-box code {
+            background-color: #1a1a1a;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #e0e0e0;
+        }
+        .checkbox-wrapper {
+            margin-top: 15px;
+        }
+        .checkbox-wrapper input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .checkbox-wrapper label {
+            display: inline-block;
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+        #rulerTitlesContainer input:disabled {
+            background-color: #282828;
+            color: #666;
+            cursor: not-allowed;
+        }
+        .toolbar {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .mode-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .mode-selector strong {
+            color: #ccc;
+        }
+        .mode-selector label {
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+        .mode-selector input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .bottom-export-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #888;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #2a2a2a;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        .modal-close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus {
+            color: #fff;
+        }
+        .modal-action-area {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4da6ff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        #apiKeySection {
+            border-top: 1px solid #555;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+        #apiKeySection a {
+            color: #4da6ff;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Stellaris Name List Creator</h1>
+
+        <div class="toolbar">
+            <div class="mode-selector">
+                <strong>Input Mode:</strong>
+                <div>
+                    <input type="radio" id="modeLine" name="inputMode" value="line" checked>
+                    <label for="modeLine">Per Line</label>
+                </div>
+                <div>
+                    <input type="radio" id="modeComma" name="inputMode" value="comma">
+                    <label for="modeComma">Comma</label>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="generateAiButton">✨ Generate with AI</button>
+                <button id="loadSampleButton">Load Sample Data</button>
+                <button class="export-button">Export as ZIP</button>
+            </div>
+        </div>
+
+        <!-- Main form content remains the same -->
+        <div class="section">
+            <h2>General Settings</h2>
+            <label for="nameListId">Name List ID (e.g., L33T1)</label>
+            <input type="text" id="nameListId" value="MYLIST1">
+            <div class="tooltip">Internal ID for the list. Must be unique.</div>
+
+            <label for="alias">Alias (In-game Display Name)</label>
+            <input type="text" id="alias" value="My Custom List">
+            <div class="tooltip">How the name list will appear in the game menu.</div>
+
+            <label for="category">Category</label>
+            <select id="category">
+                <option value="Humanoid">Humanoid</option>
+                <option value="Machine">Machine</option>
+                <option value="Fungoid">Fungoid</option>
+                <option value="Molluscoid">Molluscoid</option>
+                <option value="Plantoid">Plantoid</option>
+                <option value="Reptilian">Reptilian</option>
+                <option value="Avian">Avian</option>
+                <option value="Arthropoid">Arthropoid</option>
+                <option value="Mammalian">Mammalian</option>
+                <option value="Necroid">Necroid</option>
+                <option value="Lithoid">Lithoid</option>
+                <option value="Aquatic">Aquatic</option>
+                <option value="Toxoid">Toxoid</option>
+            </select>
+            
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="shouldNamePlanets" checked>
+                <label for="shouldNamePlanets">Name Home System Planets</label>
+                <div class="tooltip">If checked, the game will use this list to name planets in the starting system.</div>
+            </div>
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="randomized">
+                <label for="randomized">Use Randomized Character Names</label>
+                <div class="tooltip">If checked, the game generates random names from first/second name lists instead of using the predefined full names.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Ship Names</h2>
+            <div class="tooltip input-mode-tooltip">Enter one name per line for each category.</div>
+            <div class="grid-container">
+                <div><label for="ship_generic">Generic</label><textarea id="ship_generic"></textarea></div>
+                <div><label for="ship_corvette">Corvette</label><textarea id="ship_corvette"></textarea></div>
+                <div><label for="ship_destroyer">Destroyer</label><textarea id="ship_destroyer"></textarea></div>
+                <div><label for="ship_cruiser">Cruiser</label><textarea id="ship_cruiser"></textarea></div>
+                <div><label for="ship_battleship">Battleship</label><textarea id="ship_battleship"></textarea></div>
+                <div><label for="ship_titan">Titan</label><textarea id="ship_titan"></textarea></div>
+                <div><label for="ship_colossus">Colossus</label><textarea id="ship_colossus"></textarea></div>
+                <div><label for="ship_science">Science</label><textarea id="ship_science"></textarea></div>
+                <div><label for="ship_constructor">Constructor</label><textarea id="ship_constructor"></textarea></div>
+                <div><label for="ship_colonizer">Colonizer</label><textarea id="ship_colonizer"></textarea></div>
+                <div><label for="ship_transport">Transport</label><textarea id="ship_transport"></textarea></div>
+                <div><label for="ship_military_station_small">Military Station</label><textarea id="ship_military_station_small"></textarea></div>
+                <div><label for="ship_ion_cannon">Ion Cannon</label><textarea id="ship_ion_cannon"></textarea></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Fleet & Army Names (Sequential)</h2>
+            <div class="info-box">
+                <strong>Sequential Name Tip:</strong><br>
+                For Fleet and Army names, you can use special codes to generate sequences. This only works when using the localization file method, which this tool does automatically.<br>
+                - <code>$C$</code>: Cardinal numbers (1, 2, 3...)<br>
+                - <code>$ORD$</code>: Ordinal numbers (1st, 2nd, 3rd...)<br>
+                - <code>$R$</code>: Roman numerals (I, II, III...)<br>
+                - <code>$HEX$</code>: Hexadecimal numbers (001, 002, 003...)
+            </div>
+            <div class="grid-container">
+                <div>
+                    <label for="fleet_random">Random Fleet Names</label>
+                    <div class="tooltip input-mode-tooltip">One per line.</div>
+                    <textarea id="fleet_random"></textarea>
+               </div>
+               <div>
+                    <label for="fleet_sequential">Sequential Fleet Name</label>
+                    <div class="tooltip">Use $ORD$ for ordinal numbers (e.g., $ORD$ Fleet becomes 1st Fleet, 2nd Fleet...).</div>
+                    <input type="text" id="fleet_sequential" value="$ORD$ Fleet">
+               </div>
+            </div>
+             <div class="grid-container">
+                <div><label for="army_defense">Defense Army</label><input type="text" id="army_defense" value="$ORD$ Defense Army"></div>
+                <div><label for="army_assault">Assault Army</label><input type="text" id="army_assault" value="$ORD$ Assault Army"></div>
+                <div><label for="army_slave">Slave Army</label><input type="text" id="army_slave" value="$ORD$ Slave Army"></div>
+                <div><label for="army_clone">Clone Army</label><input type="text" id="army_clone" value="$ORD$ Clone Army"></div>
+                <div><label for="army_robotic">Robotic Army</label><input type="text" id="army_robotic" value="$ORD$ Robotic Army"></div>
+                <div><label for="army_robotic_defense">Robotic Defense</label><input type="text" id="army_robotic_defense" value="$ORD$ Robotic Defense"></div>
+                <div><label for="army_android_defense">Android Defense</label><input type="text" id="army_android_defense" value="$ORD$ Android Defense"></div>
+                <div><label for="army_psionic">Psionic Army</label><input type="text" id="army_psionic" value="$ORD$ Psionic Army"></div>
+                <div><label for="army_xenomorph">Xenomorph Army</label><input type="text" id="army_xenomorph" value="$ORD$ Xenomorph Army"></div>
+                <div><label for="army_gene_warrior">Gene Warrior Army</label><input type="text" id="army_gene_warrior" value="$ORD$ Gene Warrior Army"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Planet Names</h2>
+            <div class="tooltip input-mode-tooltip">Enter one name per line.</div>
+            <div class="grid-container">
+                <div><label for="planet_generic">Generic</label><textarea id="planet_generic"></textarea></div>
+                <div><label for="planet_pc_arid">Arid</label><textarea id="planet_pc_arid"></textarea></div>
+                <div><label for="planet_pc_desert">Desert</label><textarea id="planet_pc_desert"></textarea></div>
+                <div><label for="planet_pc_savanna">Savanna</label><textarea id="planet_pc_savanna"></textarea></div>
+                <div><label for="planet_pc_alpine">Alpine</label><textarea id="planet_pc_alpine"></textarea></div>
+                <div><label for="planet_pc_arctic">Arctic</label><textarea id="planet_pc_arctic"></textarea></div>
+                <div><label for="planet_pc_tundra">Tundra</label><textarea id="planet_pc_tundra"></textarea></div>
+                <div><label for="planet_pc_continental">Continental</label><textarea id="planet_pc_continental"></textarea></div>
+                <div><label for="planet_pc_ocean">Ocean</label><textarea id="planet_pc_ocean"></textarea></div>
+                <div><label for="planet_pc_tropical">Tropical</label><textarea id="planet_pc_tropical"></textarea></div>
+                <div><label for="planet_pc_gaia">Gaia</label><textarea id="planet_pc_gaia"></textarea></div>
+                <div><label for="planet_pc_nuked">Nuked</label><textarea id="planet_pc_nuked"></textarea></div>
+            </div>
+
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="enableDlcPlanets">
+                <label for="enableDlcPlanets">Enable DLC Planet Names (Optional)</label>
+            </div>
+            <div id="dlcPlanetsContainer" class="grid-container" style="display: none; margin-top: 15px;">
+                <div><label for="planet_pc_relic">Relic World</label><textarea id="planet_pc_relic"></textarea></div>
+                <div><label for="planet_pc_hive">Hive World</label><textarea id="planet_pc_hive"></textarea></div>
+                <div><label for="planet_pc_machine">Machine World</label><textarea id="planet_pc_machine"></textarea></div>
+                <div><label for="planet_pc_infested">Infested World</label><textarea id="planet_pc_infested"></textarea></div>
+                <div><label for="planet_pc_ringworld_habitable">Ring World</label><textarea id="planet_pc_ringworld_habitable"></textarea></div>
+                <div><label for="planet_pc_shattered_ring_habitable">Shattered Ring</label><textarea id="planet_pc_shattered_ring_habitable"></textarea></div>
+                <div><label for="planet_pc_toxic">Toxic World</label><textarea id="planet_pc_toxic"></textarea></div>
+                <div><label for="planet_pc_city">City World</label><textarea id="planet_pc_city"></textarea></div>
+            </div>
+
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="enableNaturalPlanets">
+                <label for="enableNaturalPlanets">Enable Natural Planet Names (Optional)</label>
+            </div>
+            <div id="naturalPlanetsContainer" class="grid-container" style="display: none; margin-top: 15px;">
+                <div><label for="planet_pc_asteroid">Asteroid</label><textarea id="planet_pc_asteroid"></textarea></div>
+                <div><label for="planet_pc_ice_asteroid">Ice Asteroid</label><textarea id="planet_pc_ice_asteroid"></textarea></div>
+                <div><label for="planet_pc_gas_giant">Gas Giant</label><textarea id="planet_pc_gas_giant"></textarea></div>
+                <div><label for="planet_pc_molten">Molten</label><textarea id="planet_pc_molten"></textarea></div>
+                <div><label for="planet_pc_barren">Barren</label><textarea id="planet_pc_barren"></textarea></div>
+                <div><label for="planet_pc_frozen">Frozen</label><textarea id="planet_pc_frozen"></textarea></div>
+                <div><label for="planet_pc_shrouded">Shrouded</label><textarea id="planet_pc_shrouded"></textarea></div>
+                <div><label for="planet_pc_broken">Broken</label><textarea id="planet_pc_broken"></textarea></div>
+                <div><label for="planet_pc_shattered">Shattered</label><textarea id="planet_pc_shattered"></textarea></div>
+                <div><label for="planet_pc_shattered_2">Shattered 2</label><textarea id="planet_pc_shattered_2"></textarea></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Character Names</h2>
+            <div class="tooltip input-mode-tooltip">Enter one name per line.</div>
+            <div class="grid-container">
+                <div><label for="char_full_names">Full Names</label><textarea id="char_full_names"></textarea></div>
+                <div><label for="char_first_names">First Names (Generic)</label><textarea id="char_first_names"></textarea></div>
+                <div><label for="char_first_names_male">First Names (Male)</label><textarea id="char_first_names_male"></textarea></div>
+                <div><label for="char_first_names_female">First Names (Female)</label><textarea id="char_first_names_female"></textarea></div>
+                <div><label for="char_second_names">Second Names</label><textarea id="char_second_names"></textarea></div>
+            </div>
+
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="enableRulerTitles">
+                <label for="enableRulerTitles">Enable Ruler/Heir Titles (Optional)</label>
+            </div>
+            <div id="rulerTitlesContainer" class="grid-container" style="margin-top: 15px;">
+                <div><label for="char_ruler_title">Ruler Title (Male)</label><input type="text" id="char_ruler_title" value="Darth" disabled></div>
+                <div><label for="char_heir_title">Heir Title (Male)</label><input type="text" id="char_heir_title" value="Apprentice" disabled></div>
+                <div><label for="char_ruler_title_female">Ruler Title (Female)</label><input type="text" id="char_ruler_title_female" value="Darth" disabled></div>
+                <div><label for="char_heir_title_female">Heir Title (Female)</label><input type="text" id="char_heir_title_female" value="Apprentice" disabled></div>
+            </div>
+        </div>
+
+        <div class="bottom-export-section">
+            <button class="export-button">Export as ZIP</button>
+        </div>
+
+        <footer>
+            <p>This tool generates the necessary .txt and .yml files for creating a custom name list mod for the game Stellaris.</p>
+            <p>Disclaimer: This web application was vibe-coded with Google Gemini.</p>
+        </footer>
+
+    </div>
+
+    <!-- AI Generation Modal -->
+    <div id="aiModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close-button">&times;</span>
+            <h2>Generate Name List with AI</h2>
+            <div class="section">
+                <label for="aiPrompt">Topic / Theme</label>
+                <input type="text" id="aiPrompt" placeholder="e.g., Cyberpunk Corporations, Ancient Roman Legions...">
+                
+                <label for="aiNumEntries">Number of Names per Category</label>
+                <input type="number" id="aiNumEntries" value="15" min="5" max="30">
+
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="aiIncludeDlc">
+                    <label for="aiIncludeDlc">Include DLC Planet Names</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="aiIncludeNatural">
+                    <label for="aiIncludeNatural">Include Natural Planet Names</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="aiIncludeRuler">
+                    <label for="aiIncludeRuler">Include Ruler/Heir Titles</label>
+                </div>
+            </div>
+            <div class="modal-action-area">
+                <button id="aiGenerateButton">Generate</button>
+            </div>
+            <div id="aiLoadingIndicator" style="display: none; margin-top: 15px;">
+                <p>Generating... this may take a moment.</p>
+                <div class="loading-spinner"></div>
+            </div>
+            <div id="apiKeySection" style="display: none;">
+                <h3>API Key Required</h3>
+                <p>To use the AI generation feature outside of the original environment, you need to provide your own Google Gemini API Key.</p>
+                <label for="apiKeyInput">Gemini API Key</label>
+                <input type="password" id="apiKeyInput" placeholder="Enter your API key">
+                <button id="saveApiKeyButton">Save Key</button>
+                <p class="tooltip">You can get a free key from <a href="https://aistudio.google.com/keys" target="_blank">Google AI Studio</a>. Your key is saved locally in your browser and is never sent to any server other than Google's.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let userApiKey = '';
+        
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
+        document.querySelectorAll('.export-button').forEach(button => {
+            button.addEventListener('click', exportFiles);
+        });
+        document.getElementById('loadSampleButton').addEventListener('click', loadSampleData);
+        document.querySelectorAll('input[name="inputMode"]').forEach(radio => {
+            radio.addEventListener('change', updateTooltips);
+        });
+        document.getElementById('enableRulerTitles').addEventListener('change', function() {
+            const isChecked = this.checked;
+            document.getElementById('char_ruler_title').disabled = !isChecked;
+            document.getElementById('char_heir_title').disabled = !isChecked;
+            document.getElementById('char_ruler_title_female').disabled = !isChecked;
+            document.getElementById('char_heir_title_female').disabled = !isChecked;
+        });
+        document.getElementById('enableDlcPlanets').addEventListener('change', function() {
+            document.getElementById('dlcPlanetsContainer').style.display = this.checked ? 'grid' : 'none';
+        });
+        document.getElementById('enableNaturalPlanets').addEventListener('change', function() {
+            document.getElementById('naturalPlanetsContainer').style.display = this.checked ? 'grid' : 'none';
+        });
+
+        // --- AI Modal Logic ---
+        const aiModal = document.getElementById('aiModal');
+        document.getElementById('generateAiButton').addEventListener('click', () => {
+            // Check for API key when opening modal if outside original env
+            // This check determines if the app is running as a local file vs. a hosted environment.
+            if (window.location.protocol === 'file:') { 
+                 if (!userApiKey) {
+                    document.getElementById('apiKeySection').style.display = 'block';
+                    document.getElementById('aiGenerateButton').disabled = true;
+                 } else {
+                    document.getElementById('apiKeySection').style.display = 'none';
+                    document.getElementById('aiGenerateButton').disabled = false;
+                 }
+            } else {
+                // If not a local file, assume environment provides the key.
+                document.getElementById('apiKeySection').style.display = 'none';
+                document.getElementById('aiGenerateButton').disabled = false;
+            }
+            aiModal.style.display = 'flex';
+        });
+        aiModal.querySelector('.modal-close-button').addEventListener('click', () => {
+            aiModal.style.display = 'none';
+        });
+        window.addEventListener('click', (event) => {
+            if (event.target == aiModal) {
+                aiModal.style.display = 'none';
+            }
+        });
+        document.getElementById('aiGenerateButton').addEventListener('click', handleGenerationRequest);
+        document.getElementById('saveApiKeyButton').addEventListener('click', saveApiKey);
+
+
+        // --- Core Functions ---
+        function initializeApp() {
+            userApiKey = localStorage.getItem('geminiApiKey') || '';
+            if (userApiKey) {
+                document.getElementById('apiKeyInput').value = userApiKey;
+            }
+            updateTooltips();
+        }
+
+        function saveApiKey() {
+            const newKey = document.getElementById('apiKeyInput').value.trim();
+            if(newKey) {
+                localStorage.setItem('geminiApiKey', newKey);
+                userApiKey = newKey;
+                alert('API Key saved successfully!');
+                document.getElementById('apiKeySection').style.display = 'none';
+                document.getElementById('aiGenerateButton').disabled = false;
+            } else {
+                alert('Please enter a valid API Key.');
+            }
+        }
+
+        function updateTooltips() {
+            const mode = document.querySelector('input[name="inputMode"]:checked').value;
+            const text = mode === 'comma' 
+                ? 'Enter names separated by commas.' 
+                : 'Enter one name per line.';
+            
+            document.querySelectorAll('.input-mode-tooltip').forEach(tooltip => {
+                tooltip.textContent = text;
+            });
+        }
+        function getVal(id) {
+            return document.getElementById(id).value;
+        }
+        function setVal(id, value) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.value = value;
+            }
+        }
+        function formatNames(input) {
+            if (!input.trim()) return '';
+            const mode = document.querySelector('input[name="inputMode"]:checked').value;
+            const separator = mode === 'comma' ? ',' : '\n';
+            
+            return input.trim().split(separator).filter(name => name.trim() !== '').map(name => `"${name.trim()}"`).join(' ');
+        }
+        const sampleData = {
+            "nameListId": "L33T1", "alias": "L33T", "category": "Machine",
+            "ship_generic": ["Glitch Ship", "The Lag Spike", "Admin's Wrath", "Mod's Hammer", "Unbannable", "Permanent Record", "The Blue Screen", "404 Not Found", "Server Crasher", "The Final Boss", "Easter Egg", "Dev Tool", "RNGesus's Blessing", "Plot Armor", "The Meta"], "ship_corvette": ["Corv4saur", "PwnCorv", "NoobHunter", "Rektify", "Jebaited", "GGship", "UwUCry", "LolVette", "EpikCruis", "BeegNoob", "133T_Star", "H4x0r", "NoScope"], "ship_destroyer": ["EpikBoom", "BigBang", "DestroyLol", "KekDestroyer", "BoomerBot", "Memeripper", "CringeCannon", "EpicWin", "Pwnage", "D00mLaser", "KeKbot"], "ship_cruiser": ["CringeCruisr", "MemeCruiser", "UwUMover", "1337Power", "BigBoyShip", "FlexCruiser", "KeKWin", "PowerMover", "Memetron", "UwUCruiser", "BasedChad"], "ship_battleship": ["BattleRekt", "Memeforce", "GGFire", "PowerMemes", "UwUFleet", "LolzCanon", "1337Force", "RoflCopter", "Lolzor", "BBQSauce", "CoomShip"], "ship_titan": ["UwUMega", "1337_Master", "EpicTitan", "BigLol", "Dominator", "Mecha1337", "MegaPwn", "UberShip", "420BlazeIt", "UwUTitan", "Omegalul"], "ship_colossus": ["UwUltima", "DestroyXD", "BigRekt", "DankVoid", "Omegalol", "GGDestroy", "UltraUwU", "BoomStar", "EpicFail", "DingDong"], "ship_science": ["BigBrain", "UwUThink", "Memebrain", "RektResearch", "KnowItAll", "KekBot", "DataUwU", "KnowledgeBase"], "ship_constructor": ["Nyanforge", "Buildzor", "LeetBuilder", "FixItUp", "CraftingUwU", "StructureBot", "MechBuilder", "EpicForge"], "ship_colonizer": ["Memeland", "UwUtopia", "1337_Haven", "LolzoPlacer", "SettleEZ", "NewDankCity", "RektSettlement", "HomeSweatHome"], "ship_transport": ["Yeet Fleet", "Clown Car", "AFK Freighter", "Noob Mover", "Salty Hauler"], "ship_military_station_small": ["Pew Pew Point", "Noob Trap", "AFK Sentry", "Camp Fortress", "Salty Spire"], "ship_ion_cannon": ["BFG 9000", "Yeet Cannon", "Delete Button", "GGEZ Gun", "Oneshot Wonder"], "fleet_random": ["UwUFleet", "NoobDestroyers", "1337Squad", "DankForce", "Memers", "RektForce", "CringeNavy", "EpicRaiders"],
+            "planet_generic": ["PwnEarth", "UwULand", "Rektopia", "KeKWorld", "DankPrime", "1337Haven", "EpicSphere", "Lolverse", "GGWorld", "BasedStar", "CoomPlanet", "MemeStation", "UwUSky", "KeKland", "Pogtopia"], "planet_pc_arid": ["DryUwU", "DustKeK", "AridLOL", "NoRainLand", "PwnedDesert", "UwUFlats", "HeatZone", "KeKSands", "MemeDrought", "UwUDry", "LOLscorch", "GGHot", "Omegarid", "BasedArid", "UwUHeaven"], "planet_pc_desert": ["DankDunes", "LOLDesert", "HotZone", "UwUScorch", "Memesands", "KeKDust", "SunburnLand", "H4tZone", "EpicHeat", "GGDesert", "UwUSands", "BoomSahara", "1337Wasteland", "LOLheat", "UwUtopia", "1v1Rust"], "planet_pc_savanna": ["GrassUwU", "SavannahLOL", "KeKWilds", "GreenlandUwU", "RektPasture", "BigGrassy", "Memeland", "KeKSavannah", "UwULawn", "PogForest", "GGJungle", "CringeSavanna", "UwUGlades", "Memesavanna", "BasedJungle"], "planet_pc_alpine": ["Mount UwU", "Pog Peak", "Kekspire", "LOLy Mountains", "Cringe Crest", "Based Summit", "Chadheim", "GMount", "1337 Alp", "AFK Mountain", "BRB Ridge", "Noob Peak", "GitGud Glacier", "Salty Summit", "RageQuit Ridge"], "planet_pc_arctic": ["Frozen Meme", "Icey UwU", "Glacier GG", "Cold AFK", "Sub-Zero Pog", "Arctic LOL", "Kekfrost", "Salty Iceberg", "BRB Blizzard", "Chilly Chad", "Based Berg", "Noob North", "Frosty Pwn", "Rekt Icecap", "Cryo Cringe"], "planet_pc_tundra": ["Tundruh", "Permapog", "KeKfrost Plains", "Salty Steppe", "Chillax Tundra", "AFK Wastes", "LOLy Plains", "Cringe Coldlands", "Based Barrens", "GitGud Taiga", "Noob tundra", "BRB Barrens", "Rekt Tundra", "UwU Wastes", "Frozen Pog"], "planet_pc_continental": ["Pog Plains", "Continent of KeK", "Based Fields", "Chadlands", "UwU Fields", "Salty Shores", "AFK Acres", "BRB Biome", "LOL Lands", "Cringe Country", "GitGud Greens", "Rekt Realm", "Newb Nation", "Meme Meadows", "Green GG"], "planet_pc_ocean": ["DeepUwU", "SeaLOL", "MemeOcean", "KekTides", "WaveUwU", "1337Deep", "EpicSea", "DankWaters", "UwUIsles", "GGDepths", "WetMemes", "LOLCoast", "KeKTide", "CringeOcean", "UwUShore"], "planet_pc_tropical": ["TropUwU", "LOLIsland", "PalmKeK", "GGJungle", "GreenUwU", "DankTropics", "EpicPalm", "LOLforest", "UwUJungle", "MemeForest", "PogTropics", "KeKIsles", "UwUIsland", "UwUBeach", "BigForest"], "planet_pc_gaia": ["Perfectly Pog", "Garden of UwU", "KeKtopia", "Based Paradise", "Chad's Eden", "Gamer's Garden", "Salty Sanctuary", "AFK Arcadia", "BRB Bliss", "Cringe Cradle", "LOLympus", "GitGud Garden", "Rekt Resort", "Noob Nirvana", "GG Gaia"], "planet_pc_nuked": ["Nuked Noobs", "Fallout LOL", "Rekt Wasteland", "Salty Scraps", "AFK Ashlands", "BRB Blastzone", "Cringe Crater", "Based Barrens", "GGEZ Ground Zero", "KeKontamination", "UwU Wasteland", "GitGud Ground", "Pwned Plains", "Radioactive Rage", "Toxic Teammate"],
+            "planet_pc_relic": ["Old Meme Museum", "GeoCities", "Angelfire Archive", "Dial-Up Domain", "Win95 World", "Ancient Internet", "Forgotten Forum", "Ask Jeeves Junction", "SpaceHey Sanctuary", "MSN Messenger Moon", "Homestar Homeworld", "Flash Player's Fall", "AOL Acropolis", "YTMND Yard", "Napster Nebula"], "planet_pc_hive": ["The Twitch Chat", "Reddit Hive", "4chan Abyss", "The Swarm Server", "Discord Den", "United Ummah", "E-Girl Empire", "Simp Sphere", "The Collective Consciousness", "Echo Chamber", "Stan Star", "Cancel Culture Colony", "The Borg Collective But Memes", "We Are Legion", "Anonymous Asylum"], "planet_pc_machine": ["The Mainframe", "Cybertronk", "127.0.0.1", "Skynet Sanctuary", "BotNet Central", "The Server Farm", "Silicon Sphere", "AI Acropolis", "The Grid", "Automation Station", "Big Data Base", "Cloudflare Core", "Gigabyte Garden", "Terabyte Territory", "Petabyte Planet"], "planet_pc_infested": ["Zalgo's Zone", "Creepypasta Cradle", "The Glitch", "Virus Vault", "Malware Moon", "Trojan Territory", "Spyware Sphere", "Ransomware Realm", "Adware Abyss", "Corrupted Data Core", "Blue Screen Planet", "Kernel Panic Point", "Fork Bomb Fiefdom", "Spaghetti Code Sphere", "Bug Bounty"], "planet_pc_ringworld_habitable": ["OP O-Ring", "Halo Heaven", "Ring of Pwnage", "Giga Ring", "The Donut of Destiny", "Loop of Legends", "Orbital of Opulence", "Ring of Power Gamers", "Big O-Zone", "Round Realm", "Infinite Loop", "Toroidal Territory", "The Hula Hoop", "God Tier Ring", "Meta Megastructure"], "planet_pc_shattered_ring_habitable": ["Shattered Skypeia", "Broken Build", "RageQuit Ring", "Fragmented Forum", "The Lag Ring", "Early Access Alpha", "Incomplete Install", "Corrupted Save", "Patch Pending", "Devs Do Something", "Vaporware Vista", "Dead Game Domain", "Dropped Connection", "Packet Loss Point", "Nerfed Nirvana"], "planet_pc_toxic": ["Salt Mine 76", "League of Legends Lobby", "Toxic Tundra", "Salty Spitoon", "Rage Realm", "The Flame War Fields", "Griefer's Garden", "Call of Duty Chat", "Salty Shores", "Tilted Towers 2.0", "GitGud Gulag", "Crybaby Crater", "The Downvote Depths", "Salty Sea", "Malding Meadows"], "planet_pc_city": ["Night City 2077", "Memeopolis", "Kekistan Kapital", "Los Santos 2.0", "Vice City Vista", "Cyberpunk Citadel", "Dystopian District", "Corpo Plaza Prime", "Arcology of Anarchy", "Gamer Ghetto", "The Sprawl", "Neo-Kyoto", "Megacity One", "The Grid City", "SimCity Supreme"],
+            "planet_pc_asteroid": ["AFK Rock", "Salty Space Potato", "BRB Boulder", "Noob Nugget", "Pwnage Pebble", "Lag Spike Stone", "GGEZ Gravel"], "planet_pc_ice_asteroid": ["Frozen AFK Rock", "Salty Ice Cube", "BRB Comet", "Chilly Noob Nugget", "Frosty Pwnage Pebble", "Glacial GG", "Cryo Cringe Comet"], "planet_pc_gas_giant": ["Gas Cloud of GG", "Vaporwave Vista", "The Big Fart", "Jupiter 2.0 But Pog", "Nebula of Noobs", "Atmosphere of AFK", "Pogchamp Planetoid"], "planet_pc_molten": ["LavaLOL", "Melted Meme", "Hot Pocket Planet", "The Floor is Lava", "RageQuit Rock", "Salty Slag", "Magma Chad"], "planet_pc_barren": ["Barren of Based", "Noob's Landing", "AFK Wasteland", "Empty Server", "404 Life Not Found", "Unpog Planet", "Cringe Crater"], "planet_pc_frozen": ["Frozen Solid Salty", "Cryo Cringe Planet", "Ice Ice Baby", "Sub-Zero Skill Issue", "Cold Shoulder World", "Absolute Zero Fun", "BRRRRRR World"], "planet_pc_shrouded": ["Mystery Meat Moon", "Redacted Rock", "Spoilers Spire", "It's a Secret", "Classified Celestial", "Censored Sphere", "DATA EXPUNGED"], "planet_pc_broken": ["Broken Build Planet", "Devs Pls Fix", "Early Access Rock", "It's Not a Bug It's a Feature", "404 Core", "Null Pointer Planet", "Segmentation Fault Sphere"], "planet_pc_shattered": ["Rage Smashed Rock", "Shattered Server", "Dropped Connection Debris", "Packet Loss Pieces", "Fragmented Files", "Lag Spike Shards", "Bad Ping Pieces"], "planet_pc_shattered_2": ["Rage Smashed Harder", "Server Crash Debris", "Blue Screen Bits", "Kernel Panic Pieces", "FAT32 Fragments", "Corrupted Save Chunks", "De-Synced Debris"],
+            "char_full_names": ["UwUKing", "1337Meme", "LOLCommander", "KeKMan", "DankLord", "UwUQueen", "CringeMaster", "RektStar", "LOLomancer", "1337Mage", "UwU Memer", "KeK Bot", "LOL Destroyer", "1337 Commander", "Dank Ruler", "Cringe Shatterer", "Rekt Walker", "Boom Mage", "GG Lander", "Pog Omancer"], "char_first_names": ["Glitch", "Lag", "Ping", "Bot", "Admin", "Mod", "Noob", "Pro", "Smurf", "Chad", "Karen", "Kyle", "Kevin", "Stacy", "Player1"], "char_first_names_male": ["Chad", "Kyle", "Kevin", "Todd", "Brad", "xX_Gamer_Xx", "SaltySteve", "RageRick", "AFKAdam", "BRBBrian", "PwnPaul", "NoobNick", "GitGudGreg", "BasedBen", "ModMike"], "char_first_names_female": ["Stacy", "Karen", "Becky", "Trixie", "SaltySally", "AFKAlice", "BRBBeth", "PwnPatty", "NoobNancy", "GGEZGeena", "BasedBella", "CringeCindy", "ModMolly", "UwU-chan", "eGirl"], "char_second_names": ["McLaggin", "VonGlitch", "The Noob", "ProGamer", "The Admin", "The Mod", "LeSmurf", "The Chad", "The Karen", "McRageQuit", "Saltypants", "AFKing", "BRBstein", "Pwnsauce", "TheBased"],
+        };
+        function loadSampleData() {
+            const mode = document.querySelector('input[name="inputMode"]:checked').value;
+            const separator = mode === 'comma' ? ', ' : '\n';
+            for (const key in sampleData) {
+                const value = sampleData[key];
+                if (Array.isArray(value)) {
+                    setVal(key, value.join(separator));
+                } else {
+                    setVal(key, value);
+                }
+            }
+            document.getElementById('randomized').checked = true;
+            document.getElementById('enableDlcPlanets').checked = true;
+            document.getElementById('dlcPlanetsContainer').style.display = 'grid';
+            document.getElementById('enableNaturalPlanets').checked = true;
+            document.getElementById('naturalPlanetsContainer').style.display = 'grid';
+        }
+
+        // --- AI Generation Logic ---
+        async function handleGenerationRequest() {
+            const generateButton = document.getElementById('aiGenerateButton');
+            const loadingIndicator = document.getElementById('aiLoadingIndicator');
+            
+            generateButton.disabled = true;
+            loadingIndicator.style.display = 'block';
+
+            const userPrompt = getVal('aiPrompt');
+            const numEntries = getVal('aiNumEntries');
+            const includeDlc = document.getElementById('aiIncludeDlc').checked;
+            const includeNatural = document.getElementById('aiIncludeNatural').checked;
+            const includeRuler = document.getElementById('aiIncludeRuler').checked;
+
+            try {
+                const generatedData = await callGeminiAPI(userPrompt, numEntries, { includeDlc, includeNatural, includeRuler });
+                if (generatedData) {
+                    populateFormWithGeneratedData(generatedData);
+                    aiModal.style.display = 'none';
+                } else {
+                    alert('Failed to generate name list. The model returned an empty or invalid response.');
+                }
+            } catch (error) {
+                console.error('Error generating name list:', error);
+                alert(`An error occurred: ${error.message}`);
+            } finally {
+                generateButton.disabled = false;
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        async function callGeminiAPI(prompt, count, options, retries = 3, delay = 1000) {
+            const apiKey = userApiKey || ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            // Define the JSON schema for the model's response
+            const stringArraySchema = { type: "ARRAY", items: { type: "STRING" } };
+            const stringSchema = { type: "STRING" };
+            let properties = {
+                "alias": { "type": "STRING", "description": "A short, thematic display name for the list." },
+                "ship_generic": stringArraySchema, "ship_corvette": stringArraySchema, "ship_destroyer": stringArraySchema, "ship_cruiser": stringArraySchema, "ship_battleship": stringArraySchema, "ship_titan": stringArraySchema, "ship_colossus": stringArraySchema, "ship_science": stringArraySchema, "ship_constructor": stringArraySchema, "ship_colonizer": stringArraySchema, "ship_transport": stringArraySchema, "ship_military_station_small": stringArraySchema, "ship_ion_cannon": stringArraySchema,
+                "fleet_random": stringArraySchema,
+                "planet_generic": stringArraySchema, "planet_pc_arid": stringArraySchema, "planet_pc_desert": stringArraySchema, "planet_pc_savanna": stringArraySchema, "planet_pc_alpine": stringArraySchema, "planet_pc_arctic": stringArraySchema, "planet_pc_tundra": stringArraySchema, "planet_pc_continental": stringArraySchema, "planet_pc_ocean": stringArraySchema, "planet_pc_tropical": stringArraySchema, "planet_pc_gaia": stringArraySchema, "planet_pc_nuked": stringArraySchema,
+                "char_full_names": stringArraySchema, "char_first_names": stringArraySchema, "char_first_names_male": stringArraySchema, "char_first_names_female": stringArraySchema, "char_second_names": stringArraySchema,
+            };
+
+            if (options.includeDlc) {
+                Object.assign(properties, { "planet_pc_relic": stringArraySchema, "planet_pc_hive": stringArraySchema, "planet_pc_machine": stringArraySchema, "planet_pc_infested": stringArraySchema, "planet_pc_ringworld_habitable": stringArraySchema, "planet_pc_shattered_ring_habitable": stringArraySchema, "planet_pc_toxic": stringArraySchema, "planet_pc_city": stringArraySchema });
+            }
+            if (options.includeNatural) {
+                Object.assign(properties, { "planet_pc_asteroid": stringArraySchema, "planet_pc_ice_asteroid": stringArraySchema, "planet_pc_gas_giant": stringArraySchema, "planet_pc_molten": stringArraySchema, "planet_pc_barren": stringArraySchema, "planet_pc_frozen": stringArraySchema, "planet_pc_shrouded": stringArraySchema, "planet_pc_broken": stringArraySchema, "planet_pc_shattered": stringArraySchema, "planet_pc_shattered_2": stringArraySchema });
+            }
+            if (options.includeRuler) {
+                Object.assign(properties, { "char_ruler_title": { "type": "STRING" }, "char_heir_title": { "type": "STRING" }, "char_ruler_title_female": { "type": "STRING" }, "char_heir_title_female": { "type": "STRING" } });
+            }
+
+            const schema = { type: "OBJECT", properties };
+            
+            const combinedPrompt = `You are an assistant designed to generate creative name lists for the video game Stellaris. The user will provide a theme.
+You must generate a JSON object matching the provided schema with exactly ${count} unique, creative names for each list category.
+Ensure all names are thematic and appropriate for a sci-fi strategy game.
+
+Generate a Stellaris name list based on the theme: "${prompt}".`;
+
+            const payload = {
+                contents: [{ parts: [{ text: combinedPrompt }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: schema,
+                }
+            };
+            
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorBody = await response.text();
+                        console.error("API Error Body:", errorBody);
+                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text) {
+                        return JSON.parse(text);
+                    }
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed. Retrying in ${delay}ms...`, error);
+                    if (i < retries - 1) {
+                        await new Promise(res => setTimeout(res, delay));
+                        delay *= 2; // Exponential backoff
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+            return null;
+        }
+
+        function populateFormWithGeneratedData(data) {
+            document.getElementById('modeLine').checked = true; // Set mode to line separated
+            updateTooltips();
+            const separator = '\n';
+
+            for (const key in data) {
+                const value = data[key];
+                if (key === 'alias') {
+                    setVal('alias', value);
+                    setVal('nameListId', value.replace(/\s+/g, '').toUpperCase().substring(0, 10));
+                } else if (Array.isArray(value)) {
+                    setVal(key, value.join(separator));
+                } else {
+                    setVal(key, value);
+                }
+            }
+            
+            // Handle optional sections
+            const optionalSections = {
+                dlc: ['planet_pc_relic', 'planet_pc_hive', 'planet_pc_machine', 'planet_pc_infested', 'planet_pc_ringworld_habitable', 'planet_pc_shattered_ring_habitable', 'planet_pc_toxic', 'planet_pc_city'],
+                natural: ['planet_pc_asteroid', 'planet_pc_ice_asteroid', 'planet_pc_gas_giant', 'planet_pc_molten', 'planet_pc_barren', 'planet_pc_frozen', 'planet_pc_shrouded', 'planet_pc_broken', 'planet_pc_shattered', 'planet_pc_shattered_2'],
+                ruler: ['char_ruler_title', 'char_heir_title', 'char_ruler_title_female', 'char_heir_title_female']
+            };
+
+            if (optionalSections.dlc.some(key => data[key] && data[key].length > 0)) {
+                document.getElementById('enableDlcPlanets').checked = true;
+                document.getElementById('dlcPlanetsContainer').style.display = 'grid';
+            }
+            if (optionalSections.natural.some(key => data[key] && data[key].length > 0)) {
+                document.getElementById('enableNaturalPlanets').checked = true;
+                document.getElementById('naturalPlanetsContainer').style.display = 'grid';
+            }
+            if (optionalSections.ruler.some(key => data[key] && data[key].length > 0)) {
+                document.getElementById('enableRulerTitles').checked = true;
+                document.getElementById('enableRulerTitles').dispatchEvent(new Event('change')); // Trigger event to enable fields
+            }
+        }
+
+
+        // --- File Generation and Export (generateTxtFileContent, generateYmlFileContent, exportFiles) ---
+        function generateTxtFileContent() {
+            const id = getVal('nameListId').toUpperCase();
+            const shouldNamePlanets = document.getElementById('shouldNamePlanets').checked ? 'yes' : 'no';
+            const isRandomized = document.getElementById('randomized').checked ? 'yes' : 'no';
+            
+            const shipNamesMap = {
+                'generic': formatNames(getVal('ship_generic')), 'corvette': formatNames(getVal('ship_corvette')), 'destroyer': formatNames(getVal('ship_destroyer')), 'cruiser': formatNames(getVal('ship_cruiser')), 'battleship': formatNames(getVal('ship_battleship')), 'titan': formatNames(getVal('ship_titan')), 'colossus': formatNames(getVal('ship_colossus')), 'science': formatNames(getVal('ship_science')), 'constructor': formatNames(getVal('ship_constructor')), 'colonizer': formatNames(getVal('ship_colonizer')), 'transport': formatNames(getVal('ship_transport')), 'military_station_small': formatNames(getVal('ship_military_station_small')), 'ion_cannon': formatNames(getVal('ship_ion_cannon')),
+            };
+            const planetNamesMap = {
+                'generic': formatNames(getVal('planet_generic')), 'pc_arid': formatNames(getVal('planet_pc_arid')), 'pc_desert': formatNames(getVal('planet_pc_desert')), 'pc_savanna': formatNames(getVal('planet_pc_savanna')), 'pc_alpine': formatNames(getVal('planet_pc_alpine')), 'pc_arctic': formatNames(getVal('planet_pc_arctic')), 'pc_tundra': formatNames(getVal('planet_pc_tundra')), 'pc_continental': formatNames(getVal('planet_pc_continental')), 'pc_ocean': formatNames(getVal('planet_pc_ocean')), 'pc_tropical': formatNames(getVal('planet_pc_tropical')), 'pc_gaia': formatNames(getVal('planet_pc_gaia')), 'pc_nuked': formatNames(getVal('planet_pc_nuked')),
+            };
+            const characterNamesMap = {
+                'full_names': formatNames(getVal('char_full_names')), 'first_names': formatNames(getVal('char_first_names')), 'first_names_male': formatNames(getVal('char_first_names_male')), 'first_names_female': formatNames(getVal('char_first_names_female')), 'second_names': formatNames(getVal('char_second_names')),
+            };
+            
+            let shipNamesContent = Object.entries(shipNamesMap).filter(([, value]) => value.trim() !== '').map(([key, value]) => `\t\t${key} = {\n\t\t\t${value}\n\t\t}`).join('\n');
+            let planetNamesContent = Object.entries(planetNamesMap).filter(([, value]) => value.trim() !== '').map(([key, value]) => `\t\t${key} = {\n\t\t\tnames = { ${value} }\n\t\t}`).join('\n');
+
+            if (document.getElementById('enableDlcPlanets').checked) {
+                const dlcPlanetNamesMap = {
+                    'pc_relic': formatNames(getVal('planet_pc_relic')), 'pc_hive': formatNames(getVal('planet_pc_hive')), 'pc_machine': formatNames(getVal('planet_pc_machine')), 'pc_infested': formatNames(getVal('planet_pc_infested')), 'pc_ringworld_habitable': formatNames(getVal('planet_pc_ringworld_habitable')), 'pc_shattered_ring_habitable': formatNames(getVal('planet_pc_shattered_ring_habitable')), 'pc_toxic': formatNames(getVal('planet_pc_toxic')), 'pc_city': formatNames(getVal('planet_pc_city')),
+                };
+                let dlcPlanetNamesContent = Object.entries(dlcPlanetNamesMap).filter(([, value]) => value.trim() !== '').map(([key, value]) => `\t\t${key} = {\n\t\t\tnames = { ${value} }\n\t\t}`).join('\n');
+                if (planetNamesContent.trim() !== '' && dlcPlanetNamesContent.trim() !== '') {
+                    planetNamesContent += '\n' + dlcPlanetNamesContent;
+                } else {
+                    planetNamesContent = dlcPlanetNamesContent;
+                }
+            }
+            
+            if (document.getElementById('enableNaturalPlanets').checked) {
+                const naturalPlanetNamesMap = {
+                    'pc_asteroid': formatNames(getVal('planet_pc_asteroid')), 'pc_ice_asteroid': formatNames(getVal('planet_pc_ice_asteroid')), 'pc_gas_giant': formatNames(getVal('planet_pc_gas_giant')), 'pc_molten': formatNames(getVal('planet_pc_molten')), 'pc_barren': formatNames(getVal('planet_pc_barren')), 'pc_frozen': formatNames(getVal('planet_pc_frozen')), 'pc_shrouded': formatNames(getVal('planet_pc_shrouded')), 'pc_broken': formatNames(getVal('planet_pc_broken')), 'pc_shattered': formatNames(getVal('planet_pc_shattered')), 'pc_shattered_2': formatNames(getVal('planet_pc_shattered_2')),
+                };
+                let naturalPlanetNamesContent = Object.entries(naturalPlanetNamesMap).filter(([, value]) => value.trim() !== '').map(([key, value]) => `\t\t${key} = {\n\t\t\tnames = { ${value} }\n\t\t}`).join('\n');
+                if (planetNamesContent.trim() !== '' && naturalPlanetNamesContent.trim() !== '') {
+                    planetNamesContent += '\n' + naturalPlanetNamesContent;
+                } else {
+                    planetNamesContent = naturalPlanetNamesContent;
+                }
+            }
+
+            let characterNamesContent = Object.entries(characterNamesMap).filter(([, value]) => value.trim() !== '').map(([key, value]) => `\t\t\t${key} = {\n\t\t\t\t${value}\n\t\t\t}`).join('\n');
+            let rulerTitlesContent = '';
+            if (document.getElementById('enableRulerTitles').checked) {
+                const rulerTitlesMap = {
+                    'ruler_title': getVal('char_ruler_title'), 'heir_title': getVal('char_heir_title'), 'ruler_title_female': getVal('char_ruler_title_female'), 'heir_title_female': getVal('char_heir_title_female'),
+                };
+                let formattedRulerTitles = Object.entries(rulerTitlesMap).filter(([, value]) => value.trim() !== '').map(([key, value]) => `\t\t\t${key} = "${value.trim()}"`).join('\n');
+                if (characterNamesContent.trim() !== '' && formattedRulerTitles.trim() !== '') {
+                    rulerTitlesContent = '\n' + formattedRulerTitles;
+                } else {
+                    rulerTitlesContent = formattedRulerTitles;
+                }
+            }
+
+            return `${id} = {\n\tcategory = "${getVal('category')}"\n\trandomized = ${isRandomized}\n\talias = "${getVal('alias')}"\n\tshould_name_home_system_planets = ${shouldNamePlanets}\n\n\tship_names = {\n${shipNamesContent}\n\t}\n\n\tship_class_names = {\n\t\tgeneric = {}\n\t}\n\n\tfleet_names = {\n\t\trandom_names = {\n\t\t\t${formatNames(getVal('fleet_random'))}\n\t\t}\n\t\tsequential_name = ${id}_FLEETNAMES\n\t}\n\n\tarmy_names = {\n\t\tdefense_army = { sequential_name = ${id}_DEFENCE }\n\t\tassault_army = { sequential_name = ${id}_ASSAULT }\n\t\tslave_army = { sequential_name = ${id}_SLAVE }\n\t\tclone_army = { sequential_name = ${id}_CLONE }\n\t\trobotic_army = { sequential_name = ${id}_ROBOT_ASS }\n\t\trobotic_defense_army = { sequential_name = ${id}_ROBOT_DEF }\n\t\tandroid_army = { sequential_name = ${id}_ROBOT_ASS }\n\t\tandroid_defense_army = { sequential_name = ${id}_ANDROID_DEF }\n\t\tpsionic_army = { sequential_name = ${id}_PSI }\n\t\txenomorph_army = { sequential_name = ${id}_XEN }\n\t\tgene_warrior_army = { sequential_name = ${id}_GEN }\n\t}\n\n\tplanet_names = {\n${planetNamesContent}\n\t}\n\n\tcharacter_names = {\n\t\tdefault = {\n${characterNamesContent}${rulerTitlesContent}\n\t\t}\n\t}\n}`;
+        }
+        function generateYmlFileContent() {
+            const id = getVal('nameListId').toUpperCase();
+            const alias = getVal('alias');
+            return `l_english:\n name_list_${id}:0 "${alias}"\n name_list_${id}_desc:0 " "\n ${id}_FLEETNAMES:0 "${getVal('fleet_sequential')}"\n ${id}_DEFENCE:0 "${getVal('army_defense')}"\n ${id}_ASSAULT:0 "${getVal('army_assault')}"\n ${id}_SLAVE:0 "${getVal('army_slave')}"\n ${id}_CLONE:0 "${getVal('army_clone')}"\n ${id}_ROBOT_ASS:0 "${getVal('army_robotic')}"\n ${id}_ROBOT_DEF:0 "${getVal('army_robotic_defense')}"\n ${id}_ANDROID_DEF:0 "${getVal('army_android_defense')}"\n ${id}_PSI:0 "${getVal('army_psionic')}"\n ${id}_XEN:0 "${getVal('army_xenomorph')}"\n ${id}_GEN:0 "${getVal('army_gene_warrior')}"\n`;
+        }
+        async function exportFiles() {
+            const nameListId = getVal('nameListId').trim() || 'namelist';
+            const txtFilename = `${nameListId}.txt`;
+            const ymlFilename = `${nameListId.toLowerCase()}_localization_l_english.yml`;
+            const bom = "\uFEFF";
+            const txtContent = generateTxtFileContent();
+            const ymlContent = generateYmlFileContent();
+            const readmeContent = `How to Install Your Custom Stellaris Name List\n-------------------------------------------------\n\n1. Locate your Stellaris installation directory. This is often in your Steam library folder.\n   Example: C:\\Program Files (x86)\\Steam\\steamapps\\common\\Stellaris\n\n2. Place the generated files into the correct subdirectories.\n\n   - Move the .txt file (${txtFilename}) to:\n     ...\\Stellaris\\common\\name_lists\\\n\n   - Move the .yml file (${ymlFilename}) to:\n     ...\\Stellaris\\localization\\english\\name_lists\\\n\n3. Launch Stellaris. Your new name list ("${getVal('alias')}") should now be available for selection when creating a new species.\n`;
+            const zip = new JSZip();
+            zip.file(txtFilename, bom + txtContent);
+            zip.file(ymlFilename, bom + ymlContent);
+            zip.file('Readme.txt', readmeContent);
+            const zipBlob = await zip.generateAsync({ type: "blob" });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(zipBlob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `${nameListId}_NameList.zip`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+    </script>
+</body>
+</html>
+
+
+
