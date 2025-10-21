@@ -447,6 +447,33 @@
             <button class="export-button">Export as ZIP</button>
         </div>
 
+        <div class="section" id="preview-import-section" style="margin-top: 20px;">
+            <h3 id="preview-toggle" style="cursor: pointer; user-select: none;">▶ Preview & Import/Export Raw Data</h3>
+            <div id="preview-content" style="display: none; margin-top: 15px;">
+                <div class="info-box">
+                    <p>Here you can preview the generated TXT and YML file contents, copy them to your clipboard, or import an existing name list file to populate the form.</p>
+                </div>
+                
+                <h4>Import Data</h4>
+                <label for="import-file-input">Import from .txt or .yml file:</label>
+                <input type="file" id="import-file-input" accept=".txt,.yml,.yaml" style="width: auto; margin-bottom: 20px;">
+                <p class="tooltip">Note: The importer is experimental and may not perfectly parse all name list formats, especially complex ones.</p>
+
+                <div class="grid-container">
+                    <div class="section">
+                        <h4>TXT Preview</h4>
+                        <button id="copy-txt-button">Copy TXT</button>
+                        <textarea id="txt-preview" readonly style="height: 300px; white-space: pre; overflow-wrap: normal; overflow-x: scroll;"></textarea>
+                    </div>
+                    <div class="section">
+                        <h4>YML Preview</h4>
+                        <button id="copy-yml-button">Copy YML</button>
+                        <textarea id="yml-preview" readonly style="height: 300px; white-space: pre; overflow-wrap: normal; overflow-x: scroll;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <p>This tool generates the necessary .txt and .yml files for creating a custom name list mod for the game Stellaris.</p>
             <p>Disclaimer: This web application was vibe-coded with Google Gemini.</p>
@@ -529,6 +556,92 @@
             document.getElementById('naturalPlanetsContainer').style.display = this.checked ? 'grid' : 'none';
         });
 
+        // --- Preview & Import Section ---
+        document.getElementById('preview-toggle').addEventListener('click', function() {
+            const content = document.getElementById('preview-content');
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                this.textContent = '▼ Preview & Import/Export Raw Data';
+                updatePreviews();
+            } else {
+                content.style.display = 'none';
+                this.textContent = '▶ Preview & Import/Export Raw Data';
+            }
+        });
+
+        document.getElementById('copy-txt-button').addEventListener('click', () => copyToClipboard('txt-preview'));
+        document.getElementById('copy-yml-button').addEventListener('click', () => copyToClipboard('yml-preview'));
+        document.getElementById('import-file-input').addEventListener('change', handleFileImport);
+
+
+        function updatePreviews() {
+            document.getElementById('txt-preview').value = generateTxtFileContent();
+            document.getElementById('yml-preview').value = generateYmlFileContent();
+        }
+
+        function copyToClipboard(elementId) {
+            const textarea = document.getElementById(elementId);
+            textarea.select();
+            document.execCommand('copy');
+            alert(elementId.split('-')[0].toUpperCase() + ' content copied to clipboard!');
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                try {
+                    if (file.name.endsWith('.txt')) {
+                        parseAndPopulateTxt(content);
+                    } else if (file.name.endsWith('.yml') || file.name.endsWith('.yaml')) {
+                        parseAndPopulateYml(content);
+                    }
+                    alert('File imported successfully! Please review the fields.');
+                } catch (error) {
+                    console.error("Import Error:", error);
+                    alert(`Failed to import file. The format may be unsupported or contain errors. (${error.message})`);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function parseAndPopulateTxt(content) {
+            // Basic parsing logic, can be expanded
+            const idMatch = content.match(/^(\w+)\s*=/);
+            if (idMatch) setVal('nameListId', idMatch[1]);
+
+            const aliasMatch = content.match(/alias\s*=\s*"([^"]+)"/);
+            if (aliasMatch) setVal('alias', aliasMatch[1]);
+            
+            const categoryMatch = content.match(/category\s*=\s*"([^"]+)"/);
+            if (categoryMatch) document.getElementById('category').value = categoryMatch[1];
+
+            // Example for a single textarea: ship_generic
+            const shipGenericMatch = content.match(/ship_names\s*=\s*{[^}]*?generic\s*=\s*{\s*([\s\S]*?)\s*}/);
+            if (shipGenericMatch) {
+                const names = shipGenericMatch[1].match(/"([^"]+)"/g).map(name => name.replace(/"/g, ''));
+                setVal('ship_generic', names.join('\n'));
+            }
+             // This is a simplified example. A full implementation would need to parse each block.
+        }
+
+        function parseAndPopulateYml(content) {
+            // YML parsing is more complex, this is a very basic example
+            const aliasMatch = content.match(/name_list_\w+:\d+\s*"([^"]+)"/);
+            if (aliasMatch) setVal('alias', aliasMatch[1]);
+
+            const fleetSeqMatch = content.match(/(\w+)_FLEETNAMES:\d+\s*"([^"]+)"/);
+            if (fleetSeqMatch) {
+                setVal('nameListId', fleetSeqMatch[1]);
+                setVal('fleet_sequential', fleetSeqMatch[2]);
+            }
+            // A full implementation would need a more robust YAML parser or more complex regex.
+        }
+
+
         // --- AI Modal Logic ---
         const aiModal = document.getElementById('aiModal');
         document.getElementById('generateAiButton').addEventListener('click', () => {
@@ -565,6 +678,30 @@
         });
         document.getElementById('aiGenerateButton').addEventListener('click', handleGenerationRequest);
         document.getElementById('saveApiKeyButton').addEventListener('click', saveApiKey);
+
+        // --- AI Input Validation ---
+        const aiPromptInput = document.getElementById('aiPrompt');
+        const aiNumEntriesInput = document.getElementById('aiNumEntries');
+        const aiGenerateButton = document.getElementById('aiGenerateButton');
+
+        function validateAiInputs() {
+            const prompt = aiPromptInput.value.trim();
+            const numEntries = parseInt(aiNumEntriesInput.value, 10);
+            const min = parseInt(aiNumEntriesInput.min, 10);
+            const max = parseInt(aiNumEntriesInput.max, 10);
+
+            const isPromptValid = prompt.length > 0;
+            const isNumValid = !isNaN(numEntries) && numEntries >= min && numEntries <= max;
+            
+            // Also consider the API key status for the button's state
+            const isCanvasEnvironment = typeof google !== 'undefined' && typeof google.generativeai !== 'undefined';
+            const isApiKeyReady = isCanvasEnvironment || userApiKey;
+
+            aiGenerateButton.disabled = !(isPromptValid && isNumValid && isApiKeyReady);
+        }
+
+        aiPromptInput.addEventListener('input', validateAiInputs);
+        aiNumEntriesInput.addEventListener('input', validateAiInputs);
 
 
         // --- Core Functions ---
@@ -660,15 +797,23 @@
                 if (generatedData) {
                     populateFormWithGeneratedData(generatedData);
                     aiModal.style.display = 'none';
-                } else {
-                    alert('Failed to generate name list. The model returned an empty or invalid response.');
                 }
             } catch (error) {
                 console.error('Error generating name list:', error);
-                alert(`An error occurred: ${error.message}`);
+                // Map HTTP status codes to user-friendly messages
+                let friendlyMessage = `An error occurred: ${error.message}`;
+                if (error.message.includes('status: 401') || error.message.includes('status: 403')) {
+                    friendlyMessage = "Authentication failed. Please check if your API Key is correct and has the necessary permissions.";
+                } else if (error.message.includes('status: 429')) {
+                    friendlyMessage = "The service is currently busy. Please wait a moment and try again.";
+                } else if (error.message.includes('status: 5')) {
+                    friendlyMessage = "The request was cancelled, likely due to a timeout. Please check your network connection and try again.";
+                }
+                alert(friendlyMessage);
             } finally {
                 generateButton.disabled = false;
                 loadingIndicator.style.display = 'none';
+                validateAiInputs(); // Re-validate to ensure button state is correct
             }
         }
 
@@ -730,15 +875,29 @@ Generate a Stellaris name list based on the theme: "${prompt}".`;
                     const result = await response.json();
                     const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (text) {
-                        return JSON.parse(text);
+                        const parsedJson = JSON.parse(text);
+                        // Validate the parsed JSON against the schema expectations
+                        const missingKeys = [];
+                        for (const key in properties) {
+                            if (properties[key].type === "ARRAY" && (!Array.isArray(parsedJson[key]) || parsedJson[key].length < count)) {
+                                missingKeys.push(key);
+                            } else if (properties[key].type === "STRING" && (typeof parsedJson[key] !== 'string' || parsedJson[key].trim() === '')) {
+                                 missingKeys.push(key);
+                            }
+                        }
+                        if (missingKeys.length > 0) {
+                            throw new Error(`Model response was incomplete. Missing or invalid entries for: ${missingKeys.join(', ')}. Please try generating again.`);
+                        }
+                        return parsedJson;
                     }
                 } catch (error) {
                     console.error(`Attempt ${i + 1} failed. Retrying in ${delay}ms...`, error);
                     if (i < retries - 1) {
-                        await new Promise(res => setTimeout(res, delay));
+                        const jitter = Math.random() * 500; // Add jitter to the delay
+                        await new Promise(res => setTimeout(res, delay + jitter));
                         delay *= 2; // Exponential backoff
                     } else {
-                        throw error;
+                        throw error; // Rethrow the last error
                     }
                 }
             }
