@@ -422,12 +422,20 @@
             const activeTabBtn = document.querySelector('.tab-btn.active');
             const activeContent = document.querySelector('.tab-content:not(.hidden)');
             
+            // Guard: ensure the requested tab exists, else fall back to 'about'
+            let nextContent = document.getElementById(`${tabName}Content`);
+            let nextTabBtn = document.getElementById(`${tabName}TabBtn`);
+            if (!nextContent || !nextTabBtn) {
+                console.warn(`Requested tab "${tabName}" not found. Falling back to 'about'.`);
+                tabName = 'about';
+                nextContent = document.getElementById('aboutContent');
+                nextTabBtn = document.getElementById('aboutTabBtn');
+            }
+
             if (activeTabBtn && activeTabBtn.id === `${tabName}TabBtn`) return;
 
-            const nextContent = document.getElementById(`${tabName}Content`);
-
             tabBtns.forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`${tabName}TabBtn`).classList.add('active');
+            if (nextTabBtn) nextTabBtn.classList.add('active');
             
             if (activeContent) {
                 activeContent.classList.add('fade-out');
@@ -724,7 +732,14 @@
             }, 300);
         }
 
-        function showLandingPage(targetTab = 'chapters') {
+        function showLandingPage(targetTab) {
+            // If targetTab isn't provided, derive it from the URL hash (e.g., #disclosuresContent) or fallback to 'chapters'
+            if (!targetTab) {
+                const hash = window.location.hash;
+                const match = hash ? hash.match(/^#(.+?)Content$/) : null;
+                targetTab = match ? match[1] : 'chapters';
+            }
+
             viewerPage.classList.add('fade-out');
             setTimeout(() => {
                 viewerPage.classList.add('hidden');
@@ -756,7 +771,8 @@
                 const chapterToLoad = chaptersLoaded.find(c => c.number === event.state.chapter);
                 if (chapterToLoad) loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
             } else {
-                showLandingPage('chapters');
+                // Let showLandingPage derive the appropriate tab (from hash or default) instead of forcing 'chapters'
+                showLandingPage();
             }
         });
 
@@ -768,7 +784,17 @@
                 history.replaceState({ page: 'landing' }, "Starfall Legacy", window.location.pathname.split('?')[0]);
             }
 
-            displayLandingPage(); // This will also start loading chapters
+            // If the page was opened with a hash that points to a specific tab (e.g., #disclosuresContent), use it as the initial tab
+            const hash = window.location.hash;
+            let initialLandingTab = 'about';
+            if (hash) {
+                const match = hash.match(/^#(.+?)Content$/);
+                if (match) {
+                    initialLandingTab = match[1];
+                }
+            }
+
+            displayLandingPage(initialLandingTab); // This will also start loading chapters
             const urlParams = new URLSearchParams(window.location.search);
             const chapterParam = urlParams.get('chapter');
 
@@ -789,15 +815,7 @@
                 }
             }
 
-            // If the page was opened with a hash that points to a specific tab's content (e.g., #disclosuresContent), show the landing page and open that tab.
-            const hash = window.location.hash;
-            if (hash) {
-                const match = hash.match(/^#(.+?)Content$/);
-                if (match) {
-                    const tabName = match[1];
-                    showLandingPage(tabName);
-                }
-            }
+            // Note: initial tab from the hash is handled above when calling displayLandingPage.
         };
 
         // Event Listeners for new UI
