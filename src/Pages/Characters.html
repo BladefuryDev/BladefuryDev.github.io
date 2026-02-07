@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex's Characters | Tome Tales Variants</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for the Intel Panel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.5);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.8);
+        }
+
+        /* AC7 Style Grid Background */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%); 
+        }
+
+        /* Animations */
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .animate-slide-in {
+            animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .scanline::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200 font-sans overflow-hidden h-screen selection:bg-cyan-500 selection:text-white transition-colors duration-700 ease-in-out" id="app-body">
+
+    <!-- Background Layers -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <!-- Dynamic Gradient -->
+        <div id="bg-gradient" class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 transition-colors duration-1000 opacity-80"></div>
+        <!-- Grid Overlay -->
+        <div class="absolute inset-0 bg-grid opacity-30"></div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="relative z-10 flex h-full max-w-7xl mx-auto p-0 md:p-6 lg:p-8">
+        
+        <!-- Mobile Header (Visible only on small screens) -->
+        <div class="md:hidden fixed top-0 left-0 w-full z-50 glass-panel p-4 flex justify-between items-center border-b border-white/10">
+            <h1 class="font-mono text-sm font-bold tracking-widest text-cyan-400">TOME TALES // INTEL</h1>
+            <button id="menu-toggle" class="text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <!-- Sidebar / Character List -->
+        <nav id="sidebar" class="fixed inset-0 z-40 bg-slate-900/95 transform -translate-x-full transition-transform duration-300 md:relative md:translate-x-0 md:bg-transparent md:w-1/3 lg:w-1/4 flex flex-col justify-center border-r border-white/10 md:border-none pt-16 md:pt-0">
+            
+            <div class="px-6 mb-8 hidden md:block">
+                <h1 class="font-mono text-xs uppercase tracking-[0.2em] text-slate-400 mb-1">Database // Iteration 84-Z</h1>
+                <h2 class="font-bold text-2xl md:text-3xl tracking-tighter text-white">HEX'S CHARACTERS</h2>
+                <div class="h-1 w-12 bg-cyan-500 mt-4"></div>
+            </div>
+
+            <ul class="space-y-2 px-4 md:px-0" id="character-list">
+                <!-- List items injected via JS -->
+            </ul>
+            
+            <div class="px-6 mt-auto mb-8 hidden md:block">
+                 <p class="font-mono text-[10px] text-slate-500">SECURE CONNECTION ESTABLISHED<br>ATLAS SERVER LINK: ACTIVE</p>
+            </div>
+            
+            <!-- Mobile Close Button -->
+            <button id="menu-close" class="absolute top-4 right-4 md:hidden text-slate-400">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </nav>
+
+        <!-- Content Area / Intel Sheet -->
+        <main class="flex-1 relative overflow-hidden flex flex-col pt-16 md:pt-0">
+            <!-- Loading Overlay -->
+            <div id="loading-overlay" class="absolute inset-0 z-30 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300 pointer-events-none opacity-0">
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-1 bg-cyan-500/50 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-cyan-400 w-1/2 animate-[slideInRight_1s_infinite]"></div>
+                    </div>
+                    <span class="font-mono text-xs text-cyan-400 mt-2 tracking-widest">DECRYPTING...</span>
+                </div>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div id="content-scroll" class="h-full overflow-y-auto pr-2 md:pl-8 scroll-smooth">
+                <div id="character-detail" class="max-w-4xl mx-auto pb-20 opacity-0 transition-opacity duration-500">
+                    <!-- Dynamic Content Injected Here -->
+                    <div class="flex items-center justify-center h-full text-slate-500 font-mono text-sm">
+                        SELECT A FILE TO VIEW
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript Data and Logic -->
+    <script>
+        // Character Data Database
+        const db = [
+            {
+                id: "hex",
+                name: "Hex the Riolu",
+                fullName: "Alan Hexfury",
+                role: "Iteration 84-Z | The Original",
+                theme: "blue", 
+                gradient: "from-blue-950 via-slate-900 to-cyan-950",
+                // ADD IMAGE LINK HERE vvv
+                imageSrc: "https://lh3.google.com/u/0/d/1iMZlzHkf8T2CDl1F2P3YnucPM19u2HBN=w1380-h947-iv1?auditContext=prefetch",
+                stats: {
+                    Gender: "Male",
+                    Age: "28",
+                    Pokemon: "Riolu",
+                    Ability: "Steadfast",
+                    Birthplace: "TS-WR-9X-0001 - // REDACTED //",
+                    Residence: "Explorers Haven - Landing Pad 1 - ATLAS"
+                },
+                affiliations: ["Golden Blaze Guild", "Paradigm Research Group", "The Heartz Foundation"],
+                imageAlt: "Hex the Riolu - Blue Riolu with tech gauntlet and tablet",
+                bio: [
+                    "Hex wasn’t born of this world, nor any world native to the Pokémon Mystery Dungeon universe. Once a high ranking science officer aboard the interstellar vessel The ATLAS, Hex served a military role in a reality where faster-than-light travel was commonplace. During a routine hyperspace jump, something extraordinary occurred: a dimensional summoning ‘light’, part of a mysterious phenomenon in the PMD world known to call forth humans in times of great need, intercepted the ATLAS mid-transit within hyperspace.",
+                    "This summoning process was not meant for him, additionally, it was never meant to operate within hyperspace. Meant to extract a single human from realspace, the beam reacted unpredictably within the compressed dimensions of hyperspace, locking onto the entire vessel's shielding bubble instead - pulling not the soul it intended to grab, but the entire vessel instead. The blue haze outside the ship shimmered gold as the ATLAS and its crew were violently ripped across realities. Automated emergency systems managed to pull the ship back to realspace above an unknown world just in time, sparing it from smashing into solid ground as would have occurred. But the damage had been done. Communications were severed, and Hex, like the rest of his crew, had undergone a mysterious transformation into new forms they didn’t recognize.",
+                    "Unaware of what Pokémon even were, Hex, as the acting captain that day made the call to land and begin understanding the world they had arrived in.",
+                    "That was five years ago.",
+                    "Since then, Hex has adapted and thrived. While not a formal member of Leon’s Heartz Foundation, he maintains strong ties with the group and regularly collaborates with them on shared research goals. He ultimately settled at Explorer’s Haven, a rapidly growing hub where locals, explorers, researchers, and others pulled from distant realities converge for adventure, growth, or simply a new home.",
+                    "Hex now oversees the Paradigm Research Group, a scientific initiative operating out of the landed ATLAS. With a focus on bridging the gap between technology and the world's magic, his work plays a vital role in helping guilds and communities confront the growing threats of the world. Whether it’s developing hybrid tech, understanding the anomalous physics behind this reality, or collaborating with Lea Blackheart and her more magic oriented team, Hex’s aim remains clear: empower this world’s defenders and maybe, one day, find a way to understand and control the forces that brought him here."
+                ],
+                personality: "Always friendly on first contact, Hex is most definitely on the outgoing side, curiosity driving him to new places, in turn, meeting new people. While not a fan of engaging in combat, he is at least proficient enough to make an escape should he need to, preferring to keep things clean in that regard. If effort is absolutely required brutal efficiency is always a thought away from being summoned forth.",
+                likes: "Hex enjoys speaking with other great minds as well as continuing work on his ever-growing list of projects, every breakthrough and success only motivating him further - creating a very productive feedback loop. Aside from his occupation, he also enjoys spending time relaxing with close friends, or eating out to try new foods.",
+                dislikes: "These days, Hex avoids conflict whenever possible. Past experiences have left him wary, with unpleasant memories simmering beneath the surface. However, true fear takes hold when facing Grass-type Pokémon or the threat of being put to sleep by status effects. The idea of being rendered helpless, at someone's complete mercy, sends shivers down his spine. He can't bear the thought of being unable to fight back. So in one word… Helplessness",
+                goals: "Hex is currently dedicated to bridging the divide between technology and magic. He has already achieved significant success with numerous projects, all aimed at bolstering local guilds and teams in their ongoing battles against an ever-growing array of hostile factions, empowering the forces of good. He also aims to share his assets to assist those teams whenever possible.",
+                physical: "An otherwise slightly shorter than usual Riolu at 2 feet with green eyes, the neck ring nice and soft with a growth of fuzzy fur around it. The fur around his head and paws always being the softest on him. Small and squishable.",
+                voice: "Hex has a warm, inviting baritone that's naturally friendly and clear. While usually pretty chill and measured, his voice gets a noticeable earnestness and enthusiasm when he's geeking out about his research or tech breakthroughs. In moments of intense focus or when he's gotta be super efficient, his tone gets sharper and more direct, though still keeping that underlying precision.",
+                moveset: ["Foresight", "Vacuum Wave", "Helping Hand", "Force Palm"],
+                specialInfo: {
+                    "ATLAS Asset": "Hex's vessel, the ATLAS, is a significant deployable asset, capable of assisting teams with tasks requiring substantial firepower or area suppression and denial. Despite his scientific inclinations, his military background instilled a desire to effectively utilize the powerful armaments under his command.",
+                    "R&D": "Hex is open to special Research and Development (R&D) requests, embracing new challenges with enthusiasm. He is particularly keen on examining anomalous artifacts or materials that other teams may have recovered.",
+                    "Combat Style": "Should Hex be required to operate on foot, he isn't suited for major roles. However, he is adept at offering support, preferring strategic maneuvers over brute force—a luxury he doesn't nor ever have innately possessed."
+                }
+            },
+            {
+                id: "zachary",
+                name: "Zachary the Dewott",
+                fullName: "Zachary Cygnus",
+                role: "Frontlines of Adventure",
+                theme: "indigo",
+                gradient: "from-indigo-950 via-slate-900 to-purple-950",
+                // ADD IMAGE LINK HERE vvv
+                imageSrc: "https://lh3.google.com/u/0/d/1cOYRUJNlS_K_l10klYTtT-qPY14mxY3Y=w1326-h947-iv1?auditContext=prefetch",
+                stats: {
+                    Gender: "Male",
+                    Age: "26",
+                    Pokemon: "Dewott",
+                    Typing: "Psychic / Water",
+                    Ability: "Trace",
+                    Birthplace: "Eterna - Whiteflake Valley",
+                    Residence: "Explorers Haven - Landing Pad 1 - ATLAS"
+                },
+                affiliations: ["Paradigm Research Group"],
+                imageAlt: "Zachary Cygnus - Indigo Dewott with starry night lower body",
+                bio: [
+                    "Zachary Cygnus was once a normal Dewott living in Whiteflake Valley until an unfortunate event destroyed his home. Rescued by a Noivern and Espeon pair, he was brought to the safety of Explorers Haven, where he first encountered the ATLAS organization. Inspired by his saviors, he was determined to work with them. After a year of familiarizing himself with their operations and the fundamentals behind their sciences, he joined the Paradigm Research Group. Teleportation via Escape Orbs dominated his mind; these items he'd only used a few times were useful escape tools, but he saw they were capable of so much more. Two more years later, he was spearheading magitech research when a severe accident left him mortally injured.",
+                    "In a desperate, experimental attempt to save his life, colleagues utilized nascent Subspace technology derived from the ATLAS’ technology and his own research, hoping to revert the damage by temporal manipulation. The procedure, while successful in saving him, had unforeseen consequences, scrambling time-space and magical energies to fundamentally alter his being.",
+                    "Alive but irrevocably changed, Zachary now finds himself partially existing within the strange reality of Subspace itself. This transformation granted him his distinct new appearance and Psychic abilities alongside his innate Water typing. Despite the radical change, he retains his pleasant demeanor as he navigates his new existence. He currently operates as a field agent for Explorer’s Haven, collaborating with his former PRG colleagues, cautiously exploring the extent of his newfound powers through action and trying to understand his place as something uniquely new forged from science and magic."
+                ],
+                personality: "Always pleasant and friendly on first contact, Zachary maintains a positive outlook while navigating his new existence. His methodical, scientific curiosity drives him to learn and understand the world around him.",
+                likes: "Zachary enjoys learning new things, successful experiments, and logical problem-solving, with swimming and starry nights bringing him a sense of peace.",
+                dislikes: "He dislikes recklessness, disorder, and unpredictable variables that can lead to critical errors. His primary fear is a form of helplessness; specifically, losing control of his unstable powers and unintentionally harming others, a dread born from the catastrophic accident that changed him.",
+                goals: "Zachary is dedicated to understanding and mastering his new psychic abilities and the unstable Subspace connection that defines his existence. He aims to continue his work with the Paradigm Research Group, using his unique condition to bridge the gap between technology and magic. Ultimately, he hopes to use his powers and knowledge to help others and prevent disasters like the one he endured.",
+                physical: "A uniquely transformed Dewott with sleek, indigo-purple fur. His paws, feet, and whiskers are a light grey, and his eyes are a glistening deep blue. His lower body is clad in a distinct, flared material that seems part of his being, mimicking a dark, starry night sky.",
+                voice: "Zachary has a calm, pleasant voice that is clear and inviting. While usually measured, his tone becomes noticeably more enthusiastic and animated when he is explaining a scientific concept or exploring a new discovery. In critical situations, his voice becomes focused and direct, reflecting his analytical mind taking charge.",
+                moveset: ["Razor Shell", "Psybeam", "Teleport", "Detect", "Water Pulse", "Future Sight"],
+                specialInfo: {
+                    "Subspace Connection": "Intrinsically linked to Subspace, granting him a unique connection to magical energies but also posing a risk of instability. This is the source of his psychic powers and transformed state. His primary vulnerability lies in the unpredictable nature of this connection. Increased power and a unique form of teleportation.",
+                    "Analytical Mind": "His greatest strength is his sharp, scientific mind, allowing him to deconstruct complex problems and adapt to various situations with logic and insight."
+                }
+            },
+            {
+                id: "kiera",
+                name: "Kiera the Espeon",
+                fullName: "Kiera",
+                role: "Frontlines of Adventure",
+                theme: "fuchsia",
+                gradient: "from-fuchsia-950 via-purple-900 to-slate-900",
+                // ADD IMAGE LINK HERE vvv
+                imageSrc: "https://lh3.google.com/u/0/d/1GDYp8QVm45Y-JupcYMZCNGskUOuBZqRo=w1326-h947-iv1?auditContext=prefetch",
+                stats: {
+                    Gender: "Female",
+                    Age: "23",
+                    Pokemon: "Espeon",
+                    Typing: "Psychic",
+                    Ability: "Synchronize",
+                    Birthplace: "Eterna - Anville Town",
+                    Residence: "Explorers Haven - Landing Pad 1 - ATLAS"
+                },
+                affiliations: ["Paradigm Research Group"],
+                imageAlt: "Kiera - Espeon with blue armband",
+                bio: [
+                    "Kiera was born and raised in the town of Anville, a place known for its bustling guild hall and the lucrative, albeit dangerous, work it offered. Family financial hardships forced her to jump towards a high-paying occupation with the least intellectual or school-time investment. As such, she found herself joining the Anville Guild as a young Eevee. Initially, smaller jobs around the town were enough to keep her family stable, but the work was menial. Over time, she became the target of ridicule from less-than-pleasant colleagues who taunted her for only taking on low-risk bounties. Not wanting to be the butt of their jokes any longer, she took on her first outlaw capture mission. This unfortunately didn’t end in success; the outlaw, a clever and agile Croagunk, easily outsmarted her, leaving her with a new sense of shame and an absolute attention to her debriefing. This would be her first true encounter with the concept of strategy.",
+                    "She tried again, taking to heart what the guild master had told her. It was tough, with her constantly re-evaluating her approach and the outlaw's predicted movements. Through methodical trial and error, she finally came out on top. The financial recovery it provided gave a great boost to her morale as well. As such, she resumed her work, becoming more and more diligent. She picked up books detailing other great adventurers and their tactics, even seeking to learn from other teams that visited from other regions. Slowly but surely, she excelled, becoming an intellectually-inclined debriefing star-gazer.",
+                    "Two years later, she was finally granted access to join a team but didn’t know anyone. She was paired with a Noibat named Zephyr. Given the stark differences in their demeanor, getting along was hardly easy in the beginning. Over the next six months, however, they developed a silent camaraderie. Kiera's calm focus and Zephyr's boundless energy began to complement each other in the field.",
+                    "Their bond was truly tested on a mission to apprehend a particularly elusive Dark-type bandit, a cunning Absol. Zephyr took a critical hit to protect Kiera. Just as the Absol prepared to strike, a brilliant light enveloped Kiera. Zephyr, even unconscious, felt a wave of Kiera's calm determination and the profound bond they had forged, and his silent, admiring thoughts of her mind became the catalyst for her evolution into Espeon. She overwhelmed the dazed Absol, securing their victory.",
+                    "Years later, Zephyr evolved into a Noivern. This opened up a new era for their duo. Zephyr would take to the skies, acting as a spotter. Kiera, riding securely on his back, would relay real-time information via psychic communication. Their symbiotic style became the envy of the guild, leading to a transfer to Explorer's Haven with the Paradigm Research Group."
+                ],
+                personality: "Kiera is intelligent and analytical, with a deep bond of trust with Zephyr. She takes pride in her ability to coordinate from afar, calmly managing battlefield situations by relaying information to her team. Though gentle by nature, Kiera can be ruthless in applying psychic pressure to her enemies, creating openings for the ground team to strike.",
+                likes: "Order and discipline in both combat and personal life; the feeling of a well-executed plan; quiet moments of solitude for meditation and reflection; the deep, unwavering trust she shares with Zephyr.",
+                dislikes: "Incompetence or recklessness that jeopardizes the team; emotional outbursts that disrupt a stable environment; chaotic or unpredictable situations she cannot control; being perceived as fragile or weak. Fears: losing control of her psychic abilities and causing unintended harm; failure to protect her team and Zephyr; a reversion to a primitive, untamed state of mind.",
+                goals: "Kiera's goals are defined by her strategic mindset and her pursuit of perfection in her role. Her immediate, mission-specific goals are to acquire and process all available data for the formulation of a comprehensive tactical strategy. Her long-term objective is to achieve a state of complete intuitive synchronization with Zephyr, making their combined 'AWACS' function a seamless, thought-driven operation.",
+                physical: "Kiera has the traditional light purple body of a standard Espeon. Her fur is short and well-kept. Her striking blue eyes are framed by the signature, wispy ear fluff of her species.",
+                voice: "Kiera's voice is low-pitched and deliberate, with a calm and controlled tone that reflects her analytical nature. She speaks with clarity and precision, rarely showing inflection or emotion unless under extreme duress.",
+                moveset: ["Psychic", "Reflect", "Charm", "Confuse Ray", "Calm Mind", "Yawn"],
+                specialInfo: {
+                    "Operational Endurance": "Flying many missions with her partner into target rich environments have passively trained her up to manage her energy and moves in such a way to fire multiple off in rapid succession with minimal drain to herself, enabling her to effect larger groups of enemies with her abilities - Two moves can be fired at the same time."
+                }
+            },
+            {
+                id: "zephyr",
+                name: "Zephyr the Noivern",
+                fullName: "Zephyr",
+                role: "Frontlines of Adventure",
+                theme: "emerald",
+                gradient: "from-slate-900 via-emerald-950 to-gray-900",
+                // ADD IMAGE LINK HERE vvv
+                imageSrc: "https://lh3.google.com/u/0/d/1KlVXT-ISf6TWpUGnS7G5zRw_0uH4Idp5=w1326-h947-iv1?auditContext=prefetch",
+                stats: {
+                    Gender: "Male",
+                    Age: "23",
+                    Pokemon: "Noivern",
+                    Typing: "Flying / Dragon",
+                    Ability: "Infiltrator",
+                    Birthplace: "Eterna - Anville Town",
+                    Residence: "Explorers Haven - Landing Pad 1 - ATLAS"
+                },
+                affiliations: ["Paradigm Research Group"],
+                imageAlt: "Zephyr - Noivern with harness",
+                bio: [
+                    "Zephyr was born and raised in the town of Anville. He joined the Anville Guild as a young Noibat, but his cheerful demeanor and playful nature often put him at odds with the serious and gruff environment of the guild. His initial forays into guild work were often met with sighs and headshakes. The more hardened guild members saw his jokes as a distraction. Despite his best efforts to showcase his agility and sharp senses, he found himself relegated to menial scouting tasks, often flying solo.",
+                    "The turning point came when he was assigned to a probationary partnership with Kiera. At first, their mismatched personalities seemed a recipe for disaster. Zephyr was a creature of playful instinct, while she was a student of methodical preparation. Over the next six months, however, they developed a silent camaraderie. Zephyr's boundless energy and keen senses began to complement Kiera's calm focus.",
+                    "Their bond was truly tested on a mission to apprehend a particularly elusive Dark-type bandit. Zephyr took a critical hit to protect Kiera. He came to consciousness to find Kiera, now a graceful Espeon, tending to him. She explained her evolution was the result of a profound, psychic bond she'd felt at that moment, a bond fueled by his silent, unconditional love for her. In that moment, their team was truly forged.",
+                    "Years later, Zephyr evolved into a Noivern, and with his evolution came a newfound mastery of flight and sound. Zephyr would take to the skies, scanning the ground with his superior flying speed and echolocation-based hearing, acting as a spotter. Kiera, riding securely on his back, would relay real-time information via psychic communication to any allies on the ground. Their unique 'AWACS before technology' approach seamlessly integrated into the new organization’s operations."
+                ],
+                personality: "Zephyr is a lighthearted and upbeat presence on any team, known for his dry jokes, spontaneous humming mid-flight, and a fondness for giving nicknames to literally everything—including terrain features. Despite his goofball tendencies, he’s remarkably reliable when it counts. Years of rigorous training have sharpened his instincts and made him a trusted guardian for his partner, Kiera.",
+                likes: "Dry jokes, spontaneous humming mid-flight, giving everything a nickname, creating a safe and humorous environment for his team, the feeling of a clean and efficient flight path.",
+                dislikes: "Unnecessary stress, rigid and overly serious atmospheres, direct confrontations when an aerial strategy is viable, anyone who threatens Kiera or his team. Fears: losing Kiera in battle, being unable to protect his team, and failing to maintain his situational awareness and letting an enemy slip by unnoticed.",
+                goals: "Zephyr's goals are fundamentally about the happiness of those around him. His biggest motivation is to make everyone smile, and more than anyone, to ensure Kiera is happy and safe. As an aerial asset, he provides flawless battlefield awareness and strategic positioning. Ultimately, he wants to prove to the ATLAS crew that his goofy, upbeat nature is a crucial asset for both morale and tactical efficiency.",
+                physical: "Zephyr possesses the traditional form of a Noivern, with deep gray fur and a slender build optimized for flight. He is equipped with a specially designed harness and saddle for his partner, Kiera. For tactical purposes, he has wearable hardpoints securely strapped to the rear extensions of his wings for mounting equipment.",
+                voice: "Zephyr possesses a medium-pitched, slightly raspy voice with a cheerful, singsong quality. It is often punctuated by spontaneous hums or sound effects. While his tone is usually light and playful, it becomes focused and firm when he is communicating during a mission or providing tactical support.",
+                moveset: ["Tailwind", "Roost", "Protect", "Air Slash", "Defog", "U-turn"],
+                specialInfo: {
+                    "Battlefield Awareness": "Constantly scanning the field for threats or openings - Visual based.",
+                    "Morale Booster": "Lightens the mood with humor, which oddly makes him more likable—even to grumpy guild members.",
+                    "PRG Equipment": "Zephyr's wing tip hardpoints are capable of carrying up to four Aura Flares. These devices can be deployed to attract incoming attacks, including those with 100% accuracy, thereby protecting him and Kiera."
+                }
+            }
+        ];
+
+        // Core Logic
+        const characterListEl = document.getElementById('character-list');
+        const contentDetailEl = document.getElementById('character-detail');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const bgGradient = document.getElementById('bg-gradient');
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const sidebar = document.getElementById('sidebar');
+
+        // Render Sidebar
+        function renderList() {
+            characterListEl.innerHTML = db.map(char => `
+                <li class="group">
+                    <button onclick="selectCharacter('${char.id}')" 
+                            class="w-full text-left p-4 md:pl-6 border-l-2 border-transparent transition-all duration-300 hover:bg-white/5 hover:border-cyan-400 focus:outline-none"
+                            id="btn-${char.id}">
+                        <span class="block font-mono text-[10px] text-slate-500 uppercase tracking-widest mb-1 group-hover:text-cyan-400 transition-colors">Unit ID: ${char.id.toUpperCase()}</span>
+                        <span class="block font-sans text-xl font-light text-slate-300 group-hover:text-white group-hover:translate-x-2 transition-transform">${char.name}</span>
+                    </button>
+                </li>
+            `).join('');
+        }
+
+        // Handle Selection
+        function selectCharacter(id) {
+            const char = db.find(c => c.id === id);
+            if (!char) return;
+
+            // Close mobile menu
+            if(window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+            }
+
+            // Update URL
+            window.location.hash = id;
+
+            // Trigger Transition
+            contentDetailEl.style.opacity = '0';
+            contentDetailEl.style.transform = 'translateX(20px)';
+            loadingOverlay.style.opacity = '1';
+
+            // Active State on List
+            document.querySelectorAll('li button').forEach(btn => {
+                btn.classList.remove('bg-white/10', 'border-cyan-500');
+                btn.classList.add('border-transparent');
+            });
+            const activeBtn = document.getElementById(`btn-${id}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-white/10', 'border-cyan-500');
+                activeBtn.classList.remove('border-transparent');
+            }
+
+            // Change Theme
+            bgGradient.className = `absolute inset-0 bg-gradient-to-br transition-colors duration-1000 opacity-80 ${char.gradient}`;
+
+            // Simulate Network Delay (Ace Combat Style)
+            setTimeout(() => {
+                renderContent(char);
+                loadingOverlay.style.opacity = '0';
+                contentDetailEl.style.opacity = '1';
+                contentDetailEl.style.transform = 'translateX(0)';
+            }, 300);
+        }
+
+        // Render HTML Content
+        function renderContent(char) {
+            const bioHtml = char.bio.map(p => `<p class="mb-4 text-slate-300 leading-relaxed">${p}</p>`).join('');
+            
+            const statsHtml = Object.entries(char.stats).map(([key, value]) => `
+                <div class="border-b border-white/10 pb-1 mb-2">
+                    <dt class="font-mono text-[10px] uppercase text-slate-500 tracking-wider">${key}</dt>
+                    <dd class="font-mono text-sm text-cyan-100">${value}</dd>
+                </div>
+            `).join('');
+
+            const movesetHtml = char.moveset.map(move => 
+                `<span class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-sm text-xs font-mono text-cyan-300 mr-2 mb-2">${move}</span>`
+            ).join('');
+
+            const specialInfoHtml = Object.entries(char.specialInfo).map(([key, value]) => `
+                <div class="mb-6 p-4 bg-black/20 border-l-2 border-${char.theme}-500">
+                    <h4 class="font-mono text-xs uppercase text-${char.theme}-400 mb-2 font-bold">${key}</h4>
+                    <p class="text-sm text-slate-300">${value}</p>
+                </div>
+            `).join('');
+
+            contentDetailEl.innerHTML = `
+                <!-- Header Section -->
+                <div class="flex flex-col md:flex-row gap-8 mb-10 animate-slide-in">
+                    <!-- Image Card -->
+                    <div class="w-full md:w-1/3 flex-shrink-0">
+                        <div class="relative aspect-[3/4] bg-slate-800 border-2 border-white/10 rounded-sm overflow-hidden shadow-2xl shadow-black/50 group">
+                            <!-- Placeholder / Image -->
+                            <div class="absolute inset-0 bg-gradient-to-b from-slate-700 to-slate-900 flex items-center justify-center">
+                                <span id="placeholder-text-${char.id}" class="font-mono text-xs text-slate-500 text-center px-4">
+                                    [IMAGE DATA: ${char.id.toUpperCase()}]<br>
+                                    <span class="text-[10px] opacity-50">Secure link required</span>
+                                </span>
+                            </div>
+                            <!-- Dynamic Image Source Applied Here -->
+                            <img src="${char.imageSrc}" 
+                                 onload="document.getElementById('placeholder-text-${char.id}').style.display='none'; this.classList.remove('opacity-50', 'mix-blend-overlay');" 
+                                 onerror="this.style.display='none'" 
+                                 alt="${char.imageAlt}" 
+                                 class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50 transition-all duration-700">
+                            
+                            <!-- Overlay UI -->
+                            <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
+                                <div class="font-mono text-[10px] text-cyan-400 mb-1">LOCATION ID</div>
+                                <div class="text-xs text-white leading-tight">${char.stats.Residence}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="w-full md:w-2/3 pt-2">
+                         <div class="flex items-end mb-4 border-b border-white/20 pb-4">
+                            <div>
+                                <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-1">${char.name}</h1>
+                                <p class="font-mono text-sm text-cyan-400 tracking-widest uppercase">${char.role}</p>
+                            </div>
+                         </div>
+                         
+                         <div class="grid grid-cols-2 gap-x-8 gap-y-1">
+                             ${statsHtml}
+                         </div>
+
+                         <div class="mt-6">
+                            <h3 class="font-mono text-xs uppercase text-slate-500 mb-2">Combat Data / Moveset</h3>
+                            <div class="flex flex-wrap">
+                                ${movesetHtml}
+                            </div>
+                         </div>
+                    </div>
+                </div>
+
+                <!-- Intel Sections -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-slide-in" style="animation-delay: 0.1s;">
+                    <!-- Left Col: Bio -->
+                    <div class="lg:col-span-2 glass-panel p-6 rounded-sm">
+                        <h3 class="flex items-center gap-2 font-mono text-sm uppercase text-white font-bold mb-6 pb-2 border-b border-white/10">
+                            <span class="w-2 h-2 bg-cyan-500 rounded-full"></span>
+                            Biographical Data
+                        </h3>
+                        <div class="space-y-4 text-justify">
+                            ${bioHtml}
+                        </div>
+                    </div>
+
+                    <!-- Right Col: Personality & Extras -->
+                    <div class="space-y-6">
+                        <div class="glass-panel p-6 rounded-sm">
+                             <h3 class="font-mono text-sm uppercase text-white font-bold mb-4 pb-2 border-b border-white/10">Psychological Profile</h3>
+                             <p class="text-sm text-slate-300 mb-4"><strong class="text-cyan-200">Personality:</strong> ${char.personality}</p>
+                             <p class="text-sm text-slate-300 mb-4"><strong class="text-green-300">Likes:</strong> ${char.likes}</p>
+                             <p class="text-sm text-slate-300"><strong class="text-red-300">Dislikes/Fears:</strong> ${char.dislikes}</p>
+                        </div>
+
+                        <div class="glass-panel p-6 rounded-sm">
+                            <h3 class="font-mono text-sm uppercase text-white font-bold mb-4 pb-2 border-b border-white/10">Physical & Voice</h3>
+                             <p class="text-sm text-slate-300 mb-4">${char.physical}</p>
+                             <div class="bg-white/5 p-3 border-l-2 border-white/20">
+                                <span class="block font-mono text-[10px] text-slate-500 uppercase mb-1">Voice Pattern</span>
+                                <p class="text-xs text-slate-300 italic">"${char.voice}"</p>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Section: Special Info & Goals -->
+                <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 animate-slide-in" style="animation-delay: 0.2s;">
+                    <div>
+                         <h3 class="font-mono text-sm uppercase text-white font-bold mb-4">Special Directives</h3>
+                         ${specialInfoHtml}
+                    </div>
+                    <div class="glass-panel p-6 rounded-sm border-t-2 border-cyan-500">
+                         <h3 class="font-mono text-sm uppercase text-white font-bold mb-4">Objective / Goals</h3>
+                         <p class="text-slate-300 text-sm leading-relaxed">${char.goals}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Event Listeners
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+        });
+
+        menuClose.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+        });
+
+        // Init
+        window.addEventListener('load', () => {
+            renderList();
+            
+            // Check Hash
+            const hash = window.location.hash.replace('#', '');
+            if (hash && db.some(c => c.id === hash)) {
+                selectCharacter(hash);
+            } else {
+                // Auto select first char if desktop, otherwise wait
+                if(window.innerWidth >= 768) {
+                    selectCharacter(db[0].id);
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
