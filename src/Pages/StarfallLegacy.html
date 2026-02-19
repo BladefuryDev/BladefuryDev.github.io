@@ -453,10 +453,10 @@
             }
         }
 
-        aboutTabBtn.onclick = () => openTab('about');
-        loreTabBtn.onclick = () => openTab('lore');
-        chaptersTabBtn.onclick = () => openTab('chapters');
-        disclosuresTabBtn.onclick = () => openTab('disclosures');
+        aboutTabBtn.onclick = () => { openTab('about'); history.pushState({ page: 'landing', tab: 'about' }, 'about', '#aboutContent'); };
+        loreTabBtn.onclick = () => { openTab('lore'); history.pushState({ page: 'landing', tab: 'lore' }, 'lore', '#loreContent'); };
+        chaptersTabBtn.onclick = () => { openTab('chapters'); history.pushState({ page: 'landing', tab: 'chapters' }, 'chapters', '#chaptersContent'); };
+        disclosuresTabBtn.onclick = () => { openTab('disclosures'); history.pushState({ page: 'landing', tab: 'disclosures' }, 'disclosures', '#disclosuresContent'); };
 
         // Mobile tab nav toggle (hamburger)
         const tabNavToggle = document.getElementById('tabNavToggle');
@@ -513,6 +513,7 @@
             viewerPage.classList.add('hidden');
             landingPage.classList.remove('hidden');
             openTab(targetTab); 
+            history.replaceState({ page: 'landing', tab: targetTab }, targetTab, `#${targetTab}Content`); 
 
             // Only fetch chapters if they haven't been loaded yet.
             if (chaptersLoaded.length === 0) {
@@ -748,6 +749,7 @@
                 landingPage.classList.add('fade-out');
                 setTimeout(() => landingPage.classList.remove('fade-out'), 10);
                 openTab(targetTab);
+                history.replaceState({ page: 'landing', tab: targetTab }, targetTab, `#${targetTab}Content`);
                 filterChapters();
             }, 300);
         }
@@ -756,7 +758,7 @@
             showLandingPage(targetTab);
             if (updateHistory) {
                 const storyTitle = document.getElementById('storyTitle').textContent || "Starfall Legacy";
-                history.pushState({ page: 'landing' }, storyTitle, window.location.pathname.split('?')[0]);
+                history.pushState({ page: 'landing', tab: targetTab }, storyTitle, `#${targetTab}Content`);
             }
         }
 
@@ -770,6 +772,8 @@
             if (event.state && event.state.page === 'viewer') {
                 const chapterToLoad = chaptersLoaded.find(c => c.number === event.state.chapter);
                 if (chapterToLoad) loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name);
+            } else if (event.state && event.state.page === 'landing') {
+                showLandingPage(event.state.tab);
             } else {
                 // Let showLandingPage derive the appropriate tab (from hash or default) instead of forcing 'chapters'
                 showLandingPage();
