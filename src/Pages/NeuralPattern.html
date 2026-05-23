@@ -212,38 +212,38 @@
                         <!-- Base Frequency -->
                         <div class="setting-item">
                             <div class="flex justify-between w-full">
-                                <label>Base Frequency</label>
+                                <label for="base-freq">Base Frequency</label>
                                 <span id="base-freq-value" class="text-right">300 HZ</span>
                             </div>
-                            <input type="range" id="base-freq" min="100" max="1000" value="300" class="lcars-input w-full">
+                            <input type="range" id="base-freq" min="100" max="1000" value="300" class="lcars-input w-full" title="Base Frequency" aria-label="Base Frequency">
                         </div>
 
                         <!-- Binaural Beat Frequency -->
                         <div class="setting-item">
                             <div class="flex justify-between w-full">
-                                <label>Binaural Beat</label>
+                                <label for="binaural-freq">Binaural Beat</label>
                                 <span id="binaural-freq-value" class="text-right">10.0 HZ</span>
                             </div>
-                            <input type="range" id="binaural-freq" min="1" max="50" value="10" step="0.5" class="lcars-input w-full">
+                            <input type="range" id="binaural-freq" min="1" max="50" value="10" step="0.5" class="lcars-input w-full" title="Binaural Beat Frequency" aria-label="Binaural Beat Frequency">
                         </div>
                         <div id="brainwave-state" class="text-center text-sm text-gray-500 dark:text-gray-400 mt-[-0.5rem] mb-2 font-medium uppercase">Alpha State</div>
 
                         <!-- Volume -->
                         <div class="setting-item">
                             <div class="flex justify-between w-full">
-                                <label>Volume</label>
+                                <label for="volume">Volume</label>
                                 <span id="volume-value" class="text-right">-10 DB</span>
                             </div>
-                            <input type="range" id="volume" min="-40" max="0" value="-10" step="1" class="lcars-input w-full">
+                            <input type="range" id="volume" min="-40" max="0" value="-10" step="1" class="lcars-input w-full" title="Volume" aria-label="Volume">
                         </div>
 
                         <!-- Timer -->
                         <div class="setting-item">
                             <label>Duration</label>
                             <div class="flex items-center gap-2">
-                                <select id="hours" class="timer-select"></select><span>H</span>
-                                <select id="minutes" class="timer-select"></select><span>M</span>
-                                <select id="seconds" class="timer-select"></select><span>S</span>
+                                <select id="hours" class="timer-select" title="Hours" aria-label="Hours"></select><span>H</span>
+                                <select id="minutes" class="timer-select" title="Minutes" aria-label="Minutes"></select><span>M</span>
+                                <select id="seconds" class="timer-select" title="Seconds" aria-label="Seconds"></select><span>S</span>
                             </div>
                         </div>
                     </div>

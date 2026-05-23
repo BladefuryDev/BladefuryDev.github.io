@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}", "./assets/htmlAssets/navbar.html", "./index.html", "./assets/htmlAssets/footer.html"], // Scan all HTML and JS files for Tailwind classes
+  content: [
+    "./src/*.html",
+    "./src/Pages/**/*.html",
+    "./src/js/**/*.js",
+    "./assets/htmlAssets/*.html",
+    "./index.html"
+  ], // Scan HTML and JS files (excluding TTMP subproject) for Tailwind classes
   theme: {
     extend: {},
   },

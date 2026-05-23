@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "dev": "npx tailwindcss -i ./src/input.css -o ./public/output.css --watch",
-  "build": "npx tailwindcss -i ./src/input.css -o ./public/output.css --minify"
-},
+    "start": "npx -y serve .",
+    "dev": "npx tailwindcss -i ./src/input.css -o ./public/output.css --watch",
+    "build": "npx tailwindcss -i ./src/input.css -o ./public/output.css --minify"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

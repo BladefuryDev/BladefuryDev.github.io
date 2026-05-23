@@ -183,9 +183,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
+    // Determine the relative path to the root of the repository
+    const isSrcFolder = /\/src\/[^/]+$/i.test(window.location.pathname) || /\/src\/$/i.test(window.location.pathname);
+    const basePath = isSrcFolder ? '../' : './';
+
+    // Adjust navbar links to be relative to the current page depth
+    const adjustNavbarLinks = (basePath) => {
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('/')) {
+                link.setAttribute('href', basePath + href.substring(1));
+            }
+        });
+    };
+
     // Initialize all site functionality
-    loadComponent('/assets/htmlAssets/navbar.html', 'navbar-placeholder', initActiveNav);
-    loadComponent('/assets/htmlAssets/footer.html', 'footer-placeholder');
+    loadComponent(`${basePath}assets/htmlAssets/navbar.html`, 'navbar-placeholder', () => {
+        adjustNavbarLinks(basePath);
+        initActiveNav();
+    });
+    loadComponent(`${basePath}assets/htmlAssets/footer.html`, 'footer-placeholder');
     initPageTransition();
     initImageModal();
     initLinkTransitions();
