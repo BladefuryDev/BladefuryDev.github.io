@@ -3,42 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Pattern Generator</title>
+    <title>Neural Synaptic Gateway - LCARS Terminal</title>
+    <!-- Tailwind CSS for utility classes -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tone.js for Web Audio synthesis -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <!-- Google Fonts for the 'Antonio' font, characteristic of LCARS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --lcars-bg: #000000;
-            --lcars-text: #FFCC99;
-            --lcars-primary: #6699FF;
-            --lcars-secondary: #3366CC;
-            --lcars-accent: #FF9900;
+            --lcars-text: #FFCC99;      /* Gold/Tan */
+            --lcars-primary: #6699FF;   /* Primary Blue */
+            --lcars-secondary: #3366CC; /* Dark Blue */
+            --lcars-accent: #FF9900;    /* Orange */
+            --lcars-alert-bg: #CC0000;  /* Red */
+            --lcars-deco: #996699;      /* Purple */
+            --lcars-green: #33CC66;     /* Terminal Green */
+            --lcars-amber: #FFB300;     /* Terminal Amber */
         }
+
         body {
-            font-family: 'Antonio', sans-serif;
             background-color: var(--lcars-bg);
             color: var(--lcars-text);
+            letter-spacing: 1px;
+            overflow-x: hidden;
+        }
+
+        .lcars-font {
+            font-family: 'Antonio', sans-serif;
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
-        .page-wrapper {
-            padding: 1rem;
-            max-width: 1000px;
-            margin: auto;
-        }
-        .lcars-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+
+        /* --- LCARS Layout elements --- */
         .lcars-navbar {
             display: flex;
             width: 100%;
-            height: 40px;
-            border-radius: 0 10px 0 0;
+            height: 35px;
+            border-radius: 0 15px 0 0;
             overflow: hidden;
             margin-bottom: 1.5rem;
         }
@@ -50,7 +55,7 @@
         }
         .navbar-content {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: stretch;
             width: 100%;
             background-color: var(--lcars-primary);
@@ -60,441 +65,1480 @@
             align-items: center;
             padding: 0 1.5rem;
             color: var(--lcars-bg);
-            font-size: 1.2rem;
+            font-weight: bold;
         }
-        @media (max-width: 640px) {
-            .system-id {
-                font-size: 0.8rem;
-            }
-        }
-        .lcars-main-content {
-            flex-grow: 1;
-        }
-        .lcars-content-panel {
-            padding: 1.5rem;
-            border-top: 5px solid var(--lcars-secondary);
-            border-right: 5px solid var(--lcars-secondary);
-        }
-        .setting-item {
+        
+        .lcars-sidebar {
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+        }
+        @media (min-width: 1024px) {
+            .lcars-sidebar {
+                width: 140px;
+                flex-shrink: 0;
+            }
+        }
+
+        /* --- UI elements --- */
+        .lcars-card {
+            border-left: 5px solid var(--lcars-secondary);
+            border-bottom: 5px solid var(--lcars-secondary);
+            padding: 1rem;
+            background-color: rgba(51, 102, 204, 0.03);
             margin-bottom: 1rem;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
         }
-        .setting-item label {
-            font-size: 1.1rem;
+        .lcars-card:hover {
+            border-color: var(--lcars-accent);
+            background-color: rgba(255, 153, 0, 0.02);
         }
-        .lcars-input, .lcars-select {
-            background-color: var(--lcars-bg);
+        .lcars-card h3 {
+            color: var(--lcars-accent);
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 153, 0, 0.2);
+            padding-bottom: 0.25rem;
+        }
+
+        .lcars-input, .lcars-select, .lcars-textarea {
+            background-color: #111;
             border: 2px solid var(--lcars-secondary);
             color: var(--lcars-text);
-            font-family: 'Antonio', sans-serif;
-            text-transform: uppercase;
-            padding: 0.5rem 1rem;
-            flex-grow: 1;
-            width: 100%;
-        }
-        .timer-select {
-             background-color: var(--lcars-bg);
-            border: 2px solid var(--lcars-secondary);
-            color: var(--lcars-text);
-            font-family: 'Antonio', sans-serif;
             text-transform: uppercase;
             padding: 0.5rem;
-            width: auto;
+            width: 100%;
+            transition: border-color 0.2s ease;
         }
-        .lcars-input:focus, .lcars-select:focus, .timer-select:focus {
+        .lcars-input:focus, .lcars-select:focus, .lcars-textarea:focus {
             outline: none;
             border-color: var(--lcars-primary);
         }
+
         .lcars-btn {
             background-color: var(--lcars-secondary);
             color: var(--lcars-text);
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 1rem;
             text-align: center;
             transition: background-color 0.2s ease, color 0.2s ease;
             border: none;
             cursor: pointer;
-            width: 100%;
-            font-size: 1.25rem;
-            border-radius: 5px;
-        }
-        .lcars-btn.btn-accent {
-            background-color: var(--lcars-accent);
-            color: var(--lcars-bg);
+            border-radius: 4px;
+            font-weight: bold;
         }
         .lcars-btn:hover {
             background-color: var(--lcars-text);
             color: var(--lcars-bg);
         }
-        .frequency-display {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 1.5rem;
-            background-color: #111;
-            padding: 1rem;
-            border-left: 5px solid var(--lcars-primary);
+        .lcars-btn.btn-accent {
+            background-color: var(--lcars-accent);
+            color: var(--lcars-bg);
         }
-        .freq-box { text-align: center; }
-        .freq-box .label { font-size: 0.9rem; color: var(--lcars-primary); }
-        .freq-box .value { font-size: 1.5rem; }
+        .lcars-btn.btn-active {
+            background-color: var(--lcars-primary);
+            color: var(--lcars-bg);
+        }
 
+        /* --- Scrollbar Customization --- */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--lcars-secondary);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--lcars-primary);
+        }
+
+        /* --- Custom Range Slider --- */
         input[type="range"] {
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
-            height: 8px;
+            height: 6px;
             background: var(--lcars-secondary);
-            border-radius: 0;
             outline: none;
-            flex-grow: 1;
+            border-radius: 3px;
         }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 12px;
-            height: 30px;
+            width: 14px;
+            height: 22px;
             background: var(--lcars-accent);
             cursor: pointer;
+            border-radius: 2px;
         }
-         input[type="range"]::-moz-range-thumb {
-            width: 12px;
-            height: 30px;
+        input[type="range"]::-moz-range-thumb {
+            width: 14px;
+            height: 22px;
             background: var(--lcars-accent);
             cursor: pointer;
+            border-radius: 2px;
+            border: none;
         }
-        .notice {
-            background-color: #330000;
-            border-left: 5px solid #CC0000;
+
+        /* --- Breathing Ring Animation --- */
+        .breath-ring {
+            transition: transform 0.1s linear, box-shadow 0.1s linear;
+        }
+
+        /* --- Typewriter effect box --- */
+        .terminal-log {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #030a05;
+            border: 1px solid var(--lcars-green);
+            color: var(--lcars-green);
             padding: 1rem;
-            margin-bottom: 1.5rem;
+            min-height: 250px;
+            max-height: 350px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            font-size: 0.85rem;
         }
-        .timer-display {
-            text-align: center;
-            font-size: 1.5rem;
-            margin-top: 1rem;
-            color: var(--lcars-accent);
+
+        /* --- Drawing canvas --- */
+        .sketchpad-canvas {
+            border: 1px dashed rgba(51, 204, 102, 0.4);
+            background-color: #020502;
+            cursor: crosshair;
+            touch-action: none;
         }
     </style>
 </head>
-<body>
-    <div class="page-wrapper">
-        <div class="lcars-container">
-            <header>
-                <nav class="lcars-navbar">
-                    <div class="navbar-elbow"></div>
-                    <div class="navbar-content">
-                        <div class="system-id">NEURAL PATTERN GENERATOR</div>
+<body class="p-4 max-w-[1600px] mx-auto">
+    <div class="flex flex-col min-height-screen">
+        <!-- HEADER -->
+        <header>
+            <nav class="lcars-navbar lcars-font">
+                <div class="navbar-elbow"></div>
+                <div class="navbar-content">
+                    <a href="../../index.html" class="lcars-nav-link flex items-center px-4 bg-blue-900 text-amber-200 text-sm font-semibold hover:bg-amber-200 hover:text-black transition">
+                        &lt; BACK TO MAIN TERMINAL
+                    </a>
+                    <div class="system-id">SYSTEM GATEWAY: NEURAL SYNAPTIC CONTROLLER</div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <div class="flex flex-col lg:flex-row gap-6 flex-grow">
+            
+            <!-- LEFT PANEL: SYNTHESIS CONTROLS (lg:w-4/12) -->
+            <section class="w-full lg:w-4/12 flex flex-col gap-4">
+                <div class="lcars-font text-amber-500 font-bold border-b-2 border-amber-500 pb-1 text-lg mb-2">
+                    [01] EMITTER PARAMETERS
+                </div>
+
+                <!-- Master Controls -->
+                <div class="lcars-card">
+                    <h3>SYSTEM STATUS</h3>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-sm font-semibold">GATEWAY AUDIO NODE</span>
+                        <span id="gateway-status" class="px-2 py-0.5 rounded text-xs font-bold bg-red-950 text-red-500 border border-red-500">OFFLINE</span>
                     </div>
-                </nav>
-            </header>
-
-            <main class="lcars-main-content">
-                <section class="lcars-content-panel">
-                    <div class="notice">
-                        <strong>ATTENTION:</strong> Stereo headphones are required for proper auditory effect.
+                    <div class="flex gap-2">
+                        <button id="mode-binaural-btn" class="lcars-btn flex-grow text-xs btn-active lcars-font">Binaural</button>
+                        <button id="mode-isochronic-btn" class="lcars-btn flex-grow text-xs lcars-font">Isochronic</button>
+                        <button id="mode-hybrid-btn" class="lcars-btn flex-grow text-xs lcars-font">Hybrid</button>
                     </div>
+                </div>
 
-                    <div class="settings-array">
-                        <!-- Presets -->
-                        <div class="setting-item">
-                            <label for="preset-select">Select Preset</label>
-                            <select id="preset-select" class="lcars-select">
-                                <option value="custom">Custom</option>
-                                <option value="delta">Delta (2 Hz) - Deep Sleep</option>
-                                <option value="theta">Theta (6 Hz) - Meditation</option>
-                                <option value="alpha">Alpha (10 Hz) - Relaxation</option>
-                                <option value="beta">Beta (20 Hz) - Focus</option>
-                                <option value="gamma">Gamma (40 Hz) - Concentration</option>
-                            </select>
-                        </div>
+                <!-- Presets -->
+                <div class="lcars-card">
+                    <label for="preset-select" class="block text-amber-500 font-bold text-xs uppercase mb-1 lcars-font">STATE PRESETS</label>
+                    <select id="preset-select" class="lcars-select lcars-font text-sm" title="State Presets" aria-label="State Presets">
+                        <option value="custom">-- CUSTOM CONFIGURATION --</option>
+                        <option value="delta">DELTA (2.0 Hz) - DEEP SLEEP / HEALING</option>
+                        <option value="theta" selected>THETA (6.0 Hz) - COGNITIVE GATEWAY / MEDITATION</option>
+                        <option value="alpha">ALPHA (10.0 Hz) - CALM FLOW / RELAXATION</option>
+                        <option value="beta">BETA (20.0 Hz) - FOCUS / LOGICAL ANALYSIS</option>
+                        <option value="gamma">GAMMA (40.0 Hz) - ACCELERATED COGNITION</option>
+                        <option value="solf528">SOLFEGGIO (528 Hz) - TRANSFORMATION / REPAIR</option>
+                        <option value="solf432">SOLFEGGIO (432 Hz) - NATURALLY TUNED SYNC</option>
+                    </select>
+                </div>
 
-                        <!-- Base Frequency -->
-                        <div class="setting-item">
-                            <div class="flex justify-between w-full">
-                                <label for="base-freq">Base Frequency</label>
-                                <span id="base-freq-value" class="text-right">300 HZ</span>
-                            </div>
-                            <input type="range" id="base-freq" min="100" max="1000" value="300" class="lcars-input w-full" title="Base Frequency" aria-label="Base Frequency">
+                <!-- Synthesizer Controls -->
+                <div class="lcars-card">
+                    <h3>FREQUENCY ALIGNMENT</h3>
+                    
+                    <!-- Carrier / Base -->
+                    <div class="mb-4">
+                        <div class="flex justify-between w-full mb-1">
+                            <span class="text-xs font-semibold">CARRIER FREQUENCY</span>
+                            <span id="base-freq-val" class="text-sm font-bold text-sky-400">400 HZ</span>
                         </div>
-
-                        <!-- Binaural Beat Frequency -->
-                        <div class="setting-item">
-                            <div class="flex justify-between w-full">
-                                <label for="binaural-freq">Binaural Beat</label>
-                                <span id="binaural-freq-value" class="text-right">10.0 HZ</span>
-                            </div>
-                            <input type="range" id="binaural-freq" min="1" max="50" value="10" step="0.5" class="lcars-input w-full" title="Binaural Beat Frequency" aria-label="Binaural Beat Frequency">
-                        </div>
-                        <div id="brainwave-state" class="text-center text-sm text-gray-500 dark:text-gray-400 mt-[-0.5rem] mb-2 font-medium uppercase">Alpha State</div>
-
-                        <!-- Volume -->
-                        <div class="setting-item">
-                            <div class="flex justify-between w-full">
-                                <label for="volume">Volume</label>
-                                <span id="volume-value" class="text-right">-10 DB</span>
-                            </div>
-                            <input type="range" id="volume" min="-40" max="0" value="-10" step="1" class="lcars-input w-full" title="Volume" aria-label="Volume">
-                        </div>
-
-                        <!-- Timer -->
-                        <div class="setting-item">
-                            <label>Duration</label>
-                            <div class="flex items-center gap-2">
-                                <select id="hours" class="timer-select" title="Hours" aria-label="Hours"></select><span>H</span>
-                                <select id="minutes" class="timer-select" title="Minutes" aria-label="Minutes"></select><span>M</span>
-                                <select id="seconds" class="timer-select" title="Seconds" aria-label="Seconds"></select><span>S</span>
-                            </div>
-                        </div>
+                        <input type="range" id="base-freq-slider" min="100" max="1000" value="400" step="1" title="Carrier Frequency" aria-label="Carrier Frequency">
+                        <div class="text-[10px] text-gray-500 mt-1">Recommended: Under 1000 Hz (Optimal: 400 Hz)</div>
                     </div>
 
-                    <button id="play-stop-btn" class="lcars-btn btn-accent mt-4">
-                        Engage Audio Stream
+                    <!-- Beat Offset -->
+                    <div>
+                        <div class="flex justify-between w-full mb-1">
+                            <span class="text-xs font-semibold">ENTRAINMENT OFFSET</span>
+                            <span id="beat-freq-val" class="text-sm font-bold text-sky-400">6.0 HZ</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="range" id="beat-freq-slider" min="1" max="50" value="6" step="0.5" class="flex-grow" title="Entrainment Offset" aria-label="Entrainment Offset">
+                            <button id="beat-dec-btn" class="bg-gray-800 text-gray-300 hover:bg-gray-700 w-8 h-8 rounded text-sm font-bold flex items-center justify-center">-0.1</button>
+                            <button id="beat-inc-btn" class="bg-gray-800 text-gray-300 hover:bg-gray-700 w-8 h-8 rounded text-sm font-bold flex items-center justify-center">+0.1</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mixers & Volumes -->
+                <div class="lcars-card">
+                    <h3>SIGNAL MIXERS</h3>
+                    
+                    <!-- Ambient Warp Hum -->
+                    <div class="mb-4">
+                        <div class="flex justify-between w-full mb-1">
+                            <span class="text-xs font-semibold">AMBIENT WARP HUM (BROWN NOISE)</span>
+                            <span id="hum-val" class="text-sm font-bold text-sky-400">-25 DB</span>
+                        </div>
+                        <input type="range" id="hum-slider" min="-50" max="-10" value="-25" step="1" title="Ambient Hum Volume" aria-label="Ambient Hum Volume">
+                    </div>
+
+                    <!-- Master Volume -->
+                    <div>
+                        <div class="flex justify-between w-full mb-1">
+                            <span class="text-xs font-semibold">MASTER OUTPUT GAIN</span>
+                            <span id="volume-val" class="text-sm font-bold text-sky-400">-15 DB</span>
+                        </div>
+                        <input type="range" id="volume-slider" min="-40" max="0" value="-15" step="1" title="Master Volume" aria-label="Master Volume">
+                    </div>
+                </div>
+
+                <!-- Timing & Duration -->
+                <div class="lcars-card">
+                    <h3>TIMED DE-HABITUATOR</h3>
+                    <div class="flex items-center gap-2 mb-3">
+                        <select id="timer-hours" class="lcars-select text-xs py-1 text-center" title="Hours" aria-label="Hours"></select><span class="text-xs">H</span>
+                        <select id="timer-minutes" class="lcars-select text-xs py-1 text-center" title="Minutes" aria-label="Minutes"></select><span class="text-xs">M</span>
+                        <select id="timer-seconds" class="lcars-select text-xs py-1 text-center" title="Seconds" aria-label="Seconds"></select><span class="text-xs">S</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <label for="habituation-cap" class="text-xs text-gray-400 flex items-center cursor-pointer">
+                            <input type="checkbox" id="habituation-cap" class="mr-2" checked>
+                            ENFORCE 10-MIN SESSION CAP
+                        </label>
+                    </div>
+                    <div id="countdown-display" class="text-center font-bold text-xl tracking-widest text-amber-500 font-mono">00:10:00</div>
+                </div>
+
+                <!-- Engage Action -->
+                <button id="engage-btn" class="lcars-btn btn-accent lcars-font text-lg py-3 w-full shadow-lg hover:shadow-amber-500/20 mb-6">
+                    ENGAGE COGNITIVE PROTOCOL
+                </button>
+            </section>
+
+            <!-- CENTER PANEL: LIVE METRICS & VISUALIZERS (lg:w-5/12) -->
+            <section class="w-full lg:w-5/12 flex flex-col gap-4">
+                <div class="lcars-font text-sky-400 font-bold border-b-2 border-sky-400 pb-1 text-lg mb-2">
+                    [02] SENSORS & REAL-TIME SPECTRUM
+                </div>
+
+                <!-- Digital Readouts -->
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="bg-gray-950 border border-sky-900/50 p-2">
+                        <div class="text-[10px] text-sky-500 lcars-font">Left Channel</div>
+                        <div id="freq-left" class="text-sm font-bold text-sky-200">400.0 HZ</div>
+                    </div>
+                    <div class="bg-gray-950 border border-sky-900/50 p-2">
+                        <div class="text-[10px] text-amber-500 lcars-font">Right Channel</div>
+                        <div id="freq-right" class="text-sm font-bold text-amber-200">406.0 HZ</div>
+                    </div>
+                    <div class="bg-gray-950 border border-sky-900/50 p-2">
+                        <div class="text-[10px] text-purple-500 lcars-font">Target State</div>
+                        <div id="brainwave-state" class="text-sm font-bold text-purple-200">THETA STATE</div>
+                    </div>
+                </div>
+
+                <!-- Canvas Visualizers -->
+                <div class="lcars-card">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="!mb-0">OSCILLOSCOPE SENSOR</h3>
+                        <select id="visualizer-type-select" class="lcars-select !w-36 text-xs py-0.5 lcars-font" title="Visualizer Type" aria-label="Visualizer Type">
+                            <option value="lissajous">LISSAJOUS SCOPE</option>
+                            <option value="waveform">SPLIT WAVEFORM</option>
+                        </select>
+                    </div>
+                    <div class="bg-black flex justify-center items-center border border-sky-950 p-1">
+                        <canvas id="visualizer-canvas" width="420" height="280" class="w-full max-w-[420px] aspect-[3/2]"></canvas>
+                    </div>
+                    <div class="text-[10px] text-gray-500 text-center mt-2">
+                        LISSAJOUS ROTATIONAL RATE DIRECTLY EQUALS SYNC OFFSET FREQUENCY
+                    </div>
+                </div>
+
+                <!-- Cardiorespiratory Pacer -->
+                <div class="lcars-card flex flex-col items-center">
+                    <h3 class="w-full text-left">VAGAL COHERENCE RESPIRATORY PACER</h3>
+                    
+                    <div class="relative w-40 h-40 flex items-center justify-center bg-gray-950/60 rounded-full border border-sky-950 my-2">
+                        <!-- Glowing concentric circle -->
+                        <div id="breathing-ring" class="breath-ring absolute bg-sky-900/30 border-2 border-sky-400 rounded-full" style="width: 40px; height: 40px;"></div>
+                        <div id="pacer-text" class="absolute text-sm font-bold tracking-widest text-sky-200 lcars-font">READY</div>
+                    </div>
+
+                    <div class="w-full px-4 mb-2">
+                        <div class="flex justify-between text-xs mb-1 text-gray-400">
+                            <span>BREATH RATE CALIBRATION</span>
+                            <span id="breaths-per-min-val" class="font-bold text-sky-400">6.0 BPM</span>
+                        </div>
+                        <input type="range" id="breaths-per-min-slider" min="4.5" max="9.0" value="6.0" step="0.5" title="Breaths Per Minute" aria-label="Breaths Per Minute">
+                    </div>
+
+                    <div class="text-[11px] text-amber-500 text-center leading-snug px-3 mt-1">
+                        <strong>RESONANCE INSTRUCTION:</strong> Inhale as the circle expands, exhale as it collapses. Breathe deeply from the diaphragm. Do not strain; maintain natural, low-effort pacing.
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: STARGATE TERMINAL & CRV (lg:w-3/12) -->
+            <section class="w-full lg:w-3/12 flex flex-col gap-4">
+                <div class="lcars-font text-purple-400 font-bold border-b-2 border-purple-400 pb-1 text-lg mb-2">
+                    [03] CLASSIFIED DATABASE
+                </div>
+
+                <!-- Tab Links -->
+                <div class="flex">
+                    <button id="tab-db-btn" class="lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 btn-active lcars-font">Database</button>
+                    <button id="tab-crv-btn" class="lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 lcars-font">CRV Trainer</button>
+                    <button id="tab-rs-btn" class="lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 lcars-font">RS Script</button>
+                </div>
+
+                <!-- Tab 1: Database Logs -->
+                <div id="panel-db" class="flex flex-col gap-2">
+                    <div class="grid grid-cols-2 gap-1 mb-2">
+                        <button onclick="loadLog('log1')" class="bg-purple-950 text-purple-300 border border-purple-900 py-1 px-2 text-left text-xs font-semibold hover:bg-purple-900/40">LOG 01: VAGAL</button>
+                        <button onclick="loadLog('log2')" class="bg-purple-950 text-purple-300 border border-purple-900 py-1 px-2 text-left text-xs font-semibold hover:bg-purple-900/40">LOG 02: HEMI-SYNC</button>
+                        <button onclick="loadLog('log3')" class="bg-purple-950 text-purple-300 border border-purple-900 py-1 px-2 text-left text-xs font-semibold hover:bg-purple-900/40">LOG 03: CRV AOL</button>
+                        <button onclick="loadLog('log4')" class="bg-purple-950 text-purple-300 border border-purple-900 py-1 px-2 text-left text-xs font-semibold hover:bg-purple-900/40">LOG 04: SCRIPTING</button>
+                    </div>
+                    <div id="database-log-output" class="terminal-log">SELECT A PROTOCOL LOG TO INITIATE SENSORY READOUT.</div>
+                </div>
+
+                <!-- Tab 2: CRV Trainer -->
+                <div id="panel-crv" class="hidden flex flex-col gap-2">
+                    <div class="text-xs text-purple-300 leading-snug border-l-2 border-purple-700 pl-2 mb-2 font-mono">
+                        Stage I CRV target acquisition. Draw your autonomic ideogram upon coordinate flash. Keep drawing fast to suppress analytical overlay (AOL).
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-gray-950 p-2 border border-purple-950">
+                        <span class="text-xs lcars-font text-purple-400">COORDINATE STIMULUS:</span>
+                        <span id="crv-coords" class="font-bold text-sm tracking-widest text-amber-500 font-mono">7391 / 0482</span>
+                    </div>
+
+                    <!-- Sketchpad -->
+                    <div class="flex flex-col items-center my-2">
+                        <canvas id="crv-sketchpad" width="280" height="150" class="sketchpad-canvas w-full max-w-[280px]"></canvas>
+                        <div class="flex w-full max-w-[280px] justify-between mt-1">
+                            <button id="clear-sketchpad-btn" class="bg-gray-800 text-gray-400 text-[10px] px-2 py-0.5 font-bold hover:bg-gray-700">WIPE PAD</button>
+                            <button id="too-much-break-btn" class="bg-red-950 text-red-400 border border-red-900 text-[10px] px-2 py-0.5 font-bold hover:bg-red-900/40">TOO MUCH BREAK (AOL RESET)</button>
+                        </div>
+                    </div>
+
+                    <!-- Cooldown / AOL break -->
+                    <div id="cooldown-box" class="hidden text-center text-red-500 font-bold border border-red-900 p-2 bg-red-950/20 text-xs">
+                        AOL FLUSH ACTIVE: <span id="cooldown-timer">10</span> SECONDS
+                    </div>
+
+                    <!-- Target Gestalt Checkbox -->
+                    <div class="grid grid-cols-2 gap-1 text-[11px]">
+                        <label class="flex items-center text-gray-400"><input type="checkbox" id="gestalt-land" class="mr-1"> LAND</label>
+                        <label class="flex items-center text-gray-400"><input type="checkbox" id="gestalt-water" class="mr-1"> WATER</label>
+                        <label class="flex items-center text-gray-400"><input type="checkbox" id="gestalt-structure" class="mr-1"> STRUCTURE</label>
+                        <label class="flex items-center text-gray-400"><input type="checkbox" id="gestalt-air" class="mr-1"> AIR / EMPTY</label>
+                    </div>
+
+                    <!-- Stage II Text -->
+                    <input type="text" id="crv-sensory" class="lcars-input text-xs" placeholder="ENTER STAGE II SENSORY ADJECTIVES..." title="Stage II Sensory Adjectives" aria-label="Stage II Sensory Adjectives">
+
+                    <button id="crv-reveal-btn" class="lcars-btn btn-accent w-full text-xs font-bold py-2 mt-2 lcars-font">
+                        DECRYPT TARGET SITE
                     </button>
 
-                    <div id="timer-display" class="timer-display">00:00:00</div>
-
-                    <div class="frequency-display">
-                        <div class="freq-box">
-                            <div class="label">Left Channel</div>
-                            <div id="left-freq-display" class="value">300.0 HZ</div>
-                        </div>
-                        <div class="freq-box">
-                            <div class="label">Right Channel</div>
-                            <div id="right-freq-display" class="value">310.0 HZ</div>
-                        </div>
+                    <!-- Reveal Area -->
+                    <div id="crv-target-display" class="hidden bg-gray-950 border border-purple-950 p-2 mt-2">
+                        <div class="text-[10px] text-purple-400 font-bold lcars-font mb-1" id="crv-target-title">TARGET REVEALED</div>
+                        <img id="crv-target-img" src="" alt="CRV Target" class="w-full h-auto border border-gray-800 mb-2">
+                        <p id="crv-target-desc" class="text-[10px] text-gray-400 font-mono leading-normal"></p>
                     </div>
-                </section>
-            </main>
+                </div>
+
+                <!-- Tab 3: RS Scripting -->
+                <div id="panel-rs" class="hidden flex flex-col gap-2">
+                    <div class="text-xs text-purple-300 leading-snug border-l-2 border-purple-700 pl-2 mb-2 font-mono">
+                        Satisfy the linear, analytical left hemisphere with order and control parameters to release the right hemisphere's creative projection capability.
+                    </div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <div class="flex flex-col">
+                            <label for="rs-reality" class="text-[10px] text-gray-400 font-bold mb-1">TARGET REALITY DESCRIPTOR</label>
+                            <input type="text" id="rs-reality" class="lcars-input text-xs" placeholder="E.G., USS ENTERPRISE NCC-1701-D">
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="rs-dilation" class="text-[10px] text-gray-400 font-bold mb-1">TIME DILATION RATIO</label>
+                            <input type="text" id="rs-dilation" class="lcars-input text-xs" placeholder="E.G., 1 HOUR HERE = 1 WEEK THERE">
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="rs-safeword" class="text-[10px] text-gray-400 font-bold mb-1">SAFE WORD / EMERGENCY KEY</label>
+                            <input type="text" id="rs-safeword" class="lcars-input text-xs" placeholder="E.G., COMPUTER: END SIMULATION">
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="rs-notes" class="text-[10px] text-gray-400 font-bold mb-1">SAFETY SCHEDULER NOTES</label>
+                            <textarea id="rs-notes" class="lcars-textarea text-xs" placeholder="ENTER PERSONAL SECURITY ANCHORS..."></textarea>
+                        </div>
+                        <button id="rs-commit-btn" class="lcars-btn btn-accent w-full text-xs font-bold py-2 mt-2 lcars-font">
+                            COMMIT SCRIPT PROTOCOL
+                        </button>
+                    </div>
+                </div>
+            </section>
         </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-6 flex justify-between items-center bg-amber-500 text-black py-1 px-4 text-xs font-bold tracking-widest lcars-font rounded-b-lg">
+            <span>SYNAPTIC GATEWAY v3.0</span>
+            <span id="footer-time">00:00:00</span>
+        </footer>
     </div>
 
+    <!-- MAIN JAVASCRIPT SYSTEM -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const playStopBtn = document.getElementById('play-stop-btn');
-            const baseFreqSlider = document.getElementById('base-freq');
-            const binauralFreqSlider = document.getElementById('binaural-freq');
-            const volumeSlider = document.getElementById('volume');
-            const presetSelect = document.getElementById('preset-select');
-            const hoursSelect = document.getElementById('hours');
-            const minutesSelect = document.getElementById('minutes');
-            const secondsSelect = document.getElementById('seconds');
-            const timerDisplay = document.getElementById('timer-display');
-
-            const baseFreqValue = document.getElementById('base-freq-value');
-            const binauralFreqValue = document.getElementById('binaural-freq-value');
-            const volumeValue = document.getElementById('volume-value');
-            const brainwaveState = document.getElementById('brainwave-state');
-            const leftFreqDisplay = document.getElementById('left-freq-display');
-            const rightFreqDisplay = document.getElementById('right-freq-display');
-
-            let isPlaying = false;
-            let oscL, oscR, pannerL, pannerR;
-            let timerInterval;
-            let remainingSeconds = 0;
-
-            const presets = {
-                delta: { beat: 2, base: 130 },
-                theta: { beat: 6, base: 180 },
-                alpha: { beat: 10, base: 250 },
-                beta: { beat: 20, base: 300 },
-                gamma: { beat: 40, base: 350 },
-            };
-
-            // --- Initialization ---
-            function populateTimeSelects() {
-                for (let i = 0; i < 24; i++) {
-                    hoursSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
-                }
-                for (let i = 0; i < 60; i++) {
-                    minutesSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
-                    secondsSelect.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
-                }
-                minutesSelect.value = "20"; // Default to 20 minutes
-            }
-
-            // --- Audio Functions ---
-            function setupAudio() {
-                pannerL = new Tone.Panner(-1).toDestination();
-                pannerR = new Tone.Panner(1).toDestination();
-                oscL = new Tone.Oscillator({ type: 'sine' }).connect(pannerL);
-                oscR = new Tone.Oscillator({ type: 'sine' }).connect(pannerR);
-                updateFrequencies();
-                updateVolume();
-            }
-
-            function getBrainwaveState(freq) {
-                if (freq < 4) return 'Delta State';
-                if (freq < 8) return 'Theta State';
-                if (freq < 13) return 'Alpha State';
-                if (freq < 38) return 'Beta State';
-                return 'Gamma State';
+        // === Tone.js Audio Synth Engine class ===
+        class SynapticGatewayEngine {
+            constructor() {
+                this.isPlaying = false;
+                this.mode = 'binaural'; // 'binaural', 'isochronic', 'hybrid'
+                this.carrierFreq = 400;
+                this.beatFreq = 6; // 6 Hz Theta
+                this.volume = -15; // dB
+                
+                // Ambient Soundscape Layer
+                this.noiseVolume = -25; // dB
+                
+                // Tone.js audio nodes
+                this.oscL = null;
+                this.oscR = null;
+                this.pannerL = null;
+                this.pannerR = null;
+                this.noise = null;
+                this.noiseFilter = null;
+                this.noiseGain = null;
+                this.modulationGain = null;
+                this.masterGain = null;
+                
+                this.loopId = null;
+                this.bufferSize = 8192;
+                
+                // Isochronic Gaussian Modulation Parameters
+                this.pulseInterval = 1 / this.beatFreq;
+                this.pulseDuration = this.pulseInterval * 0.5;
+                this.pulseSmooth = 0.7;
+                this.pulseWidth = 0.15;
+                this.pulseFloor = 0.0;
+                this.pulseCeil = 1.0;
+                
+                // Analysers for visualizer
+                this.analyserL = null;
+                this.analyserR = null;
+                this.splitter = null;
+                
+                // Synth for UI clicks
+                this.uiSynth = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.002, decay: 0.04, sustain: 0.0, release: 0.04 }
+                }).toDestination();
+                this.uiSynth.volume.value = -15;
             }
             
-            function updateFrequencies() {
-                const baseFreq = parseFloat(baseFreqSlider.value);
-                const binauralFreq = parseFloat(binauralFreqSlider.value);
-                const leftFreq = baseFreq;
-                const rightFreq = baseFreq + binauralFreq;
-
-                if (oscL && oscR) {
-                    oscL.frequency.rampTo(leftFreq, 0.1);
-                    oscR.frequency.rampTo(rightFreq, 0.1);
-                }
-
-                baseFreqValue.textContent = `${baseFreq.toFixed(0)} HZ`;
-                binauralFreqValue.textContent = `${binauralFreq.toFixed(1)} HZ`;
-                brainwaveState.textContent = getBrainwaveState(binauralFreq);
-                leftFreqDisplay.textContent = `${leftFreq.toFixed(1)} HZ`;
-                rightFreqDisplay.textContent = `${rightFreq.toFixed(1)} HZ`;
-            }
-
-            function updateVolume() {
-                const volume = parseFloat(volumeSlider.value);
-                if (oscL && oscR) {
-                    oscL.volume.value = volume;
-                    oscR.volume.value = volume;
-                }
-                volumeValue.textContent = `${volume.toFixed(0)} DB`;
-            }
-
-            function applyPreset() {
-                const selected = presetSelect.value;
-                if (selected !== 'custom' && presets[selected]) {
-                    const preset = presets[selected];
-                    binauralFreqSlider.value = preset.beat;
-                    baseFreqSlider.value = preset.base;
-                    updateFrequencies();
+            // Dynamic LCARS computer terminal chirp
+            playChirp(type = 'click') {
+                const now = Tone.now();
+                if (type === 'click') {
+                    this.uiSynth.triggerAttackRelease("G5", 0.03, now);
+                } else if (type === 'engage') {
+                    this.uiSynth.triggerAttackRelease("C5", 0.05, now);
+                    this.uiSynth.triggerAttackRelease("G5", 0.05, now + 0.05);
+                } else if (type === 'disengage') {
+                    this.uiSynth.triggerAttackRelease("G5", 0.04, now);
+                    this.uiSynth.triggerAttackRelease("C5", 0.04, now + 0.04);
+                } else if (type === 'warning') {
+                    this.uiSynth.triggerAttackRelease("F#4", 0.1, now);
+                    this.uiSynth.triggerAttackRelease("F#4", 0.08, now + 0.12);
                 }
             }
-
-            // --- Timer Functions ---
-            function formatTime(seconds) {
-                const h = Math.floor(seconds / 3600);
-                const m = Math.floor((seconds % 3600) / 60);
-                const s = seconds % 60;
-                return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            
+            // Gaussian math formulation
+            calculateGaussCurve(x, mu, sigma) {
+                const sqrt2Pi = Math.sqrt(2 * Math.PI);
+                return (1.0 / (sigma * sqrt2Pi)) * Math.exp(-Math.pow(x - mu, 2) / (2 * Math.pow(sigma, 2)));
             }
-
-            function startTimer() {
-                const hours = parseInt(hoursSelect.value);
-                const minutes = parseInt(minutesSelect.value);
-                const seconds = parseInt(secondsSelect.value);
-                remainingSeconds = (hours * 3600) + (minutes * 60) + seconds;
-
-                if (remainingSeconds <= 0) {
-                    timerDisplay.textContent = "00:00:00";
+            
+            // Envelope generation & scheduling
+            applyGaussianModulation(startTime) {
+                if (this.mode === 'binaural') {
+                    this.modulationGain.gain.setValueAtTime(1.0, startTime);
                     return;
                 }
-
-                timerDisplay.textContent = formatTime(remainingSeconds);
-
-                timerInterval = setInterval(() => {
-                    remainingSeconds--;
-                    timerDisplay.textContent = formatTime(remainingSeconds);
-                    if (remainingSeconds <= 0) {
-                        stopTimer();
-                        if (isPlaying) {
-                            playStopBtn.click(); // Programmatically stop playback
-                        }
+                
+                const pulseArray = new Float32Array(this.bufferSize);
+                let maxVal = -1;
+                
+                for (let i = 0; i < this.bufferSize; i++) {
+                    const idx = ~~i;
+                    const normalizedX = idx / this.bufferSize;
+                    pulseArray[idx] = this.calculateGaussCurve(
+                        Math.pow(normalizedX, this.pulseSmooth),
+                        0.5,
+                        this.pulseWidth
+                    );
+                    if (pulseArray[idx] > maxVal) {
+                        maxVal = pulseArray[idx];
                     }
-                }, 1000);
-            }
-
-            function stopTimer() {
-                clearInterval(timerInterval);
-                timerDisplay.textContent = "00:00:00";
+                }
+                
+                const gainParam = this.modulationGain.gain;
+                gainParam.setValueAtTime(this.pulseFloor, startTime);
+                
+                const stepDuration = this.pulseDuration / 64;
+                for (let step = 0; step <= 64; step++) {
+                    const stepTime = startTime + step * stepDuration;
+                    const bufferIdx = ~~((step / 64) * (this.bufferSize - 1));
+                    const rawVal = pulseArray[bufferIdx] / maxVal;
+                    const scaledGain = this.pulseFloor + rawVal * (this.pulseCeil - this.pulseFloor);
+                    // Ramp scheduling to prevent pops
+                    gainParam.exponentialRampToValueAtTime(scaledGain + 0.0001, stepTime + 0.001);
+                }
+                
+                gainParam.setValueAtTime(this.pulseFloor, startTime + this.pulseDuration);
             }
             
-            // --- Event Listeners ---
-            playStopBtn.addEventListener('click', async () => {
+            setupAudio() {
+                // Master Gain node
+                this.masterGain = new Tone.Gain(Tone.dbToGain(this.volume)).toDestination();
+                
+                // Modulation Gain node
+                this.modulationGain = new Tone.Gain(1.0);
+                this.modulationGain.connect(this.masterGain);
+                
+                // Left & Right Panning nodes
+                this.pannerL = new Tone.Panner(-1).connect(this.modulationGain);
+                this.pannerR = new Tone.Panner(1).connect(this.modulationGain);
+                
+                // Carrier Generators
+                this.oscL = new Tone.Oscillator({ type: 'sine' }).connect(this.pannerL);
+                this.oscR = new Tone.Oscillator({ type: 'sine' }).connect(this.pannerR);
+                
+                // Ambient noise setup (deep brown noise for warp hum)
+                this.noiseFilter = new Tone.Filter(200, "lowpass");
+                this.noiseGain = new Tone.Gain(Tone.dbToGain(this.noiseVolume));
+                this.noise = new Tone.Noise("brown");
+                
+                this.noise.connect(this.noiseFilter);
+                this.noiseFilter.connect(this.noiseGain);
+                this.noiseGain.connect(this.masterGain); // Connect direct to master gain to bypass modulation
+                
+                // Splitter & Analysers for visualization
+                this.splitter = new Tone.Split(2);
+                this.modulationGain.connect(this.splitter);
+                
+                this.analyserL = new Tone.Analyser("waveform", 256);
+                this.analyserR = new Tone.Analyser("waveform", 256);
+                
+                this.splitter.connect(this.analyserL, 0);
+                this.splitter.connect(this.analyserR, 1);
+                
+                this.updateAudioParameters();
+            }
+            
+            updateAudioParameters() {
+                const leftFreq = this.carrierFreq;
+                let rightFreq = this.carrierFreq;
+                
+                if (this.mode === 'binaural' || this.mode === 'hybrid') {
+                    rightFreq = this.carrierFreq + this.beatFreq;
+                }
+                
+                if (this.oscL && this.oscR) {
+                    this.oscL.frequency.rampTo(leftFreq, 0.1);
+                    this.oscR.frequency.rampTo(rightFreq, 0.1);
+                }
+                
+                if (this.noiseGain) {
+                    this.noiseGain.gain.rampTo(Tone.dbToGain(this.noiseVolume), 0.1);
+                }
+                
+                if (this.masterGain) {
+                    this.masterGain.gain.rampTo(Tone.dbToGain(this.volume), 0.1);
+                }
+                
+                // Calculate isochronic parameters
+                this.pulseInterval = 1 / this.beatFreq;
+                this.pulseDuration = this.pulseInterval * 0.5;
+                
+                // If active, sync the loop
+                if (this.isPlaying) {
+                    this.updateTransportLoop();
+                }
+            }
+            
+            updateTransportLoop() {
+                if (this.loopId !== null) {
+                    Tone.Transport.clear(this.loopId);
+                    this.loopId = null;
+                }
+                
+                if (this.mode !== 'binaural') {
+                    this.loopId = Tone.Transport.scheduleRepeat((time) => {
+                        this.applyGaussianModulation(time);
+                    }, `${this.pulseInterval}s`);
+                } else {
+                    this.modulationGain.gain.setValueAtTime(1.0, Tone.now());
+                }
+            }
+            
+            async start() {
                 if (Tone.context.state !== 'running') {
                     await Tone.start();
                 }
-
-                if (!isPlaying) {
-                    if (!oscL) setupAudio();
-                    oscL.start();
-                    oscR.start();
-                    startTimer();
-                    playStopBtn.textContent = 'Disengage Audio Stream';
-                    playStopBtn.style.backgroundColor = '#CC0000';
+                
+                if (!this.masterGain) {
+                    this.setupAudio();
+                }
+                
+                this.oscL.start();
+                this.oscR.start();
+                this.noise.start();
+                
+                this.isPlaying = true;
+                this.updateTransportLoop();
+                Tone.Transport.start();
+                
+                this.playChirp('engage');
+            }
+            
+            stop(fade = false) {
+                if (!this.isPlaying) return;
+                
+                this.playChirp('disengage');
+                
+                if (fade) {
+                    // Smooth volume fade-out
+                    const now = Tone.now();
+                    this.masterGain.gain.setValueAtTime(this.masterGain.gain.value, now);
+                    this.masterGain.gain.rampTo(0, 2.0);
+                    
+                    // Stop noise immediately or let it fade
+                    this.noiseGain.gain.rampTo(0, 2.0);
+                    
+                    setTimeout(() => {
+                        this.cleanupAudio();
+                        updateStatusUI(false);
+                    }, 2100);
                 } else {
-                    if (oscL && oscR) {
-                       oscL.stop();
-                       oscR.stop();
-                       oscL.dispose();
-                       oscR.dispose();
-                       pannerL.dispose();
-                       pannerR.dispose();
-                       oscL = null;
-                       oscR = null;
+                    this.cleanupAudio();
+                    updateStatusUI(false);
+                }
+            }
+            
+            cleanupAudio() {
+                this.isPlaying = false;
+                
+                if (this.oscL && this.oscR) {
+                    this.oscL.stop();
+                    this.oscR.stop();
+                    this.noise.stop();
+                    
+                    this.oscL.dispose();
+                    this.oscR.dispose();
+                    this.noise.dispose();
+                    this.pannerL.dispose();
+                    this.pannerR.dispose();
+                    this.noiseFilter.dispose();
+                    this.noiseGain.dispose();
+                    this.modulationGain.dispose();
+                    this.masterGain.dispose();
+                    this.splitter.dispose();
+                    this.analyserL.dispose();
+                    this.analyserR.dispose();
+                    
+                    this.oscL = null;
+                    this.oscR = null;
+                    this.noise = null;
+                    this.pannerL = null;
+                    this.pannerR = null;
+                    this.noiseFilter = null;
+                    this.noiseGain = null;
+                    this.modulationGain = null;
+                    this.masterGain = null;
+                    this.splitter = null;
+                    this.analyserL = null;
+                    this.analyserR = null;
+                }
+                
+                if (this.loopId !== null) {
+                    Tone.Transport.clear(this.loopId);
+                    this.loopId = null;
+                }
+                Tone.Transport.stop();
+            }
+        }
+
+        // Initialize Audio Engine
+        const engine = new SynapticGatewayEngine();
+
+        // === DOM Elements ===
+        const gatewayStatus = document.getElementById('gateway-status');
+        const modeBinauralBtn = document.getElementById('mode-binaural-btn');
+        const modeIsochronicBtn = document.getElementById('mode-isochronic-btn');
+        const modeHybridBtn = document.getElementById('mode-hybrid-btn');
+        const presetSelect = document.getElementById('preset-select');
+        const baseFreqSlider = document.getElementById('base-freq-slider');
+        const baseFreqVal = document.getElementById('base-freq-val');
+        const beatFreqSlider = document.getElementById('beat-freq-slider');
+        const beatFreqVal = document.getElementById('beat-freq-val');
+        const beatDecBtn = document.getElementById('beat-dec-btn');
+        const beatIncBtn = document.getElementById('beat-inc-btn');
+        const humSlider = document.getElementById('hum-slider');
+        const humVal = document.getElementById('hum-val');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeVal = document.getElementById('volume-val');
+        const timerHours = document.getElementById('timer-hours');
+        const timerMinutes = document.getElementById('timer-minutes');
+        const timerSeconds = document.getElementById('timer-seconds');
+        const habituationCap = document.getElementById('habituation-cap');
+        const countdownDisplay = document.getElementById('countdown-display');
+        const engageBtn = document.getElementById('engage-btn');
+
+        const freqLeft = document.getElementById('freq-left');
+        const freqRight = document.getElementById('freq-right');
+        const brainwaveState = document.getElementById('brainwave-state');
+        const visualizerTypeSelect = document.getElementById('visualizer-type-select');
+        const canvas = document.getElementById('visualizer-canvas');
+        const ctx = canvas.getContext('2d');
+
+        const breathingRing = document.getElementById('breathing-ring');
+        const pacerText = document.getElementById('pacer-text');
+        const breathsSlider = document.getElementById('breaths-per-min-slider');
+        const breathsVal = document.getElementById('breaths-per-min-val');
+
+        const tabDbBtn = document.getElementById('tab-db-btn');
+        const tabCrvBtn = document.getElementById('tab-crv-btn');
+        const tabRsBtn = document.getElementById('tab-rs-btn');
+        const panelDb = document.getElementById('panel-db');
+        const panelCrv = document.getElementById('panel-crv');
+        const panelRs = document.getElementById('panel-rs');
+
+        // === Constants ===
+        const presets = {
+            delta: { base: 130, beat: 2.0 },
+            theta: { base: 180, beat: 6.0 },
+            alpha: { base: 250, beat: 10.0 },
+            beta: { base: 300, beat: 20.0 },
+            gamma: { base: 350, beat: 40.0 },
+            solf528: { base: 528, beat: 6.0 },
+            solf432: { base: 432, beat: 6.0 }
+        };
+
+        const logs = {
+            log1: `[CLASSIFIED: PROJECT STARGATE LOG - 1983]
+VAGAL RESONANCE PROTOCOLS
+-------------------------------------
+Physiological analysis of Resonant Breathing indicates that slow, paced diaphragmatic respiration at exactly 6 breaths per minute (0.1 Hz frequency) stimulates the vagus nerve to release acetylcholine.
+
+ACETYLCHOLINE EFFECTS:
+- Rapid downregulation of sympathetic fight-or-flight arousal.
+- Suppression of amygdalar activation.
+- Marked reduction in cerebral cortical "background noise."
+
+By lowering cortical noise, the conscious mind's absolute gating threshold (limen) is lowered, allowing weak, sub-threshold intuitive signals from the autonomic nervous system to rise into awareness.
+
+COGNITIVE DIRECTION:
+Resonating the cardiovascular and respiratory systems creates the baseline calm necessary for remote viewing target acquisition. Maintain resonant pacing throughout preparatory phase.`,
+            log2: `[CLASSIFIED: MONROE INSTITUTE RESEARCH - 1982]
+HEMISPHERIC SYNCHRONIZATION (HEMI-SYNC)
+-------------------------------------
+Hemispheric synchronization utilizes Auditory Beat Stimulation (ABS) to entrain EEG patterns. Binaural beats are generated by sending phase-offset tones to the left and right ears (e.g. 400Hz and 406Hz).
+
+BIO-PROCESS:
+The superior olivary complex in the brainstem calculates the phase difference, generating an internal neural oscillation at the difference frequency (6Hz Theta).
+
+Distracting the logical, verbal left hemisphere with monotone, repetitive soundscapes lowers its critical filter. Once occupied, the right hemisphere's pattern-recognition and highly distributed neural storage arrays become accessible.
+
+LIMITATIONS & REMEDIES:
+Continuous exposure beyond 10 minutes leads to neural habituation. Modern protocols enforce a 10-minute session cap and introduce Gaussian-smoothed isochronic pulses. These pulses drive the primary auditory cortex directly via the thalamus, producing a 27% increase in EEG power compared to the small cortical responses of simple binaural beats.`,
+            log3: `[CLASSIFIED: CONTROLLED REMOTE VIEWING MANUAL - Stage I-IV]
+ANALYTICAL OVERLAY (AOL) BIAS DEVIATION
+-------------------------------------
+In remote viewing, Analytical Overlay (AOL) is the conscious mind's tendency to logically explain ambiguous, sub-threshold sensory signals by pulling from memory or imagination.
+
+STAGED SUPPRESSION METHOD:
+- STAGE I: Gestalt acquisition. Acquire the site's general terrain (land, water, mountain) within milliseconds via autonomic ideogram reflex.
+- STAGE II: Sensory contact. Note immediate tactile, thermal, aesthetic qualities before the left brain names them.
+- STAGE III: Dimensional perspective. Sketch vectors and spatial grids.
+- STAGE IV: Abstract qualitative categorization.
+
+If cognitive saturation or "Too Much AOL" is reached, coordinators must enforce a "Too Much Break" to reset autonomic signaling thresholds.`,
+            log4: `[CLASSIFIED: QUANTUM HOLOGRAPHY & REALITY SHIFTING]
+LEFT-HEMISPHERE SCRIPTING DISTRACTOR
+-------------------------------------
+Modern reality shifting protocols utilize highly detailed, structured written "scripts" specifying target environments, safe words, time dilation ratios, and safety protocols.
+
+NEURO-COGNITIVE FUNCTION:
+Drafting and reviewing a detailed script satisfies the left brain's logical demand for order, control, and structure.
+
+By fully occupying the left hemisphere's analytical gating routines, the holistic, pattern-seeking right hemisphere is freed to project highly vivid, immersive internal narratives, bypassing standard critical reality-monitoring networks.`
+        };
+
+        const crvTargets = [
+            {
+                coords: "8302 / 1948",
+                name: "STARGATE EXPERIMENT CHAMBER",
+                img: "../../assets/images/Stargate_Hex.png",
+                desc: "Classified quantum portal, circular metallic torus with active plasma core."
+            },
+            {
+                coords: "0482 / 9271",
+                name: "OCEANSIDE CLIFF Gestalt",
+                img: "../../assets/images/HexFenaraOceansideCliff.png",
+                desc: "Steep rocky crags meeting active water, high wind shear, ambient coastal temperature."
+            },
+            {
+                coords: "1192 / 8031",
+                name: "AI STORAGE GRID",
+                img: "../../assets/images/Hex_AI_test_unit.png",
+                desc: "Cybernetic server rack containing active cognitive sync unit."
+            },
+            {
+                coords: "4920 / 3810",
+                name: "RESEARCH LAB 04",
+                img: "../../assets/images/Hex-LabCoat.png",
+                desc: "Controlled clinical laboratory containing specialized sensory equipment."
+            },
+            {
+                coords: "7219 / 0382",
+                name: "THE ORB MATRIX",
+                img: "../../assets/images/Hex_The_OrbWM.png",
+                desc: "Hovering energetic spherical core, glowing yellow emitter."
+            }
+        ];
+
+        // === State Variables ===
+        let currentTimerSeconds = 600; // Default 10 mins
+        let timerInterval = null;
+        let isResonantPacing = false;
+        let pacerInterval = null;
+        let currentTargetIndex = 0;
+
+        // === Time dropdown generation ===
+        function initTimerDropdowns() {
+            for (let i = 0; i < 24; i++) {
+                timerHours.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
+            }
+            for (let i = 0; i < 60; i++) {
+                timerMinutes.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
+                timerSeconds.innerHTML += `<option value="${i}">${String(i).padStart(2, '0')}</option>`;
+            }
+            timerMinutes.value = "10"; // Default 10 mins
+        }
+
+        // === Timer logic ===
+        function updateCountdownUI(secs) {
+            const h = Math.floor(secs / 3600);
+            const m = Math.floor((secs % 3600) / 60);
+            const s = secs % 60;
+            countdownDisplay.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            // Read duration dropdown values
+            const h = parseInt(timerHours.value);
+            const m = parseInt(timerMinutes.value);
+            const s = parseInt(timerSeconds.value);
+            currentTimerSeconds = h * 3600 + m * 60 + s;
+
+            if (habituationCap.checked && currentTimerSeconds > 600) {
+                currentTimerSeconds = 600; // Limit to 10 minutes
+                timerHours.value = "0";
+                timerMinutes.value = "10";
+                timerSeconds.value = "0";
+                engine.playChirp('warning');
+            }
+
+            updateCountdownUI(currentTimerSeconds);
+
+            timerInterval = setInterval(() => {
+                if (currentTimerSeconds > 0) {
+                    currentTimerSeconds--;
+                    updateCountdownUI(currentTimerSeconds);
+                } else {
+                    // Trigger fade out on stop
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    if (engine.isPlaying) {
+                        engine.stop(true); // Stop with 2-second fade-out
                     }
-                    stopTimer();
-                    playStopBtn.textContent = 'Engage Audio Stream';
-                    playStopBtn.style.backgroundColor = 'var(--lcars-accent)';
                 }
-                isPlaying = !isPlaying;
-            });
-            
-            baseFreqSlider.addEventListener('input', () => {
-                presetSelect.value = 'custom';
-                updateFrequencies();
-            });
-            binauralFreqSlider.addEventListener('input', () => {
-                 presetSelect.value = 'custom';
-                updateFrequencies();
-            });
-            volumeSlider.addEventListener('input', updateVolume);
-            presetSelect.addEventListener('change', applyPreset);
-            
-            // --- Initial Setup Calls ---
-            populateTimeSelects();
-            updateFrequencies();
-            updateVolume();
+            }, 1000);
+        }
 
-            function handleTimeScroll(event, selectElement) {
-                event.preventDefault();
-                const direction = Math.sign(event.deltaY);
-                let currentIndex = selectElement.selectedIndex;
-                let newIndex = currentIndex - direction; // Inverted scrolling
-                if (newIndex < 0) {
-                    newIndex = selectElement.options.length - 1;
-                } else if (newIndex >= selectElement.options.length) {
-                    newIndex = 0;
-                }
-                selectElement.selectedIndex = newIndex;
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
             }
+        }
 
-            hoursSelect.addEventListener('wheel', (e) => handleTimeScroll(e, hoursSelect));
-            minutesSelect.addEventListener('wheel', (e) => handleTimeScroll(e, minutesSelect));
-            secondsSelect.addEventListener('wheel', (e) => handleTimeScroll(e, secondsSelect));
-
-            function handleSliderScroll(event, sliderElement) {
-                event.preventDefault();
-                const direction = Math.sign(event.deltaY);
-                let currentValue = parseFloat(sliderElement.value);
-                let step = parseFloat(sliderElement.step) || 1;
-                let newValue = currentValue - direction * step; // Inverted scrolling
-                let min = parseFloat(sliderElement.min);
-                let max = parseFloat(sliderElement.max);
-
-                if (newValue < min) {
-                    newValue = min;
-                } else if (newValue > max) {
-                    newValue = max;
-                }
-
-                sliderElement.value = newValue;
-                // Trigger the input event to update the UI and audio
-                sliderElement.dispatchEvent(new Event('input'));
+        // === UI Sync state ===
+        function updateStatusUI(isPlaying) {
+            if (isPlaying) {
+                gatewayStatus.textContent = 'ONLINE';
+                gatewayStatus.className = "px-2 py-0.5 rounded text-xs font-bold bg-green-950 text-green-500 border border-green-500";
+                engageBtn.textContent = 'DISENGAGE AUDIO STREAM';
+                engageBtn.className = "lcars-btn bg-red-800 text-white hover:bg-red-700 lcars-font text-lg py-3 w-full shadow-lg";
+            } else {
+                gatewayStatus.textContent = 'OFFLINE';
+                gatewayStatus.className = "px-2 py-0.5 rounded text-xs font-bold bg-red-950 text-red-500 border border-red-500";
+                engageBtn.textContent = 'ENGAGE COGNITIVE PROTOCOL';
+                engageBtn.className = "lcars-btn btn-accent lcars-font text-lg py-3 w-full shadow-lg hover:shadow-amber-500/20";
+                stopTimer();
             }
+        }
 
+        // === Resonant Breathing Pacer ===
+        function triggerPacer() {
+            if (pacerInterval) clearInterval(pacerInterval);
+            
+            const bpm = parseFloat(breathsSlider.value);
+            const cycleDuration = (60 / bpm) * 1000; // duration in milliseconds
+            const halfCycle = cycleDuration / 2;
+            
+            pacerText.textContent = "INHALE";
+            breathingRing.style.transition = `transform ${halfCycle}ms ease-out, opacity ${halfCycle}ms ease-out`;
+            breathingRing.style.transform = "scale(3.5)";
+            breathingRing.style.opacity = "1";
+            
+            let inhale = true;
+            
+            pacerInterval = setInterval(() => {
+                inhale = !inhale;
+                if (inhale) {
+                    pacerText.textContent = "INHALE";
+                    breathingRing.style.transition = `transform ${halfCycle}ms ease-out, opacity ${halfCycle}ms ease-out`;
+                    breathingRing.style.transform = "scale(3.5)";
+                    breathingRing.style.opacity = "1";
+                } else {
+                    pacerText.textContent = "EXHALE";
+                    breathingRing.style.transition = `transform ${halfCycle}ms ease-in, opacity ${halfCycle}ms ease-in`;
+                    breathingRing.style.transform = "scale(1)";
+                    breathingRing.style.opacity = "0.3";
+                }
+            }, halfCycle);
+        }
+
+        // === Typewriter Database Log Loader ===
+        let logInterval = null;
+        function loadLog(logKey) {
+            if (logInterval) clearInterval(logInterval);
+            const logBox = document.getElementById('database-log-output');
+            logBox.textContent = '';
+            const text = logs[logKey];
+            let index = 0;
+            
+            engine.playChirp('click');
+            
+            logInterval = setInterval(() => {
+                logBox.textContent += text[index];
+                index++;
+                logBox.scrollTop = logBox.scrollHeight;
+                if (index >= text.length) {
+                    clearInterval(logInterval);
+                }
+            }, 5);
+        }
+
+        // === Controlled Remote Viewing (CRV) Target sketchpad ===
+        const sketchpad = document.getElementById('crv-sketchpad');
+        const sCtx = sketchpad.getContext('2d');
+        let drawing = false;
+
+        function getMousePos(canvasDom, clientX, clientY) {
+            const rect = canvasDom.getBoundingClientRect();
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function drawSketch(e, clientX, clientY) {
+            if (!drawing) return;
+            sCtx.lineWidth = 2;
+            sCtx.lineCap = 'round';
+            sCtx.strokeStyle = 'var(--lcars-green)';
+            
+            const pos = getMousePos(sketchpad, clientX, clientY);
+            sCtx.lineTo(pos.x, pos.y);
+            sCtx.stroke();
+            sCtx.beginPath();
+            sCtx.moveTo(pos.x, pos.y);
+        }
+
+        sketchpad.addEventListener('mousedown', (e) => { drawing = true; const p = getMousePos(sketchpad, e.clientX, e.clientY); sCtx.moveTo(p.x, p.y); });
+        sketchpad.addEventListener('mouseup', () => { drawing = false; sCtx.beginPath(); });
+        sketchpad.addEventListener('mousemove', (e) => drawSketch(e, e.clientX, e.clientY));
+
+        // Touch support for tablets/phones
+        sketchpad.addEventListener('touchstart', (e) => {
+            drawing = true;
+            const t = e.touches[0];
+            const p = getMousePos(sketchpad, t.clientX, t.clientY);
+            sCtx.moveTo(p.x, p.y);
+        });
+        sketchpad.addEventListener('touchend', () => { drawing = false; sCtx.beginPath(); });
+        sketchpad.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const t = e.touches[0];
+            drawSketch(e, t.clientX, t.clientY);
+        });
+
+        document.getElementById('clear-sketchpad-btn').addEventListener('click', () => {
+            engine.playChirp('click');
+            sCtx.clearRect(0, 0, sketchpad.width, sketchpad.height);
+        });
+
+        // "Too Much Break" Cooldown (AOL Reset)
+        let cooldownActive = false;
+        let cooldownInterval = null;
+        document.getElementById('too-much-break-btn').addEventListener('click', () => {
+            if (cooldownActive) return;
+            engine.playChirp('warning');
+            cooldownActive = true;
+            
+            const timerBox = document.getElementById('cooldown-box');
+            const timerVal = document.getElementById('cooldown-timer');
+            timerBox.classList.remove('hidden');
+            sketchpad.style.pointerEvents = 'none'; // disable drawing
+            
+            let secs = 10;
+            timerVal.textContent = secs;
+            
+            cooldownInterval = setInterval(() => {
+                secs--;
+                timerVal.textContent = secs;
+                if (secs <= 0) {
+                    clearInterval(cooldownInterval);
+                    cooldownActive = false;
+                    timerBox.classList.add('hidden');
+                    sketchpad.style.pointerEvents = 'auto';
+                    sCtx.clearRect(0, 0, sketchpad.width, sketchpad.height); // clear pad on return
+                }
+            }, 1000);
+        });
+
+        // CRV Coordinator target decrypt
+        document.getElementById('crv-reveal-btn').addEventListener('click', () => {
+            engine.playChirp('engage');
+            const display = document.getElementById('crv-target-display');
+            const img = document.getElementById('crv-target-img');
+            const title = document.getElementById('crv-target-title');
+            const desc = document.getElementById('crv-target-desc');
+            
+            const target = crvTargets[currentTargetIndex];
+            img.src = target.img;
+            title.textContent = `TARGET: ${target.name} [DECRYPTED]`;
+            desc.textContent = `Gestalt Verification coordinates matching: ${target.coords}. Description: ${target.desc}`;
+            
+            display.classList.remove('hidden');
+            
+            // Advance target index for next generation
+            currentTargetIndex = (currentTargetIndex + 1) % crvTargets.length;
+        });
+
+        // Generate coordinate trigger
+        function generateCrvCoordinates() {
+            const part1 = String(Math.floor(1000 + Math.random() * 9000));
+            const part2 = String(Math.floor(1000 + Math.random() * 9000));
+            document.getElementById('crv-coords').textContent = `${part1} / ${part2}`;
+            document.getElementById('crv-target-display').classList.add('hidden');
+            sCtx.clearRect(0, 0, sketchpad.width, sketchpad.height);
+            document.getElementById('crv-sensory').value = '';
+            
+            document.getElementById('gestalt-land').checked = false;
+            document.getElementById('gestalt-water').checked = false;
+            document.getElementById('gestalt-structure').checked = false;
+            document.getElementById('gestalt-air').checked = false;
+        }
+
+        // === RS Scripting Logic ===
+        document.getElementById('rs-commit-btn').addEventListener('click', () => {
+            const targetReality = document.getElementById('rs-reality').value || 'UNDETERMINED GRID';
+            engine.playChirp('engage');
+            alert(`SCRIPT PROTOCOL DIRECTIVE LOCKED.\nTARGET REALITY: ${targetReality.toUpperCase()}\nLEFT-HEMISPHERE DISTRACTOR ENGAGED.`);
+        });
+
+        // === Event Listeners for parameters ===
+        modeBinauralBtn.addEventListener('click', () => {
+            engine.playChirp('click');
+            engine.mode = 'binaural';
+            modeBinauralBtn.className = "lcars-btn flex-grow text-xs btn-active lcars-font";
+            modeIsochronicBtn.className = "lcars-btn flex-grow text-xs lcars-font";
+            modeHybridBtn.className = "lcars-btn flex-grow text-xs lcars-font";
+            presetSelect.value = 'custom';
+            engine.updateAudioParameters();
+        });
+
+        modeIsochronicBtn.addEventListener('click', () => {
+            engine.playChirp('click');
+            engine.mode = 'isochronic';
+            modeBinauralBtn.className = "lcars-btn flex-grow text-xs lcars-font";
+            modeIsochronicBtn.className = "lcars-btn flex-grow text-xs btn-active lcars-font";
+            modeHybridBtn.className = "lcars-btn flex-grow text-xs lcars-font";
+            presetSelect.value = 'custom';
+            engine.updateAudioParameters();
+        });
+
+        modeHybridBtn.addEventListener('click', () => {
+            engine.playChirp('click');
+            engine.mode = 'hybrid';
+            modeBinauralBtn.className = "lcars-btn flex-grow text-xs lcars-font";
+            modeIsochronicBtn.className = "lcars-btn flex-grow text-xs lcars-font";
+            modeHybridBtn.className = "lcars-btn flex-grow text-xs btn-active lcars-font";
+            presetSelect.value = 'custom';
+            engine.updateAudioParameters();
+        });
+
+        presetSelect.addEventListener('change', () => {
+            engine.playChirp('click');
+            const val = presetSelect.value;
+            if (val === 'custom') return;
+            
+            const p = presets[val];
+            baseFreqSlider.value = p.base;
+            beatFreqSlider.value = p.beat;
+            
+            baseFreqVal.textContent = `${p.base} HZ`;
+            beatFreqVal.textContent = `${p.beat.toFixed(1)} HZ`;
+            
+            engine.carrierFreq = p.base;
+            engine.beatFreq = p.beat;
+            
+            // Sync frequencies
+            engine.updateAudioParameters();
+            
+            // Sync displays
+            freqLeft.textContent = `${p.base.toFixed(1)} HZ`;
+            freqRight.textContent = `${(p.base + p.beat).toFixed(1)} HZ`;
+            brainwaveState.textContent = getStateName(p.beat);
+        });
+
+        // Carrier frequency slider adjustments
+        baseFreqSlider.addEventListener('input', () => {
+            presetSelect.value = 'custom';
+            const val = parseInt(baseFreqSlider.value);
+            baseFreqVal.textContent = `${val} HZ`;
+            engine.carrierFreq = val;
+            engine.updateAudioParameters();
+            
+            freqLeft.textContent = `${val.toFixed(1)} HZ`;
+            freqRight.textContent = `${(val + engine.beatFreq).toFixed(1)} HZ`;
+        });
+
+        // Beat offset frequency slider adjustments
+        beatFreqSlider.addEventListener('input', () => {
+            presetSelect.value = 'custom';
+            const val = parseFloat(beatFreqSlider.value);
+            beatFreqVal.textContent = `${val.toFixed(1)} HZ`;
+            engine.beatFreq = val;
+            engine.updateAudioParameters();
+            
+            freqRight.textContent = `${(engine.carrierFreq + val).toFixed(1)} HZ`;
+            brainwaveState.textContent = getStateName(val);
+        });
+
+        // Fine tune beat offset buttons (+/- 0.1 Hz)
+        beatDecBtn.addEventListener('click', () => {
+            engine.playChirp('click');
+            presetSelect.value = 'custom';
+            let val = parseFloat(beatFreqSlider.value);
+            val = Math.max(1.0, val - 0.1);
+            beatFreqSlider.value = val;
+            beatFreqVal.textContent = `${val.toFixed(1)} HZ`;
+            engine.beatFreq = val;
+            engine.updateAudioParameters();
+            
+            freqRight.textContent = `${(engine.carrierFreq + val).toFixed(1)} HZ`;
+            brainwaveState.textContent = getStateName(val);
+        });
+
+        beatIncBtn.addEventListener('click', () => {
+            engine.playChirp('click');
+            presetSelect.value = 'custom';
+            let val = parseFloat(beatFreqSlider.value);
+            val = Math.min(50.0, val + 0.1);
+            beatFreqSlider.value = val;
+            beatFreqVal.textContent = `${val.toFixed(1)} HZ`;
+            engine.beatFreq = val;
+            engine.updateAudioParameters();
+            
+            freqRight.textContent = `${(engine.carrierFreq + val).toFixed(1)} HZ`;
+            brainwaveState.textContent = getStateName(val);
+        });
+
+        // Hum slider adjustments
+        humSlider.addEventListener('input', () => {
+            const val = parseInt(humSlider.value);
+            humVal.textContent = `${val} DB`;
+            engine.noiseVolume = val;
+            engine.updateAudioParameters();
+        });
+
+        // Volume slider adjustments
+        volumeSlider.addEventListener('input', () => {
+            const val = parseInt(volumeSlider.value);
+            volumeVal.textContent = `${val} DB`;
+            engine.volume = val;
+            engine.updateAudioParameters();
+        });
+
+        // Resonant pacer BPM slider adjustments
+        breathsSlider.addEventListener('input', () => {
+            const val = parseFloat(breathsSlider.value);
+            breathsVal.textContent = `${val.toFixed(1)} BPM`;
+            if (isResonantPacing) {
+                triggerPacer(); // Recalibrate interval timing on adjustment
+            }
+        });
+
+        // === Tab switching ===
+        tabDbBtn.addEventListener('click', () => {
+            engine.playChirp('click');
+            tabDbBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 btn-active lcars-font";
+            tabCrvBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 lcars-font";
+            tabRsBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 lcars-font";
+            panelDb.classList.remove('hidden');
+            panelCrv.classList.add('hidden');
+            panelRs.classList.add('hidden');
+        });
+
+        tabCrvBtn.addEventListener('click', () => {
+            engine.playChirp('click');
+            tabDbBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 lcars-font";
+            tabCrvBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 btn-active lcars-font";
+            tabRsBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 lcars-font";
+            panelDb.classList.add('hidden');
+            panelCrv.classList.remove('hidden');
+            panelRs.classList.add('hidden');
+            generateCrvCoordinates();
+        });
+
+        tabRsBtn.addEventListener('click', () => {
+            engine.playChirp('click');
+            tabDbBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 lcars-font";
+            tabCrvBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 lcars-font";
+            tabRsBtn.className = "lcars-btn flex-grow text-xs rounded-none border-b border-purple-800 btn-active lcars-font";
+            panelDb.classList.add('hidden');
+            panelCrv.classList.add('hidden');
+            panelRs.classList.remove('hidden');
+        });
+
+        // Helper to name brainwave state based on beat frequency
+        function getStateName(beat) {
+            if (beat < 4) return 'DELTA STATE';
+            if (beat < 8) return 'THETA STATE';
+            if (beat < 13) return 'ALPHA STATE';
+            if (beat < 30) return 'BETA STATE';
+            return 'GAMMA STATE';
+        }
+
+        // === Engage button click ===
+        engageBtn.addEventListener('click', async () => {
+            if (!engine.isPlaying) {
+                await engine.start();
+                updateStatusUI(true);
+                startTimer();
+                
+                // Active breathing pacer
+                isResonantPacing = true;
+                triggerPacer();
+            } else {
+                engine.stop(true); // Smooth fade stop
+                updateStatusUI(false);
+                stopTimer();
+                
+                // Clear breathing pacer
+                isResonantPacing = false;
+                if (pacerInterval) {
+                    clearInterval(pacerInterval);
+                    pacerInterval = null;
+                }
+                pacerText.textContent = "READY";
+                breathingRing.style.transform = "scale(1)";
+                breathingRing.style.opacity = "0.3";
+            }
+        });
+
+        // === Visualizer Animation Loop ===
+        function drawVisualizers() {
+            requestAnimationFrame(drawVisualizers);
+            
+            // Clear canvas
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw faint grid grid lines
+            ctx.strokeStyle = 'rgba(102, 153, 255, 0.12)';
+            ctx.lineWidth = 1;
+            for (let x = 20; x < canvas.width; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 20; y < canvas.height; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+            
+            if (!engine || !engine.isPlaying || !engine.analyserL || !engine.analyserR) {
+                // Static display line
+                ctx.strokeStyle = 'var(--lcars-secondary)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height / 2);
+                ctx.lineTo(canvas.width, canvas.height / 2);
+                ctx.stroke();
+                return;
+            }
+            
+            const leftData = engine.analyserL.getValue();
+            const rightData = engine.analyserR.getValue();
+            const bufferLength = leftData.length;
+            const visType = visualizerTypeSelect.value;
+            
+            if (visType === 'lissajous') {
+                // Lissajous curve phase scope (left amplitude vs right amplitude)
+                ctx.strokeStyle = 'var(--lcars-primary)';
+                ctx.lineWidth = 2.5;
+                ctx.shadowBlur = 4;
+                ctx.shadowColor = 'var(--lcars-primary)';
+                ctx.beginPath();
+                
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = Math.min(centerX, centerY) * 0.75;
+                
+                for (let i = 0; i < bufferLength; i++) {
+                    const xVal = leftData[i];
+                    const yVal = rightData[i];
+                    
+                    const px = centerX + xVal * scale;
+                    const py = centerY + yVal * scale;
+                    
+                    if (i === 0) {
+                        ctx.moveTo(px, py);
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                }
+                ctx.stroke();
+                ctx.shadowBlur = 0; // reset
+                
+                // Outer target indicator
+                ctx.strokeStyle = 'rgba(255, 153, 0, 0.2)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, scale, 0, 2 * Math.PI);
+                ctx.stroke();
+            } else {
+                // Split waveforms display
+                ctx.lineWidth = 2;
+                const halfHeight = canvas.height / 2;
+                
+                // Left channel (Top)
+                ctx.strokeStyle = 'var(--lcars-primary)';
+                ctx.beginPath();
+                for (let i = 0; i < bufferLength; i++) {
+                    const v = leftData[i];
+                    const x = (i / bufferLength) * canvas.width;
+                    const y = halfHeight / 2 + v * (halfHeight / 2) * 0.95;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                
+                // Right channel (Bottom)
+                ctx.strokeStyle = 'var(--lcars-accent)';
+                ctx.beginPath();
+                for (let i = 0; i < bufferLength; i++) {
+                    const v = rightData[i];
+                    const x = (i / bufferLength) * canvas.width;
+                    const y = (halfHeight * 1.5) + v * (halfHeight / 2) * 0.95;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                
+                // Midpoint divider line
+                ctx.strokeStyle = 'rgba(255, 204, 153, 0.25)';
+                ctx.beginPath();
+                ctx.moveTo(0, halfHeight);
+                ctx.lineTo(canvas.width, halfHeight);
+                ctx.stroke();
+            }
+        }
+
+        // === Time updates ===
+        function updateTime() {
+            const d = new Date();
+            document.getElementById('footer-time').textContent = d.toLocaleTimeString();
+        }
+
+        // === Initial Load ===
+        document.addEventListener('DOMContentLoaded', () => {
+            initTimerDropdowns();
+            updateCountdownUI(currentTimerSeconds);
+            setInterval(updateTime, 1000);
+            updateTime();
+            
+            // Start anim frame loop
+            drawVisualizers();
+            
+            // Scroll Wheel handler support for range inputs
+            function handleSliderScroll(e, slider) {
+                e.preventDefault();
+                const dir = Math.sign(e.deltaY);
+                let val = parseFloat(slider.value);
+                const step = parseFloat(slider.step) || 1;
+                
+                val = Math.max(parseFloat(slider.min), Math.min(parseFloat(slider.max), val - dir * step));
+                slider.value = val;
+                
+                // Dispatch input event to update values
+                slider.dispatchEvent(new Event('input'));
+            }
+            
             baseFreqSlider.addEventListener('wheel', (e) => handleSliderScroll(e, baseFreqSlider));
-            binauralFreqSlider.addEventListener('wheel', (e) => handleSliderScroll(e, binauralFreqSlider));
+            beatFreqSlider.addEventListener('wheel', (e) => handleSliderScroll(e, beatFreqSlider));
+            humSlider.addEventListener('wheel', (e) => handleSliderScroll(e, humSlider));
             volumeSlider.addEventListener('wheel', (e) => handleSliderScroll(e, volumeSlider));
+            breathsSlider.addEventListener('wheel', (e) => handleSliderScroll(e, breathsSlider));
         });
     </script>
 </body>
 </html>
-
