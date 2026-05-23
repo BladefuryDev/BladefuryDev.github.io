@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hexfury - Gallery</title>
     <link rel="icon" type="image/x-icon" href="../assets/icons/PRSG.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
     <link href="../public/output.css" rel="stylesheet">
     <link href="../assets/commonCss/repeatables.css" rel="stylesheet">
 </head>
-<body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
+<body class="font-sans antialiased">
 
     <div class="container mx-auto px-2 sm:px-4">
         <!-- Placeholder for the navigation bar -->
@@ -16,52 +23,63 @@
 
         <!-- This container will be animated -->
         <div id="page-container">
-            <main class="space-y-20 py-10">
-            <!-- Intro Section -->
-            <section id="gallery-intro" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)] text-center">
-                <h1 class="text-4xl font-bold text-center mb-12">My Gallery</h1>
-                <p class="text-lg text-[--color-text-muted] max-w-4xl mx-auto">
-                    Welcome to my personal gallery. This is a curated collection of artwork, commissions, and other visual projects I've had the pleasure of being a part of. Feel free to browse around and click on any image to see a larger version.
-                </p>
-            </section>
+            <main class="space-y-16 py-10">
+                
+                <!-- Intro Section -->
+                <section id="gallery-intro" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] border border-[--color-primary-light]/10 backdrop-blur-md shadow-xl text-center">
+                    <h1 class="text-3xl sm:text-4xl font-black text-center mb-6 tech-header">My Gallery</h1>
+                    <p class="text-base sm:text-lg text-[--color-text-muted] max-w-3xl mx-auto leading-relaxed">
+                        Welcome to my creative archive. Below is a curated collection of character drawings, graphic commissions, and worldbuilding visuals. Click on any frame to activate the high-resolution overlay.
+                    </p>
+                </section>
 
-            <!-- Gallery Grid Section -->
-            <section id="gallery-grid" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
-                <h2 class="text-4xl font-bold text-center mb-12">Collection</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Repeat this card structure 9 times -->
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/images/Hex_The_OrbWM.png" alt="Hex the Riolu, falling through a portal opened by an anomalous dark blue Orb.">
+                <!-- Gallery Grid Section -->
+                <section id="gallery-grid" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] border border-[--color-primary-light]/10 backdrop-blur-md shadow-xl">
+                    <h2 class="text-2xl sm:text-3xl font-black text-center mb-12 tech-header">Art Archives</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/Hex_Original_Artwork_Portal.png" alt="Hex the Riolu, falling through a portal opened by an anomalous dark blue Orb." onerror="this.src='../assets/images/Hex_The_OrbWM.png'">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/Stargate_Hex.png" alt="Hex the Riolu turning on a Stargate structure.">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/HexFenaraOceansideCliff.png" alt="Hex the Riolu and a friendly Fennekin both overlooking the ocean from atop a scenic cliff.">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/HexLucario.png" alt="Hex as a Lucario, waving at the viewer.">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/Hex_AI_test_unit.png" alt="A starry night sky and mountains in the distance.">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-contain pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/Hex-LabCoat.png" alt="Hex the Riolu wearing a snazzy blue lab coat.">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/HexBackrooms.png" alt="Hex the Riolu is lost in the backrooms!">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/Hex_-_Rememberance_1.png" alt="Hex overlooking the ruins of a city he once called home.">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/icons/ttmp-Logo.png" alt="The logo for Tome Tales Management Panel.">
+                        </div>
+                        <!-- Gallery Item -->
+                        <div class="gallery-image-container p-3 rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:shadow-lg hover:shadow-[--color-primary-glow]/15">
+                            <img class="w-full h-64 object-cover pointer-events-none rounded-lg border border-[--grid-color]" src="../assets/images/projects/WATERMARK -HEX- Alan Hexfury.png" alt="A fictional watermark logo for a roleplay project.">
+                        </div>
                     </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/images/Stargate_Hex.png" alt="Hex the Riolu turning on a Stargate.">
-                    </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/images/HexFenaraOceansideCliff.png" alt="Hex the Riolu and a friendly Fennekin both overlooking the ocean from atop a scenic cliff.">
-                    </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/images/HexLucario.png" alt="Hex as a Lucario, waving at the viewer.">
-                    </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/images/Hex_AI_test_unit.png" alt="A pretty drawing depicting a starry night sky and mountains in the distance.">
-                    </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-contain pointer-events-none rounded-lg" src="../assets/images/Hex-LabCoat.png" alt="Hex the Riolu wearing a snazzy blue lab coat.">
-                    </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/images/HexBackrooms.png" alt="Hex the Riolu is lost in the backrooms!">
-                    </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/images/Hex_-_Rememberance_1.png" alt="Hex overlooking the ruins of a city he once called home.">
-                    </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/icons/ttmp-Logo.png" alt="The logo for Tome Tales Management Panel.">
-                    </div>
-                    <div class="gallery-image-container p-4 rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
-                        <img class="w-full h-64 object-cover pointer-events-none rounded-lg" src="../assets/images/projects/WATERMARK -HEX- Alan Hexfury.png" alt="A fictional watermark for a fictional corporation.">
-                    </div>
-                </div>
-            </section>
+                </section>
             </main>
         </div>
 
@@ -71,7 +89,30 @@
 
     <!-- Image Modal --> 
     <div id="image-modal">
-        <img src="" alt="Enlarged gallery image" class="modal-content rounded-lg" id="modal-image-content">
+        <div id="image-modal-container" class="flex flex-col items-center gap-4 max-w-[90vw] max-h-[95vh]">
+            <img src="" alt="Enlarged gallery image" class="modal-content rounded-lg" id="modal-image-content">
+            <!-- Buttons panel -->
+            <div class="flex items-center gap-3 font-mono text-xs z-20">
+                <a id="modal-btn-tab" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg border border-[--color-primary-light]/30 bg-slate-900/80 hover:bg-[--color-primary-light]/20 hover:border-[--color-primary-light] text-[--color-primary-light] transition-all duration-200 flex items-center gap-1.5 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    <span>Open Tab</span>
+                </a>
+                <a id="modal-btn-download" href="#" download class="px-3 py-1.5 rounded-lg border border-[--color-primary-light]/30 bg-slate-900/80 hover:bg-[--color-primary-light]/20 hover:border-[--color-primary-light] text-[--color-primary-light] transition-all duration-200 flex items-center gap-1.5 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span>Save Image</span>
+                </a>
+                <button id="modal-btn-close" class="px-3 py-1.5 rounded-lg border border-red-500/30 bg-slate-900/80 hover:bg-red-500/20 hover:border-red-500 text-red-400 transition-all duration-200 flex items-center gap-1.5 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span>Close</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Tooltip for gallery images -->

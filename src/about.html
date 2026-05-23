@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hexfury - About Me</title>
     <link rel="icon" type="image/x-icon" href="../assets/icons/PRSG.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
     <link href="../public/output.css" rel="stylesheet">
     <link href="../assets/commonCss/repeatables.css" rel="stylesheet">
 </head>
-<body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
+<body class="font-sans antialiased">
 
     <div class="container mx-auto px-2 sm:px-4">
         <!-- Placeholder for the navigation bar -->
@@ -16,51 +23,55 @@
 
         <!-- This container will be animated -->
         <div id="page-container">
-            <main class="space-y-20 py-10">
+            <main class="space-y-16 py-10">
+                
                 <!-- My Story Section -->
-                <section id="story" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
-                    <h1 class="text-4xl font-bold text-center mb-12">My Story</h1>
-                    <div class="max-w-4xl mx-auto text-lg text-[--color-text-muted] space-y-6">
+                <section id="story" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] border border-[--color-primary-light]/10 backdrop-blur-md shadow-xl">
+                    <h1 class="text-3xl sm:text-4xl font-black text-center mb-8 tech-header">My Story</h1>
+                    <div class="max-w-4xl mx-auto text-base sm:text-lg text-[--color-text-muted] space-y-6 leading-relaxed">
                         <p>
-                            Hello! I'm a passionate and self-taught developer with a knack for problem-solving and a love for technology. My journey into the world of code began not in a classroom, but with a curiosity for how games worked. This led me to dive headfirst into LUA scripting, where I spent countless hours tweaking, building, and bringing my own ideas to life within game environments.
+                            Hello! I'm a passionate, self-taught developer with a knack for debugging complex logic and assembly configurations. My journey into coding began out of curiosity about game engine operations, prompting me to dive into Lua scripting where I built admin modules and customized game systems.
                         </p>
                         <p>
-                            This hands-on experience taught me more than just syntax; it taught me how to think like a developer, how to debug complex systems, and how to collaborate with others to build something amazing. From there, my interests expanded. I found a similar joy in the tangible world of PC hardware—diagnosing issues, building machines from scratch, and optimizing performance. This blend of software and hardware knowledge gives me a unique, holistic perspective on technology.
+                            This hands-on training went beyond learning standard code structures; it built my understanding of logical systems, collaborative git workflows, and clean QA testing practices. My curiosity also led me to repair computer hardware, performing diagnostics and custom computer assemblies. This software-hardware integration equips me with a holistic view of technology systems.
                         </p>
                         <p>
-                            Now, I'm channeling that same energy and dedication into web development, creating intuitive and beautiful user experiences. This portfolio is a showcase of my journey so far, from my early projects to my latest work. Feel free to explore!
+                            Today, I channel that technical base into developing responsive, premium frontend environments and interactive web widgets. This site is my sandbox and project log—feel free to run diagnostics and explore my catalog!
                         </p>
                     </div>
                 </section>
 
                 <!-- My Expertise Section -->
-                <section id="expertise" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
-                    <h2 class="text-4xl font-bold text-center mb-12">My Expertise</h2>
-                    <div class="max-w-4xl mx-auto text-lg text-center text-[--color-text-muted] mb-12">
-                        <p>Over the years, my curiosity has led me to explore and develop a diverse set of skills. Each card below represents a key area of my expertise. Hover over any of them to learn more and see my self-assessed comfort level—I believe in transparently and honestly representing my capabilities.</p>
+                <section id="expertise" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] border border-[--color-primary-light]/10 backdrop-blur-md shadow-xl">
+                    <h2 class="text-3xl sm:text-4xl font-black text-center mb-6 tech-header">My Expertise</h2>
+                    <div class="max-w-4xl mx-auto text-base text-center text-[--color-text-muted] mb-12 leading-relaxed">
+                        <p>Hover over or tap any module card below to run a diagnostic readout on my familiarity, core toolkits, and comfort ratings across my technical skillsets.</p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                         <!-- Flip Card: Game Development -->
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front flex-col items-center justify-center">
-                                    <div class="flex h-30 w-auto">
-                                        <img src="../assets/icons/icons8-roblox-studio-100.png" alt="Game Development Icon" class="h-full w-full">
+                                    <div class="flex h-24 w-auto mb-4">
+                                        <img src="../assets/icons/icons8-roblox-studio-100.png" alt="Game Development Icon" class="h-full w-full object-contain filter dark:brightness-90">
                                     </div>
-                                    <h3 class="text-2xl font-bold mt-4">Game Development</h3>
+                                    <h3 class="text-xl font-bold tracking-wide text-[--color-text]">Game Development</h3>
                                 </div>
                                 <div class="flip-card-back">
-                                    <h3 class="text-2xl font-bold mb-2">Game Development</h3>
-                                    <p class="text-slate-200">My roots are in LUA-based game development. I have extensive experience creating administrative tools, backend systems, and gameplay mechanics. I excel at understanding large codebases and contributing effectively to team projects like Aeronautica.</p>
-                                    <div class="w-full mt-auto pt-4">
-                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                    <h3 class="text-lg font-bold mb-2 text-[--color-primary-light] uppercase tracking-wider font-mono">Game Dev</h3>
+                                    <p class="text-sm text-[--color-text-muted] leading-relaxed mb-4">
+                                        Rooted in LUA-based engine pipelines. Specialities include administrative APIs, backend controller systems, and contribution to major collaborative flight engines like Aeronautica.
+                                    </p>
+                                    <div class="w-full mt-auto">
+                                        <p class="text-xs font-semibold text-[--color-text-muted] mb-1.5 uppercase font-mono tracking-wider">Diagnostic Level</p>
                                         <div class="progress-bar mx-auto">
                                             <div class="progress-segment filled"></div>
                                             <div class="progress-segment filled"></div>
                                             <div class="progress-segment filled"></div>
-                                            <div class="progress-segment"></div>
-                                            <div class="progress-segment"></div>
+                                            <div class="progress-segment filled"></div>
+                                            <div class="progress-segment filled"></div>
                                             <div class="progress-segment"></div>
                                         </div>
                                     </div>
@@ -72,16 +83,18 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front flex-col items-center justify-center">
-                                    <div class="flex h-30 w-auto">
-                                        <img src="../assets/icons/icons8-web-development-100.png" alt="Web Development Icon" class="h-full w-full">
+                                    <div class="flex h-24 w-auto mb-4">
+                                        <img src="../assets/icons/icons8-web-development-100.png" alt="Web Development Icon" class="h-full w-full object-contain filter dark:brightness-90">
                                     </div>
-                                    <h3 class="text-2xl font-bold mt-4">Web Design</h3>
+                                    <h3 class="text-xl font-bold tracking-wide text-[--color-text]">Web Design</h3>
                                 </div>
                                 <div class="flip-card-back">
-                                    <h3 class="text-2xl font-bold mb-2">Web Design</h3>
-                                    <p class="text-slate-200">I build modern, responsive websites from the ground up. My toolkit includes HTML, CSS, and JavaScript, with a focus on utility-first frameworks like Tailwind CSS. This very portfolio is a growing sample to my design and development skills.</p>
-                                    <div class="w-full mt-auto pt-4">
-                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                    <h3 class="text-lg font-bold mb-2 text-[--color-primary-light] uppercase tracking-wider font-mono">Web Design</h3>
+                                    <p class="text-sm text-[--color-text-muted] leading-relaxed mb-4">
+                                        Assembling responsive, clean websites utilizing HTML, CSS, JavaScript, and Tailwind CSS. Focused on micro-animations, glassmorphism, and responsive layouts.
+                                    </p>
+                                    <div class="w-full mt-auto">
+                                        <p class="text-xs font-semibold text-[--color-text-muted] mb-1.5 uppercase font-mono tracking-wider">Diagnostic Level</p>
                                         <div class="progress-bar mx-auto">
                                             <div class="progress-segment filled"></div>
                                             <div class="progress-segment filled"></div>
@@ -99,16 +112,18 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front flex-col items-center justify-center">
-                                    <div class="flex h-30 w-auto">
-                                        <img src="../assets/icons/icons8-computer-support-100.png" alt="QA and Hardware Icon" class="h-full w-full">
+                                    <div class="flex h-24 w-auto mb-4">
+                                        <img src="../assets/icons/icons8-computer-support-100.png" alt="QA and Hardware Icon" class="h-full w-full object-contain filter dark:brightness-90">
                                     </div>
-                                    <h3 class="text-2xl font-bold mt-4">QA & PC Hardware</h3>
+                                    <h3 class="text-xl font-bold tracking-wide text-[--color-text]">QA & PC Hardware</h3>
                                 </div>
                                 <div class="flip-card-back">
-                                    <h3 class="text-2xl font-bold mb-2">QA & PC Hardware</h3>
-                                    <p class="text-slate-200">With a background in QA testing, I have a keen eye for detail and a methodical approach to identifying and resolving issues. I'm also proficient in PC hardware repair, diagnostics, and custom builds, giving me a full-stack understanding of a system.</p>
-                                    <div class="w-full mt-auto pt-4">
-                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                    <h3 class="text-lg font-bold mb-2 text-[--color-primary-light] uppercase tracking-wider font-mono">QA & Hardware</h3>
+                                    <p class="text-sm text-[--color-text-muted] leading-relaxed mb-4">
+                                        Experienced QA debugger tracking and logging software errors. Highly proficient in custom hardware repairs, diagnostic reporting, and custom rig configurations.
+                                    </p>
+                                    <div class="w-full mt-auto">
+                                        <p class="text-xs font-semibold text-[--color-text-muted] mb-1.5 uppercase font-mono tracking-wider">Diagnostic Level</p>
                                         <div class="progress-bar mx-auto">
                                             <div class="progress-segment filled"></div>
                                             <div class="progress-segment filled"></div>
@@ -126,21 +141,23 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front flex-col items-center justify-center">
-                                    <div class="flex h-30 w-auto">
-                                        <img src="../assets/icons/icons8-art-100.png" alt="Digital Art Icon" class="h-full w-full">
+                                    <div class="flex h-24 w-auto mb-4">
+                                        <img src="../assets/icons/icons8-art-100.png" alt="Digital Art Icon" class="h-full w-full object-contain filter dark:brightness-90">
                                     </div>
-                                    <h3 class="text-2xl font-bold mt-4">Digital Art & Design</h3>
+                                    <h3 class="text-xl font-bold tracking-wide text-[--color-text]">Digital Art & Design</h3>
                                 </div>
                                 <div class="flip-card-back">
-                                    <h3 class="text-2xl font-bold mb-2">Digital Art & Design</h3>
-                                    <p class="text-slate-200">Beyond code, I have a creative side that I express through digital art. I enjoy bringing characters to life, especially for DnD campaigns, and I also design simple, clean logos for various projects.</p>
-                                    <div class="w-full mt-auto pt-4">
-                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                    <h3 class="text-lg font-bold mb-2 text-[--color-primary-light] uppercase tracking-wider font-mono">Digital Art</h3>
+                                    <p class="text-sm text-[--color-text-muted] leading-relaxed mb-4">
+                                        Designing character renders, digital concepts, and logos. Leveraging vector graphics tools like Illustrator for UI icons alongside Krita and Photoshop.
+                                    </p>
+                                    <div class="w-full mt-auto">
+                                        <p class="text-xs font-semibold text-[--color-text-muted] mb-1.5 uppercase font-mono tracking-wider">Diagnostic Level</p>
                                         <div class="progress-bar mx-auto">
                                             <div class="progress-segment filled"></div>
                                             <div class="progress-segment filled"></div>
                                             <div class="progress-segment filled"></div>
-                                            <div class="progress-segment"></div>
+                                            <div class="progress-segment filled"></div>
                                             <div class="progress-segment"></div>
                                             <div class="progress-segment"></div>
                                         </div>
@@ -153,25 +170,27 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front flex-col items-center justify-center">
-                                    <div class="flex h-30 w-auto">
-                                        <img src="../assets/icons/icons8-video-editing-100.png" alt="Video Editing Icon" class="h-full w-full">
+                                    <div class="flex h-24 w-auto mb-4">
+                                        <img src="../assets/icons/icons8-video-editing-100.png" alt="Video Editing Icon" class="h-full w-full object-contain filter dark:brightness-90">
                                     </div>
-                                    <h3 class="text-2xl font-bold mt-4">Video Editing</h3>
+                                    <h3 class="text-xl font-bold tracking-wide text-[--color-text]">Video Editing</h3>
                                 </div>
                                 <div class="flip-card-back">
-                                    <h3 class="text-2xl font-bold mb-2">Video Editing</h3>
-                                    <p class="text-slate-200">I hop onto video production every now and then for personal projects, typically for gaming content that I wish to share. My most successful videos were of the tutorial / educational variety. I use the MAGIX Vegas platform for video work, currently familiar with VEGAS Pro 21.</p>
-                                    <div class="text-center mt-4">
-                                        <a href="https://www.youtube.com/@Hexfury" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                                            <!-- Icon placeholder -->
-                                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                                    <h3 class="text-lg font-bold mb-2 text-[--color-primary-light] uppercase tracking-wider font-mono">Video Production</h3>
+                                    <p class="text-sm text-[--color-text-muted] leading-relaxed mb-4">
+                                        Editing educational tutorials, gameplay footage, and motion graphics. Proficient in MAGIX VEGAS Pro suites (currently Vegas Pro 21).
+                                    </p>
+                                    <div class="text-center mb-3">
+                                        <a href="https://www.youtube.com/@Hexfury" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-1.5 rounded-lg border border-[--color-primary-light]/30 hover:border-[--color-primary-light] bg-[--color-primary-glow]/10 text-xs font-semibold text-[--color-primary-light] transition-all duration-200">
+                                            <svg class="w-4 h-4 mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            See More
+                                            View Channel
                                         </a>
                                     </div>
-                                    <div class="w-full mt-auto pt-4">
-                                        <p class="text-sm text-slate-300 mb-2 text-center">Comfort Level</p>
+                                    <div class="w-full mt-auto">
+                                        <p class="text-xs font-semibold text-[--color-text-muted] mb-1.5 uppercase font-mono tracking-wider">Diagnostic Level</p>
                                         <div class="progress-bar mx-auto">
                                             <div class="progress-segment filled"></div>
                                             <div class="progress-segment filled"></div>
@@ -193,6 +212,7 @@
         <!-- Placeholder for the footer -->
         <div id="footer-placeholder"></div>
     </div>
+    
     <!-- This script will fetch and inject the navigation bar -->
     <script src="js/main.js" defer></script>
 </body>

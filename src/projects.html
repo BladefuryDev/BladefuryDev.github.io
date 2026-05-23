@@ -5,54 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hexfury - Projects</title>
     <link rel="icon" type="image/x-icon" href="../assets/icons/PRSG.ico">
-    <link href="../public/output.css" rel="stylesheet">
-    <link href="../assets/commonCss/repeatables.css" rel="stylesheet">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&family=Antonio:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link href="../public/output.css" rel="stylesheet">
+    <link href="../assets/commonCss/repeatables.css" rel="stylesheet">
+    
     <style>
+        /* Custom LCARS layout easter egg - preserved and polished */
         #sto-card.lcars-card {
-            background-color: black;
-            border: none;
-            border-left: 5px solid #9999ff;
-            border-bottom: 5px solid #9999ff;
-            border-radius: 0;
-            padding: 1rem;
-            -webkit-backdrop-filter: none;
-            backdrop-filter: none;
+            background-color: black !important;
+            border: none !important;
+            border-left: 6px solid #9999ff !important;
+            border-bottom: 6px solid #9999ff !important;
+            border-radius: 0 !important;
+            padding: 1rem !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
         }
         #sto-card.lcars-card:hover {
-            transform: translateY(0);
-            box-shadow: none;
-            border-color: #ff9900;
+            transform: translateY(0) !important;
+            box-shadow: none !important;
+            border-color: #ff9900 !important;
         }
         #sto-card.lcars-card h3 {
-            font-family: 'Antonio', sans-serif;
+            font-family: 'Antonio', sans-serif !important;
             letter-spacing: 2px;
-            color: #ffcc99;
+            color: #ffcc99 !important;
+            text-shadow: none !important;
         }
         #sto-card.lcars-card p {
-            font-family: 'Antonio', sans-serif;
-            color: #ffcc99;
+            font-family: 'Antonio', sans-serif !important;
+            color: #ffcc99 !important;
         }
         #sto-card.lcars-card a {
-            background-color: #ff9900;
-            color: black;
-            border: none;
-            border-radius: 5px;
-            font-family: 'Antonio', sans-serif;
+            background-color: #ff9900 !important;
+            color: black !important;
+            border: none !important;
+            border-radius: 5px !important;
+            font-family: 'Antonio', sans-serif !important;
             text-transform: uppercase;
-            padding: 0.5rem 1rem;
-            transition: background-color 0.3s ease;
-            box-shadow: none;
+            padding: 0.5rem 1rem !important;
+            transition: background-color 0.3s ease !important;
+            box-shadow: none !important;
         }
         #sto-card.lcars-card a:hover {
-            background-color: #cc8800;
-            box-shadow: none;
+            background-color: #cc8800 !important;
+            box-shadow: none !important;
         }
     </style>
 </head>
-<body class="bg-[--color-bg] text-[--color-text] font-sans antialiased">
+<body class="font-sans antialiased">
 
     <div class="container mx-auto px-2 sm:px-4">
         <!-- Placeholder for the navigation bar -->
@@ -60,30 +68,34 @@
 
         <!-- This container will be animated -->
         <div id="page-container">
-            <main class="space-y-20 py-10">
+            <main class="space-y-16 py-10">
                 <!-- Projects Section -->
-                <section id="projects" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] [box-shadow:var(--shadow-card)]">
-                    <h1 class="text-4xl font-bold text-center mb-12">Projects</h1>
+                <section id="projects" class="px-4 py-12 sm:p-12 rounded-2xl bg-[--color-bg-secondary] border border-[--color-primary-light]/10 backdrop-blur-md shadow-xl">
+                    <h1 class="text-3xl sm:text-4xl font-black text-center mb-12 tech-header">Projects</h1>
                     
                     <!-- Column for project cards -->
-                    <div class="flex flex-col gap-12">
+                    <div class="flex flex-col gap-10">
 
                         <!-- Primary Project Card: Starfall Legacy -->
-                        <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:[box-shadow:0_0_18px_-1px_var(--color-primary)]">
+                        <div class="tech-border rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[--color-primary-glow]/15">
                             <div class="px-6 pt-6">
-                                <h3 class="text-3xl md:text-4xl font-bold mb-2 text-center">Starfall Legacy</h3>
-                                <p class="text-sm text-center text-[--color-text-muted] mb-4">Passion Project — A Pokemon Mystery Dungeon sci-fi fantasy fan-fiction exploring magic, technology, and the legacy of a lost starship crew.</p>
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-2 text-center text-[--color-text]">Starfall Legacy</h3>
+                                <p class="text-xs text-center text-[--color-text-muted] mb-4 uppercase tracking-widest font-mono">Collaborative Universe / Lore & Writing</p>
                             </div>
-                            <div class="px-6">
-                                <div class="h-[35vh] md:h-[35vh] overflow-hidden rounded-lg">
-                                    <img class="w-full h-full object-contain" src="../assets/images/projects/PMD-StarfallLegacy_Cover_Dark.png" alt="Starfall Legacy Cover">
+                            <div class="px-6 flex justify-center">
+                                <div class="relative h-64 sm:h-72 aspect-[2/3] overflow-hidden rounded-r-lg border border-[--color-primary-light]/20 bg-slate-950/20 shadow-[10px_10px_20px_rgba(0,0,0,0.5)] transition-all duration-300 hover:shadow-[12px_12px_24px_rgba(0,0,0,0.6)]">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-white/5 pointer-events-none w-[18px] z-10"></div>
+                                    <div class="absolute top-0 left-[16px] bottom-0 w-[1px] bg-black/35 pointer-events-none z-10"></div>
+                                    <img class="w-full h-full object-cover" src="../assets/images/projects/PMD-StarfallLegacy_Cover_Dark.png" alt="Starfall Legacy Cover">
                                 </div>
                             </div>
                             <div class="p-6">
-                                <p class="text-[--color-text-muted] mb-6">When the U.S.S. Sagittarius is mysteriously pulled from warp and torn across realities, its bridge crew finds themselves stranded on an alien world. Explore chapters, lore, disclosures, and behind-the-scenes notes for this long-running collaborative world.</p>
+                                <p class="text-sm text-[--color-text-muted] leading-relaxed mb-6">
+                                    When the U.S.S. Sagittarius is mysteriously pulled from warp and torn across realities, its bridge crew finds themselves stranded on an alien world. Explore chapters, lore archives, disclosures, and behind-the-scenes engineering logs for this collaborative sci-fi fantasy setting.
+                                </p>
                                 <div class="flex justify-center gap-4">
-                                    <a href="Pages/StarfallLegacy.html" class="inline-flex items-center px-6 py-3 rounded-xl bg-[--color-primary] text-white font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <a href="Pages/StarfallLegacy.html" class="inline-flex items-center px-6 py-2.5 rounded-xl bg-[--color-primary] hover:bg-[--color-primary-dark] text-white text-sm font-semibold transition-all duration-200 shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                         </svg>
                                         <span>Open Project</span>
@@ -92,111 +104,148 @@
                             </div>
                         </div>
 
-                        <!-- Project Card -->
-                        <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
+                        <!-- Project Card: Aeronautica -->
+                        <div class="rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[--color-primary-glow]/15">
                             <div class="px-6 pt-6">
-                                <h3 class="text-2xl font-bold mb-2 text-center">Aeronautica</h3>
-                                <p class="text-sm text-center text-[--color-text-muted] mb-4">Administrative Tools / Backend Developer</p>
+                                <h3 class="text-2xl font-bold mb-2 text-center text-[--color-text]">Aeronautica</h3>
+                                <p class="text-xs text-center text-[--color-text-muted] mb-4 uppercase tracking-widest font-mono">Administrative Tools / Backend Developer</p>
                             </div>
                             <div class="px-6">
-                                <img class="w-full h-[35vh] object-contain rounded-lg" src="../assets/images/projects/AeronauticaWide.webp" alt="Aeronautica Project Thumbnail">
+                                <div class="h-56 sm:h-64 overflow-hidden rounded-lg border border-[--grid-color] bg-slate-950/10">
+                                    <img class="w-full h-full object-cover" src="../assets/images/projects/AeronauticaWide.webp" alt="Aeronautica Project Thumbnail">
+                                </div>
                             </div>
                             <div class="p-6">
-                                <p class="text-[--color-text-muted] mb-6">Train, Buy, Fly - Aeronautica is an open-world flight simulator with economy elements where the goal is entirely up to you. Earn money by completing unique jobs or flights between distant islands and continents. You can even create an airline for your friends to join! Train and earn licenses to unlock new exciting vehicles. Customize and maintain your planes as you work your way up from the smallest Ultralights to the world’s largest Airliners like the Airbus A380 Superjumbo.</p>
+                                <p class="text-sm text-[--color-text-muted] leading-relaxed mb-6">
+                                    Train, Buy, Fly - Aeronautica is an open-world flight simulator with economy elements. Earn money by completing cargo delivery runs, passenger transports, or charter flights. Build fleets, customize airliner configurations, and program mechanics.
+                                </p>
                                 <div class="flex justify-center">
-                                    <a href="https://www.roblox.com/games/6647962258/Aeronautica" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <a href="https://www.roblox.com/games/6647962258/Aeronautica" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-2.5 rounded-xl bg-[--color-primary] hover:bg-[--color-primary-dark] text-white text-sm font-semibold transition-all duration-200 shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                         </svg>
-                                        <span>Play Game!</span>
+                                        <span>Play Aeronautica</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Project Card: TTMP 2 -->
-                        <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
+                        <div class="rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[--color-primary-glow]/15">
                             <div class="px-6 pt-6">
-                                <h3 class="text-2xl font-bold mb-2 text-center">TTMP 2</h3>
-                                <p class="text-sm text-center text-[--color-text-muted] mb-4">Sole Developer - Passion Project</p>
+                                <h3 class="text-2xl font-bold mb-2 text-center text-[--color-text]">TTMP 2</h3>
+                                <p class="text-xs text-center text-[--color-text-muted] mb-4 uppercase tracking-widest font-mono">Sole Developer - RPG operations</p>
                             </div>
                             <div class="px-6">
-                                <img class="w-full h-[35vh] object-contain rounded-lg" src="../assets/images/projects/TTMPNewer.png" alt="Tome Tales Management Panel Thumbnail">
+                                <div class="h-56 sm:h-64 overflow-hidden rounded-lg border border-[--grid-color] bg-slate-950/10">
+                                    <img class="w-full h-full object-cover" src="../assets/images/projects/TTMPNewer.png" alt="Tome Tales Management Panel Thumbnail">
+                                </div>
                             </div>
                             <div class="p-6">
-                                <p class="text-[--color-text-muted] mb-6">TTMP (Tome Tales Management Panel) is a passion project I developed to streamline managing tabletop RPG sessions, specifically for Dungeons & Dragons. What started as a simple randomizer for enemies and locations grew into a comprehensive tool for game masters. It handles complex systems like currency tracking, loot box generation, and dynamic encounter creation. The front-end is built with HTML and styled with Tailwind CSS, while the core logic is powered by Lua running in the browser via the Fengari VM. This project was a fantastic learning experience in bridging different technologies to create a practical and fun application for my friends and me.</p>
+                                <p class="text-sm text-[--color-text-muted] leading-relaxed mb-6">
+                                    TTMP, or Tome Tales Management Panel is an interactive dashboard program I developed to aid DMs in running custom campaigns. It handles sandbox operations like monster generation, coin systems, inventory tracking, and runs Lua assemblies directly in-browser using the Fengari Lua VM.
+                                </p>
                                 <div class="flex justify-center">
-                                    <a href="TTMP/index.html" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <a href="TTMP/index.html" class="inline-flex items-center px-6 py-2.5 rounded-xl bg-[--color-primary] hover:bg-[--color-primary-dark] text-white text-sm font-semibold transition-all duration-200 shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                         </svg>
-                                        <span>View Project</span>
+                                        <span>View Dashboard</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <!-- Add more cards here by duplicating the block above -->
+
                         <!-- Project Card: STO Endeavour Helper -->
-                        <div id="sto-card" class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
+                        <div id="sto-card" class="rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[--color-primary-glow]/15">
                             <div class="px-6 pt-6">
-                                <h3 class="text-2xl font-bold mb-2 text-center">Star Trek Endeavor Guide</h3>
-                                <p class="text-sm text-center text-[--color-text-muted] mb-4">Community Tool</p>
+                                <h3 class="text-2xl font-bold mb-2 text-center text-[--color-text]">Star Trek Endeavor Guide</h3>
+                                <p class="text-xs text-center text-[--color-text-muted] mb-4 uppercase tracking-widest font-mono">Community Companion Tool</p>
                             </div>
                             <div class="px-6">
-                                <img class="w-full h-[35vh] object-contain rounded-lg" src="../assets/images/projects/STOEndevourguide.png" alt="Star Trek Endeavor Guide Thumbnail">
+                                <div class="h-56 sm:h-64 overflow-hidden rounded-lg border border-[--grid-color] bg-slate-950/10">
+                                    <img class="w-full h-full object-cover" src="../assets/images/projects/STOEndevourguide.png" alt="Star Trek Endeavor Guide Thumbnail">
+                                </div>
                             </div>
                             <div class="p-6">
-                                <p class="text-[--color-text-muted] mb-6">A comprehensive guide for the Endeavor system in Star Trek Online. This tool helps players quickly find information on how to complete any given endeavor challenge, with tips and locations for each. It's a community resource designed to be fast, efficient, and easy to use.</p>
+                                <p class="text-sm text-[--color-text-muted] leading-relaxed mb-6">
+                                    A database tool detailing tips, targets, and optimal maps for completing daily Endeavor logs in Star Trek Online. Designed for speed, utility, and clean search filters.
+                                </p>
                                 <div class="flex justify-center">
-                                    <a href="Pages/STOEndeavourHelper.html" class="inline-flex items-center px-6 py-2 rounded-xl bg-[--color-primary] font-semibold transition-all duration-300 [box-shadow:var(--shadow-sm)] hover:[box-shadow:var(--shadow-sm-inset)]">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <a href="Pages/STOEndeavourHelper.html" class="inline-flex items-center px-6 py-2.5 rounded-xl bg-[--color-primary] hover:bg-[--color-primary-dark] text-white text-sm font-semibold transition-all duration-200 shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                         </svg>
-                                        <span>View Project</span>
+                                        <span>Open Endeavor Guide</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Side Projects Card -->
-                        <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
+                        <div class="rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[--color-primary-glow]/15">
                             <div class="px-6 pt-6">
-                                <h3 class="text-2xl font-bold mb-2 text-center">More Projects</h3>
-                                <p class="text-sm text-center text-[--color-text-muted] mb-4">A collection of smaller projects and experiments.</p>
+                                <h3 class="text-2xl font-bold mb-2 text-center text-[--color-text]">Sandbox Databases</h3>
+                                <p class="text-xs text-center text-[--color-text-muted] mb-4 uppercase tracking-widest font-mono">Micro-deployments and tech experiments</p>
                             </div>
                             <div class="p-6">
-                                <ul class="space-y-4">
-                                    <li>
-                                        <a href="Pages/90sBoxOpener.html" class="font-semibold text-[--color-primary] hover:underline">90s Box Opener</a>
-                                        <p class="text-sm text-[--color-text-muted] mt-1">A fun, interactive 90s-themed box opener. A smaller companion app for the TTMP project that only features the most used part of the app, the box opener. Can load TTMP data files too.</p>
+                                <ul class="space-y-6">
+                                    <li class="border-b border-[--grid-color] pb-4 last:border-0 last:pb-0">
+                                        <a href="Pages/90sBoxOpener.html" class="font-bold text-[--color-primary-light] hover:underline flex items-center gap-1.5">
+                                            <span>90s Box Opener</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                        </a>
+                                        <p class="text-sm text-[--color-text-muted] mt-1.5 leading-relaxed">
+                                            Companion utility for TTMP, loading game files to simulate box openers with old-school pixel grids.
+                                        </p>
+                                    </li>
+                                    <li class="border-b border-[--grid-color] pb-4 last:border-0 last:pb-0">
+                                        <a href="Pages/LCARS-Template.html" class="font-bold text-[--color-primary-light] hover:underline flex items-center gap-1.5">
+                                            <span>LCARS UI Template</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                        </a>
+                                        <p class="text-sm text-[--color-text-muted] mt-1.5 leading-relaxed">
+                                            Pure CSS template mimicking LCARS structures from Star Trek configurations.
+                                        </p>
+                                    </li>
+                                    <li class="border-b border-[--grid-color] pb-4 last:border-0 last:pb-0">
+                                        <a href="Pages/Magitech.html" class="font-bold text-[--color-primary-light] hover:underline flex items-center gap-1.5">
+                                            <span>Magitech Wiki</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                        </a>
+                                        <p class="text-sm text-[--color-text-muted] mt-1.5 leading-relaxed">
+                                            A worldbuilding lore site logging the interactions between magic and technological devices in my fictional universes.
+                                        </p>
                                     </li>
                                     <li>
-                                        <a href="Pages/LCARS-Template.html" class="font-semibold text-[--color-primary] hover:underline">LCARS Template</a>
-                                        <p class="text-sm text-[--color-text-muted] mt-1">A template for creating interfaces in the style of Star Trek's LCARS.</p>
-                                    </li>
-                                    <li>
-                                        <a href="Pages/Magitech.html" class="font-semibold text-[--color-primary] hover:underline">Magitech</a>
-                                        <p class="text-sm text-[--color-text-muted] mt-1">A project for a fictional universe of mine me and my friends roleplay in. This page explores the fusion of magic and technology.</p>
-                                    </li>
-                                    <li>
-                                        <a href="Pages/NeuralPattern.html" class="font-semibold text-[--color-primary] hover:underline">Neural Pattern</a>
-                                        <p class="text-sm text-[--color-text-muted] mt-1">A tone generator page that allows the user to create and select binaural beats based on the declassified information from the CIA's project Stargate and Hemi-sync.</p>
+                                        <a href="Pages/NeuralPattern.html" class="font-bold text-[--color-primary-light] hover:underline flex items-center gap-1.5">
+                                            <span>Neural Pattern Generator</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                        </a>
+                                        <p class="text-sm text-[--color-text-muted] mt-1.5 leading-relaxed">
+                                            Binaural beat oscillator based on CIA Project Stargate documents detailing cognitive wave synchronization.
+                                        </p>
                                     </li>
                                 </ul>
                             </div>
                         </div>
 
                         <!-- Vibe-Coded Projects Card -->
-                        <div class="rounded-2xl bg-[--color-bg] [box-shadow:var(--shadow-card)] overflow-hidden transition-all duration-300 hover:[box-shadow:0_0_12px_-1px_var(--color-primary)]">
+                        <div class="rounded-2xl bg-[--color-bg-secondary-solid]/50 border border-[--color-primary-light]/15 hover:border-[--color-primary-light]/50 overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[--color-primary-glow]/15">
                             <div class="px-6 pt-6">
-                                <h3 class="text-2xl font-bold mb-2 text-center">Vibe-Coded Projects</h3>
-                                <p class="text-sm text-center text-[--color-text-muted] mb-4">While the rise of AI in development has its controversies, it also opens up exciting possibilities for rapidly creating specialized tools for niche use cases. The following projects are examples of this approach.</p>
+                                <h3 class="text-2xl font-bold mb-2 text-center text-[--color-text]">AI-Assisted Tools</h3>
+                                <p class="text-xs text-center text-[--color-text-muted] mb-4 uppercase tracking-widest font-mono">Rapid-prototype setups utilizing generative networks</p>
                             </div>
                             <div class="p-6">
                                 <ul class="space-y-4">
                                     <li>
-                                        <a href="Pages/StellarisNameListMaker.html" class="font-semibold text-[--color-primary] hover:underline">Stellaris Name List Maker</a>
-                                        <p class="text-sm text-[--color-text-muted] mt-1">A tool to create custom name lists for the game Stellaris. Features AI-powered name generation using Google Gemini.</p>
+                                        <a href="Pages/StellarisNameListMaker.html" class="font-bold text-[--color-primary-light] hover:underline flex items-center gap-1.5">
+                                            <span>Stellaris Name List Maker</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                        </a>
+                                        <p class="text-sm text-[--color-text-muted] mt-1.5 leading-relaxed">
+                                            Utility designed to output structured custom name list scripts for Stellaris modding, utilizing Gemini models for procedural generation.
+                                        </p>
                                     </li>
                                 </ul>
                             </div>
@@ -210,20 +259,48 @@
         <!-- Placeholder for the footer -->
         <div id="footer-placeholder"></div>
     </div>
-    <!-- Image Modal (optional, can be removed if not needed) -->
+    
+    <!-- Image Modal -->
     <div id="image-modal">
-        <img src="" alt="Enlarged gallery image" class="modal-content rounded-lg" id="modal-image-content">
+        <div id="image-modal-container" class="flex flex-col items-center gap-4 max-w-[90vw] max-h-[95vh]">
+            <img src="" alt="Enlarged gallery image" class="modal-content rounded-lg" id="modal-image-content">
+            <!-- Buttons panel -->
+            <div class="flex items-center gap-3 font-mono text-xs z-20">
+                <a id="modal-btn-tab" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg border border-[--color-primary-light]/30 bg-slate-900/80 hover:bg-[--color-primary-light]/20 hover:border-[--color-primary-light] text-[--color-primary-light] transition-all duration-200 flex items-center gap-1.5 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    <span>Open Tab</span>
+                </a>
+                <a id="modal-btn-download" href="#" download class="px-3 py-1.5 rounded-lg border border-[--color-primary-light]/30 bg-slate-900/80 hover:bg-[--color-primary-light]/20 hover:border-[--color-primary-light] text-[--color-primary-light] transition-all duration-200 flex items-center gap-1.5 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span>Save Image</span>
+                </a>
+                <button id="modal-btn-close" class="px-3 py-1.5 rounded-lg border border-red-500/30 bg-slate-900/80 hover:bg-red-500/20 hover:border-red-500 text-red-400 transition-all duration-200 flex items-center gap-1.5 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span>Close</span>
+                </button>
+            </div>
+        </div>
     </div>
+    
     <!-- This script will fetch and inject the navigation bar -->
     <script src="js/main.js" defer></script>
     <script>
+        // LCARS hover trigger configuration
         const stoCard = document.getElementById('sto-card');
-        stoCard.addEventListener('mouseenter', () => {
-            stoCard.classList.add('lcars-card');
-        });
-        stoCard.addEventListener('mouseleave', () => {
-            stoCard.classList.remove('lcars-card');
-        });
+        if (stoCard) {
+            stoCard.addEventListener('mouseenter', () => {
+                stoCard.classList.add('lcars-card');
+            });
+            stoCard.addEventListener('mouseleave', () => {
+                stoCard.classList.remove('lcars-card');
+            });
+        }
     </script>
 </body>
 </html>

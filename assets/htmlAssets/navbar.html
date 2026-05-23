@@ -1,47 +1,65 @@
 <style>
 .logo-link {
-    display: inline-block; /* Necessary for the transform to apply */
-    transition: transform 0.3s ease-out, text-shadow 0.3s ease-out;
+    display: inline-block;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: var(--font-cyber);
 }
 
 .logo-link:hover {
-    transform: scale(1.1); /* Grow slightly */
-    text-shadow: var(--text-shadow-dark); /* Add the glow effect from your theme */
+    transform: tracking-wider scale(1.05);
+    text-shadow: 0 0 10px var(--color-primary-light);
 }
 
 .active-nav-link {
-    box-shadow: var(--shadow-sm-inset);
-    text-shadow: var(--text-shadow-dark);
+    color: var(--color-primary-light) !important;
+    box-shadow: inset 0 -2px 0 var(--color-primary-light);
+    text-shadow: var(--text-shadow-glow);
 }
 </style>
-<nav class="mb-2 p-4 rounded-b-2xl bg-[--color-primary] [box-shadow:var(--shadow-md)]">
-    <div class="flex w-full flex-col items-center md:flex-row justify-between">
 
-        <div class="text-2xl font-bold justify-center">
-            <a href="/index.html" class="logo-link">Hexfury</a>
+<nav class="mb-6 p-4 rounded-b-2xl bg-[--color-bg-secondary] border-b border-[--color-primary-light]/20 backdrop-blur-md shadow-lg transition-all duration-300">
+    <div class="flex w-full flex-col md:flex-row items-center justify-between gap-4">
+
+        <!-- Logo -->
+        <div class="text-2xl font-black tracking-widest text-[--color-primary-light] [text-shadow:var(--text-shadow-glow)]">
+            <a href="/index.html" class="logo-link uppercase">Hexfury</a>
         </div>
 
-        <ul class="flex flex-row md:space-x-2 my-2 md:my-0">
-            <li>
-                <a href="/index.html" class="px-4 py-2 rounded-xl transition-all duration-150 hover:bg-transparent hover:[box-shadow:var(--shadow-sm-inset)]">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="/src/about.html" class="px-4 py-2 rounded-xl transition-all duration-150 hover:bg-transparent hover:[box-shadow:var(--shadow-sm-inset)]">
-                    About
-                </a>
-            </li>
-            <li>
-                <a href="/src/projects.html" class="px-4 py-2 rounded-xl transition-all duration-150 hover:bg-transparent hover:[box-shadow:var(--shadow-sm-inset)]">
-                    Projects
-                </a>
-            </li>
-            <li>
-                <a href="/src/gallery.html" class="px-4 py-2 rounded-xl transition-all duration-150 hover:bg-transparent hover:[box-shadow:var(--shadow-sm-inset)]">
-                    Gallery
-                </a>
-            </li>
-        </ul>
+        <!-- Links and Theme Toggle container -->
+        <div class="flex items-center gap-6 flex-wrap justify-center">
+            <ul class="flex flex-row space-x-1 sm:space-x-2">
+                <li>
+                    <a href="/index.html" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-medium text-[--color-text] transition-all duration-200 hover:text-[--color-primary-light] hover:bg-[--color-primary-glow]/10">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="/src/about.html" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-medium text-[--color-text] transition-all duration-200 hover:text-[--color-primary-light] hover:bg-[--color-primary-glow]/10">
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a href="/src/projects.html" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-medium text-[--color-text] transition-all duration-200 hover:text-[--color-primary-light] hover:bg-[--color-primary-glow]/10">
+                        Projects
+                    </a>
+                </li>
+                <li>
+                    <a href="/src/gallery.html" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-medium text-[--color-text] transition-all duration-200 hover:text-[--color-primary-light] hover:bg-[--color-primary-glow]/10">
+                        Gallery
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Theme Selector Button -->
+            <button id="theme-toggle" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-[--color-primary-light]/30 bg-[--color-bg]/40 hover:bg-[--color-primary-light]/10 hover:border-[--color-primary-light]/80 text-[--color-text] transition-all duration-200" title="Toggle Theme (System / Light / Dark)">
+                <span class="theme-toggle-icon text-[--color-primary-light] flex items-center justify-center">
+                    <!-- Icon loaded programmatically -->
+                </span>
+                <span class="theme-toggle-label hidden sm:inline text-xs font-semibold tracking-wider uppercase text-[--color-text-muted]">
+                    System
+                </span>
+            </button>
+        </div>
+
     </div>
 </nav>

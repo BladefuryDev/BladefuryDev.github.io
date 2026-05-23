@@ -1,7 +1,226 @@
 // Handles shared functionality across the site like navbar loading,
-// page transitions, and the image gallery modal.
+// page transitions, image gallery modal, and theme management.
+
+// 1. Theme Controller IIFE - Run immediately on script evaluation to prevent flashes
+(function() {
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    let activeTheme = savedTheme;
+    if (savedTheme === 'system') {
+        activeTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(activeTheme);
+})();
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    // --- THEME MANAGEMENT ---
+    let currentTheme = localStorage.getItem('theme') || 'system';
+
+    const applyTheme = (theme) => {
+        const root = document.documentElement;
+        root.classList.remove('light', 'dark');
+        
+        let activeTheme = theme;
+        if (theme === 'system') {
+            activeTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        
+        root.classList.add(activeTheme);
+        currentTheme = theme;
+        localStorage.setItem('theme', theme);
+        updateThemeToggleUI(theme);
+    };
+
+    const updateThemeToggleUI = (theme) => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        
+        const icon = btn.querySelector('.theme-toggle-icon');
+        const label = btn.querySelector('.theme-toggle-label');
+        
+        let iconHtml = '';
+        let labelText = '';
+        
+        if (theme === 'light') {
+            // Sun Icon
+            iconHtml = `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>`;
+            labelText = 'Light';
+        } else if (theme === 'dark') {
+            // Moon Icon
+            iconHtml = `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
+            labelText = 'Dark';
+        } else {
+            // CPU/System Icon
+            iconHtml = `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`;
+            labelText = 'System';
+        }
+        
+        if (icon) icon.innerHTML = iconHtml;
+        if (label) label.textContent = labelText;
+    };
+
+    const initThemeToggle = () => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        
+        // Initial draw
+        updateThemeToggleUI(currentTheme);
+        
+        btn.addEventListener('click', () => {
+            let nextTheme = 'system';
+            if (currentTheme === 'system') {
+                nextTheme = 'light';
+            } else if (currentTheme === 'light') {
+                nextTheme = 'dark';
+            } else {
+                nextTheme = 'system';
+            }
+            applyTheme(nextTheme);
+        });
+    };
+
+    // Watch OS preference shifts
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (currentTheme === 'system') {
+            const nextTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add(nextTheme);
+        }
+    });
+
+    // --- TERMINAL SIMULATOR ---
+    const initTerminal = () => {
+        const termInput = document.getElementById('terminal-input-field');
+        const termOutput = document.getElementById('terminal-output');
+        const termForm = document.getElementById('terminal-form');
+        const termShortcuts = document.querySelectorAll('[data-term-btn]');
+        
+        if (!termInput || !termOutput || !termForm) return;
+
+        // Command definitions
+        const commands = {
+            help: () => `Available commands:<br>
+  <span class="text-[--color-primary-light]">about</span>     - Learn more about who I am<br>
+  <span class="text-[--color-primary-light]">projects</span>  - List highlighted projects with links<br>
+  <span class="text-[--color-primary-light]">skills</span>    - Display technical skill breakdown<br>
+  <span class="text-[--color-primary-light]">contact</span>   - Get in touch with me<br>
+  <span class="text-[--color-primary-light]">clear</span>     - Clear the screen`,
+            
+            about: () => `<span class="text-[--color-primary-light] font-bold">[ Developer Profile: Hexfury ]</span><br>
+------------------------------------<br>
+ROLE:   Game Developer & Web Designer<br>
+BIO:    I started with Lua scripting for game modules and software QA testing,<br>
+        expanded into assembling and repairing PC hardware systems,<br>
+        and now build custom, responsive web interfaces.<br>
+------------------------------------<br>
+Use '<span class="text-[--color-primary-light]">projects</span>' or '<span class="text-[--color-primary-light]">skills</span>' to view more details.`,
+            
+            projects: () => `<span class="text-[--color-primary-light] font-bold">[ Highlighted Projects ]</span><br>
+------------------------------------<br>
+1. <a href="src/Pages/StarfallLegacy.html" class="underline text-[--color-primary-light] hover:text-[--color-text]">Starfall Legacy</a><br>
+   - Sci-fi PMD collaborative writing project.<br>
+2. <a href="https://www.roblox.com/games/6647962258/Aeronautica" target="_blank" rel="noopener noreferrer" class="underline text-[--color-primary-light] hover:text-[--color-text]">Aeronautica</a><br>
+   - Open-world flight simulator on Roblox (LUA scripting & admin tools).<br>
+3. <a href="src/TTMP/index.html" class="underline text-[--color-primary-light] hover:text-[--color-text]">TTMP 2</a><br>
+   - RPG management tool utilizing Lua (Fengari VM) and Tailwind CSS.<br>
+4. <a href="src/Pages/STOEndeavourHelper.html" class="underline text-[--color-primary-light] hover:text-[--color-text]">Star Trek Online Endeavor Helper</a><br>
+   - Practical companion guide utility for daily STO tasks.<br>
+------------------------------------<br>
+Select a link or visit the Projects page for full listings.`,
+            
+            skills: () => `<span class="text-[--color-primary-light] font-bold">[ Core Technical Skills ]</span><br>
+------------------------------------<br>
+LUA GAME DEV       <span class="text-[--color-primary-light]">[██████████░░] 85%</span><br>
+WEB FRONTEND       <span class="text-[--color-primary-light]">[████████░░░░] 70%</span><br>
+QA / DEBUGGING     <span class="text-[--color-primary-light]">[██████████░░] 85%</span><br>
+PC HARDWARE        <span class="text-[--color-primary-light]">[███████████░] 90%</span><br>
+DIGITAL ART        <span class="text-[--color-primary-light]">[███████░░░░░] 60%</span><br>
+VIDEO PRODUCTION   <span class="text-[--color-primary-light]">[████████░░░░] 70%</span><br>
+------------------------------------`,
+            
+            contact: () => `<span class="text-[--color-primary-light] font-bold">[ Contact Information ]</span><br>
+------------------------------------<br>
+YOUTUBE:  <a href="https://www.youtube.com/@Hexfury" target="_blank" rel="noopener noreferrer" class="underline hover:text-[--color-primary-light]">youtube.com/@Hexfury</a><br>
+EMAIL:    <a href="mailto:christopher.bdf@gmail.com" class="underline hover:text-[--color-primary-light]">christopher.bdf@gmail.com</a><br>
+GITHUB:   <a href="https://github.com/BladefuryDev" target="_blank" rel="noopener noreferrer" class="underline hover:text-[--color-primary-light]">github.com/BladefuryDev</a><br>
+------------------------------------`
+        };
+
+        const printLine = (text, isInput = false) => {
+            const line = document.createElement('div');
+            line.className = isInput ? 'text-[--color-text]' : 'text-[--color-text-muted] leading-relaxed';
+            line.innerHTML = text;
+            termOutput.appendChild(line);
+            
+            // Scroll container
+            const win = termOutput.closest('.terminal-window');
+            if (win) {
+                win.scrollTop = win.scrollHeight;
+            }
+        };
+
+        const executeCommand = (cmdText) => {
+            const trimmed = cmdText.trim().toLowerCase();
+            printLine(`guest@hexfury-os:~$ ${cmdText}`, true);
+
+            if (trimmed === '') return;
+
+            if (trimmed === 'clear') {
+                termOutput.innerHTML = '';
+                return;
+            }
+
+            if (commands[trimmed]) {
+                printLine(commands[trimmed]());
+            } else {
+                printLine(`Command not found: <span class="text-red-400">${cmdText}</span>. Type '<span class="text-[--color-primary-light]">help</span>' for options.`);
+            }
+        };
+
+        const simulateCommand = (cmdText) => {
+            termInput.disabled = true;
+            termInput.value = '';
+            
+            let index = 0;
+            const typeInterval = setInterval(() => {
+                if (index < cmdText.length) {
+                    termInput.value += cmdText[index];
+                    index++;
+                } else {
+                    clearInterval(typeInterval);
+                    termInput.disabled = false;
+                    executeCommand(cmdText);
+                    termInput.value = '';
+                    termInput.focus();
+                }
+            }, 55);
+        };
+
+        // Form submit handler
+        termForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = termInput.value;
+            executeCommand(val);
+            termInput.value = '';
+        });
+
+        // Click handlers for terminal shortcut tags
+        termShortcuts.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const cmd = btn.getAttribute('data-term-btn');
+                simulateCommand(cmd);
+            });
+        });
+
+        // Print initial boot messages
+        printLine(`<span class="text-emerald-400">> Loading profile components... Done.</span>`);
+        printLine(`<span class="text-emerald-400">> Establishing server link... Connected.</span>`);
+        printLine(`System active. Type '<span class="text-[--color-primary-light]">help</span>' or select shortcut buttons below to interact.<br>`);
+    };
+
+
+    // --- COMPONENT LOADERS ---
 
     /**
      * Fetches an HTML component and injects it into a placeholder element.
@@ -38,16 +257,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const pageContainer = document.getElementById('page-container');
         if (pageContainer) {
             // Set initial state for slide-in.
-            // The 'opacity: 0' is already set via inline style in the HTML.
-            pageContainer.style.transform = 'translateX(50px)';
+            pageContainer.style.transform = 'translateY(15px)';
+            pageContainer.style.opacity = '0';
 
-            // Use a short timeout to allow the browser to render the initial state
-            // before applying the transition.
             setTimeout(() => {
-                pageContainer.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
-                pageContainer.style.transform = 'translateX(0)';
+                pageContainer.style.transition = 'opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                pageContainer.style.transform = 'translateY(0)';
                 pageContainer.style.opacity = '1';
-            }, 50);
+            }, 60);
         }
     };
 
@@ -59,13 +276,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!pageContainer) return;
 
         document.body.addEventListener('click', e => {
+            // Support view transition api if supported instead of manual timeout
             const link = e.target.closest('a');
-
             if (!link || !link.href) return;
 
             // Let the browser handle new tabs, external links, and same-page hash links
             if (link.target === '_blank' || link.protocol !== window.location.protocol || link.host !== window.location.host || link.pathname === window.location.pathname) {
                 return;
+            }
+
+            // If View Transitions API is supported, let the browser animate it natively
+            if (document.startViewTransition) {
+                return; 
             }
 
             e.preventDefault();
@@ -79,6 +301,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const modalImage = document.getElementById('modal-image-content');
         const tooltip = document.getElementById('image-tooltip');
         const imageContainers = document.querySelectorAll('.gallery-image-container');
+        
+        const btnTab = document.getElementById('modal-btn-tab');
+        const btnDownload = document.getElementById('modal-btn-download');
+        const btnClose = document.getElementById('modal-btn-close');
 
         if (!modal || !modalImage || !tooltip || imageContainers.length === 0) return;
 
@@ -89,6 +315,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Modal click listener
             container.addEventListener('click', () => {
                 modalImage.src = img.src;
+                if (btnTab) btnTab.href = img.src;
+                if (btnDownload) btnDownload.href = img.src;
                 modal.classList.add('is-visible');
             });
 
@@ -97,7 +325,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const altText = img.getAttribute('alt');
                 if (altText) {
                     tooltip.textContent = altText;
-                    // Position tooltip near cursor before making it visible
                     tooltip.style.left = `${e.pageX + 15}px`;
                     tooltip.style.top = `${e.pageY + 15}px`;
                     tooltip.classList.add('is-visible');
@@ -109,15 +336,23 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             container.addEventListener('mousemove', (e) => {
-                // Continuously update position to follow the cursor
                 tooltip.style.left = `${e.pageX + 15}px`;
                 tooltip.style.top = `${e.pageY + 15}px`;
             });
         });
 
-        // Close modal listener
+        // Close modal listener (explicit close button)
+        if (btnClose) {
+            btnClose.addEventListener('click', () => {
+                modal.classList.remove('is-visible');
+            });
+        }
+
+        // Backdrop click to close (only if clicked outside the container)
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('is-visible');
+            if (!e.target.closest('#image-modal-container')) {
+                modal.classList.remove('is-visible');
+            }
         });
     };
 
@@ -134,7 +369,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let bestMatch = null;
             let hasExactMatch = false;
 
-            // First pass: look for an exact match (pathname + hash)
             navLinks.forEach(link => {
                 const linkUrl = new URL(link.href);
                 if (linkUrl.pathname === currentPathname && linkUrl.hash === currentHash) {
@@ -143,7 +377,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Second pass: if no exact match, find the best partial match (pathname only)
             if (!hasExactMatch) {
                 navLinks.forEach(link => {
                     const linkUrl = new URL(link.href);
@@ -153,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
 
-            // Clear existing active classes and apply to the best match
             navLinks.forEach(link => link.classList.remove('active-nav-link'));
             if (bestMatch) {
                 bestMatch.classList.add('active-nav-link');
@@ -166,16 +398,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Resets page state when navigating back/forward using browser history (bfcache).
-     * If a page is restored from the cache, its exit animation class might still be present,
-     * leaving the page blank. This removes the class to make the content visible again.
      */
     const initBfcacheFix = () => {
         window.addEventListener('pageshow', (event) => {
-            // event.persisted is true if the page is being restored from the back-forward cache.
             if (event.persisted) {
                 const pageContainer = document.getElementById('page-container');
-                // If the page was exiting when it was cached, the animation will still be applied.
-                // We remove the class to make the content visible again, restoring its initial state.
                 if (pageContainer && pageContainer.classList.contains('page-is-exiting')) {
                     pageContainer.classList.remove('page-is-exiting');
                 }
@@ -202,10 +429,13 @@ document.addEventListener('DOMContentLoaded', function() {
     loadComponent(`${basePath}assets/htmlAssets/navbar.html`, 'navbar-placeholder', () => {
         adjustNavbarLinks(basePath);
         initActiveNav();
+        initThemeToggle();
     });
     loadComponent(`${basePath}assets/htmlAssets/footer.html`, 'footer-placeholder');
+    
     initPageTransition();
     initImageModal();
     initLinkTransitions();
     initBfcacheFix();
+    initTerminal(); // Auto-runs if terminal elements exist
 });
