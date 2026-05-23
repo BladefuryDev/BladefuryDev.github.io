@@ -5,6 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hexfury - Portfolio</title>
+    <script type="text/javascript">
+        (function() {
+            // Bypass redirect if user explicitly requested modern mode
+            if (window.location.search.indexOf('mode=modern') !== -1 || window.location.hash.indexOf('mode=modern') !== -1) {
+                return;
+            }
+            var isRetro = false;
+            // 1. Feature detection: check for basic modern DOM and JS features
+            if (!window.addEventListener || !document.querySelector || !document.getElementsByClassName) {
+                isRetro = true;
+            }
+            // 2. User-Agent detection for common retro browsers
+            if (navigator.userAgent) {
+                var ua = navigator.userAgent.toLowerCase();
+                var retroUAs = ['lynx', 'dillo', 'w3m', 'links', 'netscape', 'opera mini', 'msie 1.', 'msie 2.', 'msie 3.', 'msie 4.', 'msie 5.', 'msie 6.'];
+                for (var i = 0; i < retroUAs.length; i++) {
+                    if (ua.indexOf(retroUAs[i]) !== -1) {
+                        isRetro = true;
+                        break;
+                    }
+                }
+            }
+            if (isRetro) {
+                window.location.href = 'retro.html';
+            }
+        })();
+    </script>
     <meta name="description"
         content="The portfolio of a self-taught and versatile developer with experience spanning from LUA-based game development and QA testing to web design and PC hardware repair.">
     <meta name="keywords"

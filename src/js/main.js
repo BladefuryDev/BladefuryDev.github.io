@@ -477,10 +477,10 @@ GITHUB:   <a href="https://github.com/BladefuryDev" target="_blank" rel="noopene
     const isSrcFolder = /\/src\/[^/]+$/i.test(window.location.pathname) || /\/src\/$/i.test(window.location.pathname);
     const basePath = isSrcFolder ? '../' : './';
 
-    // Adjust navbar links to be relative to the current page depth
-    const adjustNavbarLinks = (basePath) => {
-        const navLinks = document.querySelectorAll('nav a');
-        navLinks.forEach(link => {
+    // Adjust links starting with '/' to be relative to the current page depth
+    const adjustLinks = (selector, basePath) => {
+        const links = document.querySelectorAll(selector);
+        links.forEach(link => {
             const href = link.getAttribute('href');
             if (href && href.startsWith('/')) {
                 link.setAttribute('href', basePath + href.substring(1));
@@ -490,11 +490,13 @@ GITHUB:   <a href="https://github.com/BladefuryDev" target="_blank" rel="noopene
 
     // Initialize all site functionality
     loadComponent(`${basePath}assets/htmlAssets/navbar.html`, 'navbar-placeholder', () => {
-        adjustNavbarLinks(basePath);
+        adjustLinks('nav a', basePath);
         initActiveNav();
         initThemeToggle();
     });
-    loadComponent(`${basePath}assets/htmlAssets/footer.html`, 'footer-placeholder');
+    loadComponent(`${basePath}assets/htmlAssets/footer.html`, 'footer-placeholder', () => {
+        adjustLinks('footer a', basePath);
+    });
     
     initPageTransition();
     initImageModal();
