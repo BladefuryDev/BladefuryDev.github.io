@@ -147,16 +147,79 @@ GITHUB:   <a href="https://github.com/BladefuryDev" target="_blank" rel="noopene
 ------------------------------------`
         };
 
+        const typeHTML = (element, htmlText, durationMs = 1000) => {
+            const tokens = [];
+            let i = 0;
+            while (i < htmlText.length) {
+                if (htmlText[i] === '<') {
+                    let tag = '';
+                    while (i < htmlText.length && htmlText[i] !== '>') {
+                        tag += htmlText[i];
+                        i++;
+                    }
+                    if (i < htmlText.length) {
+                        tag += '>';
+                        i++;
+                    }
+                    tokens.push({ type: 'tag', value: tag });
+                } else if (htmlText[i] === '&') {
+                    let entity = '';
+                    while (i < htmlText.length && htmlText[i] !== ';') {
+                        entity += htmlText[i];
+                        i++;
+                    }
+                    if (i < htmlText.length) {
+                        entity += ';';
+                        i++;
+                    }
+                    tokens.push({ type: 'char', value: entity });
+                } else {
+                    tokens.push({ type: 'char', value: htmlText[i] });
+                    i++;
+                }
+            }
+
+            if (tokens.length === 0) return;
+
+            const charCount = tokens.filter(t => t.type === 'char').length;
+            const totalTokens = tokens.length;
+            const delay = charCount > 0 ? durationMs / charCount : 10;
+
+            let currentTokenIndex = 0;
+            element.innerHTML = '';
+
+            const typeNext = () => {
+                if (currentTokenIndex >= totalTokens) {
+                    termOutput.scrollTop = termOutput.scrollHeight;
+                    return;
+                }
+
+                const token = tokens[currentTokenIndex];
+                currentTokenIndex++;
+
+                if (token.type === 'tag') {
+                    element.innerHTML += token.value;
+                    typeNext();
+                } else {
+                    element.innerHTML += token.value;
+                    termOutput.scrollTop = termOutput.scrollHeight;
+                    setTimeout(typeNext, delay);
+                }
+            };
+
+            typeNext();
+        };
+
         const printLine = (text, isInput = false) => {
             const line = document.createElement('div');
             line.className = isInput ? 'text-[--color-text]' : 'text-[--color-text-muted] leading-relaxed';
-            line.innerHTML = text;
             termOutput.appendChild(line);
             
-            // Scroll container
-            const win = termOutput.closest('.terminal-window');
-            if (win) {
-                win.scrollTop = win.scrollHeight;
+            if (isInput) {
+                line.innerHTML = text;
+                termOutput.scrollTop = termOutput.scrollHeight;
+            } else {
+                typeHTML(line, text, 1000);
             }
         };
 

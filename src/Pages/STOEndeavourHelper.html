@@ -1,677 +1,1424 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Star Trek Online - Endeavor Guide</title>
-    <meta name="description" content="A personal, searchable guide for completing daily Endeavors in Star Trek Online, with tips and locations.">
-    <meta name="keywords" content="Star Trek Online, STO, Endeavor Guide, STO Endeavors, Gaming, MMO">
+    <title>LCARS Terminal - Star Trek Online Endeavor Guide</title>
+    <meta name="description"
+        content="An authentic Star Trek LCARS-style terminal guide for completing daily Personal Endeavors in Star Trek Online, with searchable maps, mechanics, and strategies.">
+    <meta name="keywords"
+        content="Star Trek Online, STO, Endeavor Guide, LCARS, STO Endeavors, Gaming, MMO, Star Trek Console">
     <link rel="canonical" href="https://www.hexfury.com/src/Pages/STOEndeavourHelper.html" />
     <meta name="author" content="Hexfury Games">
 
-    <!-- --- Discord/Social Media Embed Tags --- -->
-    <meta property="og:title" content="Star Trek Online - Endeavor Guide">
-    <meta property="og:description" content="A personal, searchable guide for completing daily Endeavors in Star Trek Online, with tips and locations.">
+    <!-- Social Media Embed Tags -->
+    <meta property="og:title" content="LCARS Terminal - STO Personal Endeavor Guide">
+    <meta property="og:description"
+        content="An authentic Star Trek LCARS-style terminal guide for completing daily Personal Endeavors in Star Trek Online, with searchable maps, mechanics, and strategies.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.hexfury.com/src/Pages/STOEndeavourHelper.html">
     <meta property="og:image" content="/assets/images/projects/STOEndevourguide.png">
-    <!-- hint-disable-next-line compat-api/html -->
-    <meta name="theme-color" content="#4a6fbd">
+    <meta name="theme-color" content="#FF9900">
 
-    <!-- --- Twitter Card Tags --- -->
+    <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Star Trek Online - Endeavor Guide">
-    <meta name="twitter:description" content="A personal, searchable guide for completing daily Endeavors in Star Trek Online, with tips and locations.">
+    <meta name="twitter:title" content="LCARS Terminal - STO Personal Endeavor Guide">
+    <meta name="twitter:description"
+        content="An authentic Star Trek LCARS-style terminal guide for completing daily Personal Endeavors in Star Trek Online, with searchable maps, mechanics, and strategies.">
     <meta name="twitter:image" content="/assets/images/projects/STOEndevourguide.png">
 
-    <link href="/public/output.css" rel="stylesheet">
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@700&family=Antonio:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <style>
-        /* --- Base & Default Theme Styles --- */
+        /* --- LCARS Design Tokens & Theme Variables --- */
         :root {
-            --default-bg: #0a0f1e;
-            --default-text: #c0c5d1;
-            --default-primary: #2a3a5e;
-            --default-secondary: #4a6fbd;
-            --default-accent: #87a2d9;
             --lcars-bg: #000000;
-            --lcars-orange: #ff9900;
-            --lcars-purple: #cc99cc;
-            --lcars-blue: #9999ff;
-            --lcars-tan: #ffcc99;
+            --lcars-text: #FFCC99;
+            /* Tan / Peach */
+            --lcars-primary: #6699FF;
+            /* Light Blue */
+            --lcars-secondary: #3366CC;
+            /* Dark Blue */
+            --lcars-accent: #FF9900;
+            /* Orange */
+            --lcars-purple: #CC99CC;
+            /* Lavender / Purple */
+            --lcars-red: #CC0000;
+            /* Alert Red */
+            --lcars-pink: #FF66CC;
+            /* Hover Pink */
+            --lcars-card-hover: #1e2942;
+            --lcars-font-title: 'Antonio', sans-serif;
+            --lcars-font-body: 'Inter', sans-serif;
         }
+
+        /* --- Reset & Global Styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--default-bg);
-            color: var(--default-text);
-            transition: background-color 0.5s ease;
+            background-color: var(--lcars-bg);
+            color: var(--lcars-text);
+            font-family: var(--lcars-font-body);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding: 1rem;
+            letter-spacing: 0.5px;
         }
-        #warp-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            filter: blur(2px);
-            opacity: 0.6;
-            transition: opacity 0.5s ease;
+
+        /* Custom Scrollbar for LCARS theme */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
         }
-        .title-font {
-            font-family: 'Orbitron', sans-serif;
+
+        ::-webkit-scrollbar-track {
+            background: var(--lcars-bg);
         }
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--lcars-secondary);
+            border: 2px solid var(--lcars-bg);
+            border-radius: 4px;
         }
-        .card {
-            background-color: rgba(22, 30, 53, 0.7);
-            border: 1px solid var(--default-primary);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-            -webkit-backdrop-filter: blur(5px);
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.5s forwards;
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--lcars-primary);
+        }
+
+        /* --- Layout Structures --- */
+        .page-wrapper {
+            max-width: 1700px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
+            min-height: calc(100vh - 2rem);
         }
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 0 20px rgba(74, 111, 189, 0.5);
+
+        /* LCARS Header panel */
+        .lcars-header {
+            display: flex;
+            align-items: stretch;
+            height: 70px;
+            margin-bottom: 1.25rem;
         }
-        .card-content { flex-grow: 1; }
-        .category-tag {
-            background-color: var(--default-primary);
-            color: var(--default-accent);
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
+
+        .lcars-header-elbow {
+            width: 180px;
+            background-color: var(--lcars-accent);
+            border-radius: 20px 0 0 0;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* Inner black arch to create the elbow effect */
+        .lcars-header-elbow::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: calc(100% - 35px);
+            height: calc(100% - 25px);
+            background-color: var(--lcars-bg);
+            border-radius: 12px 0 0 0;
+        }
+
+        .lcars-header-bar {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--lcars-accent);
+            padding: 0 1.5rem;
+            border-radius: 0 10px 0 0;
+            height: 45px;
+            margin-top: 0;
+        }
+
+        .lcars-header-title {
+            font-family: var(--lcars-font-title);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--lcars-bg);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .lcars-header-status {
+            font-family: var(--lcars-font-title);
+            font-size: 1.1rem;
+            color: var(--lcars-bg);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lcars-status-pill {
+            background-color: var(--lcars-bg);
+            color: var(--lcars-primary);
+            padding: 0.1rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px solid var(--lcars-primary);
+            animation: pulse-border 2s infinite alternate;
+        }
+
+        @keyframes pulse-border {
+            from {
+                border-color: var(--lcars-secondary);
+            }
+
+            to {
+                border-color: var(--lcars-primary);
+            }
+        }
+
+        /* Outer grid container for main body */
+        .lcars-main {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* --- Left Console Panel (Sidebar) --- */
+        .lcars-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Upper connecting bracket */
+        .lcars-sidebar-elbow {
+            height: 50px;
+            background-color: var(--lcars-primary);
+            border-radius: 0 0 0 20px;
+            position: relative;
+            margin-top: -1.25rem;
+        }
+
+        .lcars-sidebar-elbow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: calc(100% - 35px);
+            height: calc(100% - 25px);
+            background-color: var(--lcars-bg);
+            border-radius: 0 0 0 12px;
+        }
+
+        /* Navigation controls */
+        .lcars-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .lcars-menu-btn {
+            font-family: var(--lcars-font-title);
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            text-align: right;
+            padding: 0.75rem 1rem;
+            background-color: var(--lcars-secondary);
+            /* Blue background */
+            color: var(--lcars-bg);
+            /* Black text */
+            border: none;
+            cursor: pointer;
+            border-radius: 0;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: 700;
+        }
+
+        .lcars-menu-btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 8px;
+            background-color: var(--lcars-primary);
+        }
+
+        .lcars-menu-btn:hover {
+            background-color: var(--lcars-pink) !important;
+            /* Pink background on hover */
+            color: var(--lcars-bg);
+            /* Black text */
+            padding-right: 1.5rem;
+        }
+
+        .lcars-menu-btn.active {
+            background-color: var(--lcars-accent) !important;
+            /* Orange background when active */
+            color: var(--lcars-bg);
+            /* Black text */
+            font-weight: bold;
+        }
+
+        /* Left sidebar controls (inputs) */
+        .lcars-controls {
+            border: 2px solid var(--lcars-secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            /* Transition & Collapse properties */
+            max-height: 250px;
+            opacity: 1;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.4s ease,
+                padding 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                border-width 0.4s ease,
+                margin-top 0.4s ease;
+
+            /* Mask properties for vertical wipe */
+            -webkit-mask-size: 100% 300%;
+            mask-size: 100% 300%;
+        }
+
+        .lcars-controls:not(.hidden-controls) {
+            -webkit-mask-image: linear-gradient(to bottom, #000 33.3%, transparent 66.6%);
+            mask-image: linear-gradient(to bottom, #000 33.3%, transparent 66.6%);
+            animation: controlsWipeDown 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .lcars-controls.hidden-controls {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top-width: 0;
+            border-bottom-width: 0;
+            margin-top: -1rem;
+            /* Collapse the grid gap spacing */
+            pointer-events: none;
+            -webkit-mask-image: linear-gradient(to top, #000 33.3%, transparent 66.6%);
+            mask-image: linear-gradient(to top, #000 33.3%, transparent 66.6%);
+            animation: controlsWipeUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes controlsWipeDown {
+            0% {
+                -webkit-mask-position: 0 100%;
+                mask-position: 0 100%;
+            }
+
+            100% {
+                -webkit-mask-position: 0 0;
+                mask-position: 0 0;
+            }
+        }
+
+        @keyframes controlsWipeUp {
+            0% {
+                -webkit-mask-position: 0 100%;
+                mask-position: 0 100%;
+            }
+
+            100% {
+                -webkit-mask-position: 0 0;
+                mask-position: 0 0;
+            }
+        }
+
+        .lcars-control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .lcars-control-label {
+            font-family: var(--lcars-font-title);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            color: var(--lcars-primary);
+            letter-spacing: 1px;
+        }
+
+        .lcars-input,
+        .lcars-select {
+            background-color: var(--lcars-bg);
+            border: 1px solid var(--lcars-secondary);
+            color: var(--lcars-text);
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-family: var(--lcars-font-body);
+            font-size: 0.9rem;
+            outline: none;
+            width: 100%;
+            transition: border-color 0.25s ease;
+        }
+
+        .lcars-input:focus,
+        .lcars-select:focus {
+            border-color: var(--lcars-primary);
+            box-shadow: 0 0 5px rgba(102, 153, 255, 0.4);
+        }
+
+        /* Sidebar Stats Panel */
+        .lcars-status-panel {
+            background-color: rgba(51, 102, 204, 0.1);
+            border-left: 5px solid var(--lcars-secondary);
+            padding: 0.85rem;
+            font-family: var(--lcars-font-title);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--lcars-text);
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .lcars-status-line {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .lcars-status-value {
+            color: var(--lcars-primary);
+        }
+
+        /* --- Main Content Panel (Right Viewport) --- */
+        .lcars-viewport {
+            border-top: 5px solid var(--lcars-primary);
+            border-right: 5px solid var(--lcars-primary);
+            border-radius: 0 15px 0 0;
+            padding: 1.5rem 1rem 1.5rem 1.5rem;
+            position: relative;
+            min-height: 500px;
+        }
+
+        /* Dynamic view switching */
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            -webkit-mask-image: linear-gradient(to right, #000 33.3%, transparent 66.6%);
+            mask-image: linear-gradient(to right, #000 33.3%, transparent 66.6%);
+            -webkit-mask-size: 300% 100%;
+            mask-size: 300% 100%;
+            animation: lcarsWipe 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes lcarsWipe {
+            0% {
+                -webkit-mask-position: 100% 0;
+                mask-position: 100% 0;
+            }
+
+            100% {
+                -webkit-mask-position: 0% 0;
+                mask-position: 0% 0;
+            }
+        }
+
+        /* General view title headers */
+        .viewport-title {
+            font-family: var(--lcars-font-title);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--lcars-accent);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1.5px;
+            border-bottom: 2px solid var(--lcars-secondary);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- DATABASE TAB COMPONENTS --- */
+
+        /* Category Filter Buttons */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lcars-pill-btn {
+            font-family: var(--lcars-font-title);
+            font-size: 1rem;
+            text-transform: uppercase;
+            padding: 0.4rem 1rem;
+            background-color: var(--lcars-secondary);
+            color: var(--lcars-bg);
+            border: none;
+            cursor: pointer;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.35rem;
         }
-        .category-icon {
-            width: 1em;
-            height: 1em;
-            filter: invert(1);
+
+        .lcars-pill-btn img {
+            width: 16px;
+            height: 16px;
+            filter: invert(0);
         }
-        .location-info {
+
+        .lcars-pill-btn:hover {
+            background-color: var(--lcars-primary);
+            color: var(--lcars-bg);
+        }
+
+        .lcars-pill-btn.active {
+            background-color: var(--lcars-accent);
+            color: var(--lcars-bg);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* LCARS styled card */
+        .lcars-card {
+            border-left: 5px solid var(--lcars-primary);
+            border-bottom: 5px solid var(--lcars-primary);
+            padding: 1.25rem;
+            background-color: rgba(51, 102, 204, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 0 0 0 10px;
+
+            /* Fade transition properties */
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                background-color 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .lcars-card:hover {
+            background-color: var(--lcars-card-hover);
+            border-left-color: var(--lcars-accent);
+            border-bottom-color: var(--lcars-accent);
+            transform: translateY(-4px);
+        }
+
+        .lcars-card.fade-out {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .lcars-card.hidden-card {
+            display: none !important;
+        }
+
+        .lcars-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            gap: 0.5rem;
+        }
+
+        .lcars-card-title {
+            font-family: var(--lcars-font-title);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--lcars-text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .lcars-card-tag {
+            font-family: var(--lcars-font-title);
             font-size: 0.8rem;
-            color: #9ab5f5;
-            padding-left: 1.25rem;
-            position: relative;
-            margin-top: 0.75rem;
-            list-style: none;
+            background-color: var(--lcars-secondary);
+            color: var(--lcars-bg);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
         }
-        .location-info::before {
-            content: '⚬';
-            font-size: 1.2em;
-            position: absolute;
-            left: 0; top: 50%;
-            transform: translateY(-50%);
-            color: var(--default-secondary);
+
+        .lcars-card-body {
+            font-size: 0.9rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+            flex-grow: 1;
         }
-        .filter-btn {
-            transition: all 0.2s ease;
-            border: 1px solid var(--default-primary);
-            display: inline-flex;
+
+        .lcars-card-location {
+            font-size: 0.8rem;
+            color: var(--lcars-primary);
+            border-top: 1px solid rgba(102, 153, 255, 0.2);
+            padding-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .lcars-card-location::before {
+            content: '::';
+            color: var(--lcars-accent);
+            font-weight: bold;
+        }
+
+        /* --- STRATEGY, HEALING, HARVEST TEXT VIEWS --- */
+        .intel-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .intel-section {
+            background-color: rgba(255, 204, 153, 0.03);
+            border-left: 5px solid var(--lcars-tan);
+            border-radius: 0 10px 10px 0;
+            padding: 1.5rem;
+        }
+
+        .intel-section.purple {
+            border-left-color: var(--lcars-purple);
+        }
+
+        .intel-section.orange {
+            border-left-color: var(--lcars-accent);
+        }
+
+        .intel-section.blue {
+            border-left-color: var(--lcars-primary);
+        }
+
+        .intel-section-title {
+            font-family: var(--lcars-font-title);
+            font-size: 1.5rem;
+            color: var(--lcars-tan);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        .filter-btn.active {
-            background-color: var(--default-secondary);
-            color: #ffffff;
-            border-color: var(--default-secondary);
-            transform: translateY(0);
-        }
-        .filter-btn:not(.active):hover {
-            background-color: #314575;
-            transform: translateY(-2px);
-            border-color: var(--default-secondary);
-        }
-        .search-input, #sort-select {
-            background-color: rgba(22, 30, 53, 0.7);
-            border: 1px solid var(--default-primary);
-            color: var(--default-text);
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-        }
-        .search-input:focus, #sort-select:focus {
-            outline: none;
-            border-color: var(--default-secondary);
-            box-shadow: 0 0 0 3px rgba(74, 111, 189, 0.3);
-        }
-        
-        /* --- Filter Bar Logic --- */
-        @media (min-width: 768px) and (max-width: 1023px) {
-             #filterBar { flex-direction: column !important; align-items: stretch !important; }
-             #searchSortWrapper { flex-direction: row !important; }
-             #filtersWrapper { margin-top: 1rem; }
-        }
-        @media (min-width: 1024px) {
-            #filterBar { flex-direction: row !important; }
+
+        .intel-section.purple .intel-section-title {
+            color: var(--lcars-purple);
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0f1e; }
-        ::-webkit-scrollbar-thumb { background: #2a3a5e; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4a6fbd; }
+        .intel-section.orange .intel-section-title {
+            color: var(--lcars-accent);
+        }
 
-        /* --- LCARS Theme Styles --- */
-        .lcars-theme {
-            background-color: var(--lcars-bg);
-            color: var(--lcars-tan);
-            font-family: 'Antonio', sans-serif;
+        .intel-section.blue .intel-section-title {
+            color: var(--lcars-primary);
         }
-        .lcars-theme #warp-background { opacity: 0; }
-        .lcars-theme .title-font { font-family: 'Antonio', sans-serif; letter-spacing: 2px; }
-        .lcars-theme #filterBarContainer { background-color: transparent; border: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
-        .lcars-theme #filterBar { background-color: var(--lcars-purple); border-radius: 15px 0 0 15px; padding: 0.5rem; padding-left: 120px; position: relative; }
-        .lcars-theme #filterBar::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0;
-            width: 100px;
-            height: 100%;
-            background-color: var(--lcars-orange);
-            border-radius: 15px 0 0 15px;
-        }
-        .lcars-theme .search-input, .lcars-theme #sort-select {
-            background-color: var(--lcars-bg);
-            border: none;
-            border-radius: 0;
-            color: var(--lcars-tan);
-            font-family: 'Antonio', sans-serif;
-            text-transform: uppercase;
-        }
-        .lcars-theme .search-input:focus, .lcars-theme #sort-select:focus { box-shadow: none; }
-        .lcars-theme .filter-btn {
-            background-color: var(--lcars-blue);
-            color: var(--lcars-bg);
-            border: none;
-            border-radius: 5px;
-            text-transform: uppercase;
-            padding: 0.25rem 1rem;
-        }
-        .lcars-theme .filter-btn:not(.active):hover { background-color: var(--lcars-tan); transform: translateY(0); }
-        .lcars-theme .filter-btn.active { background-color: var(--lcars-orange); color: var(--lcars-bg); }
-        .lcars-theme .card {
-            background-color: transparent;
-            border: none;
-            border-left: 5px solid var(--lcars-blue);
-            border-bottom: 5px solid var(--lcars-blue);
-            border-radius: 0;
-            padding: 1rem;
-            -webkit-backdrop-filter: none;
-            backdrop-filter: none;
-        }
-        .lcars-theme .card:hover { transform: translateY(0); box-shadow: none; border-color: var(--lcars-orange); }
-        .lcars-theme .category-tag {
-            background-color: var(--lcars-purple);
-            color: var(--lcars-bg);
-            border-radius: 5px;
-            padding: 0.25rem 0.5rem;
-            text-transform: uppercase;
-        }
-        .lcars-theme .category-icon {
-            filter: none;
-        }
-        .lcars-theme .location-info { color: var(--lcars-blue); }
-        .lcars-theme .location-info::before { content: '::'; color: var(--lcars-orange); }
-        
-        /* --- Theme Toggle Button --- */
-        #theme-toggle-btn {
-            background-color: var(--default-primary);
-            color: var(--default-text);
-            border: 1px solid var(--default-secondary);
-            transition: all 0.3s ease;
-        }
-        #theme-toggle-btn:hover { background-color: var(--default-secondary); color: white; }
-        .lcars-theme #theme-toggle-btn {
-            background-color: var(--lcars-orange);
-            color: var(--lcars-bg);
-            border: none;
-            border-radius: 5px;
-            font-family: 'Antonio', sans-serif;
-            text-transform: uppercase;
-        }
-        .lcars-theme #theme-toggle-btn:hover { background-color: var(--lcars-tan); }
 
-        /* --- Footer Styles --- */
-        .app-footer { text-align: center; padding: 2rem 1rem; font-size: 0.875rem; color: var(--default-primary); }
-        .lcars-theme .app-footer { color: var(--lcars-purple); font-family: 'Antonio', sans-serif; text-transform: uppercase; }
-
-        /* --- LCARS Loader --- */
-        #lcars-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000;
-            z-index: 9999;
+        .intel-list {
+            margin-left: 1.25rem;
+            margin-top: 0.75rem;
             display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .intel-list-item {
+            position: relative;
+            list-style: none;
+            padding-left: 1.25rem;
+        }
+
+        .intel-list-item::before {
+            content: '▫';
+            color: var(--lcars-accent);
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.2rem;
+        }
+
+        .intel-text {
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        /* Highlight boxes */
+        .intel-alert-box {
+            background-color: rgba(204, 0, 0, 0.1);
+            border: 1px solid var(--lcars-red);
+            border-left: 6px solid var(--lcars-red);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .intel-alert-title {
+            font-family: var(--lcars-font-title);
+            font-size: 1.1rem;
+            color: var(--lcars-red);
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+            font-weight: 700;
+        }
+
+        .intel-tip-box {
+            background-color: rgba(51, 102, 204, 0.15);
+            border: 1px solid var(--lcars-secondary);
+            border-left: 6px solid var(--lcars-primary);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .intel-tip-title {
+            font-family: var(--lcars-font-title);
+            font-size: 1.1rem;
+            color: var(--lcars-primary);
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+            font-weight: 700;
+        }
+
+        /* --- Footer Bar --- */
+        .lcars-footer {
+            height: 35px;
+            background-color: var(--lcars-accent);
+            color: var(--lcars-bg);
+            font-family: var(--lcars-font-title);
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            color: var(--lcars-tan);
-            font-family: 'Antonio', sans-serif;
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
-        #lcars-loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        #lcars-loader .dot {
-            animation: blink 1.2s infinite steps(1, start);
-        }
-        #lcars-loader .dot:nth-of-type(1) { animation-delay: 0s; }
-        #lcars-loader .dot:nth-of-type(2) { animation-delay: 0.4s; }
-        #lcars-loader .dot:nth-of-type(3) { animation-delay: 0.8s; }
-
-        @keyframes blink {
-            50% { opacity: 0; }
+            padding: 0 1.5rem;
+            border-radius: 0 0 10px 10px;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            flex-shrink: 0;
         }
 
-        /* --- Content Animation --- */
-        .lcars-intro .content-wrapper {
-            opacity: 0;
-            transition: opacity 0.5s 0.3s ease-out;
-        }
-        .lcars-intro.loaded .content-wrapper {
-            opacity: 1;
+        .lcars-footer-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
         }
 
-        .lcars-intro.loaded .title-font {
-            animation: intro-fadeIn-down 0.5s 0.5s both;
+        /* --- Responsive Styles --- */
+        @media (max-width: 1024px) {
+            .lcars-main {
+                grid-template-columns: 200px 1fr;
+            }
+
+            .lcars-header-elbow {
+                width: 140px;
+            }
         }
-        .lcars-intro.loaded #filterBar::before {
-            animation: intro-scale-x-in 0.4s 0.7s both cubic-bezier(0.23, 1, 0.32, 1);
-            transform-origin: left;
-        }
-        .lcars-intro.loaded #filterBar {
-            animation: intro-slide-in-left 0.4s 0.7s both cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .lcars-intro.loaded #searchSortWrapper {
-            animation: intro-fadeIn 0.3s 1.1s both;
-        }
-        .lcars-intro.loaded .filter-btn {
-            opacity: 0;
-            animation: intro-fadeIn-up 0.4s both;
-        }
-        .lcars-intro.loaded .card {
-            opacity: 0; /* Start hidden */
-            animation: intro-fadeIn-up 0.5s both;
-        }
-        
-        @keyframes intro-fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes intro-fadeIn-down {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes intro-fadeIn-up {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes intro-scale-x-in {
-            from { transform: scaleX(0); }
-            to { transform: scaleX(1); }
-        }
-        @keyframes intro-slide-in-left {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(0); }
+
+        @media (max-width: 768px) {
+            .lcars-main {
+                grid-template-columns: 1fr;
+            }
+
+            .lcars-header {
+                height: auto;
+                flex-direction: column;
+                margin-bottom: 1rem;
+            }
+
+            .lcars-header-elbow {
+                display: none;
+            }
+
+            .lcars-header-bar {
+                border-radius: 5px;
+                padding: 0.5rem 1rem;
+                height: auto;
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .lcars-sidebar-elbow {
+                display: none;
+            }
+
+            .lcars-sidebar {
+                margin-top: 0;
+            }
+
+            .lcars-viewport {
+                border-left: 5px solid var(--lcars-primary);
+                border-radius: 5px;
+                padding: 1rem;
+            }
+
+            .lcars-footer {
+                flex-direction: column;
+                height: auto;
+                padding: 0.5rem;
+                gap: 0.35rem;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen">
 
-    <canvas id="warp-background"></canvas>
+<body>
 
-    <div class="content-wrapper relative z-10 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-        
-        <div class="absolute top-4 right-4 z-50">
-            <button id="theme-toggle-btn" class="px-4 py-2 rounded-full text-sm font-medium">Toggle LCARS</button>
-        </div>
-
-        <!-- Header -->
-        <header class="text-center mb-8 pt-12">
-            <h1 class="title-font text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2 tracking-wider">STAR TREK ONLINE</h1>
-            <p class="text-lg sm:text-xl text-blue-300">Personal Endeavor Guide</p>
-        </header>
-
-        <!-- Search and Filters -->
-        <div id="filterBarContainer" class="mb-8 p-4 bg-black bg-opacity-20 rounded-lg backdrop-filter backdrop-blur-md border border-gray-700/50 transition-all duration-300">
-            <div id="filterBar" class="flex flex-col lg:flex-row gap-4 items-center">
-                <div id="searchSortWrapper" class="flex items-center gap-4 w-full lg:w-2/5 xl:w-1/3">
-                    <input type="text" id="searchInput" placeholder="Search endeavors..." class="search-input w-full flex-grow" title="Search endeavors" aria-label="Search endeavors">
-                    <select id="sort-select" class="w-auto flex-shrink-0" title="Sort options" aria-label="Sort options">
-                        <option value="alpha-asc">Sort A-Z</option>
-                        <option value="alpha-desc">Sort Z-A</option>
-                    </select>
-                </div>
-                <div id="filtersWrapper" class="flex flex-wrap gap-2 items-center w-full lg:w-3/5 xl:w-2/3 lg:justify-end">
-                    <div id="categoryFilters" class="flex flex-wrap gap-2 items-center">
-                        <!-- Filter buttons will be injected here -->
-                    </div>
+    <div class="page-wrapper">
+        <!-- LCARS Horizontal Header Block -->
+        <header class="lcars-header">
+            <div class="lcars-header-elbow"></div>
+            <div class="lcars-header-bar">
+                <h1 class="lcars-header-title">Star Trek Online // Endeavor Console</h1>
+                <div class="lcars-header-status">
+                    <span>SYS.ST: <span class="lcars-status-pill">NOMINAL</span></span>
                 </div>
             </div>
+        </header>
+
+        <!-- Primary LCARS Layout Grid -->
+        <div class="lcars-main">
+
+            <!-- Left Console (Controls & Navigation) -->
+            <aside class="lcars-sidebar">
+                <div class="lcars-sidebar-elbow"></div>
+
+                <!-- Tab Controls -->
+                <nav class="lcars-menu">
+                    <button class="lcars-menu-btn tab-db active" data-tab="db-panel">Database</button>
+                    <button class="lcars-menu-btn tab-strat" data-tab="strat-panel">Strategy</button>
+                    <button class="lcars-menu-btn tab-heal" data-tab="heal-panel">Healing Intel</button>
+                    <button class="lcars-menu-btn tab-harv" data-tab="harv-panel">Harvest/Log</button>
+                </nav>
+
+                <!-- Search & Filters (Relevant for DB Tab) -->
+                <div class="lcars-controls" id="db-controls-wrapper">
+                    <div class="lcars-control-group">
+                        <label class="lcars-control-label" for="searchInput">Search Query</label>
+                        <input type="text" id="searchInput" class="lcars-input" placeholder="Search parameters...">
+                    </div>
+                    <div class="lcars-control-group">
+                        <label class="lcars-control-label" for="sortSelect">Sort Criteria</label>
+                        <select id="sortSelect" class="lcars-select">
+                            <option value="alpha-asc">Ascending A-Z</option>
+                            <option value="alpha-desc">Descending Z-A</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Diagnostics Panel -->
+                <div class="lcars-status-panel">
+                    <div class="lcars-status-line">
+                        <span>Terminal ID</span>
+                        <span class="lcars-status-value">LCARS-1.16</span>
+                    </div>
+                    <div class="lcars-status-line">
+                        <span>Database v.</span>
+                        <span class="lcars-status-value">5.23.26</span>
+                    </div>
+                    <div class="lcars-status-line">
+                        <span>Connection</span>
+                        <span class="lcars-status-value" style="color:#00FF00;">ONLINE</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Viewport Area -->
+            <main class="lcars-viewport">
+
+                <!-- ================= DATABASE TAB ================= -->
+                <section class="tab-panel active" id="db-panel">
+                    <div class="viewport-title">
+                        <span>Endeavor Database Retrieval</span>
+                    </div>
+
+                    <!-- Category Pills -->
+                    <div class="category-filters" id="categoryFilters">
+                        <!-- Filled dynamically by JavaScript -->
+                    </div>
+
+                    <!-- Dynamic Card Grid -->
+                    <div class="cards-grid" id="endeavorContainer">
+                        <!-- Card elements filled dynamically by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- ================= STRATEGY TAB ================= -->
+                <section class="tab-panel" id="strat-panel">
+                    <div class="viewport-title">
+                        <span>General Strategy & Tips</span>
+                    </div>
+
+                    <div class="intel-content">
+                        <!-- Mark Level Section -->
+                        <div class="intel-section blue">
+                            <h2 class="intel-section-title">Weapons Mark Level Impact</h2>
+                            <p class="intel-text">
+                                For both Ground and Space combat endeavors (deal damage, defeat foes), your equipment
+                                tier is the single largest multiplier of completion speed.
+                            </p>
+                            <div class="intel-tip-box">
+                                <h3 class="intel-tip-title">Recommendation</h3>
+                                <p>Ensure your active weaponry is at least <strong>Mark XII</strong> or higher.
+                                    Upgrading a basic phaser split beam or torpedo from Mk VIII to Mk XV increases core
+                                    damage capacity by over 200%, significantly shortening the time required to clear
+                                    kill quotas.</p>
+                            </div>
+                        </div>
+
+                        <!-- Home Mission Farming Section -->
+                        <div class="intel-section orange">
+                            <h2 class="intel-section-title">The "Home" Mission Exploit</h2>
+                            <p class="intel-text">
+                                The Victory is Life episode <strong>“Home”</strong> is an exceptionally efficient map
+                                that serves as a multi-purpose farming zone for multiple Personal Endeavors.
+                            </p>
+                            <h3 class="intel-control-label" style="margin-top: 1rem; color: var(--lcars-accent);">1.
+                                Space Combat Phase (Intro)</h3>
+                            <ul class="intel-list">
+                                <li class="intel-list-item"><strong>Objective Compatibility:</strong> Deal Damage
+                                    (Space), Destroy Hur'q Frigates, Hull Healing (Space), and Shield Healing (Space).
+                                </li>
+                                <li class="intel-list-item"><strong>Method:</strong> Complete the initial fleet action
+                                    against Hur'q forces. The density of targets allows quick resolution of space heals
+                                    and kills.</li>
+                            </ul>
+
+                            <h3 class="intel-control-label" style="margin-top: 1rem; color: var(--lcars-accent);">2.
+                                Ground Combat Phase (Frontier Medicine)</h3>
+                            <ul class="intel-list">
+                                <li class="intel-list-item"><strong>Objective Compatibility:</strong> All Deal Damage
+                                    (Ground) categories, Defeat Captains (Ground), Defeat Hur'q Attendants (Ground),
+                                    Health Healing (Ground), and Shield Healing (Ground).</li>
+                                <li class="intel-list-item"><strong>Method:</strong> Clear the hordes of incoming Hur'q
+                                    attendants and local bosses.</li>
+                            </ul>
+
+                            <div class="intel-alert-box">
+                                <h3 class="intel-alert-title">Farming Mechanics Warning</h3>
+                                <p>To preserve this farm for future use: <strong>DO NOT complete the "Frontier Medicine"
+                                        section.</strong> Once you have satisfied your endeavor requirements, simply
+                                    <strong>beam out</strong>. The mission progress will save at the start of that
+                                    ground segment, allowing you to instantly load back into the ground battle area next
+                                    time you receive these endeavors.</p>
+                            </div>
+
+                            <div class="intel-tip-box">
+                                <h3 class="intel-tip-title">Multi-Character Setup</h3>
+                                <p>If you play on multiple characters, progress through the space intro and park one
+                                    character at the start of the "Frontier Medicine" ground section. You can leave them
+                                    logged out there, reserving them as a dedicated ground-farming character.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= HEALING TAB ================= -->
+                <section class="tab-panel" id="heal-panel">
+                    <div class="viewport-title">
+                        <span>Healing Mechanics Intel</span>
+                    </div>
+
+                    <div class="intel-content">
+                        <!-- Ground Healing Section -->
+                        <div class="intel-section purple">
+                            <h2 class="intel-section-title">Ground Health & Shield Healing</h2>
+                            <p class="intel-text">
+                                Resolving ground healing objectives is best achieved by forcing environmental damage
+                                rather than waiting for combat encounters.
+                            </p>
+                            <h3 class="intel-control-label" style="color: var(--lcars-purple);">Nukara Acid Pools
+                                Exploits</h3>
+                            <ul class="intel-list">
+                                <li class="intel-list-item"><strong>Nukara Prime:</strong> Travel to the hazard zones in
+                                    Nukara Prime. Equip an Engineering kit module (Medical Generator for health, Shield
+                                    Generator for shields) and stand inside the acid pools.</li>
+                                <li class="intel-list-item"><strong>EV Suit Trick:</strong> To accelerate healing ticks,
+                                    temporarily <strong>deactivate your Environmental Suit</strong> while standing in
+                                    the acid. This induces constant shield/health damage, forcing your generators to
+                                    heal continuously.</li>
+                                <li class="intel-list-item"><strong>Shield Fullness Constraint:</strong> Shield heals
+                                    will NOT accumulate or count towards your endeavor goal if your shield strength is
+                                    already at 100%. You must be actively taking damage for the healing numbers to
+                                    register.</li>
+                            </ul>
+
+                            <h3 class="intel-control-label" style="margin-top: 1rem; color: var(--lcars-purple);">New
+                                Romulus Insect Swarms alternative</h3>
+                            <ul class="intel-list">
+                                <li class="intel-list-item">If Nukara is unavailable, travel to New Romulus and stand in
+                                    the insect swarms located across the map. Unlike Nukara Prime, you can bring a
+                                    Bridge Officer here to heal you or stand next to you.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Space Healing Section -->
+                        <div class="intel-section blue">
+                            <h2 class="intel-section-title">Space Hull & Shield Healing</h2>
+                            <p class="intel-text">
+                                Space healing registers when active skills (Hazard Emitters, Science Team, transfer
+                                systems) repair damage. Passive hull/shield regeneration does NOT count.
+                            </p>
+                            <ul class="intel-list">
+                                <li class="intel-list-item"><strong>Shield Unequipping Trick:</strong> For both hull and
+                                    shield endeavors, unequip your ship's shield console/item. This ensures your hull
+                                    takes immediate direct damage during patrols or battlezones, allowing you to trigger
+                                    hull heals immediately.</li>
+                                <li class="intel-list-item"><strong>Passive Warning:</strong> High ratings in <em>Damage
+                                        Control</em> (for hull) or <em>Shield Regeneration</em> mods and skills actually
+                                    slow down your progress, as passive regeneration heals you without adding to the
+                                    endeavor tally.</li>
+                                <li class="intel-list-item"><strong>"Midnight" U.S.S. Cleveland Farm:</strong> Load the
+                                    episode <strong>“Midnight”</strong>. Fight the first wave of Iconian vessels during
+                                    the <em>“Our Final Hour”</em> segment. Once the wave is defeated, <strong>do not
+                                        hail the U.S.S. Cleveland</strong>. The ship will remain under constant hull
+                                    damage. Stand next to it and spam your hull heals on the Cleveland as much as
+                                    desired to complete the endeavor in minutes.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Temporal Reverse Trick -->
+                        <div class="intel-section orange">
+                            <h2 class="intel-section-title">Temporal Operative Spec Exploit</h2>
+                            <p class="intel-text">
+                                The <strong>Non-Linear Progression</strong> passive skill from the Temporal Operative
+                                Specialization tree is highly effective for both hull and shield healing endeavors.
+                            </p>
+                            <div class="intel-tip-box">
+                                <h3 class="intel-tip-title">How it works</h3>
+                                <p>If this specialization skill is active and you enter combat, simply put your ship in
+                                    <strong>Reverse</strong>. Flying backwards while in combat triggers continuous
+                                    health and shield ticks from the specialization, which register as active heals and
+                                    completes both endeavors rapidly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= HARVEST / LOG TAB ================= -->
+                <section class="tab-panel" id="harv-panel">
+                    <div class="viewport-title">
+                        <span>Resource Harvesting & Miscellaneous</span>
+                    </div>
+
+                    <div class="intel-content">
+                        <!-- Ground Material Harvest -->
+                        <div class="intel-section orange">
+                            <h2 class="intel-section-title">Ground Material Harvesting</h2>
+                            <p class="intel-text">
+                                Collecting materials requires scanning anomalous nodes on ground maps.
+                            </p>
+                            <ul class="intel-list">
+                                <li class="intel-list-item"><strong>Sphere of Influence:</strong> This mission offers 2
+                                    nodes directly in the initial spawn room. Collect the 2 nodes, beam out of the
+                                    mission, and restart it immediately to respawn the nodes. This allows completion in
+                                    under two minutes.</li>
+                                <li class="intel-list-item"><strong>Diplomatic Orders (Federation):</strong> Provides 2
+                                    nodes on Vulcan and 4 nodes during the P'Jem ground portion.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Space Material Harvest -->
+                        <div class="intel-section blue">
+                            <h2 class="intel-section-title">Space Material Harvesting</h2>
+                            <p class="intel-text">
+                                Space nodes are scanned anomalies in space maps, commonly found in Tau Dewa patrols.
+                            </p>
+                            <ul class="intel-list">
+                                <li class="intel-list-item"><strong>Patrol Farming Loop:</strong> Enter patrols in the
+                                    Tau Dewa Sector (e.g., Archer System, Carraya System, Japori, Jouret, Beta Thoridor,
+                                    Starbase 234). Collect the anomaly nodes, then immediately <strong>abandon the
+                                        patrol/leave map</strong> without completing the fights. Re-enter to farm nodes
+                                    continuously.</li>
+                                <li class="intel-list-item"><strong>Node Counts:</strong> Archer System Patrol (3),
+                                    Carraya System Patrol (2), Japori System Patrol (3), Jouret System Patrol (3), and
+                                    Diplomatic Orders (6 nodes in space segment).</li>
+                                <li class="intel-list-item"><strong>“Mine Enemy” Exploit:</strong> Load the mission. It
+                                    contains 4 space nodes. Collect them, immediately beam out of the mission, and
+                                    restart (ignoring the moons completely) to repeat.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Dabo & Salvage -->
+                        <div class="intel-section purple">
+                            <h2 class="intel-section-title">Dabo Latinum & Salvaging</h2>
+                            <h3 class="intel-control-label" style="color: var(--lcars-purple);">Gold Pressed Latinum
+                            </h3>
+                            <p class="intel-text">
+                                Complete this endeavor by placing a bet on any Dabo table. Major Dabo table locations
+                                include <strong>Deep Space 9</strong> (Quark's Bar) and <strong>Drozana
+                                    Station</strong>.
+                            </p>
+
+                            <h3 class="intel-control-label" style="margin-top: 1rem; color: var(--lcars-purple);">Gain
+                                Salvage</h3>
+                            <p class="intel-text">
+                                While salvaging drops from patrols and adventure zones is standard, the most
+                                cost-effective method is purchasing cheap items directly.
+                            </p>
+                            <div class="intel-tip-box">
+                                <h3 class="intel-tip-title">Vendor Salvage Trick</h3>
+                                <p>Travel to any ground gear vendor (e.g., on Earth Spacedock). Purchase low-cost
+                                    <strong>Mark IX ground gear</strong> (approx. 4,000 Energy Credits each) and salvage
+                                    them directly from your inventory. This satisfies the endeavor immediately for a
+                                    small credit cost.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
         </div>
 
-        <!-- Endeavor Cards -->
-        <main id="endeavorContainer" class="card-container">
-            <!-- Endeavor cards will be injected here -->
-        </main>
-
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p>This guide was developed with assistance from Gemini. All information has been reviewed and proofread by gamers for accuracy and reliable use.</p>
+        <!-- LCARS Console Footer Bar -->
+        <footer class="lcars-footer">
+            <span id="footer-system-id">DATABASE: STO-ENDEAVOR-RETRIEVAL-DECK</span>
+            <div class="lcars-footer-right">
+                <span>STARDATE: <span id="stardate-val" style="color:var(--lcars-text)">---</span></span>
+                <span>TIME: <span id="time-val" style="color:var(--lcars-text)">---</span></span>
+            </div>
         </footer>
     </div>
 
+    <!-- Interface Logic Script -->
     <script>
         // --- Icon Mapping ---
         const iconMap = {
-            // A classic cannon
-            'Space: Deal Damage': `<img src="https://img.icons8.com/ios-filled/100/cannon.png" class="category-icon" alt="Cannon Icon">`,
-            // A simple spaceship
-            'Space: Destroy Targets': `<img src="https://img.icons8.com/ios-filled/100/rocket.png" class="category-icon" alt="Rocket Icon">`,
-            // A wrench for repairs
-            'Space: Healing': `<img src="https://img.icons8.com/ios-filled/100/wrench.png" class="category-icon" alt="Wrench Icon">`,
-            // A sword
-            'Ground: Deal Damage': `<img src="https://img.icons8.com/ios-filled/100/sword.png" class="category-icon" alt="Sword Icon">`,
-            // A crosshair
-            'Ground: Defeat Enemies': `<img src="https://img.icons8.com/ios-filled/100/center-diretion-2.png" class="category-icon" alt="Crosshair Icon">`,
-            // A medical plus icon
-            'Ground: Healing': `<img src="https://img.icons8.com/ios-filled/100/medical-id.png" class="category-icon" alt="Medical Icon">`,
-            // User silhouettes
-            'TFOs': `<img src="https://img.icons8.com/ios-filled/100/groups.png" class="category-icon" alt="Group Icon">`,
-            // A question mark
-            'Other': `<img src="https://img.icons8.com/ios-filled/100/question-mark.png" class="category-icon" alt="Question Mark Icon">`,
+            'Space: Deal Damage': `<img src="https://img.icons8.com/ios-filled/100/cannon.png" class="category-icon" alt="Cannon">`,
+            'Space: Destroy Targets': `<img src="https://img.icons8.com/ios-filled/100/rocket.png" class="category-icon" alt="Rocket">`,
+            'Space: Healing': `<img src="https://img.icons8.com/ios-filled/100/wrench.png" class="category-icon" alt="Wrench">`,
+            'Ground: Deal Damage': `<img src="https://img.icons8.com/ios-filled/100/sword.png" class="category-icon" alt="Sword">`,
+            'Ground: Defeat Enemies': `<img src="https://img.icons8.com/ios-filled/100/center-diretion-2.png" class="category-icon" alt="Crosshair">`,
+            'Ground: Healing': `<img src="https://img.icons8.com/ios-filled/100/medical-id.png" class="category-icon" alt="Medical">`,
+            'TFOs': `<img src="https://img.icons8.com/ios-filled/100/groups.png" class="category-icon" alt="Group">`,
+            'Other': `<img src="https://img.icons8.com/ios-filled/100/question-mark.png" class="category-icon" alt="Question Mark">`,
         };
 
-        // --- Endeavor Guide Logic ---
+        // --- Expanded Endeavor Database (Incorporating all 50 verified details) ---
         const endeavorData = [
             // --- Space: Deal Damage ---
-            { id: 'deal-antiproton-damage-space', name: "Deal Antiproton Damage", category: "Space: Deal Damage", tip: "Equip Antiproton-based weaponry. Pets dealing Antiproton damage, such as Swarmers, also contribute." },
-            { id: 'deal-disruptor-damage-space', name: "Deal Disruptor Damage", category: "Space: Deal Damage", tip: "Equip Disruptor-based weaponry. Effective pets include the To’Duj or Stinger Fighter. KDF-aligned characters can also use Fleet Support." },
-            { id: 'deal-kinetic-damage-space', name: "Deal Kinetic Damage", category: "Space: Deal Damage", tip: "Utilize torpedoes, the Gravity Well science ability, or other kinetic-damage sources. Fleet Support and certain pets also contribute." },
-            { id: 'deal-phaser-damage-space', name: "Deal Phaser Damage", category: "Space: Deal Damage", tip: "Equip Phaser-based weaponry. Pets like Peregrine Fighters are effective. Federation-aligned characters can also use Fleet Support." },
-            { id: 'deal-physical-damage-space', name: "Deal Physical Damage", category: "Space: Deal Damage", tip: "Use the Destabilized Resonance Beam (an episode reward) or various Temporal Operative bridge officer abilities." },
-            { id: 'deal-plasma-damage-space', name: "Deal Plasma Damage", category: "Space: Deal Damage", tip: "Equip Plasma-based weaponry. Pets like Scorpion Fighters are effective. Romulan-aligned characters can also use Fleet Support." },
-            { id: 'deal-polaron-damage-space', name: "Deal Polaron Damage", category: "Space: Deal Damage", tip: "Equip Polaron-based weaponry. Vanguard Wingmen pets are effective. Jem'Hadar-aligned characters can also use Fleet Support." },
-            // Corrected: Added 'Tholian Widow Fighter' pet.
-            { id: 'deal-tetryon-damage-space', name: "Deal Tetryon Damage", category: "Space: Deal Damage", tip: "Activate the reputation ability from the Nukara Strikeforce T5/T6 reputation. Tetryon weapons or pets like the Tholian Mesh Weaver or Tholian Widow Fighter also work." },
+            { id: 'deal-antiproton-damage-space', name: "Deal Antiproton Damage", category: "Space: Deal Damage", tip: "Equip Antiproton-based weaponry. Space pets dealing Antiproton damage, such as Swarmers, also contribute. Excellent when paired with Beam Fire at Will or Cannon Scatter Volley." },
+            { id: 'deal-disruptor-damage-space', name: "Deal Disruptor Damage", category: "Space: Deal Damage", tip: "Equip Disruptor-based weaponry. Highly effective space pets include the To’Duj or Stinger Fighters. KDF-aligned characters can also summon Fleet Support." },
+            { id: 'deal-kinetic-damage-space', name: "Deal Kinetic Damage", category: "Space: Deal Damage", tip: "Utilize torpedoes, the Gravity Well science ability, or other kinetic-damage sources. Grab your best kinetic torpedo and use Torpedo Spread, which cannot miss. Fleet Support and certain pets also contribute." },
+            { id: 'deal-phaser-damage-space', name: "Deal Phaser Damage", category: "Space: Deal Damage", tip: "Equip Phaser-based weaponry. Space pets like Peregrine Fighters are effective. Federation-aligned characters can also use Fleet Support to add Phaser firepower." },
+            { id: 'deal-physical-damage-space', name: "Deal Physical Damage", category: "Space: Deal Damage", tip: "Use the Destabilized Resonance Beam (episode reward) or various Temporal Operative bridge officer abilities. Remember that shields absorb 75% of incoming Kinetic and Physical damage. This is a prime candidate for rerolls. See Damage type (space) § Physical for more specs." },
+            { id: 'deal-plasma-damage-space', name: "Deal Plasma Damage", category: "Space: Deal Damage", tip: "Equip Plasma-based weaponry. Space pets like Romulan Scorpion Fighters are highly effective. Romulan-aligned characters can also call in Fleet Support." },
+            { id: 'deal-polaron-damage-space', name: "Deal Polaron Damage", category: "Space: Deal Damage", tip: "Equip Polaron-based weaponry. Jem'Hadar Vanguard Wingmen pets are highly effective. Jem'Hadar-aligned characters can also use Fleet Support." },
+            { id: 'deal-tetryon-damage-space', name: "Deal Tetryon Damage", category: "Space: Deal Damage", tip: "Activate the reputation ability from the Nukara Strikeforce T5/T6 reputation. Tetryon weapons or space pets like the Tholian Mesh Weaver or Tholian Widow Fighter also work." },
 
             // --- Space: Destroy Targets ---
-            // Corrected: Added 'Point Defense Console' tip.
-            { id: 'destroy-targetable-torpedos', name: "Destroy Targetable Torpedos", category: "Space: Destroy Targets", tip: "The most reliable method is a private PvP match with a friend using targetable torpedoes (e.g., Hyper-Plasma). Alternatively, target torpedoes in the Carraya System patrol or during the final phases of the 'Undine Assault' and 'Crystalline Catastrophe' TFOs. The Point Defense Console can be helpful.", location: "Carraya System is in the Tau Dewa Sector Block (Beta Quadrant)." },
+            { id: 'destroy-targetable-torpedos', name: "Destroy Destructable Torpedos", category: "Space: Destroy Targets", tip: "The most reliable method is a private PvP match with a friend using targetable torpedoes (e.g., Hyper-Plasma). Alternatively, target torpedoes in the Carraya System patrol or during the final phases of 'Undine Assault' and 'Crystalline Catastrophe' TFOs. The Point Defense Console, Scylla and Charybdis (part 1 & 2) torpedoes, Operation Riposte missiles, Sentinels, or Undine Battlezone can be helpful.", location: "Carraya System is in the Tau Dewa Sector Block (Beta Quadrant)." },
             { id: 'destroy-terran-empire-ships', name: "Destroy Terran Empire Ships", category: "Space: Destroy Targets", tip: "Engage Terran forces in the Badlands Battlezone or within the 'Counterpoint' TFO.", location: "Badlands Battlezone is in the Cardassia Sector (Alpha Quadrant)." },
             { id: 'destroy-terran-empire-ships-in-battlezone', name: "Destroy Terran Empire Ships in Battlezone", category: "Space: Destroy Targets", tip: "Focus on defeating Terran ships specifically within the Badlands Battlezone.", location: "Location: Cardassia Sector (Alpha Quadrant, left of DS9)." },
-            // Corrected: Added tip about the second Dyson space zone.
-            { id: 'destroy-voth-ships', name: "Destroy Voth Ships", category: "Space: Destroy Targets", tip: "Voth ships can be found in the 'Aftermath' patrol, the Dyson Sphere Space Battlezone (after the Voth Citadel phase), or in the contested space zone above the ground battlezone.", location: "Dyson Sphere is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
-            { id: 'destroy-tzenkethi-ships', name: "Destroy Tzenkethi Ships", category: "Space: Destroy Targets", tip: "Engage Tzenkethi forces in their Battlezone, the 'Gravity Kills' TFO, or during related story episodes.", location: "Tzenkethi Battlezone is in the Gon'cra Sector (Alpha Quadrant)." },
+            { id: 'destroy-voth-ships', name: "Destroy Voth Ships", category: "Space: Destroy Targets", tip: "Voth ships can be found in the 'Aftermath' patrol, the Dyson Sphere Space Battlezone (after the Voth Citadel phase), or in the contested space zone (2nd Zone) above the ground battlezone.", location: "Dyson Sphere is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
+            { id: 'destroy-tzenkethi-ships', name: "Destroy Tzenkethi Ships", category: "Space: Destroy Targets", tip: "Engage Tzenkethi forces in their Battlezone, the Tzenkethi Front TFO, the 'Gravity Kills' TFO, or during related story episodes.", location: "Tzenkethi Battlezone is in the Gon'cra Sector (Alpha Quadrant)." },
             { id: 'destroy-tzenkethi-ship-in-goncra-battlezone', name: "Destroy Tzenkethi Ship in Gon’Cra Battlezone", category: "Space: Destroy Targets", tip: "Focus on defeating Tzenkethi ships specifically within the Tzenkethi Battlezone located in the Gon'cra Sector.", location: "Location: Gon’Cra Sector (Alpha Quadrant, top left)." },
             { id: 'destroy-undine-ships', name: "Destroy Undine Ships", category: "Space: Destroy Targets", tip: "Engage Undine (Species 8472) ships in the Dyson Sphere Space Battlezone, the 'Undine Assault' TFO, or the 'Surface Tension' episode.", location: "Dyson Battlezone is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
             { id: 'destroy-undine-ships-in-the-dyson-battlezone', name: "Destroy Undine Ships in the Dyson Battlezone", category: "Space: Destroy Targets", tip: "Focus on defeating Undine ships specifically within the Dyson Sphere Space Battlezone.", location: "Location: Solanae Sector Block (Alpha/Beta Quadrant access)." },
-            { id: 'destroy-hurq-frigates', name: "Destroy Hur’q Frigates", category: "Space: Destroy Targets", tip: "These specific targets are found during the 'Home' story episode." },
-            { id: 'destroy-borg-ships', name: "Destroy Borg Ships", category: "Space: Destroy Targets", tip: "The 'Infected: The Conduit' (Advanced) TFO offers a high density of Borg targets." },
-            { id: 'destroy-herald-ships', name: "Destroy Herald Ships", category: "Space: Destroy Targets", tip: "Herald ships are the primary enemy type in the 'Midnight' story episode." },
-            { id: 'destroy-dreadnaughts', name: "Destroy Dreadnaughts", category: "Space: Destroy Targets", tip: "Dreadnought-class ships can be found in the 'Hive Onslaught' TFO, 'Dranuur Gauntlet' TFO, or by destroying the Voth Planet Killers in the Dyson Sphere." },
-            { id: 'destroy-tholians-space', name: "Destroy Tholians", category: "Space: Destroy Targets", tip: "Engage Tholian ships in the 'Crystalline Catastrophe' TFO or the Archer System patrol.", location: "Archer System is in the Narendra Sector (Beta Quadrant)." },
+            { id: 'destroy-hurq-frigates', name: "Destroy Hur’q Ships (Space)", category: "Space: Destroy Targets", tip: "Engage Hur'q vessels. These targets are found during the 'Home' or 'The Search' story episodes, as well as the Gamma Quadrant Battlezone." },
+            { id: 'destroy-borg-ships', name: "Destroy Borg Ships", category: "Space: Destroy Targets", tip: "Engage Borg forces. The 'Infected: The Conduit' (Advanced) TFO, 'The Cure Found' TFO, 'Red Alert: Borg' event, and Borg Deep Space Encounters offer high density of targets." },
+            { id: 'destroy-herald-ships', name: "Destroy Herald Ships", category: "Space: Destroy Targets", tip: "Herald ships are the primary enemy type in the 'Midnight' story episode (Sol System segment), 'Blood of Ancients' (first part), 'Broken Circle', or the 'Herald Sphere' and 'Gateway to Gre'thor' TFOs." },
+            { id: 'destroy-dreadnaughts', name: "Destroy Dreadnaughts", category: "Space: Destroy Targets", tip: "Dreadnought-class ships can be found in 'Hive Onslaught' TFO, 'Dranuur Gauntlet' TFO, 'Peril Over Pahvo' TFO on Normal (for ease), 'Infected: The Conduit' (Borg Gateway, Tactical Cube), Undine Battlezone (when 5+ players are on a single point; Planetkillers do not count), Badlands Battlezone (each fortress has one), or 'Strike at Seedea' patrol (final segment). Recommended to reroll if time-limited." },
+            { id: 'destroy-tholians-space', name: "Destroy Tholians", category: "Space: Destroy Targets", tip: "Engage Tholian ships in the 'Crystalline Catastrophe' TFO or the Archer System patrol. Note: Tholian Web Nodes count towards completion, making the patrol extremely easy.", location: "Archer System is in the Narendra Sector (Beta Quadrant)." },
 
             // --- Space: Healing ---
-            { id: 'hull-healing-space', name: "Hull Healing (Space)", category: "Space: Healing", tip: "Use abilities like Hazard Emitters, Engineering Team, and Auxiliary to Structural. Healing consoles are also very effective." },
-            { id: 'shield-healing-space', name: "Shield Healing (Space)", category: "Space: Healing", tip: "Use abilities such as Science Team, Transfer Shield Strength, or the Biomolecular Shield Generator console." },
+            { id: 'hull-healing-space', name: "Hull Healing (Space)", category: "Space: Healing", tip: "Use Hazard Emitters, Engineering Team, Auxiliary to Structural, or healing consoles. Unequip your ship's shield to take direct damage in patrols or adventure zones (Damage Control skill/mods slow progress as passive regen does not count). Alternatively, start the 'Midnight' episode, fight the first wave in 'Our Final Hour' portion, then do not hail the U.S.S. Cleveland; you can use hull heals on it constantly as it takes continuous damage." },
+            { id: 'shield-healing-space', name: "Shield Healing (Space)", category: "Space: Healing", tip: "Use Science Team, Transfer Shield Strength, or the Biomolecular Shield Generator console. Unequip your shields to ensure you take damage, then activate your healing systems in patrols/battlezones. Passive shield regeneration does not count." },
 
             // --- Ground: Deal Damage ---
-            // Corrected: Added 'Herald Projector'.
-            { id: 'deal-antiproton-damage-ground', name: "Deal Antiproton Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Antiproton damage, such as the Omega Reputation Carbine, Herald Projector, or various Antiproton rifles." },
+            { id: 'deal-antiproton-damage-ground', name: "Deal Antiproton Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Antiproton damage, such as the Omega Reputation Carbine, Herald Projector, or standard Antiproton rifles." },
             { id: 'deal-disruptor-damage-ground', name: "Deal Disruptor Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Disruptor damage, such as the Boolean Cannon or standard Disruptor rifles." },
-            // Corrected: Added more abilities.
-            { id: 'deal-kinetic-damage-ground', name: "Deal Kinetic Damage (Ground)", category: "Ground: Deal Damage", tip: "Use abilities and equipment that deal kinetic damage, including grenades, mines, mortars, Graviton Spike, Protomatter Deployment, and the TR-116B rifle." },
+            { id: 'deal-kinetic-damage-ground', name: "Deal Kinetic Damage (Ground)", category: "Ground: Deal Damage", tip: "Use abilities and equipment that deal kinetic damage, including grenades, mines, mortars, Graviton Spike, Protomatter Deployment, or the TR-116B sniper rifle." },
             { id: 'deal-phaser-damage-ground', name: "Deal Phaser Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip any standard ground weapon that deals Phaser damage, such as a Phaser Split Beam or Full Auto Rifle." },
-            { id: 'deal-physical-damage-ground', name: "Deal Physical Damage (Ground)", category: "Ground: Deal Damage", tip: "Utilize melee weapons, Temporal Operative abilities, the Harmonic Resonance Device, or Zefram Cochrane's Shotgun." },
+            { id: 'deal-physical-damage-ground', name: "Deal Physical Damage (Ground)", category: "Ground: Deal Damage", tip: "Utilize melee weapons, Temporal Operative abilities, the Harmonic Resonance Device, or Zefram Cochrane's Shotgun. A number of physical kit modules will help deal damage faster than melee. Locations: 'Frontier Medicine' ground section of 'Home', Nimbus III, Voth Battlezone, or Kobali Prime." },
             { id: 'deal-plasma-damage-ground', name: "Deal Plasma Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Plasma damage, such as Romulan reputation weapons or standard Plasma rifles." },
             { id: 'deal-polaron-damage-ground', name: "Deal Polaron Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip ground weapons that deal Polaron damage, such as the Jem'Hadar rifle, or use kit modules like the Polaron Bombardment." },
             { id: 'deal-tetryon-damage-ground', name: "Deal Tetryon Damage (Ground)", category: "Ground: Deal Damage", tip: "Equip any standard ground weapon that deals Tetryon damage, such as a Tetryon Split Beam or Full Auto Rifle." },
 
             // --- Ground: Defeat Enemies ---
-            { id: 'defeat-hurq-attendants', name: "Defeat Hur’q Attendants", category: "Ground: Defeat Enemies", tip: "These specific ground targets are found during the 'Home' story episode." },
-            // Corrected: Merged two duplicate Gorn entries into one.
+            { id: 'defeat-hurq-attendants', name: "Defeat Hur’q Attendants", category: "Ground: Defeat Enemies", tip: "These specific ground targets are found in large quantities during the 'Home' story episode (Frontier Medicine ground portion) and the 'Storm Clouds Gather' episode." },
             { id: 'defeat-gorn-on-nimbus', name: "Defeat Gorn on Nimbus", category: "Ground: Defeat Enemies", tip: "Travel to the Gorn Canyon area on the Nimbus III adventure zone to find Gorn enemies.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
-            { id: 'defeat-terran-empire-ground', name: "Defeat Terran Empire (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Terran Empire ground forces in the 'Assault on Terok Nor' TFO or during the 'Future Proof' story arc." },
-            // Corrected: Added more locations.
-            { id: 'defeat-captains', name: "Defeat Captains", category: "Ground: Defeat Enemies", tip: "Captain-rank enemies are common in the Dyson Ground Battlezone, Defera Adventure Zone, 'Hive Onslaught' (Ground) TFO on Advanced/Elite, Nimbus minibosses, and the 'Home' episode." },
+            { id: 'defeat-terran-empire-ground', name: "Defeat Terran Empire (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Terran Empire ground forces in the 'Assault on Terok Nor' TFO, or during missions like 'Ragnarok', 'Para Pacem', 'Illusion of Communication' (ground portion), 'Operation Wolf', and Pahvo Dissension." },
+            { id: 'defeat-captains', name: "Defeat Captains", category: "Ground: Defeat Enemies", tip: "Defeat Captain-rank enemies. Locations: 'Home' ground portion, 'Mycelial Realm' (last island), 'Leap of Faith' (various bosses), Nimbus III Stronghold bosses, or Dyson Ground Battlezone. The TFO 'Storm Chasers' is excellent (each Guardian counts, plus final Guardian releases Plasma Energy Bolts which count as Captains). During winter, the 'Cones of Conduct' snowmen waves spawn multiple captains." },
             { id: 'defeat-elachi-captain', name: "Defeat Elachi Captain", category: "Ground: Defeat Enemies", tip: "This specific captain-rank enemy is found within the 'Mycelial Realm' TFO." },
             { id: 'defeat-tholians-ground', name: "Defeat Tholians (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Tholian ground forces in the Nukara Prime Adventure Zone or related TFOs.", location: "Nukara is in the Boreth Sector (Beta Quadrant)." },
             { id: 'defeat-tholians-ground-adventure-zone', name: "Defeat Tholians (Ground Adventure Zone)", category: "Ground: Defeat Enemies", tip: "Focus on defeating Tholians specifically within the Nukara Prime Adventure Zone.", location: "Location: Boreth Sector (Beta Quadrant, below Drozana Station)." },
-            { id: 'defeat-borg-ground', name: "Defeat Borg (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Borg ground forces in the Defera Adventure Zone or within Borg-specific TFOs.", location: "Defera Zone is in the Orellius Sector Block (Beta Quadrant)." },
-            { id: 'defeat-dewan-arthropods', name: "Defeat Dewan Arthropods", category: "Ground: Defeat Enemies", tip: "These scorpion-like creatures are found throughout the desert areas of the Nimbus III adventure zone.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
+            { id: 'defeat-borg-ground', name: "Defeat Borg (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Borg ground forces in the Defera Adventure Zone, or in Borg TFOs ('Cure Applied', 'Into the Hive', 'Khitomer in Stasis', 'Where Angels Fear to Tread'). Avoid 'Infected: Manus' TFO, as kills here are highly unreliable and often fail to count towards the endeavor.", location: "Defera Zone is in the Orellius Sector Block (Beta Quadrant)." },
+            { id: 'defeat-dewan-arthropods', name: "Defeat Dewan Arthropods", category: "Ground: Defeat Enemies", tip: "Found in desert areas of Nimbus III. Alternatively, play the mission 'Partisans' (Arena portion) and do NOT deactivate the Scorpion generator to farm them indefinitely.", location: "Nimbus III is in the Sirius Sector Block (Alpha Quadrant)." },
             { id: 'defeat-voth-ground', name: "Defeat Voth (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Voth ground forces within the Dyson Sphere Ground Battlezone.", location: "Dyson Battlezone is in the Solanae Sector Block (Alpha/Beta Quadrant access)." },
             { id: 'defeat-voth-in-battlezone', name: "Defeat Voth in Battlezone", category: "Ground: Defeat Enemies", tip: "Focus on defeating Voth specifically within the Dyson Sphere Ground Battlezone.", location: "Location: Solanae Sector Block (Alpha/Beta Quadrant access, Part of Solanae Dyson Sphere)." },
-            // Corrected: Added 'New Frontiers Arc' context.
-            { id: 'defeat-tzenkethi-ground', name: "Defeat Tzenkethi (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Tzenkethi ground forces during the 'Of Signs and Portents' or 'Brushfire' episodes (New Frontiers story arc)." },
+            { id: 'defeat-tzenkethi-ground', name: "Defeat Tzenkethi (Ground)", category: "Ground: Defeat Enemies", tip: "Engage Tzenkethi ground forces. Play the ground portion of 'Of Signs and Portents' (60+ possible targets) or the 'Brushfire' episode in the New Frontiers story arc." },
             { id: 'defeat-vaadwaur', name: "Defeat Vaadwaur", category: "Ground: Defeat Enemies", tip: "Engage Vaadwaur forces throughout the Kobali Prime Adventure Zone.", location: "Kobali Prime is in the Delta Quadrant (Kobali System)." },
-            
+            { id: 'defeat-undine-ground', name: "Defeat Undine (Ground) [DISABLED]", category: "Ground: Defeat Enemies", tip: "Note: This endeavor is currently disabled in-game. Historically completed in 'Undine Infiltration' TFO." },
+
             // --- Ground: Healing ---
-            // Corrected: Added 'Medical Tricorder'.
-            { id: 'hull-healing-ground', name: "Health Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Medical Generator, abilities like Rally Cry or Medical Tricorder, or consumables like Large Hyposprays.", location: "The acid pools on Nukara are a popular spot to get this done. Use an AoE healing ability. (Boreth Sector, Beta Quadrant) - Red Teleporter." },
-            { id: 'shield-healing-ground', name: "Shield Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Shield Generator, the Shield Recharge ability, or consumables like Large Shield Charges." },
+            { id: 'hull-healing-ground', name: "Health Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Medical Generator, or abilities like Rally Cry and Medical Tricorder, or consumable Hyposprays. Travel to Nukara Prime acid pools, temporarily deactivate your EV suit to take damage, and heal yourself. Alternatively, stand in Romulus insect swarms with a Bridge Officer.", location: "Nukara Prime (Boreth Sector, Beta Quadrant) - Red Teleporter." },
+            { id: 'shield-healing-ground', name: "Shield Healing (Ground)", category: "Ground: Healing", tip: "Use kit modules like Shield Generator, the Shield Recharge ability, or consumable Shield Charges. Note: shield heals do not count if your shield is full. Travel to Nukara Prime acid pools, temporarily deactivate your EV suit to take damage, and trigger shield heals. Alternatively, stand in Romulus insect swarms.", location: "Nukara Prime (Boreth Sector, Beta Quadrant) - Red Teleporter." },
 
             // --- TFOs ---
-            { id: 'complete-competitive-wargames-tfos', name: "Complete Competitive Wargames TFOs", category: "TFOs", tip: "The 'Binary Circuit' TFO on Elite difficulty is a fast and reliable option for completion." },
-            { id: 'complete-lukari-tfos', name: "Complete Lukari TFOs", category: "TFOs", tip: "The 'Dranuur Gauntlet' TFO on Normal difficulty is a straightforward option for completion." },
-            { id: 'complete-borg-tfos', name: "Complete Borg TFOs", category: "TFOs", tip: "The 'Infected: The Conduit' (Advanced) TFO is a popular and efficient option for completion." },
-            { id: 'complete-iconian-tfos', name: "Complete Iconian TFOs", category: "TFOs", tip: "'Brotherhood of the Sword' is a common and direct option for completion." },
+            { id: 'complete-competitive-wargames-tfos', name: "Complete Competitive Wargames TFOs", category: "TFOs", tip: "'Binary Circuit' (ground) is the quickest and easiest of these. However, its 10-person requirement and absence from the Random TFO system means it and all other Competitive TFOs have extremely long public queue times. Reroll this if possible." },
+            { id: 'complete-lukari-tfos', name: "Complete Lukari TFOs", category: "TFOs", tip: "The 'Dranuur Gauntlet' TFO on Normal difficulty is a straightforward and easy option. You should especially avoid 'Gravity Kills' due to its extreme length and difficulty." },
+            { id: 'complete-borg-tfos', name: "Complete Borg TFOs", category: "TFOs", tip: "The quickest Borg TFO is 'The Cure Found' (space), though 'Infected: The Conduit' (space) and 'Khitomer Vortex' (space) are frequently run by players and complete quickly. 'Into the Hive' is a good ground choice. Avoid other ground Borg TFOs as they are difficult and time-consuming." },
+            { id: 'complete-iconian-tfos', name: "Complete Iconian TFOs", category: "TFOs", tip: "The quickest and easiest Iconian TFOs are 'Bug Hunt' (ground), 'Brotherhood of the Sword' (ground), and 'Gateway to Gre'thor' (space)." },
 
             // --- Other ---
-            // Corrected: Added cost information.
-            { id: 'gain-salvage', name: "Gain Salvage", category: "Other", tip: "Purchase and salvage Mark IX ground equipment (approx. 4,000 EC each) from any standard gear vendor (e.g., on Earth Spacedock) for a cost-effective method." },
-            { id: 'harvest-materials-ground', name: "Harvest Materials (Ground)", category: "Other", tip: "The 'Sphere of Influence' mission offers repeatable nodes. Federation characters can also use the 'Diplomatic Order' mission for multiple nodes." },
-            // Corrected: Added more patrol examples.
-            { id: 'harvest-materials-space', name: "Harvest Materials (Space)", category: "Other", tip: "Enter patrols in the Tau Dewa Sector Block (e.g., Carraya, Beta Thoridor, Archer System, Starbase 234), harvest the anomaly nodes, and leave without fighting to repeat quickly.", location: "These patrols are in/near the Tau Dewa Sector Block (Beta Quadrant)." },
-            { id: 'win-gold-pressed-latinum', name: "Win Gold Pressed Latinum", category: "Other", tip: "Play the Dabo mini-game, available at locations like Drozana Station or Deep Space 9." }
+            { id: 'gain-salvage', name: "Gain Salvage", category: "Other", tip: "Earned from salvage items in adventure zones and patrols. For a rapid, cheap shortcut: travel to any ground gear vendor (e.g. Earth Spacedock), buy low-cost Mark IX ground equipment (approx. 4,000 EC each), and salvage them directly from your inventory." },
+            { id: 'harvest-materials-ground', name: "Harvest Materials (Ground)", category: "Other", tip: "Scan ground anomalies. The 'Sphere of Influence' mission offers 2 nodes in the initial spawn room: harvest them, beam out, and restart to repeat quickly. Alternatively, play 'Diplomatic Orders' for 2 nodes on Vulcan and 4 nodes in the P'Jem ground segment." },
+            { id: 'harvest-materials-space', name: "Harvest Materials (Space)", category: "Other", tip: "Scan space anomalies. Enter patrols in the Tau Dewa Sector Block (e.g., Archer System (3), Carraya (2), Japori (3), Jouret (3), Beta Thoridor, Starbase 234), harvest the anomaly nodes, and leave without fighting to repeat. Alternatively, play 'Diplomatic Orders' (6 space nodes) or 'Mine Enemy' (4 nodes; collect, beam out, ignore the moons).", location: "These patrols are in/near the Tau Dewa Sector Block (Beta Quadrant)." },
+            { id: 'win-gold-pressed-latinum', name: "Win Gold Pressed Latinum", category: "Other", tip: "Play the Dabo mini-game. Available at any Dabo table, such as Quark's Bar on Deep Space 9 or Drozana Station." }
         ];
 
+        // --- DOM Elements ---
         const container = document.getElementById('endeavorContainer');
         const searchInput = document.getElementById('searchInput');
-        const sortSelect = document.getElementById('sort-select');
+        const sortSelect = document.getElementById('sortSelect');
         const filtersContainer = document.getElementById('categoryFilters');
-        const filterBar = document.getElementById('filterBar');
-        const filtersWrapper = document.getElementById('filtersWrapper');
-        const themeToggleBtn = document.getElementById('theme-toggle-btn');
-        let activeFilter = 'All';
+        const menuButtons = document.querySelectorAll('.lcars-menu-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        const timeVal = document.getElementById('time-val');
+        const stardateVal = document.getElementById('stardate-val');
+        const dbControlsWrapper = document.getElementById('db-controls-wrapper');
+
+        let activeCategory = 'All';
         let currentSort = 'alpha-asc';
-        let canRenderCards = false; // Control rendering
-        let isIntroAnimation = true;
-        
-        const renderEndeavors = (items) => {
-            container.innerHTML = '';
-            if (items.length === 0) {
-                container.innerHTML = `<p class="text-center text-gray-400 col-span-full">No endeavors found matching your criteria.</p>`;
-                return;
+
+        // --- Tab Navigation Logic ---
+        const switchTab = (tabId) => {
+            tabPanels.forEach(panel => {
+                panel.classList.remove('active');
+            });
+            const targetPanel = document.getElementById(tabId);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
             }
-            const isIntro = document.body.classList.contains('lcars-intro') && isIntroAnimation;
-            const baseDelay = isIntro ? 1.2 : 0;
-            items.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.style.animationDelay = `${baseDelay + index * 0.05}s`;
-                let locationInfo = '';
-                if (item.location) {
-                    locationInfo = `<li class="location-info">${item.location}</li>`;
+
+            menuButtons.forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
                 }
+            });
+
+            // Only show search and sort inputs on the Database panel
+            if (tabId === 'db-panel') {
+                dbControlsWrapper.classList.remove('hidden-controls');
+            } else {
+                dbControlsWrapper.classList.add('hidden-controls');
+            }
+        };
+
+        menuButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchTab(btn.dataset.tab);
+            });
+        });
+
+        // --- Initialize Endeavors Cards once in DOM ---
+        const initializeEndeavors = () => {
+            container.innerHTML = '';
+            endeavorData.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'lcars-card';
+                card.dataset.id = item.id;
+
+                let locationHtml = '';
+                if (item.location) {
+                    locationHtml = `<div class="lcars-card-location">${item.location}</div>`;
+                }
+
                 card.innerHTML = `
-                    <div class="card-content">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-xl font-bold text-white pr-4">${item.name}</h3>
-                            <span class="category-tag">
-                                ${iconMap[item.category] || ''}
-                                ${item.category}
-                            </span>
+                    <div>
+                        <div class="lcars-card-header">
+                            <h3 class="lcars-card-title">${item.name}</h3>
+                            <span class="lcars-card-tag">${item.category}</span>
                         </div>
-                        <p class="text-gray-300">${item.tip}</p>
+                        <p class="lcars-card-body">${item.tip}</p>
                     </div>
-                    ${locationInfo}
+                    ${locationHtml}
                 `;
                 container.appendChild(card);
             });
-            if (isIntro) {
-                isIntroAnimation = false;
-            }
         };
 
+        // --- Render Category Filter Buttons (Pills) ---
         const renderFilters = () => {
             const categories = ['All', ...new Set(endeavorData.map(item => item.category))];
-            const isIntro = document.body.classList.contains('lcars-intro') && isIntroAnimation;
-            const baseDelay = isIntro ? 1.1 : 0;
 
-            filtersContainer.innerHTML = categories.map((cat, index) => {
-                const delay = isIntro ? `style="animation-delay: ${baseDelay + index * 0.05}s"` : '';
+            filtersContainer.innerHTML = categories.map(cat => {
+                const icon = iconMap[cat] || '';
                 return `
-                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium ${activeFilter === cat ? 'active' : ''}" data-category="${cat}" ${delay}>
-                    ${iconMap[cat] || ''}
-                    <span>${cat}</span>
-                </button>
-            `}).join('');
+                    <button class="lcars-pill-btn ${activeCategory === cat ? 'active' : ''}" data-category="${cat}">
+                        ${icon}
+                        <span>${cat}</span>
+                    </button>
+                `;
+            }).join('');
         };
 
+        // --- Filter and Sort Core Logic with Fade Animations ---
         const filterAndRender = () => {
-            if (!canRenderCards) return; // Don't render prematurely
+            const query = searchInput.value.toLowerCase();
 
-            let filteredData = [...endeavorData];
-            const searchTerm = searchInput.value.toLowerCase();
+            // 1. Determine which card IDs match the filters/query
+            const visibleIds = new Set();
+            endeavorData.forEach(item => {
+                const matchesCategory = (activeCategory === 'All' || item.category === activeCategory);
+                const matchesQuery = !query ||
+                    item.name.toLowerCase().includes(query) ||
+                    item.tip.toLowerCase().includes(query) ||
+                    (item.location && item.location.toLowerCase().includes(query));
 
-            // Filter
-            if (activeFilter !== 'All') {
-                filteredData = filteredData.filter(item => item.category === activeFilter);
-            }
-            if (searchTerm) {
-                filteredData = filteredData.filter(item => 
-                    item.name.toLowerCase().includes(searchTerm) || 
-                    item.tip.toLowerCase().includes(searchTerm) ||
-                    (item.location && item.location.toLowerCase().includes(searchTerm))
-                );
-            }
+                if (matchesCategory && matchesQuery) {
+                    visibleIds.add(item.id);
+                }
+            });
 
-            // Sort
+            // 2. Sort the DOM elements in-place to avoid rebuilding and disrupting transitions
+            let sortedData = [...endeavorData];
             if (currentSort === 'alpha-asc') {
-                filteredData.sort((a, b) => a.name.localeCompare(b.name));
+                sortedData.sort((a, b) => a.name.localeCompare(b.name));
             } else if (currentSort === 'alpha-desc') {
-                filteredData.sort((a, b) => b.name.localeCompare(a.name));
+                sortedData.sort((a, b) => b.name.localeCompare(a.name));
             }
-            
-            renderEndeavors(filteredData);
+
+            sortedData.forEach(item => {
+                const card = container.querySelector(`[data-id="${item.id}"]`);
+                if (card) {
+                    container.appendChild(card); // Re-appending moves it to the bottom, ordering them
+                }
+            });
+
+            // 3. Apply fade-out or fade-in transitions on card elements
+            const cards = container.querySelectorAll('.lcars-card');
+            let matchCount = 0;
+
+            cards.forEach(card => {
+                const id = card.dataset.id;
+                const shouldBeVisible = visibleIds.has(id);
+
+                if (shouldBeVisible) {
+                    matchCount++;
+
+                    // Clear any pending fade-out hide timeouts
+                    if (card.dataset.timeoutId) {
+                        clearTimeout(parseInt(card.dataset.timeoutId));
+                        card.removeAttribute('data-timeout-id');
+                    }
+
+                    // If it was hidden, make it display: flex first, reflow, then remove fade-out
+                    if (card.classList.contains('hidden-card')) {
+                        card.classList.remove('hidden-card');
+                    }
+                    // Trigger browser reflow to ensure fade-in transition works
+                    card.offsetHeight;
+                    card.classList.remove('fade-out');
+                } else {
+                    // Start fade out animation if it isn't already fading out
+                    if (!card.classList.contains('fade-out') && !card.classList.contains('hidden-card')) {
+                        card.classList.add('fade-out');
+                        const timeoutId = setTimeout(() => {
+                            card.classList.add('hidden-card');
+                            card.removeAttribute('data-timeout-id');
+                        }, 250); // Matches CSS transition duration
+                        card.dataset.timeoutId = timeoutId;
+                    }
+                }
+            });
+
+            // Handle "No matches found" message
+            let noMatchMsg = container.querySelector('.no-match-message');
+            if (matchCount === 0) {
+                if (!noMatchMsg) {
+                    noMatchMsg = document.createElement('p');
+                    noMatchMsg.className = 'no-match-message text-center';
+                    noMatchMsg.style.cssText = 'color:var(--lcars-tan); grid-column: 1 / -1; padding: 2rem; font-family: var(--lcars-font-title); font-size: 1.5rem; text-transform: uppercase;';
+                    noMatchMsg.textContent = 'No corresponding logs found.';
+                    container.appendChild(noMatchMsg);
+                }
+            } else {
+                if (noMatchMsg) {
+                    noMatchMsg.remove();
+                }
+            }
         };
 
+        // --- Event Listeners for Filters/Search ---
         searchInput.addEventListener('input', filterAndRender);
+
         sortSelect.addEventListener('change', (e) => {
             currentSort = e.target.value;
             filterAndRender();
         });
+
         filtersContainer.addEventListener('click', (e) => {
-            const button = e.target.closest('.filter-btn');
+            const button = e.target.closest('.lcars-pill-btn');
             if (button) {
-                activeFilter = button.dataset.category;
-                document.querySelectorAll('#categoryFilters .filter-btn').forEach(btn => btn.classList.remove('active'));
+                activeCategory = button.dataset.category;
+                document.querySelectorAll('.lcars-pill-btn').forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
                 filterAndRender();
             }
         });
-        
-        themeToggleBtn.addEventListener('click', () => {
-            const isLcars = document.body.classList.toggle('lcars-theme');
-            localStorage.setItem('theme', isLcars ? 'lcars' : 'default');
-        });
 
+        // --- Stardate & Clock Calculations ---
+        const updateTimeAndStardate = () => {
+            const now = new Date();
+
+            // Format Time (HH:MM:SS)
+            timeVal.textContent = now.toLocaleTimeString();
+
+            // Calculate Starfleet Stardate
+            // Formula: (Year - 1900)*1000 + (DayOfYear / 365)*1000 + (Hour / 24)*100
+            const year = now.getFullYear();
+            const start = new Date(year, 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const day = Math.floor(diff / oneDay);
+            const yearPart = (year - 1900) * 1000;
+            const dayPart = (day / 365) * 1000;
+            const stardate = (yearPart + dayPart).toFixed(1);
+
+            stardateVal.textContent = stardate;
+        };
+
+        // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            const body = document.body;
+            // Render Database elements once
+            initializeEndeavors();
+            renderFilters();
+            filterAndRender();
 
-            if (savedTheme !== 'default') { // Default to LCARS
-                body.classList.add('lcars-theme');
-                body.classList.add('lcars-intro');
-
-                const loader = document.createElement('div');
-                loader.id = 'lcars-loader';
-                loader.innerHTML = `<p>LCARS 1.16 Loading<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></p>`;
-                body.prepend(loader);
-
-                // Start the sequence
-                setTimeout(() => {
-                    loader.classList.add('hidden');
-                    body.classList.add('loaded');
-                    renderFilters(); // Render filters first
-                    // Now it's safe to render cards
-                    canRenderCards = true;
-                    filterAndRender();
-                }, 750); // Show loader for 1000 = 1 second
-            } else {
-                // If not LCARS intro, render immediately
-                canRenderCards = true;
-                renderFilters();
-                filterAndRender();
-            }
+            // Initialize clock and stardate loop
+            updateTimeAndStardate();
+            setInterval(updateTimeAndStardate, 1000);
         });
-
-        // --- Warp Drive Background Logic ---
-        const canvas = document.getElementById('warp-background');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        const numStars = 1000;
-        const speed = 4;
-
-        function setup() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            stars = [];
-            for (let i = 0; i < numStars; i++) {
-                stars.push({
-                    x: (Math.random() - 0.5) * canvas.width,
-                    y: (Math.random() - 0.5) * canvas.height,
-                    z: Math.random() * canvas.width
-                });
-            }
-        }
-
-        function draw() {
-            ctx.fillStyle = 'rgba(10, 15, 30, 0.2)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.fillStyle = 'white';
-            for (let i = 0; i < stars.length; i++) {
-                let star = stars[i];
-                star.z -= speed;
-                if (star.z < 1) {
-                    star.z = canvas.width;
-                    star.x = (Math.random() - 0.5) * canvas.width;
-                    star.y = (Math.random() - 0.5) * canvas.height;
-                }
-                const sx = star.x / star.z * canvas.width / 10;
-                const sy = star.y / star.z * canvas.height / 10;
-                const r = Math.max(0.1, (1 - star.z / canvas.width) * 2);
-                ctx.beginPath();
-                ctx.arc(sx, sy, r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            ctx.restore();
-            requestAnimationFrame(draw);
-        }
-
-        window.addEventListener('resize', setup);
-        setup();
-        draw();
     </script>
 </body>
+
 </html>
