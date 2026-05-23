@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.hexfury.com/</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Retro Version -->
+  <url>
+    <loc>https://www.hexfury.com/retro.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <!-- Projects Directory -->
+  <url>
+    <loc>https://www.hexfury.com/src/projects.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- STO Personal Endeavor Guide -->
+  <url>
+    <loc>https://www.hexfury.com/src/Pages/STOEndeavourHelper.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- About Page -->
+  <url>
+    <loc>https://www.hexfury.com/src/about.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Gallery Page -->
+  <url>
+    <loc>https://www.hexfury.com/src/gallery.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Characters Page -->
+  <url>
+    <loc>https://www.hexfury.com/src/Pages/Characters.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <!-- Magitech Page -->
+  <url>
+    <loc>https://www.hexfury.com/src/Pages/Magitech.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <!-- NeuralPattern Page -->
+  <url>
+    <loc>https://www.hexfury.com/src/Pages/NeuralPattern.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <!-- StarfallLegacy Page -->
+  <url>
+    <loc>https://www.hexfury.com/src/Pages/StarfallLegacy.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <!-- StellarisNameListMaker Page -->
+  <url>
+    <loc>https://www.hexfury.com/src/Pages/StellarisNameListMaker.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <!-- 90sBoxOpener Page -->
+  <url>
+    <loc>https://www.hexfury.com/src/Pages/90sBoxOpener.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

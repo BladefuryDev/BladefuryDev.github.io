@@ -1,0 +1,7 @@
+# Global Robots.txt file for BladefuryDev / Hexfury Games Portfolio
+# Allows search engine crawlers to access all pages and points to the sitemap
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.hexfury.com/sitemap.xml
