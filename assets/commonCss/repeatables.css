@@ -9,36 +9,40 @@
     
     /* Default Light Mode Theme Values */
     --color-bg: rgb(248 250 252);            /* Slate 50 */
-    --color-bg-secondary: rgba(255, 255, 255, 0.7);  /* Glass white */
+    --color-bg-secondary: rgba(255, 255, 255, 0.75);  /* Glass white */
     --color-bg-secondary-solid: rgb(255, 255, 255);
-    --color-primary: rgb(2, 132, 199);        /* Sky 600 */
-    --color-primary-light: rgb(56, 189, 248);  /* Sky 400 */
-    --color-primary-dark: rgb(3, 105, 161);    /* Sky 700 */
-    --color-primary-glow: rgba(2, 132, 199, 0.15);
+    --color-primary: rgb(7, 89, 133);        /* Sky 800 (Darker blue for better contrast) */
+    --color-primary-light: rgb(3, 105, 161);  /* Sky 700 (High contrast logo and [] headers) */
+    --color-primary-dark: rgb(12, 74, 110);    /* Sky 900 (High contrast action states) */
+    --color-primary-glow: rgba(3, 105, 161, 0.18);
+    
+    /* RGB Helper components to support runtime variable opacity classes */
+    --color-primary-light-rgb: 3, 105, 161;
+    --color-primary-glow-rgb: 3, 105, 161;
 
     --color-text: rgb(15 23 42);             /* Slate 900 */
     --color-text-muted: rgb(71 85 105);      /* Slate 600 */
     
     /* Grid details */
-    --grid-color: rgba(15, 23, 42, 0.025);
+    --grid-color: rgba(3, 105, 161, 0.035);  /* Subtle themed brand grid */
     
     /* Shadow colors for elements on the main background */
-    --shadow-color-dark: rgba(0, 0, 0, 0.1);
-    --shadow-color-light: rgba(255, 255, 255, 0.8);
+    --shadow-color-dark: rgba(3, 105, 161, 0.12);
+    --shadow-color-light: rgba(255, 255, 255, 0.9);
 
-    /* Neumorphic/Futuristic Shadow Styles */
-    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.05);
-    --shadow-sm-inset: inset 0 2px 4px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
-    --shadow-md-inset: inset 0 2px 4px rgba(0,0,0,0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
-    --shadow-lg-inset: inset 0 4px 8px rgba(0,0,0,0.08);
+    /* Neumorphic/Futuristic Shadow Styles (Themed soft glows) */
+    --shadow-sm: 0 2px 4px rgba(3, 105, 161, 0.05), 0 0 0 1px rgba(3, 105, 161, 0.08);
+    --shadow-sm-inset: inset 0 2px 4px rgba(3, 105, 161, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(3, 105, 161, 0.08), 0 2px 4px -1px rgba(3, 105, 161, 0.04), 0 0 8px rgba(3, 105, 161, 0.05);
+    --shadow-md-inset: inset 0 2px 4px rgba(3, 105, 161, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(3, 105, 161, 0.1), 0 4px 6px -2px rgba(3, 105, 161, 0.05), 0 0 15px rgba(3, 105, 161, 0.08);
+    --shadow-lg-inset: inset 0 4px 8px rgba(3, 105, 161, 0.08);
     
-    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+    --shadow-card: 0 10px 30px -10px rgba(3, 105, 161, 0.12), 0 1px 3px rgba(3, 105, 161, 0.02), 0 0 1px rgba(3, 105, 161, 0.2);
 
     /* Text Shadow Styles */
     --text-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --text-shadow-glow: none;
+    --text-shadow-glow: 0 0 6px rgba(3, 105, 161, 0.15);
 
     color-scheme: light;
 }
@@ -53,6 +57,10 @@
         --color-primary-light: rgb(56, 189, 248); /* Neon Sky */
         --color-primary-dark: rgb(3, 105, 161);   /* Deep Blue */
         --color-primary-glow: rgba(56, 189, 248, 0.35);
+        
+        /* RGB Helper components to support runtime variable opacity classes */
+        --color-primary-light-rgb: 56, 189, 248;
+        --color-primary-glow-rgb: 56, 189, 248;
 
         --color-text: rgb(241 245 249);           /* slate-100 */
         --color-text-muted: rgb(148 163 184);     /* slate-400 */
@@ -83,24 +91,26 @@ html.light {
     --color-bg: rgb(248 250 252);
     --color-bg-secondary: rgba(255, 255, 255, 0.75);
     --color-bg-secondary-solid: rgb(255, 255, 255);
-    --color-primary: rgb(2, 132, 199);
-    --color-primary-light: rgb(56, 189, 248);
-    --color-primary-dark: rgb(3, 105, 161);
-    --color-primary-glow: rgba(2, 132, 199, 0.15);
+    --color-primary: rgb(7, 89, 133);        /* Sky 800 */
+    --color-primary-light: rgb(3, 105, 161);  /* Sky 700 */
+    --color-primary-dark: rgb(12, 74, 110);    /* Sky 900 */
+    --color-primary-glow: rgba(3, 105, 161, 0.18);
+    --color-primary-light-rgb: 3, 105, 161;
+    --color-primary-glow-rgb: 3, 105, 161;
     --color-text: rgb(15 23 42);
     --color-text-muted: rgb(71 85 105);
-    --grid-color: rgba(15, 23, 42, 0.025);
-    --shadow-color-dark: rgba(0, 0, 0, 0.1);
-    --shadow-color-light: rgba(255, 255, 255, 0.8);
-    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.05);
-    --shadow-sm-inset: inset 0 2px 4px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
-    --shadow-md-inset: inset 0 2px 4px rgba(0,0,0,0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
-    --shadow-lg-inset: inset 0 4px 8px rgba(0,0,0,0.08);
-    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+    --grid-color: rgba(3, 105, 161, 0.035);
+    --shadow-color-dark: rgba(3, 105, 161, 0.12);
+    --shadow-color-light: rgba(255, 255, 255, 0.9);
+    --shadow-sm: 0 2px 4px rgba(3, 105, 161, 0.05), 0 0 0 1px rgba(3, 105, 161, 0.08);
+    --shadow-sm-inset: inset 0 2px 4px rgba(3, 105, 161, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(3, 105, 161, 0.08), 0 2px 4px -1px rgba(3, 105, 161, 0.04), 0 0 8px rgba(3, 105, 161, 0.05);
+    --shadow-md-inset: inset 0 2px 4px rgba(3, 105, 161, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(3, 105, 161, 0.1), 0 4px 6px -2px rgba(3, 105, 161, 0.05), 0 0 15px rgba(3, 105, 161, 0.08);
+    --shadow-lg-inset: inset 0 4px 8px rgba(3, 105, 161, 0.08);
+    --shadow-card: 0 10px 30px -10px rgba(3, 105, 161, 0.12), 0 1px 3px rgba(3, 105, 161, 0.02), 0 0 1px rgba(3, 105, 161, 0.2);
     --text-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --text-shadow-glow: none;
+    --text-shadow-glow: 0 0 6px rgba(3, 105, 161, 0.15);
     color-scheme: light;
 }
 
@@ -112,6 +122,8 @@ html.dark {
     --color-primary-light: rgb(56, 189, 248);
     --color-primary-dark: rgb(3, 105, 161);
     --color-primary-glow: rgba(56, 189, 248, 0.35);
+    --color-primary-light-rgb: 56, 189, 248;
+    --color-primary-glow-rgb: 56, 189, 248;
     --color-text: rgb(241 245 249);
     --color-text-muted: rgb(148 163 184);
     --grid-color: rgba(56, 189, 248, 0.035);
@@ -346,6 +358,11 @@ body {
     font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
     position: relative;
     overflow: hidden;
+    /* Force dark theme primary colors inside the terminal regardless of page theme */
+    --color-primary-light: rgb(56, 189, 248);
+    --color-primary-light-rgb: 56, 189, 248;
+    --color-primary-glow: rgba(56, 189, 248, 0.35);
+    --color-primary-glow-rgb: 56, 189, 248;
 }
 .terminal-window::before {
     content: " ";
@@ -369,4 +386,65 @@ body {
         -webkit-hyphens: auto;
         hyphens: auto;
     }
+}
+
+/* Custom utility overrides to make Tailwind arbitrary color opacity classes work correctly at runtime using CSS variables */
+.border-\[--color-primary-light\]\/10 {
+    border-color: rgba(var(--color-primary-light-rgb), 0.15) !important;
+}
+.border-\[--color-primary-light\]\/15 {
+    border-color: rgba(var(--color-primary-light-rgb), 0.22) !important;
+}
+.border-\[--color-primary-light\]\/20 {
+    border-color: rgba(var(--color-primary-light-rgb), 0.3) !important;
+}
+.border-\[--color-primary-light\]\/30 {
+    border-color: rgba(var(--color-primary-light-rgb), 0.42) !important;
+}
+.border-\[--color-primary-light\]\/40 {
+    border-color: rgba(var(--color-primary-light-rgb), 0.55) !important;
+}
+.border-\[--color-primary-light\]\/50 {
+    border-color: rgba(var(--color-primary-light-rgb), 0.65) !important;
+}
+.hover\:border-\[--color-primary-light\]:hover {
+    border-color: rgba(var(--color-primary-light-rgb), 1) !important;
+}
+.hover\:border-\[--color-primary-light\]\/50:hover {
+    border-color: rgba(var(--color-primary-light-rgb), 0.7) !important;
+}
+.hover\:border-\[--color-primary-light\]\/80:hover {
+    border-color: rgba(var(--color-primary-light-rgb), 0.85) !important;
+}
+.bg-\[--color-primary-glow\]\/10 {
+    background-color: rgba(var(--color-primary-glow-rgb), 0.1) !important;
+}
+.bg-\[--color-primary-glow\]\/20 {
+    background-color: rgba(var(--color-primary-glow-rgb), 0.2) !important;
+}
+.hover\:bg-\[--color-primary-glow\]\/10:hover {
+    background-color: rgba(var(--color-primary-glow-rgb), 0.1) !important;
+}
+.hover\:bg-\[--color-primary-glow\]\/30:hover {
+    background-color: rgba(var(--color-primary-glow-rgb), 0.3) !important;
+}
+.hover\:bg-\[--color-primary-light\]\/10:hover {
+    background-color: rgba(var(--color-primary-light-rgb), 0.1) !important;
+}
+.hover\:bg-\[--color-primary-light\]\/20:hover {
+    background-color: rgba(var(--color-primary-light-rgb), 0.2) !important;
+}
+.shadow-\[--color-primary-glow\]\/10 {
+    --tw-shadow-color: rgba(var(--color-primary-glow-rgb), 0.15) !important;
+    --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.shadow-\[--color-primary-glow\]\/15 {
+    --tw-shadow-color: rgba(var(--color-primary-glow-rgb), 0.22) !important;
+    --tw-shadow: var(--tw-shadow-colored) !important;
+}
+.hover\:shadow-\[--color-primary-glow\]\/10:hover {
+    --tw-shadow-color: rgba(var(--color-primary-glow-rgb), 0.15) !important;
+}
+.hover\:shadow-\[--color-primary-glow\]\/15:hover {
+    --tw-shadow-color: rgba(var(--color-primary-glow-rgb), 0.22) !important;
 }

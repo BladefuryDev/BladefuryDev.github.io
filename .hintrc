@@ -6,7 +6,10 @@
     "defaults",
     "not ie 11",
     "not ios_saf <= 26.4",
-    "not safari <= 26.4"
+    "not safari <= 26.4",
+    "not and_ff <= 150",
+    "not firefox <= 150",
+    "not opera <= 131"
   ],
   "hints": {
     "axe/forms": [
@@ -17,6 +20,7 @@
     ],
     "meta-charset-utf-8": "off",
     "disown-opener": "off",
-    "meta-viewport": "off"
+    "meta-viewport": "off",
+    "no-inline-styles": "off"
   }
 }
