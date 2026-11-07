@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Map Processing & Vectorization Suite</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-teal-500 selection:text-slate-900">
+
+    <!-- Header Banner -->
+    <header
+        class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <div class="bg-gradient-to-tr from-teal-500 to-emerald-500 p-2.5 rounded-xl shadow-lg shadow-teal-500/20">
+                <svg class="w-6 h-6 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7">
+                    </path>
+                </svg>
+            </div>
+            <div>
+                <h1
+                    class="text-xl font-bold tracking-tight bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">
+                    CartoAlign Engine</h1>
+                <p class="text-xs text-slate-400">Local Multi-Image Median Filter, Target Analyzer & Vector Topo
+                    Generator</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <span
+                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-teal-400 mr-1.5 animate-pulse"></span>
+                Local Browser Mode
+            </span>
+        </div>
+    </header>
+
+    <!-- Application Main Workspace -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+
+        <!-- Left Sidebar: Controls & Files -->
+        <section
+            class="w-full lg:w-[420px] bg-slate-900/30 border-r border-slate-800/80 flex flex-col overflow-y-auto shrink-0 p-6 space-y-6">
+
+            <!-- Upload Dropzone -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                    <span>01</span> Import Screenshots
+                </h3>
+                <div id="drop-zone"
+                    class="border-2 border-dashed border-slate-700 hover:border-teal-500/70 bg-slate-900/60 rounded-2xl p-6 transition-all duration-300 text-center cursor-pointer group relative overflow-hidden">
+                    <label for="file-input" class="sr-only">Upload screenshots</label>
+                    <input type="file" id="file-input" multiple accept="image/*"
+                        title="Upload screenshots"
+                        placeholder="Choose images"
+                        class="absolute inset-0 opacity-0 cursor-pointer" />
+                    <div class="space-y-3 pointer-events-none">
+                        <div
+                            class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 border border-slate-700 group-hover:border-teal-500/30">
+                            <svg class="w-6 h-6 text-slate-400 group-hover:text-teal-400" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-200">Drag & drop your 5 screenshots</p>
+                            <p class="text-xs text-slate-500 mt-1">Or click to browse files locally</p>
+                        </div>
+                        <div
+                            class="inline-flex items-center gap-1.5 text-[10px] bg-slate-800 text-slate-400 px-2 py-1 rounded border border-slate-700/60">
+                            Requires exactly-aligned images for best results
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loaded File List / Status -->
+            <div id="file-list-container" class="space-y-2 hidden">
+                <div class="flex justify-between items-center">
+                    <h4 class="text-xs font-semibold text-slate-400">LOADED FILES (<span id="file-count">0</span>/5)
+                    </h4>
+                    <button id="clear-btn" class="text-xs text-rose-400 hover:text-rose-300 transition-colors">Clear
+                        All</button>
+                </div>
+                <div id="file-list" class="space-y-1.5 max-h-[160px] overflow-y-auto pr-1"></div>
+            </div>
+
+            <!-- Settings Panels -->
+            <div class="space-y-4 pt-2 border-t border-slate-800">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                    <span>02</span> Engine Configuration
+                </h3>
+
+                <!-- Configuration Tabs -->
+                <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+                    <button id="tab-btn-clean"
+                        class="flex-1 py-2 text-center rounded-lg font-medium bg-slate-800 text-white transition-all duration-200">Median
+                        Filter</button>
+                    <button id="tab-btn-topo"
+                        class="flex-1 py-2 text-center rounded-lg font-medium text-slate-400 hover:text-slate-200 transition-all duration-200">Topography</button>
+                    <button id="tab-btn-marker"
+                        class="flex-1 py-2 text-center rounded-lg font-medium text-slate-400 hover:text-slate-200 transition-all duration-200">Red
+                        Spawns</button>
+                    <button id="tab-btn-terrain"
+                        class="flex-1 py-2 text-center rounded-lg font-medium text-slate-400 hover:text-slate-200 transition-all duration-200">Terrain</button>
+                </div>
+
+                <!-- Tab Content 1: Median & Base Cleaning -->
+                <div id="tab-content-clean" class="space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <label for="slider-land-thresh" class="text-slate-300 font-medium">Land Detection Threshold</label>
+                            <span id="val-land-thresh" class="text-teal-400 font-bold code-font">110</span>
+                        </div>
+                        <input type="range" id="slider-land-thresh" min="50" max="200" value="110"
+                            title="Land Detection Threshold"
+                            placeholder="110"
+                            class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500" />
+                        <p class="text-[10px] text-slate-500">Fine-tunes the separation between shallow ocean water and
+                            beach/land.</p>
+                    </div>
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/80 space-y-2 text-xs">
+                        <span class="font-semibold text-teal-400 block">How Median Cleaning Works</span>
+                        <p class="text-slate-400 leading-relaxed text-[11px]">By sorting pixels from all 5 images at
+                            every coordinate, non-matching pixels like text, players, mini-maps, and specific red spawns
+                            are filtered out automatically as statistical outliers.</p>
+                    </div>
+                </div>
+
+                <!-- Tab Content 2: Topography & Contours -->
+                <div id="tab-content-topo" class="space-y-4 hidden">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <label for="slider-levels" class="text-slate-300 font-medium">Elevation Levels (Contours)</label>
+                            <span id="val-levels" class="text-teal-400 font-bold code-font">10</span>
+                        </div>
+                        <input type="range" id="slider-levels" min="3" max="25" value="10"
+                            title="Elevation Levels"
+                            placeholder="10"
+                            class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500" />
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <label for="select-smooth" class="text-slate-300 font-medium">Topo Line Smoothness</label>
+                            <span id="val-smooth" class="text-teal-400 font-bold code-font">Low</span>
+                        </div>
+                        <select id="select-smooth"
+                            title="Topo Line Smoothness"
+                            class="w-full bg-slate-950 border border-slate-800 rounded-lg py-1.5 px-3 text-xs text-slate-300 focus:outline-none focus:border-teal-500">
+                            <option value="none" selected>No Smoothing (Pixel Perfect)</option>
+                            <option value="basic">Basic (Averaging Run-pass)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tab Content 3: Marker Extraction -->
+                <div id="tab-content-marker" class="space-y-4 hidden">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <label for="slider-red-tol" class="text-slate-300 font-medium">Red Contrast Tolerance</label>
+                            <span id="val-red-tol" class="text-teal-400 font-bold code-font">65</span>
+                        </div>
+                        <input type="range" id="slider-red-tol" min="20" max="120" value="65"
+                            title="Red Contrast Tolerance"
+                            placeholder="65"
+                            class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500" />
+                        <p class="text-[10px] text-slate-500">Sensitivity for finding red pixels in the source photos
+                            relative to the clean base map.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <label for="slider-cluster-size" class="text-slate-300 font-medium">Min Marker Size (Pixels)</label>
+                            <span id="val-cluster-size" class="text-teal-400 font-bold code-font">6px</span>
+                        </div>
+                        <input type="range" id="slider-cluster-size" min="2" max="30" value="6"
+                            title="Min Marker Size (Pixels)"
+                            placeholder="6"
+                            class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500" />
+                        <p class="text-[10px] text-slate-500">Filter out stray red pixels that do not form a solid spawn
+                            block.</p>
+                    </div>
+                    <div class="space-y-2 pt-3 border-t border-slate-800/80">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Database Management</span>
+                        <button id="clear-saved-spawns-btn"
+                            title="Wipe Discovered Spawns"
+                            class="w-full py-2.5 px-4 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-300 hover:text-rose-200 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            Clear Saved Spawns
+                        </button>
+                        <p class="text-[10px] text-slate-500 leading-relaxed mt-1">Click directly on the canvas while this tab is active to manually add new markers or click close to an existing one to remove it.</p>
+                    </div>
+                </div>
+
+                <!-- Tab Content 4: Terrain Painting Editor -->
+                <div id="tab-content-terrain" class="space-y-4 hidden">
+                    <div class="space-y-2">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Select Brush Tool</span>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button id="tool-water"
+                                title="Water Brush"
+                                class="py-2.5 px-3 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-xs font-semibold text-teal-400 hover:text-teal-300 transition-colors flex items-center justify-center gap-1.5 active:border-teal-500">
+                                <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                                Water Brush
+                            </button>
+                            <button id="tool-land"
+                                title="Land Brush"
+                                class="py-2.5 px-3 rounded-lg border border-slate-800 bg-slate-950 text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors flex items-center justify-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                Land Brush
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <label for="slider-brush-size" class="text-slate-300 font-medium">Brush Size (Radius)</label>
+                            <span id="val-brush-size" class="text-teal-400 font-bold code-font">15px</span>
+                        </div>
+                        <input type="range" id="slider-brush-size" min="2" max="50" value="15"
+                            title="Brush Size"
+                            placeholder="15"
+                            class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500" />
+                    </div>
+                    <button id="reset-terrain-btn"
+                        title="Reset Terrain Edits"
+                        class="w-full py-2.5 px-4 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-300 hover:text-rose-200 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8.21M3 9h6V3"></path>
+                        </svg>
+                        Reset All Terrain Edits
+                    </button>
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800/80 space-y-2 text-xs">
+                        <span class="font-semibold text-teal-400 block">How to Edit Elevation</span>
+                        <p class="text-slate-400 leading-relaxed text-[11px]">Select a brush, then click and drag on the map. Painting water will push the contours inward, and painting land will expand them. Topography recalculates instantly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Execution Panel -->
+            <div class="space-y-3 pt-4 border-t border-slate-800 mt-auto">
+                <button id="process-btn" disabled
+                    class="w-full py-3.5 px-4 rounded-xl font-semibold bg-gradient-to-r from-slate-800 to-slate-700 text-slate-400 cursor-not-allowed shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                        </path>
+                    </svg>
+                    Load 2+ Images to Process
+                </button>
+            </div>
+
+        </section>
+
+        <!-- Center Workspace -->
+        <section class="flex-1 bg-slate-950 flex flex-col relative overflow-hidden">
+
+            <!-- Workspace Header -->
+            <div
+                class="border-b border-slate-800 bg-slate-900/25 px-6 py-3.5 flex flex-wrap justify-between items-center gap-4 z-10">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Workspace:</span>
+                    <!-- Workspace Display Modes -->
+                    <div class="flex bg-slate-950 rounded-lg p-0.5 border border-slate-800 text-xs">
+                        <button id="mode-clean"
+                            class="px-3 py-1.5 rounded-md font-medium bg-slate-800 text-white transition-all duration-150">Clean
+                            Map</button>
+                        <button id="mode-landmask"
+                            class="px-3 py-1.5 rounded-md font-medium text-slate-400 hover:text-slate-200 transition-all duration-150">Land
+                            Mask</button>
+                        <button id="mode-topo"
+                            class="px-3 py-1.5 rounded-md font-medium text-slate-400 hover:text-slate-200 transition-all duration-150">Topography</button>
+                        <button id="mode-vector"
+                            class="px-3 py-1.5 rounded-md font-medium text-slate-400 hover:text-slate-200 transition-all duration-150">Vector
+                            Tracing</button>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Overlays -->
+                    <label for="toggle-markers" class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="toggle-markers" checked
+                            title="Overlay Red Spawns"
+                            placeholder="Toggle marker visibility"
+                            class="w-4 h-4 rounded border-slate-800 text-teal-500 focus:ring-teal-500 bg-slate-950" />
+                        <span class="text-xs font-medium text-slate-300">Overlay Red Spawns</span>
+                    </label>
+                    <label for="toggle-coords" class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="toggle-coords" checked
+                            title="Labels & Grid"
+                            placeholder="Toggle labels and grid visibility"
+                            class="w-4 h-4 rounded border-slate-800 text-teal-500 focus:ring-teal-500 bg-slate-950" />
+                        <span class="text-xs font-medium text-slate-300">Labels & Grid</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Main Canvas Viewport Area -->
+            <div class="flex-1 relative overflow-auto p-8 flex items-center justify-center min-h-[400px]">
+                <!-- Instructions overlay before files are processed -->
+                <div id="instructions-card"
+                    class="max-w-md bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 text-center space-y-4 shadow-2xl relative z-10 backdrop-blur-md">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500/10 to-emerald-500/10 border border-teal-500/20 flex items-center justify-center mx-auto text-teal-400">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="space-y-1.5">
+                        <h2 class="text-lg font-bold text-slate-200">Local Map Processor</h2>
+                        <p class="text-xs text-slate-400 leading-relaxed">This processing interface takes identical
+                            screenshots of the same map coordinates to compute a clean map baseline and extract hidden
+                            spawn variants completely client-side.</p>
+                    </div>
+                    <div
+                        class="text-left bg-slate-950 rounded-xl p-4 border border-slate-800/80 space-y-2 text-[11px] text-slate-400 leading-relaxed">
+                        <p class="font-medium text-teal-400 text-xs flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+                            Execution Workflow
+                        </p>
+                        <ol class="list-decimal pl-4 space-y-1">
+                            <li>Upload screenshots with differing red square spawn points.</li>
+                            <li>Press "Analyze and Clear Map Layers".</li>
+                            <li>Toggle workspace visual channels and review extracted locations.</li>
+                            <li>Export fully stylized, clean vector topology directly.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Canvas Holder (shows up when processing starts) -->
+                <div id="canvas-container"
+                    class="hidden relative border border-slate-800 bg-slate-950 rounded-2xl overflow-hidden shadow-2xl">
+                    <canvas id="main-canvas" class="block max-w-full max-h-[70vh] cursor-crosshair"></canvas>
+                    
+                    <!-- Floating Zoom Controls -->
+                    <div class="absolute bottom-4 left-4 z-20 flex bg-slate-900/90 backdrop-blur border border-slate-800 rounded-xl p-1 shadow-lg text-xs items-center gap-1">
+                        <button id="zoom-in-btn" title="Zoom In" aria-label="Zoom In"
+                            class="w-7 h-7 rounded-lg hover:bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                        </button>
+                        <span id="zoom-level-badge" class="px-1.5 font-mono text-slate-400 select-none text-[10px] min-w-[36px] text-center">100%</span>
+                        <button id="zoom-out-btn" title="Zoom Out" aria-label="Zoom Out"
+                            class="w-7 h-7 rounded-lg hover:bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                            </svg>
+                        </button>
+                        <div class="w-px h-4 bg-slate-800 mx-0.5"></div>
+                        <button id="zoom-reset-btn" title="Reset Navigation" aria-label="Reset Navigation"
+                            class="w-7 h-7 rounded-lg hover:bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8.21M3 9h6V3"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Coordinate inspector tooltip overlay -->
+                    <div id="canvas-tooltip"
+                        class="absolute pointer-events-none bg-slate-900/90 border border-slate-700 px-2.5 py-1.5 rounded text-xs text-slate-300 font-mono hidden">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Analysis / Target Coordinates Bar -->
+            <div id="analytics-bar"
+                class="border-t border-slate-800 bg-slate-900/40 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 z-10 hidden">
+                <div class="flex items-center gap-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></div>
+                    <span class="text-xs text-slate-300">Found <strong id="spawn-count"
+                            class="text-red-400 text-sm">0</strong> unique treasure spawn points.</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="copy-coords-btn"
+                        class="px-3.5 py-1.5 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-xs font-semibold text-slate-300 transition-all duration-200 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-5 4h5m-5 4h5m-2 5h2">
+                            </path>
+                        </svg>
+                        Copy Coordinates
+                    </button>
+                    <button id="export-panel-btn"
+                        class="px-3.5 py-1.5 rounded-lg bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs transition-all duration-200 flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Export Maps & Vectors
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Export Dialog Modal -->
+    <div id="export-modal"
+        class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div
+            class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+
+            <!-- Modal Header -->
+            <div class="border-b border-slate-800 px-6 py-4 flex justify-between items-center bg-slate-950/40">
+                <div>
+                    <h3 class="text-base font-bold text-slate-100">Export Vector Map & Canvas Layouts</h3>
+                    <p class="text-xs text-slate-400">Download clean images or a customizable SVG file</p>
+                </div>
+                <button id="close-modal-btn"
+                    title="Close export dialog"
+                    aria-label="Close export dialog"
+                    class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700/60 flex items-center justify-center text-slate-400 hover:text-slate-200 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-6">
+
+                <!-- Style Profile Select -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Select Vector
+                        Layout Aesthetics</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div data-style="blueprint"
+                            class="export-style-card border-2 border-teal-500 bg-slate-950 p-4 rounded-xl cursor-pointer hover:border-teal-400 transition-all duration-200">
+                            <div class="font-bold text-xs text-teal-400">Engineering Blueprint</div>
+                            <p class="text-[10px] text-slate-500 mt-1">Deep marine blue backdrop, light cyan vector
+                                contour loops, glow orange markers.</p>
+                        </div>
+                        <div data-style="dark"
+                            class="export-style-card border-2 border-slate-800 hover:border-slate-700 bg-slate-950 p-4 rounded-xl cursor-pointer transition-all duration-200">
+                            <div class="font-bold text-xs text-emerald-400">Tactical Dark Map</div>
+                            <p class="text-[10px] text-slate-500 mt-1">Rich slate-black color profile, intense neon
+                                green outlines, bold red spawn stars.</p>
+                        </div>
+                        <div data-style="classic"
+                            class="export-style-card border-2 border-slate-800 hover:border-slate-700 bg-slate-950 p-4 rounded-xl cursor-pointer transition-all duration-200">
+                            <div class="font-bold text-xs text-amber-500">Classic Topography</div>
+                            <p class="text-[10px] text-slate-500 mt-1">Slight parchment colored landmass, classic brown
+                                elevation lines, red points.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Buttons List -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Column 1: SVG -->
+                    <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-4 flex flex-col justify-between">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="inline-flex px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 text-[10px] font-bold uppercase">Vector</span>
+                                <span class="text-xs font-semibold text-slate-300">SVG Topography File</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500">Perfect for infinite scaling, zooming, or printing.
+                                Preserves layers, markers, and shapes.</p>
+                        </div>
+                        <button id="download-svg-btn"
+                            class="w-full mt-4 py-2 px-3 rounded-lg bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs transition-colors">
+                            Save SVG Vector File
+                        </button>
+                    </div>
+
+                    <!-- Column 2: Clean Base Image -->
+                    <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-4 flex flex-col justify-between">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="inline-flex px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 text-[10px] font-bold uppercase">Raster</span>
+                                <span class="text-xs font-semibold text-slate-300">Clean Base Image (PNG)</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500">Export the median map containing zero UI elements,
+                                text blocks, or overlay artifacts.</p>
+                        </div>
+                        <button id="download-clean-btn"
+                            class="w-full mt-4 py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition-colors">
+                            Save Clean Base PNG
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Custom Feedback Notifications -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
+
+    <!-- JS Code Section -->
+    <script>
+        // App State Configuration
+        const STATE = {
+            images: [],             // Array of { name, imgObj, data (ImageData) }
+            width: 0,
+            height: 0,
+            cleanImageData: null,   // Clean base map median output
+            landMask: null,         // Binary Array: true = land, false = water
+            originalLandMask: null, // Cache initial mask for reset
+            distField: null,        // Distance transform elevation map
+            maxDistance: 0,         // Normalization parameter for topography
+            spawns: [],             // Array of { x, y, size } detected coordinates
+            currentMode: 'clean',   // 'clean', 'landmask', 'topo', 'vector'
+            svgStyle: 'blueprint',  // 'blueprint', 'dark', 'classic'
+            showMarkers: true,
+            showCoords: true,
+            activeTool: null,       // 'water', 'land', or null
+            brushSize: 15,          // Brush radius
+            isDrawing: false,
+            cursorX: -100,
+            cursorY: -100,
+            zoom: 1,                // Navigation zoom multiplier
+            panX: 0,                // Navigation pan offset X
+            panY: 0,                // Navigation pan offset Y
+            isPanning: false,
+            lastMouseX: 0,
+            lastMouseY: 0
+        };
+
+        // DOM Cache
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileListContainer = document.getElementById('file-list-container');
+        const fileCountEl = document.getElementById('file-count');
+        const fileList = document.getElementById('file-list');
+        const clearBtn = document.getElementById('clear-btn');
+        const processBtn = document.getElementById('process-btn');
+        const canvasContainer = document.getElementById('canvas-container');
+        const instructionsCard = document.getElementById('instructions-card');
+        const mainCanvas = document.getElementById('main-canvas');
+        const analyticsBar = document.getElementById('analytics-bar');
+        const spawnCountEl = document.getElementById('spawn-count');
+        const copyCoordsBtn = document.getElementById('copy-coords-btn');
+        const exportPanelBtn = document.getElementById('export-panel-btn');
+
+        // Config controls
+        const sliderLandThresh = document.getElementById('slider-land-thresh');
+        const valLandThresh = document.getElementById('val-land-thresh');
+        const sliderLevels = document.getElementById('slider-levels');
+        const valLevels = document.getElementById('val-levels');
+        const sliderRedTol = document.getElementById('slider-red-tol');
+        const valRedTol = document.getElementById('val-red-tol');
+        const sliderClusterSize = document.getElementById('slider-cluster-size');
+        const valClusterSize = document.getElementById('val-cluster-size');
+        const selectSmooth = document.getElementById('select-smooth');
+
+        // Sidebar Config Tabs
+        const tabBtnClean = document.getElementById('tab-btn-clean');
+        const tabBtnTopo = document.getElementById('tab-btn-topo');
+        const tabBtnMarker = document.getElementById('tab-btn-marker');
+        const tabContentClean = document.getElementById('tab-content-clean');
+        const tabContentTopo = document.getElementById('tab-content-topo');
+        const tabContentMarker = document.getElementById('tab-content-marker');
+        const tabBtnTerrain = document.getElementById('tab-btn-terrain');
+        const tabContentTerrain = document.getElementById('tab-content-terrain');
+        const toolWaterBtn = document.getElementById('tool-water');
+        const toolLandBtn = document.getElementById('tool-land');
+        const sliderBrushSize = document.getElementById('slider-brush-size');
+        const valBrushSize = document.getElementById('val-brush-size');
+        const resetTerrainBtn = document.getElementById('reset-terrain-btn');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
+        const zoomResetBtn = document.getElementById('zoom-reset-btn');
+        const zoomLevelBadge = document.getElementById('zoom-level-badge');
+        const clearSavedSpawnsBtn = document.getElementById('clear-saved-spawns-btn');
+
+        // Workspace mode buttons
+        const modeClean = document.getElementById('mode-clean');
+        const modeLandmask = document.getElementById('mode-landmask');
+        const modeTopo = document.getElementById('mode-topo');
+        const modeVector = document.getElementById('mode-vector');
+
+        // Toggles
+        const toggleMarkers = document.getElementById('toggle-markers');
+        const toggleCoords = document.getElementById('toggle-coords');
+
+        // Export Modal Controls
+        const exportModal = document.getElementById('export-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const downloadSvgBtn = document.getElementById('download-svg-btn');
+        const downloadCleanBtn = document.getElementById('download-clean-btn');
+        const styleCards = document.querySelectorAll('.export-style-card');
+
+        // --- Interactive Tab Logic ---
+        function setupTabs() {
+            const tabs = [
+                { btn: tabBtnClean, content: tabContentClean },
+                { btn: tabBtnTopo, content: tabContentTopo },
+                { btn: tabBtnMarker, content: tabContentMarker },
+                { btn: tabBtnTerrain, content: tabContentTerrain }
+            ];
+
+            tabs.forEach((tab, index) => {
+                tab.btn.addEventListener('click', () => {
+                    tabs.forEach(t => {
+                        t.btn.classList.remove('bg-slate-800', 'text-white');
+                        t.btn.classList.add('text-slate-400');
+                        t.content.classList.add('hidden');
+                    });
+                    tab.btn.classList.add('bg-slate-800', 'text-white');
+                    tab.btn.classList.remove('text-slate-400');
+                    tab.content.classList.remove('hidden');
+
+                    if (tab.btn === tabBtnTerrain) {
+                        setBrushTool('water');
+                    } else {
+                        setBrushTool(null);
+                        if (tab.btn === tabBtnMarker) {
+                            mainCanvas.style.cursor = 'pointer';
+                        } else {
+                            mainCanvas.style.cursor = 'default';
+                        }
+                    }
+                });
+            });
+        }
+
+        // --- Toast / Alerts Logic ---
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            const colors = {
+                success: 'border-emerald-500/30 bg-slate-900 text-slate-100',
+                error: 'border-rose-500/30 bg-slate-900 text-rose-200',
+                info: 'border-teal-500/30 bg-slate-900 text-teal-100'
+            };
+
+            toast.className = `flex items-center gap-2 px-4 py-3 rounded-xl border ${colors[type]} shadow-xl text-xs font-medium transition-all duration-300 transform translate-y-2 opacity-0 max-w-sm`;
+
+            let icon = '';
+            if (type === 'success') {
+                icon = '<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+            } else if (type === 'error') {
+                icon = '<svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+            } else {
+                icon = '<svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+            }
+
+            toast.innerHTML = `${icon} <span class="flex-1">${message}</span>`;
+            container.appendChild(toast);
+
+            // Force reflow
+            toast.offsetHeight;
+            toast.classList.remove('translate-y-2', 'opacity-0');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // --- Configuration Controls Events ---
+        sliderLandThresh.addEventListener('input', (e) => {
+            valLandThresh.textContent = e.target.value;
+            if (STATE.cleanImageData) {
+                STATE.originalLandMask = null; // Clear cached base mask
+                computeLandMask();
+                computeDistanceField();
+                renderWorkspace();
+            }
+        });
+
+        sliderLevels.addEventListener('input', (e) => {
+            valLevels.textContent = e.target.value;
+            if (STATE.distField) {
+                renderWorkspace();
+            }
+        });
+
+        sliderRedTol.addEventListener('input', (e) => {
+            valRedTol.textContent = e.target.value;
+            if (STATE.images.length > 0 && STATE.cleanImageData) {
+                extractRedMarkers();
+                renderWorkspace();
+            }
+        });
+
+        sliderClusterSize.addEventListener('input', (e) => {
+            valClusterSize.textContent = e.target.value + 'px';
+            if (STATE.images.length > 0 && STATE.cleanImageData) {
+                extractRedMarkers();
+                renderWorkspace();
+            }
+        });
+
+        selectSmooth.addEventListener('change', () => {
+            if (STATE.distField) {
+                renderWorkspace();
+            }
+        });
+
+        // --- File Input Handlers ---
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('border-teal-500', 'bg-teal-950/10');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('border-teal-500', 'bg-teal-950/10');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-teal-500', 'bg-teal-950/10');
+            handleSelectedFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleSelectedFiles(e.target.files);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            STATE.images = [];
+            STATE.width = 0;
+            STATE.height = 0;
+            STATE.cleanImageData = null;
+            STATE.landMask = null;
+            STATE.originalLandMask = null;
+            STATE.distField = null;
+            STATE.isDrawing = false;
+            setBrushTool(null);
+            STATE.zoom = 1;
+            STATE.panX = 0;
+            STATE.panY = 0;
+            STATE.isPanning = false;
+            loadSpawnsFromStorage(); // Reload master spawns list
+            if (zoomLevelBadge) zoomLevelBadge.textContent = "100%";
+
+            fileListContainer.classList.add('hidden');
+            fileList.innerHTML = '';
+            processBtn.disabled = true;
+            processBtn.className = "w-full py-3.5 px-4 rounded-xl font-semibold bg-gradient-to-r from-slate-800 to-slate-700 text-slate-400 cursor-not-allowed shadow-lg flex items-center justify-center gap-2";
+            processBtn.innerHTML = `
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+        </svg>
+        Load 2+ Images to Process
+      `;
+
+            canvasContainer.classList.add('hidden');
+            instructionsCard.classList.remove('hidden');
+            analyticsBar.classList.add('hidden');
+            showToast("Cleared file repository", "info");
+        });
+
+        function handleSelectedFiles(files) {
+            if (!files || files.length === 0) return;
+
+            let itemsToLoad = Array.from(files);
+
+            itemsToLoad.forEach(file => {
+                if (!file.type.startsWith('image/')) {
+                    showToast(`Skipping non-image file: ${file.name}`, 'error');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const img = new Image();
+                    img.onload = function () {
+                        let isMismatched = false;
+                        let originalResLabel = "";
+
+                        // Check image alignments if there's already an image loaded
+                        if (STATE.width > 0) {
+                            if (img.width !== STATE.width || img.height !== STATE.height) {
+                                isMismatched = true;
+                                originalResLabel = `${img.width}x${img.height}`;
+                            }
+                        } else {
+                            STATE.width = img.width;
+                            STATE.height = img.height;
+                        }
+
+                        // Create canvas helper to grab rescaled raw pixel data
+                        const helperCanvas = document.createElement('canvas');
+                        helperCanvas.width = STATE.width;
+                        helperCanvas.height = STATE.height;
+                        const helperCtx = helperCanvas.getContext('2d');
+
+                        // Draw image. If dimensions differ, it automatically resamples to fit the base dimensions.
+                        helperCtx.drawImage(img, 0, 0, STATE.width, STATE.height);
+                        const imgData = helperCtx.getImageData(0, 0, STATE.width, STATE.height);
+
+                        STATE.images.push({
+                            name: file.name,
+                            imgObj: img,
+                            data: imgData
+                        });
+
+                        // Update UI file items
+                        addFileListItem(
+                            file.name,
+                            isMismatched ? `Scaled (${originalResLabel} → ${STATE.width}x${STATE.height})` : 'READY'
+                        );
+                        updateFileStateUI();
+
+                        if (isMismatched) {
+                            showToast(`Rescaled slightly: "${file.name}" to fit baseline (${STATE.width}x${STATE.height})`, 'info');
+                        }
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function addFileListItem(name, statusLabel = 'READY') {
+            fileListContainer.classList.remove('hidden');
+            const item = document.createElement('div');
+            item.className = "flex items-center justify-between text-xs bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 hover:border-slate-700/60 transition-colors";
+
+            const isScaled = statusLabel !== 'READY';
+            const badgeClass = isScaled
+                ? 'text-amber-400 bg-amber-500/5 border-amber-500/20'
+                : 'text-teal-400 bg-teal-500/10 border-teal-500/10';
+
+            item.innerHTML = `
+        <span class="truncate font-medium text-slate-300 max-w-[200px] flex items-center gap-1.5" title="${name}">
+          <svg class="w-3.5 h-3.5 text-teal-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          ${name}
+        </span>
+        <span class="inline-flex px-1.5 py-0.5 rounded text-[10px] font-semibold border ${badgeClass}">${statusLabel}</span>
+      `;
+            fileList.appendChild(item);
+        }
+
+        function updateFileStateUI() {
+            const count = STATE.images.length;
+            fileCountEl.textContent = count;
+
+            if (count >= 2) {
+                processBtn.disabled = false;
+                processBtn.className = "w-full py-3.5 px-4 rounded-xl font-bold bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2";
+                processBtn.innerHTML = `
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+          </svg>
+          Analyze & Clear Map Layers
+        `;
+            } else {
+                processBtn.disabled = true;
+                processBtn.className = "w-full py-3.5 px-4 rounded-xl font-semibold bg-gradient-to-r from-slate-800 to-slate-700 text-slate-400 cursor-not-allowed shadow-lg flex items-center justify-center gap-2";
+                processBtn.textContent = `Load ${2 - count} more image to start`;
+            }
+        }
+
+        // --- Processing Algorithms ---
+
+        processBtn.addEventListener('click', () => {
+            if (STATE.images.length < 2) return;
+
+            showToast("Starting local multi-frame processing...", "info");
+
+            // Delay slightly to yield execution and let UI update spinner
+            setTimeout(() => {
+                try {
+                    runMedianFilter();
+                    computeLandMask();
+                    computeDistanceField();
+                    extractRedMarkers();
+
+                    // Setup canvas sizes
+                    mainCanvas.width = STATE.width;
+                    mainCanvas.height = STATE.height;
+
+                    // Show container
+                    instructionsCard.classList.add('hidden');
+                    canvasContainer.classList.remove('hidden');
+                    analyticsBar.classList.remove('hidden');
+
+                    // Render results
+                    renderWorkspace();
+                    showToast("Median alignment and topography vectorization complete!", "success");
+                } catch (err) {
+                    console.error(err);
+                    showToast("Error processing screenshots. Ensure images are aligned.", "error");
+                }
+            }, 50);
+        });
+
+        // 1. Median Filter across images
+        function runMedianFilter() {
+            const numImages = STATE.images.length;
+            const w = STATE.width;
+            const h = STATE.height;
+            const numPixels = w * h;
+
+            const cleanCanvas = document.createElement('canvas');
+            cleanCanvas.width = w;
+            cleanCanvas.height = h;
+            const cleanCtx = cleanCanvas.getContext('2d');
+            const cleanData = cleanCtx.createImageData(w, h);
+
+            // Cache buffers for quick access
+            const buffers = STATE.images.map(img => img.data.data);
+            const tempR = new Uint8Array(numImages);
+            const tempG = new Uint8Array(numImages);
+            const tempB = new Uint8Array(numImages);
+
+            for (let i = 0; i < numPixels; i++) {
+                const p = i * 4;
+
+                // Grab values across all frames
+                for (let imgIdx = 0; imgIdx < numImages; imgIdx++) {
+                    tempR[imgIdx] = buffers[imgIdx][p];
+                    tempG[imgIdx] = buffers[imgIdx][p + 1];
+                    tempB[imgIdx] = buffers[imgIdx][p + 2];
+                }
+
+                // Sort and find medians
+                tempR.sort();
+                tempG.sort();
+                tempB.sort();
+
+                const mid = Math.floor(numImages / 2);
+
+                // If even number of frames, average the middle two
+                if (numImages % 2 === 0) {
+                    cleanData.data[p] = Math.round((tempR[mid - 1] + tempR[mid]) / 2);
+                    cleanData.data[p + 1] = Math.round((tempG[mid - 1] + tempG[mid]) / 2);
+                    cleanData.data[p + 2] = Math.round((tempB[mid - 1] + tempB[mid]) / 2);
+                } else {
+                    cleanData.data[p] = tempR[mid];
+                    cleanData.data[p + 1] = tempG[mid];
+                    cleanData.data[p + 2] = tempB[mid];
+                }
+                cleanData.data[p + 3] = 255; // Solid opacity
+            }
+
+            STATE.cleanImageData = cleanData;
+        }
+
+        // 2. Classify Land vs. Water
+        function computeLandMask() {
+            const w = STATE.width;
+            const h = STATE.height;
+            const data = STATE.cleanImageData.data;
+            const thresh = parseInt(sliderLandThresh.value);
+
+            STATE.landMask = new Uint8Array(w * h);
+
+            for (let i = 0; i < w * h; i++) {
+                const p = i * 4;
+                const r = data[p];
+                const g = data[p + 1];
+                const b = data[p + 2];
+
+                // Water on these tropical maps has a very high blue/green relative to red
+                // Deep water: low red, average green, high blue
+                // Sand: high red, high green, average blue
+                // Jungle: average red, high green, low blue
+                const isWater = (b > r + 10) && (b > 100);
+
+                // Filter elements based on adjusted threshold value
+                const intensity = (r + g + b) / 3;
+
+                if (isWater && intensity < thresh + 40) {
+                    STATE.landMask[i] = 0; // Water
+                } else {
+                    STATE.landMask[i] = 1; // Land
+                }
+            }
+
+            // Cache original land mask if not cached already
+            if (!STATE.originalLandMask) {
+                STATE.originalLandMask = new Uint8Array(STATE.landMask);
+            }
+        }
+
+        // 3. Two-Pass Chamfer Distance Transform for Topography
+        function computeDistanceField() {
+            const w = STATE.width;
+            const h = STATE.height;
+            const mask = STATE.landMask;
+            const dist = new Float32Array(w * h);
+            const INF = 1e9;
+
+            // Initialize distance: 0 for borders (water), INF for land
+            for (let i = 0; i < w * h; i++) {
+                dist[i] = mask[i] === 0 ? 0 : INF;
+            }
+
+            // Pass 1: Top-Left to Bottom-Right
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const i = y * w + x;
+                    if (mask[i] !== 0) {
+                        let minD = dist[i];
+                        // Left neighbor
+                        if (x > 0) minD = Math.min(minD, dist[i - 1] + 1);
+                        // Top-left neighbor
+                        if (x > 0 && y > 0) minD = Math.min(minD, dist[i - w - 1] + 1.414);
+                        // Top neighbor
+                        if (y > 0) minD = Math.min(minD, dist[i - w] + 1);
+                        // Top-right neighbor
+                        if (x < w - 1 && y > 0) minD = Math.min(minD, dist[i - w + 1] + 1.414);
+                        dist[i] = minD;
+                    }
+                }
+            }
+
+            // Pass 2: Bottom-Right to Top-Left
+            let maxD = 0;
+            for (let y = h - 1; y >= 0; y--) {
+                for (let x = w - 1; x >= 0; x--) {
+                    const i = y * w + x;
+                    if (mask[i] !== 0) {
+                        let minD = dist[i];
+                        // Right neighbor
+                        if (x < w - 1) minD = Math.min(minD, dist[i + 1] + 1);
+                        // Bottom-right neighbor
+                        if (x < w - 1 && y < h - 1) minD = Math.min(minD, dist[i + w + 1] + 1.414);
+                        // Bottom neighbor
+                        if (y < h - 1) minD = Math.min(minD, dist[i + w] + 1);
+                        // Bottom-left neighbor
+                        if (x > 0 && y < h - 1) minD = Math.min(minD, dist[i + w - 1] + 1.414);
+                        dist[i] = minD;
+
+                        if (minD > maxD && minD < INF) {
+                            maxD = minD;
+                        }
+                    }
+                }
+            }
+
+            STATE.distField = dist;
+            STATE.maxDistance = maxD;
+        }
+
+        // 4. Extract Spawns via Color Diff Clustering
+        function extractRedMarkers() {
+            const w = STATE.width;
+            const h = STATE.height;
+            const numImages = STATE.images.length;
+            const cleanData = STATE.cleanImageData.data;
+            const redTolerance = parseInt(sliderRedTol.value);
+            const minClusterSize = parseInt(sliderClusterSize.value);
+
+            // 1D map of red candidate pixels
+            const redMask = new Uint8Array(w * h);
+
+            for (let imgIdx = 0; imgIdx < numImages; imgIdx++) {
+                const sourceData = STATE.images[imgIdx].data.data;
+
+                for (let i = 0; i < w * h; i++) {
+                    const p = i * 4;
+                    const r = sourceData[p];
+                    const g = sourceData[p + 1];
+                    const b = sourceData[p + 2];
+
+                    // Look for pure red pixels in the source screenshot
+                    const isSourceRed = (r > 160 && g < 75 && b < 75 && r > g + 70 && r > b + 70);
+
+                    if (isSourceRed) {
+                        // Confirm it's not red in our clean base map (otherwise it's a persistent UI element)
+                        const cr = cleanData[p];
+                        const cg = cleanData[p + 1];
+                        const cb = cleanData[p + 2];
+
+                        const isCleanNotRed = !(cr > 160 && cg < 75 && cb < 75);
+
+                        // Confirm delta red difference
+                        const redDelta = Math.abs(r - cr);
+                        const greenDelta = cg - g;
+
+                        if (isCleanNotRed && (redDelta > redTolerance || greenDelta > 30)) {
+                            redMask[i] = 1;
+                        }
+                    }
+                }
+            }
+
+            // Connected components labeling (Union-Find) to cluster red pixels
+            const parent = new Int32Array(w * h);
+            for (let i = 0; i < w * h; i++) parent[i] = i;
+
+            function find(i) {
+                let root = i;
+                while (parent[root] !== root) {
+                    root = parent[root];
+                }
+                let curr = i;
+                while (curr !== root) {
+                    let nxt = parent[curr];
+                    parent[curr] = root;
+                    curr = nxt;
+                }
+                return root;
+            }
+
+            function union(i, j) {
+                const rootI = find(i);
+                const rootJ = find(j);
+                if (rootI !== rootJ) {
+                    parent[rootI] = rootJ;
+                }
+            }
+
+            // Labeling pass
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const i = y * w + x;
+                    if (redMask[i] === 1) {
+                        // Check right
+                        if (x < w - 1 && redMask[i + 1] === 1) union(i, i + 1);
+                        // Check down
+                        if (y < h - 1 && redMask[i + w] === 1) union(i, i + w);
+                    }
+                }
+            }
+
+            // Group centroids
+            const clusters = {};
+            for (let i = 0; i < w * h; i++) {
+                if (redMask[i] === 1) {
+                    const root = find(i);
+                    if (!clusters[root]) {
+                        clusters[root] = { sumX: 0, sumY: 0, count: 0 };
+                    }
+                    const x = i % w;
+                    const y = Math.floor(i / w);
+                    clusters[root].sumX += x;
+                    clusters[root].sumY += y;
+                    clusters[root].count++;
+                }
+            }
+
+            // Filter clusters
+            const validatedSpawns = [];
+            for (const key in clusters) {
+                const cluster = clusters[key];
+                if (cluster.count >= minClusterSize) {
+                    validatedSpawns.push({
+                        x: Math.round(cluster.sumX / cluster.count),
+                        y: Math.round(cluster.sumY / cluster.count),
+                        size: cluster.count
+                    });
+                }
+            }
+
+            mergeSpawns(validatedSpawns);
+        }
+
+        // --- Workspace Views & Toggles ---
+
+        modeClean.addEventListener('click', () => setMode('clean'));
+        modeLandmask.addEventListener('click', () => setMode('landmask'));
+        modeTopo.addEventListener('click', () => setMode('topo'));
+        modeVector.addEventListener('click', () => setMode('vector'));
+
+        toggleMarkers.addEventListener('change', (e) => {
+            STATE.showMarkers = e.target.checked;
+            renderWorkspace();
+        });
+
+        toggleCoords.addEventListener('change', (e) => {
+            STATE.showCoords = e.target.checked;
+            renderWorkspace();
+        });
+
+        function setMode(mode) {
+            STATE.currentMode = mode;
+
+            const buttons = [modeClean, modeLandmask, modeTopo, modeVector];
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-slate-800', 'text-white');
+                btn.classList.add('text-slate-400');
+            });
+
+            const activeBtn = document.getElementById(`mode-${mode}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-slate-800', 'text-white');
+                activeBtn.classList.remove('text-slate-400');
+            }
+
+            renderWorkspace();
+        }
+
+        // Main Renderer
+        function renderWorkspace() {
+            if (!STATE.cleanImageData) return;
+
+            const ctx = mainCanvas.getContext('2d');
+            const w = STATE.width;
+            const h = STATE.height;
+
+            // Clear main view
+            ctx.clearRect(0, 0, w, h);
+
+            // Apply zoom and pan transformations
+            ctx.save();
+            ctx.translate(STATE.panX, STATE.panY);
+            ctx.scale(STATE.zoom, STATE.zoom);
+
+            if (STATE.currentMode === 'clean') {
+                // Draw the cleaned pixel base map
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = w;
+                tempCanvas.height = h;
+                tempCanvas.getContext('2d').putImageData(STATE.cleanImageData, 0, 0);
+                ctx.drawImage(tempCanvas, 0, 0);
+
+            } else if (STATE.currentMode === 'landmask') {
+                // Show binary land classification
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = w;
+                tempCanvas.height = h;
+                const tempCtx = tempCanvas.getContext('2d');
+                const maskData = tempCtx.createImageData(w, h);
+                for (let i = 0; i < w * h; i++) {
+                    const p = i * 4;
+                    const isLand = STATE.landMask[i] === 1;
+                    maskData.data[p] = isLand ? 45 : 15;      // Red
+                    maskData.data[p + 1] = isLand ? 212 : 23;  // Green
+                    maskData.data[p + 2] = isLand ? 191 : 42;  // Blue
+                    maskData.data[p + 3] = 255;
+                }
+                tempCtx.putImageData(maskData, 0, 0);
+                ctx.drawImage(tempCanvas, 0, 0);
+
+            } else if (STATE.currentMode === 'topo') {
+                // Render stylized heightfield (3D distance gradient profile)
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = w;
+                tempCanvas.height = h;
+                const tempCtx = tempCanvas.getContext('2d');
+                const topoData = tempCtx.createImageData(w, h);
+                const levels = parseInt(sliderLevels.value);
+
+                for (let i = 0; i < w * h; i++) {
+                    const p = i * 4;
+                    if (STATE.landMask[i] === 0) {
+                        // Shallow to Deep ocean gradient
+                        topoData.data[p] = 15;
+                        topoData.data[p + 1] = 23;
+                        topoData.data[p + 2] = 42;
+                    } else {
+                        // Normalized elevation
+                        const elevation = STATE.distField[i] / STATE.maxDistance;
+
+                        // Quantize elevation into posterized step contours
+                        const band = Math.floor(elevation * levels) / levels;
+
+                        // Emerald/Teal to Amber high elevation vector spectrum
+                        topoData.data[p] = Math.round(13 + band * 210);
+                        topoData.data[p + 1] = Math.round(148 + band * 50);
+                        topoData.data[p + 2] = Math.round(136 - band * 100);
+                    }
+                    topoData.data[p + 3] = 255;
+                }
+                tempCtx.putImageData(topoData, 0, 0);
+                ctx.drawImage(tempCanvas, 0, 0);
+
+            } else if (STATE.currentMode === 'vector') {
+                // Draw Blueprint map simulation canvas
+                ctx.fillStyle = '#020617'; // Rich dark slate
+                ctx.fillRect(0, 0, w, h);
+
+                // Setup styled stroke aesthetics
+                ctx.strokeStyle = '#0d9488'; // Teal outline
+                ctx.lineWidth = 1;
+
+                const levels = parseInt(sliderLevels.value);
+
+                // Trace and draw contour vectors dynamically
+                for (let l = 1; l <= levels; l++) {
+                    const threshold = (l / levels) * STATE.maxDistance;
+                    ctx.beginPath();
+                    marchSquares(threshold, ctx);
+
+                    // Higher lines are thinner and glowing
+                    ctx.strokeStyle = `rgba(45, 212, 191, ${0.15 + (l / levels) * 0.75})`;
+                    ctx.lineWidth = 0.5 + (l / levels) * 1.5;
+                    ctx.stroke();
+                }
+            }
+
+            // Draw grid overlay
+            if (STATE.showCoords) {
+                drawCoordinatesGrid(ctx, w, h);
+            }
+
+            // Draw red dot markers
+            if (STATE.showMarkers) {
+                drawSpawnMarkers(ctx);
+            }
+
+            // Draw hover brush cursor when editor is active
+            if (STATE.activeTool && STATE.cursorX >= 0 && STATE.cursorY >= 0) {
+                const zoom = STATE.zoom || 1;
+                ctx.beginPath();
+                ctx.arc(STATE.cursorX, STATE.cursorY, STATE.brushSize, 0, Math.PI * 2);
+                ctx.strokeStyle = STATE.activeTool === 'land' ? '#10b981' : '#3b82f6';
+                ctx.lineWidth = 1.5 / zoom;
+                ctx.setLineDash([4 / zoom, 4 / zoom]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.beginPath();
+                ctx.arc(STATE.cursorX, STATE.cursorY, 2 / zoom, 0, Math.PI * 2);
+                ctx.fillStyle = STATE.activeTool === 'land' ? '#10b981' : '#3b82f6';
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        // Grid Renderer
+        function drawCoordinatesGrid(ctx, w, h) {
+            const zoom = STATE.zoom || 1;
+            ctx.strokeStyle = 'rgba(148, 163, 184, 0.1)';
+            ctx.lineWidth = 1 / zoom;
+
+            const step = 64;
+            ctx.beginPath();
+            for (let x = step; x < w; x += step) {
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+            }
+            for (let y = step; y < h; y += step) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+            }
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = 'rgba(148, 163, 184, 0.4)';
+            ctx.font = `${Math.round(10 / zoom)}px "JetBrains Mono", monospace`;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+
+            for (let x = step; x < w; x += step * 2) {
+                ctx.fillText(`X:${x}`, x + 4 / zoom, 4 / zoom);
+            }
+            for (let y = step; y < h; y += step * 2) {
+                ctx.fillText(`Y:${y}`, 4 / zoom, y + 4 / zoom);
+            }
+        }
+
+        // Spawn markers
+        function drawSpawnMarkers(ctx) {
+            const zoom = STATE.zoom || 1;
+            STATE.spawns.forEach((spawn, idx) => {
+                const { x, y } = spawn;
+
+                // Glow pulse background ring
+                ctx.beginPath();
+                ctx.arc(x, y, 16 / zoom, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(239, 68, 68, 0.15)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(x, y, 8 / zoom, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(239, 68, 68, 0.4)';
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 1.5 / zoom;
+                ctx.fill();
+                ctx.stroke();
+
+                // Inner core
+                ctx.beginPath();
+                ctx.arc(x, y, 3 / zoom, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+
+                // Label badge
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+                ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
+                ctx.lineWidth = 1 / zoom;
+                ctx.beginPath();
+                if (ctx.roundRect) {
+                    ctx.roundRect(x + 12 / zoom, y - 10 / zoom, 36 / zoom, 18 / zoom, 4 / zoom);
+                } else {
+                    ctx.rect(x + 12 / zoom, y - 10 / zoom, 36 / zoom, 18 / zoom);
+                }
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f8fafc';
+                ctx.font = `bold ${Math.round(9 / zoom)}px "JetBrains Mono", monospace`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`#${idx + 1}`, x + 30 / zoom, y - 1 / zoom);
+            });
+        }        // --- Interactive Tooltip Coordinates Tracker & Canvas Paint Interactions ---
+        let paintRequestActive = false;
+
+        function getCoords(e) {
+            const rect = mainCanvas.getBoundingClientRect();
+            const cssScaleX = rect.width / STATE.width;
+            const cssScaleY = rect.height / STATE.height;
+
+            const canvasX = (e.clientX - rect.left) / (cssScaleX || 1);
+            const canvasY = (e.clientY - rect.top) / (cssScaleY || 1);
+
+            const x = Math.round((canvasX - STATE.panX) / STATE.zoom);
+            const y = Math.round((canvasY - STATE.panY) / STATE.zoom);
+            return { x, y };
+        }
+
+        function paintAtMouse(cx, cy) {
+            const r = STATE.brushSize;
+            const w = STATE.width;
+            const h = STATE.height;
+            const mask = STATE.landMask;
+            const val = STATE.activeTool === 'land' ? 1 : 0;
+
+            if (!mask) return;
+
+            // Paint in circle
+            for (let dy = -r; dy <= r; dy++) {
+                for (let dx = -r; dx <= r; dx++) {
+                    if (dx * dx + dy * dy <= r * r) {
+                        const px = cx + dx;
+                        const py = cy + dy;
+                        if (px >= 0 && px < w && py >= 0 && py < h) {
+                            mask[py * w + px] = val;
+                        }
+                    }
+                }
+            }
+
+            // Throttle distance transform updates
+            if (!paintRequestActive) {
+                paintRequestActive = true;
+                requestAnimationFrame(() => {
+                    computeDistanceField();
+                    renderWorkspace();
+                    paintRequestActive = false;
+                });
+            }
+        }
+
+        let isSpacePressed = false;
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && e.target === document.body) {
+                isSpacePressed = true;
+                e.preventDefault();
+                mainCanvas.style.cursor = 'grab';
+            }
+        });
+        window.addEventListener('keyup', (e) => {
+            if (e.code === 'Space') {
+                isSpacePressed = false;
+                mainCanvas.style.cursor = STATE.activeTool ? 'crosshair' : 'default';
+            }
+        });
+
+        mainCanvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        mainCanvas.addEventListener('mousedown', (e) => {
+            if (!STATE.cleanImageData) return;
+            
+            // Pan triggers: Right-click, Middle-click, or Space+Left-click
+            if (e.button === 1 || e.button === 2 || isSpacePressed) {
+                STATE.isPanning = true;
+                STATE.lastMouseX = e.clientX;
+                STATE.lastMouseY = e.clientY;
+                mainCanvas.style.cursor = 'grabbing';
+                e.preventDefault();
+                return;
+            }
+
+            if (e.button === 0) {
+                if (STATE.activeTool) {
+                    STATE.isDrawing = true;
+                    const { x, y } = getCoords(e);
+                    paintAtMouse(x, y);
+                    return;
+                }
+                
+                const isMarkerTabActive = !tabContentMarker.classList.contains('hidden');
+                if (isMarkerTabActive) {
+                    const { x, y } = getCoords(e);
+                    toggleMarkerAt(x, y);
+                    return;
+                }
+            }
+        });
+
+        mainCanvas.addEventListener('mousemove', (e) => {
+            if (!STATE.cleanImageData) return;
+
+            if (STATE.isPanning) {
+                const dx = e.clientX - STATE.lastMouseX;
+                const dy = e.clientY - STATE.lastMouseY;
+                STATE.lastMouseX = e.clientX;
+                STATE.lastMouseY = e.clientY;
+
+                const rect = mainCanvas.getBoundingClientRect();
+                const cssScaleX = rect.width / STATE.width;
+                const cssScaleY = rect.height / STATE.height;
+
+                STATE.panX += dx / (cssScaleX || 1);
+                STATE.panY += dy / (cssScaleY || 1);
+
+                renderWorkspace();
+                return;
+            }
+
+            const { x, y } = getCoords(e);
+            STATE.cursorX = x;
+            STATE.cursorY = y;
+
+            const tooltip = document.getElementById('canvas-tooltip');
+            const rect = mainCanvas.getBoundingClientRect();
+
+            if (x >= 0 && x < STATE.width && y >= 0 && y < STATE.height) {
+                tooltip.style.left = `${e.clientX - rect.left + 15}px`;
+                tooltip.style.top = `${e.clientY - rect.top + 15}px`;
+                tooltip.classList.remove('hidden');
+
+                // Read color & elevation details
+                const idx = y * STATE.width + x;
+                const elev = STATE.distField ? Math.round((STATE.distField[idx] / STATE.maxDistance) * 100) : 0;
+                const isLand = STATE.landMask ? (STATE.landMask[idx] === 1 ? 'Land' : 'Water') : 'N/A';
+
+                tooltip.innerHTML = `
+          <div class="font-bold text-teal-400">POS: [${x}, ${y}]</div>
+          <div class="text-[10px] text-slate-400">Class: ${isLand}</div>
+          <div class="text-[10px] text-slate-400">Relative Height: ${elev}%</div>
+        `;
+            } else {
+                tooltip.classList.add('hidden');
+            }
+
+            if (STATE.isDrawing && STATE.activeTool) {
+                paintAtMouse(x, y);
+            } else {
+                renderWorkspace();
+            }
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (STATE.isDrawing) {
+                STATE.isDrawing = false;
+            }
+            if (STATE.isPanning) {
+                STATE.isPanning = false;
+                mainCanvas.style.cursor = isSpacePressed ? 'grab' : (STATE.activeTool ? 'crosshair' : 'default');
+            }
+        });
+
+        mainCanvas.addEventListener('mouseleave', () => {
+            document.getElementById('canvas-tooltip').classList.add('hidden');
+            STATE.cursorX = -100;
+            STATE.cursorY = -100;
+            renderWorkspace();
+        });
+
+        // --- Navigation Zoom Actions ---
+        function adjustZoom(factor, centerX, centerY) {
+            if (!STATE.cleanImageData) return;
+
+            const rect = mainCanvas.getBoundingClientRect();
+            const cssScaleX = rect.width / STATE.width;
+            const cssScaleY = rect.height / STATE.height;
+
+            const cx = centerX !== undefined ? (centerX - rect.left) / (cssScaleX || 1) : STATE.width / 2;
+            const cy = centerY !== undefined ? (centerY - rect.top) / (cssScaleY || 1) : STATE.height / 2;
+
+            const oldZoom = STATE.zoom;
+            let newZoom;
+            if (factor > 1) {
+                newZoom = Math.min(STATE.zoom * factor, 12);
+            } else {
+                newZoom = Math.max(STATE.zoom * factor, 0.8);
+            }
+
+            STATE.panX = cx - (cx - STATE.panX) * (newZoom / oldZoom);
+            STATE.panY = cy - (cy - STATE.panY) * (newZoom / oldZoom);
+            STATE.zoom = newZoom;
+
+            if (zoomLevelBadge) {
+                zoomLevelBadge.textContent = `${Math.round(STATE.zoom * 100)}%`;
+            }
+            renderWorkspace();
+        }
+
+        mainCanvas.addEventListener('wheel', (e) => {
+            if (!STATE.cleanImageData) return;
+            e.preventDefault(); // Prevent scrolling page
+            const factor = e.deltaY < 0 ? 1.1 : 0.9;
+            adjustZoom(factor, e.clientX, e.clientY);
+        });
+
+        zoomInBtn.addEventListener('click', () => {
+            adjustZoom(1.25);
+        });
+
+        zoomOutBtn.addEventListener('click', () => {
+            adjustZoom(0.8);
+        });
+
+        zoomResetBtn.addEventListener('click', () => {
+            STATE.zoom = 1;
+            STATE.panX = 0;
+            STATE.panY = 0;
+            if (zoomLevelBadge) {
+                zoomLevelBadge.textContent = "100%";
+            }
+            renderWorkspace();
+        });
+
+        // --- Spawn Points Persistence & Merging ---
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+            return null;
+        }
+
+        function serializeSpawns(spawns) {
+            return spawns.map(s => `${s.x},${s.y},${s.size || 10}`).join(';');
+        }
+
+        function deserializeSpawns(str) {
+            if (!str) return [];
+            if (str.startsWith('[')) {
+                try {
+                    return JSON.parse(str);
+                } catch (e) {
+                    // fall through
+                }
+            }
+            return str.split(';').map(part => {
+                const pieces = part.split(',');
+                if (pieces.length < 2) return null;
+                return {
+                    x: parseInt(pieces[0], 10),
+                    y: parseInt(pieces[1], 10),
+                    size: parseInt(pieces[2] || "10", 10)
+                };
+            }).filter(s => s && !isNaN(s.x) && !isNaN(s.y));
+        }
+
+        function loadSpawnsFromStorage() {
+            try {
+                let localSpawns = [];
+                const storedLocal = localStorage.getItem('cartoalign_discovered_spawns');
+                if (storedLocal) {
+                    try {
+                        localSpawns = JSON.parse(storedLocal);
+                    } catch (e) {
+                        console.error("Error parsing localStorage spawns:", e);
+                    }
+                }
+
+                let cookieSpawns = [];
+                const storedCookie = getCookie('cartoalign_spawns');
+                if (storedCookie) {
+                    try {
+                        cookieSpawns = deserializeSpawns(storedCookie);
+                    } catch (e) {
+                        console.error("Error parsing cookie spawns:", e);
+                    }
+                }
+
+                // Merge coordinates from both storage types (using proximity check to avoid duplication)
+                const mergedSpawns = [...localSpawns];
+                const threshold = 12; // Proximity threshold
+
+                cookieSpawns.forEach(cSpawn => {
+                    const exists = mergedSpawns.some(lSpawn => {
+                        const dx = cSpawn.x - lSpawn.x;
+                        const dy = cSpawn.y - lSpawn.y;
+                        return Math.sqrt(dx * dx + dy * dy) < threshold;
+                    });
+                    if (!exists) {
+                        mergedSpawns.push(cSpawn);
+                    }
+                });
+
+                STATE.spawns = mergedSpawns;
+
+                // Sync back to both storage systems to keep them aligned
+                saveSpawnsToStorage();
+
+                if (spawnCountEl) {
+                    spawnCountEl.textContent = STATE.spawns.length;
+                }
+            } catch (err) {
+                console.error("Failed to load saved spawns:", err);
+            }
+        }
+
+        function saveSpawnsToStorage() {
+            try {
+                // Save to localStorage
+                localStorage.setItem('cartoalign_discovered_spawns', JSON.stringify(STATE.spawns));
+
+                // Save to cookie
+                if (STATE.spawns.length === 0) {
+                    document.cookie = "cartoalign_spawns=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Strict";
+                } else {
+                    let serialized = serializeSpawns(STATE.spawns);
+                    // Safe guard for cookie length (4KB max, limit value to 3800 bytes)
+                    if (serialized.length > 3800) {
+                        const parts = serialized.split(';');
+                        while (parts.length > 0 && parts.join(';').length > 3800) {
+                            parts.pop();
+                        }
+                        serialized = parts.join(';');
+                    }
+                    document.cookie = `cartoalign_spawns=${encodeURIComponent(serialized)}; path=/; max-age=31536000; SameSite=Strict`;
+                }
+            } catch (err) {
+                console.error("Failed to save spawns:", err);
+            }
+        }
+
+        function mergeSpawns(newSpawns) {
+            let addedCount = 0;
+            const threshold = 12; // Radius in pixels for merge proximity
+
+            newSpawns.forEach(newSpawn => {
+                const isDuplicate = STATE.spawns.some(existingSpawn => {
+                    const dx = newSpawn.x - existingSpawn.x;
+                    const dy = newSpawn.y - existingSpawn.y;
+                    return Math.sqrt(dx * dx + dy * dy) < threshold;
+                });
+
+                if (!isDuplicate) {
+                    STATE.spawns.push(newSpawn);
+                    addedCount++;
+                }
+            });
+
+            if (addedCount > 0) {
+                saveSpawnsToStorage();
+                showToast(`Discovered ${addedCount} new spawn position(s) and merged them into database.`, "success");
+            } else {
+                showToast("Analyzed images. No new spawn positions detected.", "info");
+            }
+
+            if (spawnCountEl) {
+                spawnCountEl.textContent = STATE.spawns.length;
+            }
+        }
+
+        function toggleMarkerAt(x, y) {
+            const threshold = 12;
+            let existingIndex = -1;
+
+            for (let i = 0; i < STATE.spawns.length; i++) {
+                const s = STATE.spawns[i];
+                const dx = x - s.x;
+                const dy = y - s.y;
+                if (Math.sqrt(dx * dx + dy * dy) < threshold) {
+                    existingIndex = i;
+                    break;
+                }
+            }
+
+            if (existingIndex !== -1) {
+                STATE.spawns.splice(existingIndex, 1);
+                saveSpawnsToStorage();
+                renderWorkspace();
+                showToast("Removed spawn position", "info");
+            } else {
+                STATE.spawns.push({ x, y, size: 10 });
+                saveSpawnsToStorage();
+                renderWorkspace();
+                showToast("Manually added spawn position", "success");
+            }
+
+            if (spawnCountEl) {
+                spawnCountEl.textContent = STATE.spawns.length;
+            }
+        }
+
+        // --- Terrain Editor Event Bindings ---
+        function setBrushTool(tool) {
+            STATE.activeTool = tool;
+
+            // Reset buttons styling
+            toolWaterBtn.classList.remove('border-teal-500', 'bg-slate-800', 'text-teal-300');
+            toolWaterBtn.classList.add('border-slate-700', 'bg-slate-800/50', 'text-teal-400');
+            
+            toolLandBtn.classList.remove('border-teal-500', 'bg-slate-800', 'text-emerald-300');
+            toolLandBtn.classList.add('border-slate-800', 'bg-slate-950', 'text-slate-400');
+
+            if (tool === 'water') {
+                toolWaterBtn.classList.add('border-teal-500', 'bg-slate-800', 'text-teal-300');
+                toolWaterBtn.classList.remove('border-slate-700', 'bg-slate-800/50', 'text-teal-400');
+            } else if (tool === 'land') {
+                toolLandBtn.classList.add('border-teal-500', 'bg-slate-800', 'text-emerald-300');
+                toolLandBtn.classList.remove('border-slate-800', 'bg-slate-950', 'text-slate-400');
+            }
+
+            if (mainCanvas) {
+                mainCanvas.style.cursor = tool ? 'crosshair' : 'default';
+            }
+        }
+
+        toolWaterBtn.addEventListener('click', () => setBrushTool('water'));
+        toolLandBtn.addEventListener('click', () => setBrushTool('land'));
+        
+        sliderBrushSize.addEventListener('input', (e) => {
+            valBrushSize.textContent = e.target.value + 'px';
+            STATE.brushSize = parseInt(e.target.value);
+            if (STATE.cleanImageData) {
+                renderWorkspace();
+            }
+        });
+
+        resetTerrainBtn.addEventListener('click', () => {
+            if (STATE.originalLandMask && STATE.landMask) {
+                STATE.landMask.set(STATE.originalLandMask);
+                computeDistanceField();
+                renderWorkspace();
+                showToast("Restored original land classification", "info");
+            }
+        });
+
+        clearSavedSpawnsBtn.addEventListener('click', () => {
+            if (confirm("Are you sure you want to delete all saved spawn positions? This cannot be undone.")) {
+                STATE.spawns = [];
+                saveSpawnsToStorage();
+                renderWorkspace();
+                if (spawnCountEl) {
+                    spawnCountEl.textContent = "0";
+                }
+                showToast("Cleared spawn position database", "info");
+            }
+        });
+
+        // --- Marching Squares Vector Line Contour Algorithm ---
+        function marchSquares(threshold, ctx) {
+            const w = STATE.width;
+            const h = STATE.height;
+            const dist = STATE.distField;
+            const smooth = selectSmooth.value === 'basic';
+
+            // Step interval for marching square cells
+            const step = 4;
+
+            for (let y = 0; y < h - step; y += step) {
+                for (let x = 0; x < w - step; x += step) {
+                    // Get values at four corners
+                    const val00 = dist[y * w + x];
+                    const val10 = dist[y * w + (x + step)];
+                    const val11 = (y + step) * w + (x + step) < w * h ? dist[(y + step) * w + (x + step)] : 0;
+                    const val01 = (y + step) * w + x < w * h ? dist[(y + step) * w + x] : 0;
+
+                    // Configure 4-bit binary index configuration
+                    let cellIndex = 0;
+                    if (val00 >= threshold) cellIndex |= 8;
+                    if (val10 >= threshold) cellIndex |= 4;
+                    if (val11 >= threshold) cellIndex |= 2;
+                    if (val01 >= threshold) cellIndex |= 1;
+
+                    if (cellIndex === 0 || cellIndex === 15) continue;
+
+                    // Mid-interpolated coords
+                    let pTop = { x: x + step / 2, y: y };
+                    let pRight = { x: x + step, y: y + step / 2 };
+                    let pBottom = { x: x + step / 2, y: y + step };
+                    let pLeft = { x: x, y: y + step / 2 };
+
+                    // Perform basic linear interpolation to remove pixel steps if selected
+                    if (smooth) {
+                        pTop.x = x + interpolate(val00, val10, threshold) * step;
+                        pRight.y = y + interpolate(val10, val11, threshold) * step;
+                        pBottom.x = x + interpolate(val01, val11, threshold) * step;
+                        pLeft.y = y + interpolate(val00, val01, threshold) * step;
+                    }
+
+                    // Generate vector line outputs based on intersection index configurations
+                    switch (cellIndex) {
+                        case 1: case 14:
+                            drawLine(pLeft, pBottom, ctx);
+                            break;
+                        case 2: case 13:
+                            drawLine(pBottom, pRight, ctx);
+                            break;
+                        case 3: case 12:
+                            drawLine(pLeft, pRight, ctx);
+                            break;
+                        case 4: case 11:
+                            drawLine(pTop, pRight, ctx);
+                            break;
+                        case 5:
+                            drawLine(pTop, pRight, ctx);
+                            drawLine(pLeft, pBottom, ctx);
+                            break;
+                        case 10:
+                            drawLine(pLeft, pTop, ctx);
+                            drawLine(pBottom, pRight, ctx);
+                            break;
+                        case 6: case 9:
+                            drawLine(pTop, pBottom, ctx);
+                            break;
+                        case 7: case 8:
+                            drawLine(pLeft, pTop, ctx);
+                            break;
+                    }
+                }
+            }
+        }
+
+        function interpolate(valA, valB, target) {
+            if (Math.abs(valA - valB) < 1e-5) return 0.5;
+            return (target - valA) / (valB - valA);
+        }
+
+        function drawLine(p1, p2, ctx) {
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+        }
+
+        // --- Marching Squares Vector Exporter (Compiles directly to raw SVG string Paths) ---
+        function generateMarchingSquaresSVGPaths(threshold) {
+            const w = STATE.width;
+            const h = STATE.height;
+            const dist = STATE.distField;
+            const smooth = selectSmooth.value === 'basic';
+
+            const step = 4;
+            let pathSegments = [];
+
+            for (let y = 0; y < h - step; y += step) {
+                for (let x = 0; x < w - step; x += step) {
+                    const val00 = dist[y * w + x];
+                    const val10 = dist[y * w + (x + step)];
+                    const val11 = (y + step) * w + (x + step) < w * h ? dist[(y + step) * w + (x + step)] : 0;
+                    const val01 = (y + step) * w + x < w * h ? dist[(y + step) * w + x] : 0;
+
+                    let cellIndex = 0;
+                    if (val00 >= threshold) cellIndex |= 8;
+                    if (val10 >= threshold) cellIndex |= 4;
+                    if (val11 >= threshold) cellIndex |= 2;
+                    if (val01 >= threshold) cellIndex |= 1;
+
+                    if (cellIndex === 0 || cellIndex === 15) continue;
+
+                    let pTop = { x: x + step / 2, y: y };
+                    let pRight = { x: x + step, y: y + step / 2 };
+                    let pBottom = { x: x + step / 2, y: y + step };
+                    let pLeft = { x: x, y: y + step / 2 };
+
+                    if (smooth) {
+                        pTop.x = x + interpolate(val00, val10, threshold) * step;
+                        pRight.y = y + interpolate(val10, val11, threshold) * step;
+                        pBottom.x = x + interpolate(val01, val11, threshold) * step;
+                        pLeft.y = y + interpolate(val00, val01, threshold) * step;
+                    }
+
+                    const addSegment = (a, b) => {
+                        pathSegments.push(`M ${a.x.toFixed(1)} ${a.y.toFixed(1)} L ${b.x.toFixed(1)} ${b.y.toFixed(1)}`);
+                    };
+
+                    switch (cellIndex) {
+                        case 1: case 14:
+                            addSegment(pLeft, pBottom);
+                            break;
+                        case 2: case 13:
+                            addSegment(pBottom, pRight);
+                            break;
+                        case 3: case 12:
+                            addSegment(pLeft, pRight);
+                            break;
+                        case 4: case 11:
+                            addSegment(pTop, pRight);
+                            break;
+                        case 5:
+                            addSegment(pTop, pRight);
+                            addSegment(pLeft, pBottom);
+                            break;
+                        case 10:
+                            addSegment(pLeft, pTop);
+                            addSegment(pBottom, pRight);
+                            break;
+                        case 6: case 9:
+                            addSegment(pTop, pBottom);
+                            break;
+                        case 7: case 8:
+                            addSegment(pLeft, pTop);
+                            break;
+                    }
+                }
+            }
+            return pathSegments.join(' ');
+        }
+
+        // --- Export Handling & Modal Interfaces ---
+
+        exportPanelBtn.addEventListener('click', () => {
+            exportModal.classList.remove('hidden');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            exportModal.classList.add('hidden');
+        });
+
+        // Close on click outside modal panel
+        exportModal.addEventListener('click', (e) => {
+            if (e.target === exportModal) {
+                exportModal.classList.add('hidden');
+            }
+        });
+
+        // Style Profile cards picker
+        styleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                styleCards.forEach(c => {
+                    c.classList.remove('border-teal-500');
+                    c.classList.add('border-slate-800');
+                });
+                card.classList.add('border-teal-500');
+                card.classList.remove('border-slate-800');
+                STATE.svgStyle = card.getAttribute('data-style');
+            });
+        });
+
+        // Copy JSON Coordinates
+        copyCoordsBtn.addEventListener('click', () => {
+            if (STATE.spawns.length === 0) {
+                showToast("No treasure spawn points detected yet.", "error");
+                return;
+            }
+
+            const formatted = STATE.spawns.map((s, idx) => ({
+                index: idx + 1,
+                x: s.x,
+                y: s.y,
+                pixelsCount: s.size
+            }));
+
+            const jsonStr = JSON.stringify(formatted, null, 2);
+
+            // Local document.execCommand copy fallback to ensure compliance inside sandboxed frames
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = jsonStr;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+
+            try {
+                const success = document.execCommand('copy');
+                if (success) {
+                    showToast("Copied JSON spawn coordinates to clipboard!", "success");
+                } else {
+                    showToast("Failed to copy coordinates automatically.", "error");
+                }
+            } catch (err) {
+                showToast("Error processing clipboard transfer.", "error");
+            }
+            document.body.removeChild(tempTextArea);
+        });
+
+        // Download PNG Clean Base
+        downloadCleanBtn.addEventListener('click', () => {
+            if (!STATE.cleanImageData) return;
+
+            const cleanCanvas = document.createElement('canvas');
+            cleanCanvas.width = STATE.width;
+            cleanCanvas.height = STATE.height;
+            cleanCanvas.getContext('2d').putImageData(STATE.cleanImageData, 0, 0);
+
+            const url = cleanCanvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cartoalign_clean_base_map.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast("Download clean base map PNG successful!", "success");
+        });
+
+        // Download layered SVG file
+        downloadSvgBtn.addEventListener('click', () => {
+            if (!STATE.distField) return;
+
+            showToast("Building scalable vector asset contours...", "info");
+
+            setTimeout(() => {
+                const svgContent = buildSVGDocument();
+                const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `cartoalign_vector_topo_map.svg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                showToast("SVG Map downloaded successfully!", "success");
+            }, 50);
+        });
+
+        // Helper: Construct styled SVG elements based on selected theme profiles
+        function buildSVGDocument() {
+            const w = STATE.width;
+            const h = STATE.height;
+            const levels = parseInt(sliderLevels.value);
+
+            // Color Profile Palette definitions
+            let config = {
+                background: '#020617',
+                gridColor: 'rgba(148, 163, 184, 0.08)',
+                markerFill: '#ef4444',
+                markerStroke: '#ffffff',
+                markerLabel: '#ffffff',
+                textColor: '#94a3b8',
+                getLineStyle: (step) => {
+                    const intensity = 0.2 + (step / levels) * 0.8;
+                    return {
+                        color: `rgba(45, 212, 191, ${intensity})`,
+                        width: (0.5 + (step / levels) * 2).toFixed(1)
+                    };
+                }
+            };
+
+            if (STATE.svgStyle === 'dark') {
+                config.background = '#090d16';
+                config.gridColor = 'rgba(16, 185, 129, 0.05)';
+                config.markerFill = '#f43f5e';
+                config.getLineStyle = (step) => {
+                    const intensity = 0.2 + (step / levels) * 0.8;
+                    return {
+                        color: `rgba(16, 185, 129, ${intensity})`,
+                        width: (0.5 + (step / levels) * 1.8).toFixed(1)
+                    };
+                };
+            } else if (STATE.svgStyle === 'classic') {
+                config.background = '#fcf8f2';
+                config.gridColor = 'rgba(120, 110, 90, 0.08)';
+                config.markerFill = '#b91c1c';
+                config.textColor = '#78350f';
+                config.getLineStyle = (step) => {
+                    return {
+                        color: `rgba(139, 92, 26, ${0.15 + (step / levels) * 0.7})`,
+                        width: (0.6 + (step / levels) * 1.5).toFixed(1)
+                    };
+                };
+            }
+
+            let svg = `<?xml version="1.0" encoding="utf-8"?>\n`;
+            svg += `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="100%" height="100%" style="background-color: ${config.background}; font-family: 'JetBrains Mono', monospace;">\n`;
+
+            // Add Grid lines
+            svg += `  <!-- Grid Layout -->\n`;
+            svg += `  <g id="map-grid">\n`;
+            const stepGrid = 64;
+            for (let x = stepGrid; x < w; x += stepGrid) {
+                svg += `    <line x1="${x}" y1="0" x2="${x}" y2="${h}" stroke="${config.gridColor}" stroke-width="1" />\n`;
+            }
+            for (let y = stepGrid; y < h; y += stepGrid) {
+                svg += `    <line x1="0" y1="${y}" x2="${w}" y2="${y}" stroke="${config.gridColor}" stroke-width="1" />\n`;
+            }
+            svg += `  </g>\n\n`;
+
+            // Add Topography Elevation Path Layers
+            svg += `  <!-- Contour Elevation Loops -->\n`;
+            svg += `  <g id="topography-contours">\n`;
+            for (let l = 1; l <= levels; l++) {
+                const threshold = (l / levels) * STATE.maxDistance;
+                const dPath = generateMarchingSquaresSVGPaths(threshold);
+                if (dPath.trim().length > 0) {
+                    const style = config.getLineStyle(l);
+                    svg += `    <path d="${dPath}" fill="none" stroke="${style.color}" stroke-width="${style.width}" stroke-linecap="round" stroke-linejoin="round" />\n`;
+                }
+            }
+            svg += `  </g>\n\n`;
+
+            // Add Spawns Markers Group
+            svg += `  <!-- Extracted Spawns -->\n`;
+            svg += `  <g id="treasure-markers">\n`;
+            STATE.spawns.forEach((spawn, idx) => {
+                const { x, y } = spawn;
+                svg += `    <g id="marker-${idx + 1}" transform="translate(0, 0)">\n`;
+                svg += `      <circle cx="${x}" cy="${y}" r="15" fill="${config.markerFill}" fill-opacity="0.15" />\n`;
+                svg += `      <circle cx="${x}" cy="${y}" r="6" fill="${config.markerFill}" stroke="${config.markerStroke}" stroke-width="1.5" />\n`;
+                svg += `      <circle cx="${x}" cy="${y}" r="2" fill="${config.markerStroke}" />\n`;
+
+                // Text labels
+                svg += `      <rect x="${x + 12}" y="${y - 10}" width="34" height="18" rx="4" fill="#0f172a" fill-opacity="0.85" stroke="${config.markerFill}" stroke-width="1" />\n`;
+                svg += `      <text x="${x + 29}" y="${y + 1}" font-size="9" fill="${config.markerLabel}" font-weight="bold" text-anchor="middle" dominant-baseline="middle">#${idx + 1}</text>\n`;
+                svg += `    </g>\n`;
+            });
+            svg += `  </g>\n\n`;
+
+            // Sidebar Metadata info on SVG
+            svg += `  <!-- Metadata Info -->\n`;
+            svg += `  <g id="metadata-legends" transform="translate(20, ${h - 60})">\n`;
+            svg += `    <rect width="250" height="40" rx="6" fill="#0f172a" fill-opacity="0.8" stroke="rgba(255,255,255,0.05)" stroke-width="1" />\n`;
+            svg += `    <text x="15" y="16" font-size="10" fill="${config.textColor}" font-weight="bold">CARTOGRAPHY ENGINE VECTOR</text>\n`;
+            svg += `    <text x="15" y="28" font-size="9" fill="${config.textColor}">Extracted Locations: ${STATE.spawns.length} | Levels: ${levels}</text>\n`;
+            svg += `  </g>\n`;
+
+            svg += `</svg>`;
+            return svg;
+        }
+
+        // Initialize UI on window load
+        window.onload = function () {
+            setupTabs();
+            setBrushTool(null);
+            loadSpawnsFromStorage();
+            showToast("App workspace initiated. Upload screenshots to begin alignment.", "info");
+        };
+    </script>
+</body>
+
+</html>
