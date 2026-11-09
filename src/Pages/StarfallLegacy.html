@@ -82,12 +82,13 @@
     <div class="container mx-auto max-w-4xl bg-[#0F1023] bg-opacity-90 px-4 md:px-8 py-8 rounded-xl shadow-xl border border-blue-600/30">
         <!-- Landing Page for Chapter List -->
         <div id="landingPage">
-            <div class="mb-8 flex justify-center">
+            <div class="mb-1 flex justify-center">
                  <!-- DEVELOPER NOTE: Please replace the 'src' attribute below with the correct path to your 'SFL_logo@3x.jpg' file. -->
                 <img src="../../assets/images/projects/SFL_logo@3x.png" alt="Starfall Legacy Logo" class="max-w-full h-auto md:max-w-lg">
             </div>
-            <h1 class="text-center text-2xl md:text-3xl font-bold text-[#55AAFF] drop-shadow-lg">Pokémon Mystery Dungeon: Starfall Legacy</h1>
-            <p class="text-center text-sm text-gray-400 mt-2 mb-8">A Star Trek Online × Pokemon Mystery Dungeon fan fiction by Hexfury</p>
+            <!-- Visually hidden (logo above shows the title) but kept for SEO and screen readers -->
+            <h1 class="sr-only">Pokémon Mystery Dungeon: Starfall Legacy</h1>
+            <p class="text-center text-sm text-gray-400 mb-8">A Star Trek Online × Pokemon Mystery Dungeon fan fiction by Hexfury</p>
 
             <!-- Tab Navigation -->
             <div class="mb-4 border-b border-blue-600/30">
@@ -128,7 +129,7 @@
                     <div class="w-full md:w-2/3 text-center md:text-left">
                         <p class="text-lg leading-relaxed text-gray-300 mb-8">When the U.S.S. Sagittarius is mysteriously pulled from warp and torn across realities, its bridge crew finds themselves stranded on an alien world, transformed into creatures with strange new powers. Stripped of their technology and facing a cosmic threat that defies all known science, they must adapt to a reality where magic is real, gods walk the earth, and their only hope for survival lies in a legacy left behind by another lost soul. Their journey to find a way home becomes a desperate race against an encroaching darkness, forcing them to become more than just a crew—they must become the unexpected heroes this new world needs.</p>
                         <button id="continueReadingBtn" class="px-8 py-4 rounded-lg bg-sky-500 text-white font-bold text-lg shadow-lg shadow-sky-500/30 hover:bg-sky-400 transform hover:-translate-y-1 transition-all duration-300">Start Reading</button>
-                        <p class="mt-4 text-sm text-gray-400">Also published on <a href="https://www.fanfiction.net/s/14490010/1/Pokemon-Mystery-Dungeon-Starfall-Legacy" target="_blank" rel="noopener noreferrer" class="underline hover:text-sky-300">FanFiction.net</a>.</p>
+                        <p class="mt-4 text-sm text-gray-400">Want to know when new chapters drop? This site can't send update notifications, so follow the story on <a href="https://www.fanfiction.net/s/14490010/1/Pokemon-Mystery-Dungeon-Starfall-Legacy" target="_blank" rel="noopener noreferrer" class="underline text-sky-400 hover:text-sky-300">FanFiction.net</a> to get alerts for new chapters.</p>
                     </div>
                 </div>
             </div>
@@ -316,6 +317,7 @@
 
             <div id="chaptersContent" class="tab-content hidden">
                 <h2 class="text-center text-xl mt-2 mb-4">Select a Chapter</h2>
+                <p class="text-center text-sm text-gray-400 mb-4">Want update notifications? Follow the story on <a href="https://www.fanfiction.net/s/14490010/1/Pokemon-Mystery-Dungeon-Starfall-Legacy" target="_blank" rel="noopener noreferrer" class="underline text-sky-400 hover:text-sky-300">FanFiction.net</a> to be alerted when new chapters are posted.</p>
                 <div class="flex flex-wrap items-center gap-2 mb-4">
                     <input type="text" id="chapterSearch" placeholder="Search by chapter name or number" class="flex-grow p-3 rounded-lg bg-[#0D0E21] text-[#E0E0F0] border border-blue-600/50 focus:outline-none focus:ring-2 focus:ring-blue-600">
                 </div>
@@ -331,7 +333,13 @@
             <h2 class="text-center text-xl mt-2 mb-4" id="chapterInfo"></h2>
 
             <div id="chapterContent" class="pre-wrap text-lg leading-relaxed overflow-x-hidden"></div>
-            
+
+            <!-- Shown only on the latest chapter -->
+            <div id="caughtUpNotice" class="hidden mt-10 p-4 rounded-lg bg-[#1A1B32] border border-blue-600/50 text-center">
+                <p class="font-bold text-[#55AAFF] mb-1">You're all caught up!</p>
+                <p class="text-sm text-gray-300">This site can't send update notifications. To be alerted when the next chapter is posted, follow the story on <a href="https://www.fanfiction.net/s/14490010/1/Pokemon-Mystery-Dungeon-Starfall-Legacy" target="_blank" rel="noopener noreferrer" class="underline text-sky-400 hover:text-sky-300">FanFiction.net</a>.</p>
+            </div>
+
             <!-- New Floating Control Bar -->
             <div id="mobileControlBar" class="fixed bottom-0 left-0 right-0 bg-[#1A1B32] border-t border-blue-600/50 shadow-lg p-2 flex justify-around items-center z-50">
                 <button id="backBtn" class="p-3 rounded-lg hover:bg-[#2A2B42] transition-all" title="Back to Chapters">
@@ -711,6 +719,7 @@
             chapterDisplay.textContent = `Chapter ${currentChapterNumber} / ${totalLoadedChapters}`;
             prevBtn.disabled = currentChapterNumber <= 1;
             nextBtn.disabled = currentChapterNumber >= totalLoadedChapters;
+            document.getElementById('caughtUpNotice').classList.toggle('hidden', currentChapterNumber < totalLoadedChapters);
         }
 
         function goToPreviousChapter() {
