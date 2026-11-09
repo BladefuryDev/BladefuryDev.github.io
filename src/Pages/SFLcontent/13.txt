@@ -306,7 +306,7 @@ They turned their attention to the dam. It was a crude but effective piece of en
 
 "This isn't a natural formation," Anya observed, her engineer's eye assessing the structure. "The Golduck built this deliberately. The interlocking logs, the placement of the key stones... it's designed to hold."
 
-"A sudden, catastrophic failure would send a surge of water downstream that could overwhelm the reservoir's spillways and flood the lower districts of Havenwood. We must proceed with caution."
+"A sudden, catastrophic failure," T'Vella warned, "would send a surge of water downstream that could overwhelm the reservoir's spillways and flood the lower districts of Havenwood. We must proceed with caution."
 
 "We'll have to deconstruct it piece by piece," Eva decided. "Anya, Zax, you have the strength. Find the keystones. We'll release the pressure slowly and carefully. This isn't a battle anymore. This is an engineering problem." With their objective clear, the team set to work, their combat roles shifting seamlessly to those of a construction crew, ready to tame the river.
 
@@ -317,8 +317,6 @@ The grotto was filled with the sound of their own heavy breathing mingling with 
 Crafter Anya, now in her element, approached the area where the dam had been. Her engineer's mind, accustomed to starship schematics and plasma conduits, easily adapted to the principles of stress and fluid dynamics. She walked the length of the former blockage, her claws tapping against the wet rock, her eyes tracing the imaginary lines of force.
 
 "It was surprisingly well-built for something assembled without tools," she reported, her deep voice resonating with professional respect. "The Golduck used the natural shape of the cavern to its advantage. The main pressure is being held by these three large boulders at the base, acting as a foundation. Above them, two massive logs are interlocked, distributing the weight of the smaller debris. If we had removed one of the base boulders first, the whole thing would have come down at once. It would have been... catastrophic."
-
-"A flash flood. The sudden release of this volume of water would overwhelm the reservoir's spillways and flood the lower districts of Havenwood."
 
 "So a controlled demolition was the right call," Eva concluded. "Good work."
 
@@ -432,7 +430,7 @@ Cinder let out a dramatic sigh. "A total mess. We got there, and the whole hive 
 
 A Machoke at a nearby table overheard and laughed. "Better than our day! We had to rescue a Bidoof who got himself stuck in a tree. Cried the whole time! Kept saying a ghost pushed him."
 
-"Don't laugh, Breaker," a Medicham from the same team chimed in. "You almost got flattened in that Monster House in the Lapis Cave last week."
+"Don't laugh, Grit," a Medicham from the same team chimed in. "You almost got flattened in that Monster House in the Lapis Cave last week."
 
 "Monster House?" Kenji chirped, his curiosity piqued.
 
@@ -440,7 +438,7 @@ A Machoke at a nearby table overheard and laughed. "Better than our day! We had 
 
 T'Vella filed that information away. A spontaneous, localized mass-materialization event. The tactical implications were significant.
 
-"At least you didn't have to deal with Wonder Tiles," Breaker the Machoke grumbled. "We found one, and our client, a rich Persian, kept stepping on it over and over to heal a papercut. Added two hours to the mission!"
+"At least you didn't have to deal with Wonder Tiles," Grit the Machoke grumbled. "We found one, and our client, a rich Persian, kept stepping on it over and over to heal a papercut. Added two hours to the mission!"
 
 This caught Anya's attention. "A 'Wonder Tile'? What are its properties?"
 
@@ -448,13 +446,15 @@ This caught Anya's attention. "A 'Wonder Tile'? What are its properties?"
 
 The conversation opened up, with other teams chiming in, sharing stories of their own missions—some dangerous, some comical. They talked about dungeons with strange properties, powerful Pokémon they had fought, and the bizarre requests they sometimes received. For Team Starfall, it was an invaluable intelligence-gathering opportunity, a firehose of information about their new profession delivered through casual conversation. They listened, shared their own sanitized version of events, and for the first time, truly felt like a part of the Guild. They weren't just allies of convenience; they were peers, sharing food and stories after a hard day's work.
 
-Just as the boisterous storytelling reached its peak, a hush fell over the room. A small, delicate-looking Pokémon hopped onto a low wooden stage at the side of the hall. It was that Shaymin in its Sky Form once again, It closed its eyes, and a brilliant green energy began to coalesce before it, forming a small, dense, glowing ball. With a flick of its head, it tossed the ball high into the air. It arced over the center of the room, then fell, landing on an empty part of the long central table with a soft, almost inaudible thump. The ball detonated, not with a sound or a shockwave, but with a silent, expanding wave of sparkling green light. The wave washed over the entire mess hall. As it passed over Team Starfall, they felt that strange, tingling sensation once more. The grime, dust, and soot from their long day seemed to lift from their fur and feathers, dissolving into the green light. A moment later, the wave receded, pulling all the collected dirt from every Pokémon in the room into a single, compact, hovering sphere of filth in the center of the hall. Beside the stage, a small, purple Espurr, who had been watching impassively, opened its large eyes. A faint psychic glow enveloped the ball of grime, which then floated silently across the room and deposited itself neatly into a waste bin. Just like that, every adventurer in the room was perfectly clean, the physical evidence of their day's trials wiped away in an instant.
+Just as the boisterous storytelling reached its peak, a hush fell over the room. The Shaymin hopped onto her little stage again, and this time Team Starfall noticed what they'd missed the first night: the veterans didn't stop talking. They simply set down their mugs and waited, the way a crew waits out a routine decon cycle. The emerald orb arced over the tables, burst into its silent wave, and drew a day's worth of cave silt, Krabby grit and Golduck spray from every pelt in the hall into one hovering ball. The Espurr dispatched it to the bin with a bored flick of her eyes, and the conversations picked up exactly where they'd left off.
 
-"That’s still cool!" Kenji chirped, ruffling his now-spotless feathers in amazement. "It's infuriating," Anya rumbled, but without any real heat in her voice as she examined her own now-pristine claws. "I’ve been over this. The energy cost alone... how does she do that?"
+Kenji shook out his wings and looked down at himself, almost disappointed. "Aw. I was kind of proud of that mud. I earned that mud."
 
-"The law of conservation of mass continues to be treated as a vague suggestion in this reality," T'Vella stated, her voice a flat monotone that was her version of a sigh. "It is, still, undeniably efficient."
+"Second time," Anya muttered, holding a spotless claw up to the crystal light. Her neck-flames gave a small, irritated flicker. "Wave crosses the whole hall in under four seconds. Next time I'm bringing the tricorder, and she can glare at me all she wants."
 
-Zax grunted, stretching his newly-cleaned shoulders. "Good for morale." He’d say, inspecting his claws now too, even the corners under them were clean.
+"I have elected to stop objecting," T'Vella said, folding her hands on the table. "Objecting has not altered the outcome." A pause. "I will be documenting it instead."
+
+Zax said nothing for a moment. He was watching the older teams, none of whom had so much as glanced up. "They don't even notice it anymore," he said finally, and checked the corners under his claws. Clean. "Nightly decontamination, zero downtime. Starfleet Medical would have requisitioned her on the spot."
 
 The darkness was still out there, but in the warm, loud, cheerful mess hall, surrounded by their fellow Pathfinders, it felt a little less daunting.
 
@@ -504,9 +504,9 @@ Finally, T'Vella closed the book. "Further study at this time would result in di
 
 One by one, they retreated to their woven straw beds, the soft moss of the floor cool beneath their paws and feet. A comfortable silence filled the room, punctuated by the gentle hum of the light crystal.
 
-"I still say it's undignified," Zax's voice rumbled from the darkness, though the aggressive edge was gone, replaced by a weary resignation. "But... it was effective in the end."
+"If anyone at the Academy ever learns I was taught to read by a drawing of an Applin," Zax's voice came out of the dark, dry as Vulcan sand, "I will deny it under oath." A beat passed. "...There is no one at the Academy to find out." Nobody answered that. After a while, Anya's flames dimmed a shade lower.
 
-"It felt... clearer tonight," Elara replied softly from her own bed. "Less like noise. More like... seeing the answer before you read the question. I think I can learn to control it further." A sense of quiet pride emanated from her, a feeling of finally having a vital, unique role to play beyond her operational duties.
+"It's quieter tonight," Elara murmured into the straw. "When I touched the practice page, with all those little names... it felt warm. Like the Pichu and the Azurill were still in it somehow." Her voice softened. "And now so are we."
 
 Anya sighed, a puff of warm air from her Typhlosion snout. "That primer probably saved us a week of banging our heads against a wall. The enchantment text is still a beast, just having a peek in it showed a lot more uses of those runes the primer didn’t cover." The thought of a new, complex system to master was a familiar comfort, continuing the feeling from the night prior, kicking it one notch higher
 
