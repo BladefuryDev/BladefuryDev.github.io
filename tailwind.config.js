@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // Follow the site's theme toggle (html.dark / html.light) instead of the OS preference
+  darkMode: 'class',
   content: [
     "./src/*.html",
     "./src/Pages/**/*.html",
