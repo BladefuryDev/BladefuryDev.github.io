@@ -1,4 +1,4 @@
-Captain's Log, Stardate 65382.51. The U.S.S. Sagittarius is currently en-route to the Althos system, our final staging point before we begin our primary mission: a two-year deep-space survey of the uncharted Althos Expanse. For a veteran Springfield-class, the journey has been blessedly uneventful, and the ship continues to perform admirably. Morale remains high; the crew is eager to be the first to map this new sector and add our names to the Federation's star charts. There's a quiet satisfaction in these days, the long stretches of silent running between the stars. It's in these moments that we're reminded of Starfleet's true purpose: not just to go, but to see. Rostova out.
+*Captain's Log, Stardate 65382.51. The U.S.S. Sagittarius is currently en-route to the Althos system, our final staging point before we begin our primary mission: a two-year deep-space survey of the uncharted Althos Expanse. For a veteran Springfield-class, the journey has been blessedly uneventful, and the ship continues to perform admirably. Morale remains high; the crew is eager to be the first to map this new sector and add our names to the Federation's star charts. There's a quiet satisfaction in these days, the long stretches of silent running between the stars. It's in these moments that we're reminded of Starfleet's true purpose: not just to go, but to see. Rostova out.*
 
 The hum of the U.S.S. Sagittarius's warp drive was a constant, comforting symphony to its crew. It was the reliable thrum of a Springfield-class light explorer. A veteran of a bygone era, the 325-meter vessel had been decommissioned from front-line combat service during the Dominion War, replaced by more capable ships. Yet, it continued to serve faithfully in its original role: pushing the boundaries of known space. On the bridge, a quiet efficiency reigned. Captain Eva Rostova, a woman whose calm demeanor belied a sharp, strategic mind, sat in her command chair, eyes fixed on the swirling vortex of warp space displayed on the main viewscreen.
 
@@ -6,7 +6,7 @@ The hum of the U.S.S. Sagittarius's warp drive was a constant, comforting sympho
 
 "All systems nominal, Captain," responded First Officer T'Vella from her right. The Vulcan's face was a mask of serene logic, her pointed ears twitching slightly, the only sign of her constant, vigilant analysis of the ship's data streams. "We are maintaining Warp 7. ETA to the Althos system is 48 hours."
 
-At the helm, Lieutenant Kenji Tanaka grinned, his fingers dancing over the console. "Smooth sailing, Captain. The Sagittarius is flying like a dream."
+At the helm, Lieutenant Kenji Tanaka grinned, his fingers dancing over the console. "Smooth sailing, Captain. The Sagittarius is flying like a dream." He was young, eager, and one of the best pilots in Starfleet.
 
 "That's because I've personally calibrated every plasma injector myself, Kenji," a cheerful voice with a hint of a Terran accent crackled over the comm. "Treat her well, or you'll have me to answer to."
 
@@ -16,7 +16,7 @@ Kenji grinned. "Wouldn't dream of it, Chief Sharma. She's in good hands."
 
 "The probability of an external threat manifesting without any prior energy readings is 0.0013 percent, Lieutenant," T'Vella stated, her voice a placid sea of logic. "Your feelings are statistically insignificant."
 
-"Tell that to the Gorn warship that decloaked on top of the Lexington," Zax shot back. "I'm sure their statistical analysis was flawless right up until the torpedoes hit."
+"Tell that to the Gorn warship that decloaked on top of the *Lexington*," Zax shot back. "I'm sure their statistical analysis was flawless right up until the torpedoes hit."
 
 "An Andorian's intuition is a valuable asset, Commander," Operations Officer Elara Vance added softly from her station, not looking up from her console. "It's a form of subconscious pattern recognition. The silence itself is a pattern."
 
@@ -48,7 +48,7 @@ Elara cried out, her hands flying to her temples as the psychic component of the
 
 Consciousness returned slowly, like swimming up from a deep, dark ocean. Eva Rostova’s first sensation was of soft grass beneath her. Her last memory was of the bridge, the alarms, the white light. As her senses came online, she became aware of a gentle warmth on her skin and a faint, golden luminescence that was slowly fading from the air around her. In the distance, she could hear a faint, rhythmic wail—the red alert siren of the Sagittarius, muffled by distance and the dense foliage.
 
-A transporter, then, she thought, her mind grasping for a logical explanation. Someone must have initiated an emergency site-to-site transport. Evacuated the bridge crew first. Standard protocol in a catastrophic failure. The fading golden light felt... deliberate. Precise. Like the clean hum of a transporter beam, but oddly more complex and powerful. She pushed herself up, her limbs feeling strangely heavy and uncoordinated. She looked down at her hands—or where her hands should have been. In their place were two powerful, feline paws, covered in sleek, white fur. A jolt of pure, unadulterated shock shot through her. She tried to cry out, but the sound that escaped her throat was a guttural, feline yowl. Her eyes, now possessing the sharp clarity of a predator, darted around. She was in a forest, sunlight dappling through a thick canopy of oversized leaves. She was an Absol.
+*A transporter, then,* she thought, her mind grasping for a logical explanation. *Someone must have initiated an emergency site-to-site transport. Evacuated the bridge crew first. Standard protocol in a catastrophic failure.* The fading golden light felt... deliberate. Precise. Like the clean hum of a transporter beam, but oddly more complex and powerful. She pushed herself up, her limbs feeling strangely heavy and uncoordinated. She looked down at her hands—or where her hands should have been. In their place were two powerful, feline paws, covered in sleek, white fur. A jolt of pure, unadulterated shock shot through her. She tried to cry out, but the sound that escaped her throat was a guttural, feline yowl. Her eyes, now possessing the sharp clarity of a predator, darted around. She was in a forest, sunlight dappling through a thick canopy of oversized leaves. She was an Absol.
 
 A groan nearby drew her attention. T'Vella was stirring, the last vestiges of the same golden light fading from around her new, graceful Gardevoir form. The Vulcan's logical mind, for the first time in her life, was utterly overwhelmed by the sheer impossibility of it all. Scattered around her, each in their own fading nimbus of golden light, were the others.
 
@@ -62,7 +62,11 @@ Elara Vance, the operations officer, had become a Kirlia, her small, humanoid fo
 
 And from another fading glow, a low growl rumbled. Anya Sharma, the brilliant engineer, was now a hulking, bipedal Typhlosion, a collar of fire flickering nervously around the back of her neck.
 
-As they slowly, shakily gathered, the distant wail of the sirens was joined by a low, persistent hum from a clearing just ahead. Pushing through the giant ferns, they saw it. The U.S.S. Sagittarius. It was embedded in the earth, tilted at a dangerous angle, its hull scarred and smoking. Emergency lights flickered across its saucer section, one of the impulse engines still firing. It was a miracle it hadn't been completely destroyed. The transport, whoever initiated it, had saved them just moments before impact.
+As they slowly, shakily gathered, the distant wail of the sirens was joined by a low, persistent hum from a clearing just ahead. Pushing through the giant ferns, they saw it. The U.S.S. Sagittarius. The broad saucer had dug itself into the earth at the end of a long furrow, tilted at a dangerous angle, its hull scarred and smoking. Behind it, the two arms that reached back from the saucer's trailing edges had flexed and held, and the slim engineering hull they carried hung clear of the torn ground between them. Above it all, the warp nacelles still rode high on their pylons over the broken trees, as if nothing had happened. Emergency lights flickered across the saucer, and one of the impulse engines was still firing.
+
+"She held," Anya breathed, and there was something close to reverence in it. "A bigger ship would have folded in half on that slide. She was built to be thrown around."
+
+It was a miracle the ship hadn't been completely destroyed. The transport, whoever initiated it, had saved them just moments before impact.
 
 "The ship..." Anya, the Typhlosion, rumbled, her voice a deep baritone. "The power conduits cannot be healthy. I need to get to engineering!"
 
@@ -76,7 +80,9 @@ A colossal, serpentine creature, green as jade and impossibly long, descended fr
 
 "Tactical analysis, Zax!" Eva, the Absol, commanded, her voice a sharp bark that cut through the fear.
 
-The Lucario, Zax, instinctively dropped into a combat stance, eyes wide as he took a defensive step back. "I have no data, Captain! It's! I- I don’t know!"
+The Lucario, Zax, instinctively dropped into a combat stance, eyes wide as he took a defensive step back. "I have no data, Captain! It's! I- I don't know!" He caught himself, and the training came back through the panic. "Treeline. Now. Whatever that is, it's looking at the ship, not at us."
+
+"There are a hundred and thirty-five people on that ship," Eva said. She didn't move.
 
 The great serpent, Rayquaza, opened its mouth, and a sphere of crackling energy began to form. It saw the strange metal beast and the misshapen creatures below it as a singular threat. It would protect its world, as it always had.
 
@@ -86,23 +92,43 @@ The sphere of energy in Rayquaza's mouth pulsed with an intensity that warped th
 
 For a fraction of a second, the ship's damaged systems tried to respond. The navigational shielding, the only defense still partially active, flared to life, a shimmering, translucent bubble of energy enveloping the saucer section. The golden beam struck the shield, and for one glorious, defiant moment, it held. The air crackled, and the shield glowed white-hot under the strain, the hum of its emitters rising to a piercing scream. But it was like trying to stop a tidal wave with a pane of glass. The shield buckled, spiderweb cracks of pure energy spreading across its surface before it shattered into a billion glittering motes of light.
 
-With the shield gone, the beam slammed into the Sagittarius's saucer section unimpeded. The ship, already crippled, screamed in protest. Metal groaned and tore as the beam carved a molten trench across the dorsal hull, vaporizing plating and blowing out entire decks. The emergency lights flickered violently, then half of them went dark for good. The low hum of failing systems was replaced by the shriek of tortured metal and the crackle of exposed, arcing power conduits.
+With the shield gone, the beam slammed into the Sagittarius's saucer section unimpeded. The ship, already crippled, screamed in protest. Metal groaned and tore as the beam carved a molten trench across the dorsal hull, vaporizing plating and blowing out entire decks. At the saucer's trailing edge, the one impulse engine that had kept burning through the crash guttered, flared orange, and sputtered out, its glow fading from the cowling like a coal going cold. The emergency lights flickered violently, then half of them went dark for good. The low hum of failing systems was replaced by the shriek of tortured metal and the crackle of exposed, arcing power conduits.
 
 On the ground, the crew was thrown back by the sheer force of the impact. Eva was thrown onto her side, her mind still reeling from the sudden transformation. As she scrambled to her paws, her new, sharp senses were flooded with the dying screams of her ship. She could feel the catastrophic chain reaction of explosions—the two transporter rooms in the saucer section detonating from power overloads, the hydro-deck shattering and flash-boiling evident by the steam rising from where it should have been, entire corridors venting into the alien atmosphere as critical conduits failed. She knew, with a sickening certainty, that dozens of her crew had just been extinguished. "No!" she screamed, a raw, helpless cry of anguish that was lost in the cacophony of destruction.
 
-"It's tearing us apart!" Anya, the Typhlosion, roared in anguish, the flames on her back flaring with her distress. She watched as some of the long, dark strips of the dorsal phaser arrays glowed cherry-red for a heartbeat before they exploded outwards in a shower of molten metal. "The primary phaser arrays are gone!" A massive section of the hull plating above the crew quarters buckled and peeled away like a scab, revealing the decks within for a horrifying instant before a secondary explosion blew the entire section into the air. "Hull integrity on decks one through five is... it's gone!" Her engineer's mind could visualize the destruction with horrifying clarity—the catastrophic power failures cascading from the hit, the environmental seals on those decks failing in sequence, the life support systems winking out one by one. She wasn't just seeing a ship being destroyed; she was watching her life's work, and the lives of her friends, being unmade system by system.
+She was running before she had decided to. Four bounding strides toward the clearing, and then the heat hit her like a wall, the air itself cooking, and she skidded to a stop with her eyes streaming. "Anya! The lifeboat deck, can they reach it?"
 
-"That wasn't a standard energy weapon," Zax, the Lucario, said, his voice tight. He was on one knee, a blue-furred hand pressed to the side of his head. "Disruptors, phasers... they overwhelm shields with brute force. This... This just ignored them. I've never seen anything like it. Even at full power, our defenses would have been useless…"
+"The pod bays are on the ventral saucer!" Anya roared back. "If anyone's alive down there they'll be going for them! The hatches seal from inside, Captain, we can't get to them, there's no way in!"
 
-Helplessness. It was a foreign, bitter taste. They were Starfleet officers, trained to confront the unknown, to analyze, strategize, and overcome. But what could they do? They were small, fleshy creatures standing in a forest, watching a deity dismantle their vessel with casual, overwhelming force. Kenji, the Starly, could only flutter to the ground, hiding his head under a wing, chirping in pure terror. Elara, the Kirlia, sank to the grass, overwhelmed by the wave of raw power and the collective despair of her crewmates.
+"Then why aren't the pods launching?"
+
+Nobody had an answer.
+
+"It's tearing us apart!" Anya, the Typhlosion, roared in anguish, the flames on her neck flaring with her distress. She watched as some of the long, dark strips of the dorsal phaser arrays glowed cherry-red for a heartbeat before they exploded outwards in a shower of molten metal. "The primary phaser arrays are gone!" A massive section of the hull plating above the crew quarters buckled and peeled away like a scab, revealing the decks within for a horrifying instant before a secondary explosion blew the entire section into the air. "Hull integrity on decks one through five is... it's gone!" Her engineer's mind could visualize the destruction with horrifying clarity—the catastrophic power failures cascading from the hit, the environmental seals on those decks failing in sequence, the life support systems winking out one by one. She wasn't just seeing a ship being destroyed; she was watching her life's work, and the lives of her friends, being unmade system by system.
+
+"That wasn't a standard energy weapon," Zax, the Lucario, said, his voice tight. He had put himself between the Captain and the clearing without seeming to notice he had done it, one black paw pressed to the side of his head. "Disruptors, phasers... they overwhelm shields with brute force. This... This just ignored them. I've never seen anything like it. Even at full power, our defenses would have been useless…"
+
+Helplessness. It was a foreign, bitter taste. They were Starfleet officers, trained to confront the unknown, to analyze, strategize, and overcome. But what could they do? They were small, fleshy creatures standing in a forest, watching a deity dismantle their vessel with casual, overwhelming force. Kenji, the Starly, threw himself into the air toward the ship, a pilot going for his post, and the heat and the chaos of the wind tumbled him straight back into the ferns, where he lay with his head under a wing, chirping in pure terror. Elara, the Kirlia, sank to the grass, overwhelmed by the wave of raw power and the collective despair of her crewmates. "They're still in there," she said, her voice thin. She had run the duty roster that morning. She knew every name on it. "Captain, they're still in there."
+
+"I know," Eva said, and her voice shook on it. "I know every one of them."
 
 T'Vella, the Gardevoir, stood unnaturally still, her new form rigid. Her eyes were fixed on the creature in the sky. It had opened its mouth again, and a point of brilliant light was coalescing before it, drawing in ambient energy and growing with a terrifying speed. "Captain," she said, her melodic voice flat with shock. "The creature is gathering energy into a focused point. It is preparing to fire again!"
 
-As if on cue, Rayquaza let out another roar of fury and launched a second blast. This one struck the port nacelle. The pylon, designed to withstand the stresses of warp travel and the vacuum of space, snapped like a twig. The nacelle, with its Bussard collectors cold and dark, was torn from the ship and sent slamming into the forest beside it, where it exploded in a shower of sparks and duranium fragments. The Sagittarius listed heavily, its frame groaning under the new, unbalanced weight.
+As if on cue, Rayquaza let out another roar of fury and launched a second blast. This one struck the port nacelle. The pylon that carried it up from the engineering hull, designed to withstand the stresses of warp travel and the vacuum of space, snapped like a twig. The nacelle, with its Bussard collectors cold and dark, was torn from the ship and sent slamming into the forest beside it, where it exploded in a shower of sparks and duranium fragments. The Sagittarius listed heavily, the weight hanging from the two arms suddenly uneven, its frame groaning under the strain.
 
 "It's targeting our propulsion," Zax stated, the observation grimly obvious. "It's systematically disabling us."
 
 "Disabling? It's executing us," Eva snarled, her Absol form pacing back and forth, the sickle-like horn on her head catching the light. She looked at her crew—her brilliant, capable officers, now reduced to frightened animals—and then at the dying starship that had been their home. There were no orders to give, no clever strategies to employ. They were simply witnesses to their own end.
+
+Then something dropped from the underside of the saucer.
+
+It was small and blunt and white, and it fell the way a pod falls from a ship that is sitting on the ground instead of in orbit: straight down, two decks' worth, to thump into the churned earth beneath the hull in a puff of dirt. It rocked once and lay still, its running lights blinking a patient, pointless green.
+
+"Pod," Anya breathed. "Somebody made it to a pod."
+
+"They have to cycle the hatch," Zax said. "Thirty seconds, if it has power."
+
+Eva was already moving along the edge of the heat, looking for a way down to it, counting the seconds under her breath in Russian.
 
 Rayquaza coiled in the sky, its golden eyes burning with righteous anger. It saw the metal beast still twitching, still humming with a malevolent energy. It would not tolerate this intrusion. It gathered its power one last time, the energy sphere growing larger, brighter, more violent than before.
 
@@ -112,12 +138,16 @@ The phaser beams struck Rayquaza's side, causing the great serpent to hiss as it
 
 Anya's eyes widened in horror. She knew her ship. She knew every conduit, every power relay, every deck plate. And she knew exactly where the creature, now filled with vengeful rage, was aiming. "No..." she whispered, the sound a low rumble of dread. "No, not there..."
 
-The final beam was a torrent of destruction. It didn't strike the outer hull. It pierced it, punching through the weakened engineering section with pinpoint, devastating accuracy. A single, remaining phaser bank fired one last, desperate shot. The beam lanced out, a defiant orange needle against the sky, for less than a second before it sputtered and died, the power from its conduits severed. The streak of heated atmosphere it left behind faded slowly, a final, dying breath. For a moment, there was an unnatural silence. The last of the emergency lights on the Sagittarius died. The groaning of metal ceased.
+The final beam was a torrent of destruction. It didn't strike the outer hull. It pierced it, punching into the slim engineering hull slung beneath and behind the saucer, between the arms, where the warp core lived, with pinpoint, devastating accuracy. A single, remaining phaser bank fired one last, desperate shot. The beam lanced out, a defiant orange needle against the sky, for less than a second before it sputtered and died, the power from its conduits severed. The streak of heated atmosphere it left behind faded slowly, a final, dying breath. For a moment, there was an unnatural silence. The last of the emergency lights on the Sagittarius died. The groaning of metal ceased.
 
 Then, a new sound began. It was a low, deep thrumming from the heart of the ship, a vibration that traveled through the very ground they stood on. It grew rapidly in pitch and volume, becoming a piercing, world-ending scream of unrestrained power. A brilliant, blue-white light began to shine from the wound in the ship's hull—the same impossible light that had brought them to this world, now unleashed and uncontrolled. It was a light so pure it bleached all color from the world, casting their own monstrous shadows in stark, terrifying relief.
 
+Under the saucer, a seam of light appeared along the pod's hatch, a hand's width, grinding wider.
+
 "The warp core!" Anya screamed, her voice a mixture of terror and grief, turning around in an attempt to get behind the crash site crater, as if that would save her. "It's breached! The containment's gone! Get down!"
 
-There was no time. The heart of the U.S.S. Sagittarius, its matter-antimatter reaction chamber, detonated. A wave of pure, unrestrained energy erupted outwards. It was not an explosion of fire and shrapnel, but one of silent, perfect annihilation. The rear half of the starship didn't explode; it simply ceased to exist, its atoms unwritten from the fabric of reality in a silent, expanding sphere of blue-white nothingness. For a fraction of a second, the universe was silent. Then the shockwave hit. It was a physical wall of force, a concussive blast that flattened the forest for miles, the sound of a thousand ancient trees snapping like twigs arriving a heartbeat later.
+Eva didn't get down. She was watching the hatch. It was Zax who hit her, a full-body tackle that drove them both into the dirt, his arms locked around her and his back to the light.
+
+There was no time. The heart of the U.S.S. Sagittarius, its matter-antimatter reaction chamber, detonated. A wave of pure, unrestrained energy erupted outwards. It was not an explosion of fire and shrapnel, but one of silent, perfect annihilation. The engineering hull, the arms, the pylons and the rear half of the saucer didn't explode; they simply ceased to exist, their atoms unwritten from the fabric of reality in a silent, expanding sphere of blue-white nothingness. For a fraction of a second, the universe was silent. Then the shockwave hit. It was a physical wall of force, a concussive blast that flattened the forest for miles, the sound of a thousand ancient trees snapping like twigs arriving a heartbeat later.
 
 The six officers were lifted from their feet, not by a force that pushed, but by one that unmade. In that final, silent instant, Eva's mind, her very soul, was brushed by the psychic echo of 135 lives being extinguished at once. It was a chorus of sudden, silent screams, a wave of pure terror and surprise that washed over her before vanishing into the void. She felt a searing heat that had nothing to do with fire, a pressure that squeezed the very air from her lungs, and saw that final, annihilating blue-white light burn itself onto the inside of her eyelids before the world dissolved into a merciful blackness. Their last connection to home, to everything they had ever known, was gone—not just gone, but unmade, reduced to its constituent energy in a flash of impossible power. They were truly and utterly alone, adrift in the ashes of their crew.

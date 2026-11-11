@@ -622,6 +622,22 @@
             }
         }
 
+        // Converts raw chapter text into safe HTML with lightweight emphasis:
+        // ***text*** → bold italic, **text** → bold, *text* → italic.
+        // Markers must hug the text (no inner leading/trailing space) and stay on one line,
+        // so stray asterisks like "5 * 3" are left alone.
+        function formatChapterText(text) {
+            const escaped = text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            return escaped
+                .replace(/\*\*\*([^\s*](?:[^\n]*?[^\s*])?)\*\*\*/g, '<strong><em>$1</em></strong>')
+                .replace(/\*\*([^\s*](?:[^\n]*?[^\s*])?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*([^\s*](?:[^*\n]*[^\s*])?)\*/g, '<em>$1</em>');
+        }
+
         async function loadChapter(filename, chapterNumber, chapterName, fontSize = null, direction = null) {
             try {
                 const metadataResponse = await fetch(`SFLcontent/${filename}`);
@@ -637,7 +653,7 @@
 
                 const updateContent = () => {
                     chapterInfo.textContent = `Chapter ${chapterNumber} - ${chapterName}`;
-                    chapterContent.textContent = content;
+                    chapterContent.innerHTML = formatChapterText(content);
                     currentChapterNumber = chapterNumber;
 
                     if (fontSize) {
