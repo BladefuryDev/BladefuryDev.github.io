@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Mystery Dungeon: Starfall Legacy – a Star Trek Online × PMD Fan Story | Hexfury</title>
     <link rel="icon" type="image/png" href="../../assets/images/projects/PMD_SFL_Icon.png">
-    <meta name="description" content="A Pokémon Mystery Dungeon × Star Trek Online fan fiction. When the U.S.S. Sagittarius is torn from warp and across realities, its bridge crew is stranded on an alien world and transformed into Pokemon. Stripped of their technology and facing a darkness that defies science, they must become the heroes this new world needs. Free to read online, new chapters ongoing.">
+    <meta name="description" content="A Pokémon Mystery Dungeon × Star Trek Online fan fiction. Ripped from warp and stranded on an uncharted world, six officers of the U.S.S. Sagittarius wake as Pokemon, the last of 141 crew. Free to read online, new chapters ongoing.">
     <link rel="canonical" href="https://www.hexfury.com/src/Pages/StarfallLegacy.html">
     <meta name="author" content="Alan Hexfury">
 
@@ -13,14 +13,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.hexfury.com/src/Pages/StarfallLegacy.html">
     <meta property="og:title" content="Pokémon Mystery Dungeon: Starfall Legacy – Star Trek Online × PMD Fan Story">
-    <meta property="og:description" content="A Pokémon Mystery Dungeon × Star Trek Online fan fiction. When the U.S.S. Sagittarius is torn from warp and across realities, its bridge crew is stranded on an alien world and transformed into Pokemon. Stripped of their technology and facing a darkness that defies science, they must become the heroes this new world needs. Free to read online, new chapters ongoing.">
+    <meta property="og:description" content="A Pokémon Mystery Dungeon × Star Trek Online fan fiction. Ripped from warp and stranded on an uncharted world, six officers of the U.S.S. Sagittarius wake as Pokemon, the last of 141 crew. Free to read online, new chapters ongoing.">
     <meta property="og:image" content="https://www.hexfury.com/assets/images/projects/PMD-StarfallLegacy_Cover_Dark.png">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.hexfury.com/src/Pages/StarfallLegacy.html">
     <meta name="twitter:title" content="Pokémon Mystery Dungeon: Starfall Legacy – Star Trek Online × PMD Fan Story">
-    <meta name="twitter:description" content="A Pokémon Mystery Dungeon × Star Trek Online fan fiction. When the U.S.S. Sagittarius is torn from warp and across realities, its bridge crew is stranded on an alien world and transformed into Pokemon. Stripped of their technology and facing a darkness that defies science, they must become the heroes this new world needs. Free to read online, new chapters ongoing.">
+    <meta name="twitter:description" content="A Pokémon Mystery Dungeon × Star Trek Online fan fiction. Ripped from warp and stranded on an uncharted world, six officers of the U.S.S. Sagittarius wake as Pokemon, the last of 141 crew. Free to read online, new chapters ongoing.">
     <meta name="twitter:image" content="https://www.hexfury.com/assets/images/projects/PMD-StarfallLegacy_Cover_Dark.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -75,6 +75,16 @@
         .slide-out-right { animation: slide-out-right 0.25s ease-in forwards; }
         .slide-in-left { animation: slide-in-left 0.25s ease-out forwards; }
 
+        /* "Ongoing" status light on the About tab: slow fade with a soft glow */
+        @keyframes status-blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 6px 1px rgba(52, 211, 153, 0.6); }
+            50% { opacity: 0.35; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+        .status-blink { animation: status-blink 2.4s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) {
+            .status-blink { animation: none; }
+        }
+
     </style>
 </head>
 <body class="bg-[#0A0B1C] text-[#E0E0F0] font-mono p-2 sm:p-5">
@@ -116,20 +126,48 @@
 
             <!-- Tab Content -->
             <div id="aboutContent" class="tab-content">
-                <div class="bg-yellow-500/20 border border-yellow-500/30 text-yellow-200 p-4 rounded-lg mb-6 text-center text-sm">
-                    The story is still in active development. More pages are available at the source document <a href="https://docs.google.com/document/d/1Hiv639Apep1bFqboQlK0h6A-mlL9-tG45QKKQdi1dUs/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-yellow-100">here</a>.
-                </div>
-                <!-- REDESIGNED ABOUT SECTION -->
-                <div class="flex flex-col md:flex-row items-center gap-8 mt-6">
-                    <!-- Left Column: Book Cover -->
-                    <div class="w-full md:w-1/3 flex-shrink-0">
-                        <img src="../../assets/images/projects/PMD-StarfallLegacy_Cover_Dark.png" alt="Starfall Legacy Book Cover" class="rounded-lg shadow-2xl shadow-blue-500/20 border-2 border-blue-600/30 w-full transition-transform hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/400x600/0A0B1C/55AAFF?text=Book+Cover';">
+                <h2 class="sr-only">About the story</h2>
+
+                <!-- Hero: cover + synopsis + reading actions -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start mt-6">
+                    <img src="../../assets/images/projects/PMD-StarfallLegacy_Cover_Dark.png" alt="Starfall Legacy book cover" class="w-48 sm:w-56 md:w-full mx-auto rounded-lg shadow-2xl shadow-blue-500/20 border-2 border-blue-600/30" onerror="this.onerror=null;this.src='https://placehold.co/400x600/0A0B1C/55AAFF?text=Book+Cover';">
+                    <div class="md:col-span-2">
+                        <p class="text-xl leading-relaxed text-[#E0E0F0] mb-5">Ripped from warp and stranded on an uncharted world, six officers of the U.S.S. Sagittarius wake in bodies that aren't theirs. Of 141 crew, they are all that's left, and they are Pokémon now.</p>
+                        <p class="leading-relaxed text-gray-300 mb-4">Their ship is a crater. Their technology is down to a cracked tricorder and a phaser with one charge left. What they still have is their training: a captain who keeps giving orders because someone has to, an engineer who wants to meet whoever grew this town out of living trees, and a science officer who scans everything the locals call magic. In a land of Mystery Dungeons, guild badges and a sky god that shot them down, the last crew of the Sagittarius do what Starfleet does best. They survive, they learn, and they ask questions.</p>
+                        <p class="leading-relaxed text-gray-300 mb-6">But the deeper they go, the less this world adds up. Someone was here before them. Someone left a legacy behind. And the question that keeps Captain Eva Rostova awake at night isn't how they got here. It's why this world brought them.</p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button id="continueReadingBtn" class="px-6 py-3 rounded-lg bg-sky-500 text-white font-bold shadow-lg shadow-sky-500/30 hover:bg-sky-400 transition-colors">Start Reading</button>
+                            <button id="aboutBrowseBtn" class="px-6 py-3 rounded-lg border border-blue-600/50 text-[#E0E0F0] font-semibold hover:bg-[#1A1B32] hover:text-[#55AAFF] transition-colors">Browse Chapters</button>
+                        </div>
+                        <p id="resumeHint" class="hidden mt-3 text-sm text-gray-400"></p>
                     </div>
-                    <!-- Right Column: Synopsis & CTA -->
-                    <div class="w-full md:w-2/3 text-center md:text-left">
-                        <p class="text-lg leading-relaxed text-gray-300 mb-8">When the U.S.S. Sagittarius is mysteriously pulled from warp and torn across realities, its bridge crew finds themselves stranded on an alien world, transformed into creatures with strange new powers. Stripped of their technology and facing a cosmic threat that defies all known science, they must adapt to a reality where magic is real, gods walk the earth, and their only hope for survival lies in a legacy left behind by another lost soul. Their journey to find a way home becomes a desperate race against an encroaching darkness, forcing them to become more than just a crew—they must become the unexpected heroes this new world needs.</p>
-                        <button id="continueReadingBtn" class="px-8 py-4 rounded-lg bg-sky-500 text-white font-bold text-lg shadow-lg shadow-sky-500/30 hover:bg-sky-400 transform hover:-translate-y-1 transition-all duration-300">Start Reading</button>
-                        <p class="mt-4 text-sm text-gray-400">Want to know when new chapters drop? This site can't send update notifications, so follow the story on <a href="https://www.fanfiction.net/s/14490010/1/Pokemon-Mystery-Dungeon-Starfall-Legacy" target="_blank" rel="noopener noreferrer" class="underline text-sky-400 hover:text-sky-300">FanFiction.net</a> to get alerts for new chapters.</p>
+                </div>
+
+                <!-- Story readout: filled in from the chapter metadata once it loads -->
+                <dl class="grid grid-cols-2 md:grid-cols-4 gap-px mt-8 rounded-lg overflow-hidden border border-blue-600/30 bg-blue-600/30">
+                    <div class="bg-[#0D0E21] p-4">
+                        <dt class="text-xs uppercase tracking-widest text-gray-400">Status</dt>
+                        <dd class="mt-1 flex items-center gap-2 font-semibold text-[#E0E0F0]"><span class="status-blink h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true"></span>Ongoing</dd>
+                    </div>
+                    <div class="bg-[#0D0E21] p-4">
+                        <dt class="text-xs uppercase tracking-widest text-gray-400">Chapters</dt>
+                        <dd id="aboutChapterCount" class="mt-1 font-semibold text-[#E0E0F0]">…</dd>
+                    </div>
+                    <div class="col-span-2 bg-[#0D0E21] p-4">
+                        <dt class="text-xs uppercase tracking-widest text-gray-400">Latest chapter</dt>
+                        <dd class="mt-1"><button id="aboutLatestBtn" disabled class="text-left font-semibold text-sky-400 hover:text-sky-300 hover:underline disabled:text-gray-500 disabled:no-underline disabled:cursor-default">Loading…</button></dd>
+                    </div>
+                </dl>
+
+                <!-- Keeping up with the story -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8 text-sm">
+                    <div class="rounded-lg bg-[#1A1B32] border border-blue-600/50 p-4">
+                        <p class="font-semibold text-[#E0E0F0] mb-1">New chapter alerts</p>
+                        <p class="text-gray-400">This site can't send notifications. Follow the story on <a href="https://www.fanfiction.net/s/14490010/1/Pokemon-Mystery-Dungeon-Starfall-Legacy" target="_blank" rel="noopener noreferrer" class="underline text-sky-400 hover:text-sky-300">FanFiction.net</a> to hear when the next one is posted.</p>
+                    </div>
+                    <div class="rounded-lg bg-[#1A1B32] border border-yellow-500/30 p-4">
+                        <p class="font-semibold text-yellow-200 mb-1">Still being written</p>
+                        <p class="text-gray-400">The story is in active development. Pages past the latest chapter are in the <a href="https://docs.google.com/document/d/1Hiv639Apep1bFqboQlK0h6A-mlL9-tG45QKKQdi1dUs/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="underline text-yellow-200 hover:text-yellow-100">source document</a>.</p>
                     </div>
                 </div>
             </div>
@@ -361,9 +399,10 @@
                     </svg>
                 </button>
                 <button id="settingsBtn" class="p-3 rounded-lg hover:bg-[#2A2B42] transition-all" title="Settings">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E0E0F0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066 2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <!-- 8-tooth gear outline -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#E0E0F0]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.27 4.8L10.52 2.11A10 10 0 0 1 13.48 2.11L13.73 4.8A7.4 7.4 0 0 1 15.87 5.69L17.95 3.96A10 10 0 0 1 20.04 6.05L18.31 8.13A7.4 7.4 0 0 1 19.2 10.27L21.89 10.52A10 10 0 0 1 21.89 13.48L19.2 13.73A7.4 7.4 0 0 1 18.31 15.87L20.04 17.95A10 10 0 0 1 17.95 20.04L15.87 18.31A7.4 7.4 0 0 1 13.73 19.2L13.48 21.89A10 10 0 0 1 10.52 21.89L10.27 19.2A7.4 7.4 0 0 1 8.13 18.31L6.05 20.04A10 10 0 0 1 3.96 17.95L5.69 15.87A7.4 7.4 0 0 1 4.8 13.73L2.11 13.48A10 10 0 0 1 2.11 10.52L4.8 10.27A7.4 7.4 0 0 1 5.69 8.13L3.96 6.05A10 10 0 0 1 6.05 3.96L8.13 5.69A7.4 7.4 0 0 1 10.27 4.8Z" />
+                        <circle cx="12" cy="12" r="3" stroke-width="2" />
                     </svg>
                 </button>
             </div>
@@ -415,6 +454,11 @@
         const disclosuresContent = document.getElementById('disclosuresContent');
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
+
+        // About tab elements
+        const aboutChapterCount = document.getElementById('aboutChapterCount');
+        const aboutLatestBtn = document.getElementById('aboutLatestBtn');
+        const resumeHint = document.getElementById('resumeHint');
 
         // New UI controls
         const settingsBtn = document.getElementById('settingsBtn');
@@ -508,6 +552,13 @@
             });
         }
 
+        // In-page links from the About tab switch tabs and bring the tab bar back into view.
+        function jumpToTab(tabBtn) {
+            tabBtn.click();
+            tabNav.parentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        document.getElementById('aboutBrowseBtn').onclick = () => jumpToTab(chaptersTabBtn);
+
         function resetInactivityTimer() {
             clearTimeout(inactivityTimer);
             inactivityTimer = setTimeout(saveReadingProgress, 5000);
@@ -520,7 +571,47 @@
             };
             localStorage.setItem('readingProgressV2', JSON.stringify(progress));
             console.log(`Reading progress saved for Chapter ${progress.chapter} with font size ${progress.fontSize}.`);
+            updateAboutPanel();
         }
+
+        function getSavedProgress() {
+            try {
+                return JSON.parse(localStorage.getItem('readingProgressV2'));
+            } catch {
+                return null;
+            }
+        }
+
+        // Keeps the About tab in step with the loaded chapters and the reader's saved place.
+        function updateAboutPanel() {
+            if (!chaptersReady) return;
+
+            const latest = chaptersLoaded[chaptersLoaded.length - 1];
+            aboutChapterCount.textContent = chaptersLoaded.length || '—';
+            if (latest) {
+                aboutLatestBtn.textContent = `Ch. ${latest.number}: ${latest.name}`;
+                aboutLatestBtn.disabled = false;
+                aboutLatestBtn.onclick = () => loadChapter(latest.filename, latest.number, latest.name);
+            } else {
+                aboutLatestBtn.textContent = 'Unavailable';
+            }
+
+            const progress = getSavedProgress();
+            const lastRead = progress ? chaptersLoaded.find(c => c.number === progress.chapter) : null;
+            if (progress && !lastRead) localStorage.removeItem('readingProgressV2');
+
+            continueReadingBtn.textContent = lastRead ? 'Continue Reading' : 'Start Reading';
+            resumeHint.textContent = lastRead ? `Last read: Chapter ${lastRead.number}, ${lastRead.name}` : '';
+            resumeHint.classList.toggle('hidden', !lastRead);
+        }
+
+        // Reads the saved place at click time, so it stays correct after the reader returns from a chapter.
+        continueReadingBtn.onclick = () => {
+            const progress = getSavedProgress();
+            const lastRead = progress ? chaptersLoaded.find(c => c.number === progress.chapter) : null;
+            const target = lastRead || chaptersLoaded[0];
+            if (target) loadChapter(target.filename, target.number, target.name, lastRead ? progress.fontSize : null);
+        };
 
         async function displayLandingPage(targetTab = 'about') {
             viewerPage.classList.add('hidden');
@@ -553,28 +644,7 @@
 
             chapterSearch.addEventListener('input', filterChapters);
 
-            const savedProgress = localStorage.getItem('readingProgressV2');
-            if (savedProgress) {
-                const progress = JSON.parse(savedProgress);
-                continueReadingBtn.textContent = 'Continue Reading';
-                continueReadingBtn.onclick = () => {
-                    const chapterToLoad = chaptersLoaded.find(c => c.number === progress.chapter);
-                    if (chapterToLoad) {
-                        loadChapter(chapterToLoad.filename, chapterToLoad.number, chapterToLoad.name, progress.fontSize);
-                    } else {
-                        localStorage.removeItem('readingProgressV2');
-                        continueReadingBtn.textContent = 'Start Reading';
-                    }
-                };
-            } else {
-                continueReadingBtn.textContent = 'Start Reading';
-                continueReadingBtn.onclick = () => {
-                    if (chaptersLoaded.length > 0) {
-                        const firstChapter = chaptersLoaded[0];
-                        loadChapter(firstChapter.filename, firstChapter.number, firstChapter.name);
-                    }
-                };
-            }
+            updateAboutPanel();
         }
 
         function filterChapters() {
@@ -782,6 +852,7 @@
                 openTab(targetTab);
                 history.replaceState({ page: 'landing', tab: targetTab }, targetTab, `#${targetTab}Content`);
                 filterChapters();
+                updateAboutPanel();
             }, 300);
         }
         
