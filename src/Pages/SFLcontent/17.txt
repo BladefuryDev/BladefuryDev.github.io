@@ -1,0 +1,579 @@
+The Guild's morning bell chimed, its clear notes echoing through the team's quarters. It was a sound that pulled them from a deep, necessary sleep—a sleep still haunted by the ghosts of their past and the grim reality of their present. Eva opened her eyes to the familiar burden of command, but today it was tempered not by grief, but by a sharp, singular focus.
+
+“Time for the briefing?” Kenji chirped, stretching a wing.
+
+“Negative,” T’Vella stated from her bed, her voice as crisp and logical as ever, though her eyes were heavy-lidded. “Our directive from the Guildmaster was to focus on our primary objective. The morning announcements are, for our purposes, irrelevant data.”
+
+A silent, unanimous agreement passed through the room. There was no need for discussion. They were no longer just another team needing assignments; they were a special projects unit with a critical task. This room was their lab, and the day's work was about to begin.
+
+Through the door came the sound of the Guild waking up: footsteps, laughter, two voices arguing over who had eaten the last Sitrus Berry, all of it streaming down the corridor toward the main hall. The bell had called, and for the first time since they arrived, it wasn't calling them.
+
+Kenji tilted his head toward the door, feathers half fluffed, listening to the crowd go by. "Feels like skipping class," he said, delighted and guilty in equal measure.
+
+"It is not skipping," T'Vella said. "It is an authorized deviation from standard routine."
+
+"That's what skipping class *is*," Kenji said, and grinned.
+
+The atmosphere was not of a barracks, but of an engineering lab on the verge of a major breakthrough. After a quick meal of the previous night's leftover rations, Elara slipped up to the mess hall and came back with a squat clay jug of water, which Anya had her set at the end of the workbench. "Hot work, water within reach," the engineer said. "First rule of any machine shop." Then they gathered around the salvaged petrified wood desk. Before Anya lay the components for her most important project yet: the two halves of the shattered Starfleet tricorder casing, the delicate, exposed web of its internal circuitry, and the new, heavy-duty alloy housing forged by Breaker.
+
+"Alright, Chief," Eva said, her voice low and steady. "The floor is yours."
+
+Anya nodded, a grim determination on her face. This was her domain. "This is going to be delicate," she rumbled, her powerful Typhlosion claws ill-suited for the microscopic precision required. It was like trying to perform surgery with a pair of shuttlecraft landing struts.
+
+She took a deep, calming breath, the flames on her neck settling into a low, steady burn. "Elara, I need you," she said. The small Kirlia stepped forward without hesitation, her delicate, three-fingered hands far better suited for the task ahead.
+
+Under Anya's careful direction, the two of them began the painstaking transfer. With Elara gently lifting the components with her psychic abilities and Anya using the tip of a single claw to disconnect them, they moved each piece from the old casing to the new. The sensor array, the power converter, the tiny memory core. Each piece was a ghost of their old life, a fragile link to a world they might never see again, now being placed into a new home forged from the materials of this one.
+
+Finally, the internal components were all safely nestled within the new, sturdy housing. Now came the most critical part. Anya took one of the power crystals they had harvested. "The tricorder's power cell is designed for a refined, stable energy source," she explained. "This crystal... it's like hooking up a starship's main computer to a lightning storm. I need to build a converter, a step-down transformer."
+
+Using wire salvaged from the dead shelter emitter and a small, conductive stone, she assembled a crude but functional power converter. It was ugly, inefficient, and would have made any Starfleet engineering professor recoil in horror, but it worked, which was all Anya had ever asked of a design. She carefully wired the converter from the crystal's compartment to the tricorder's main power cell. Then, with a final, satisfying click, she snapped the new, scratch-resistant glass faceplate into place and closed the hinged cover, the locking mechanism engaging with a solid, reassuring thud.
+
+It was done. The old tricorder was gone. In its place was something new. A hybrid. A rugged, powerful device with the heart of a Starfleet instrument and the soul of this new, magical world.
+
+Anya placed a power crystal into the compartment and sealed the hatch. For a moment, nothing happened. The team held its breath. Then, the tricorder's screen flickered to life, its light brighter and steadier than it had been since the crash. The power gauge, which had been at a paltry seventy percent, now read a full, glorious one hundred percent, with a new icon beside it: a small, glowing crystal, indicating an external power source was active.
+
+A triumphant grin spread across Anya's face. "We have power," she declared, her voice ringing with the pride of an engineer who had just brought a dead ship back to life.
+
+With the successful upgrade, a new energy filled the room. Anya carefully carried the robust, newly-housed tricorder over to the research desk where the heavy enchantment tome lay open. Her powerful form hunched over the book, a stark contrast of primal fire and focused intellect. With a reverence usually reserved for a warp core diagnostic, she carefully turned the pristine polymer pages, past the page with the single, etched audio file. The next page was a solid, intimidating wall of text. It was a dense, unending waterfall of hexadecimal code and complex symbols, laser-etched with a precision that was utterly alien to the handcrafted nature of the rest of the book.
+
+“Alright, Hexfury,” Anya said, a challenge in her voice. “Let’s see what you were so desperate to hide.”
+
+She held the tricorder over the page. Activating the scanner, a bright, solid bar of blue light projected from the device. She began to move it slowly, methodically, from top to bottom, like a scholar reading a sacred text or a surveyor mapping alien terrain. The team gathered around, watching in hushed silence. On the tricorder's screen, they could see the data stream pouring in, the symbols being logged and buffered, a digital ghost being captured from its paper prison.
+
+The process took several minutes. Anya’s hand was rock-steady, ensuring the scanner captured every microscopic detail. Finally, after scanning the last line of code, the tricorder emitted a soft, clear chime, a sound of successful data acquisition.
+
+The screen flashed, the raw data replaced by a simple, clean prompt in Federation Standard:
+
+[ENCRYPTED DATA BLOCK 001 LOGGED. INITIATE DECRYPTION ALGORITHM? Y/N]
+
+“It’s in,” Anya breathed, her voice a mixture of exhaustion and exhilaration. “The whole block is in the buffer.”
+
+"The custom cipher is the next obstacle," T'Vella analyzed, peering at the screen. "The tricorder will now need to run millions, perhaps billions, of decryption permutations. The process will be resource-intensive, but now, with a continuous power source, it is inevitable."
+
+“So, this is it,” Zax said, his voice a low growl of anticipation. His hand rested on his holstered phaser, as if preparing for the intelligence to reveal a new enemy. “Hexfury’s logs. His research. This is the intel we need to fight the Corruption.”
+
+“We’re going to read the ghost’s secret diary!” Kenji chirped, fluttering with excitement on Eva’s back. “What do you think it says?”
+
+Elara, however, was staring at the book, her expression distant. “It feels… heavy,” she whispered, her empathic senses registering the data in a way the others couldn’t. “Like a compressed thought. A whole lifetime of knowledge packed into those little symbols. It’s… sad.”
+
+Eva looked from the faces of her crew—their hope, their curiosity, their grim determination—to the simple, two-letter question blinking on the tricorder's screen. This was the culmination of everything they had fought for since arriving in this world. This was the voice of the ghost, waiting to be unlocked.
+
+She looked at her Chief Engineer, her expression firm, her voice ringing with the quiet authority of a Starfleet Captain giving the final, critical command.
+
+“Execute.”
+
+Anya’s claw, large enough to crush stone, gently tapped the 'Y' on the tricorder's screen. The device emitted a sharp, confirming beep. The screen immediately changed, the simple prompt replaced by cascading columns of rapidly changing characters as the tricorder's processor began its monumental task.
+
+For a moment, they watched, mesmerized by the raw data stream. Then, another chime. A new text box appeared over the frantic scroll.
+
+[KEY LENGTH DETECTED: 128 CHARACTERS. BRUTE-FORCE ALGORITHM OPTIMIZED.]
+
+[ESTIMATED TIME TO DECRYPTION: 22.4 STANDARD HOURS.]
+
+"A day," Anya breathed, open respect on her face. "Just over a day."
+
+"He intentionally left the key length unencrypted," T'Vella surmised, immediately grasping the implication. "A failsafe. A way to dramatically accelerate the decryption process for anyone with the proper technology. He was planning for this eventuality. For someone like us to find it."
+
+"He left us a shortcut," Anya finished, shaking her head in admiration. "That clever, clever ghost."
+
+Relief went through Eva so hard her legs nearly folded. What could have taken weeks of patient waiting would now take a single day. "The tricorder can run this in the background, correct?"
+
+"Affirmative, Captain," Anya confirmed. The screen shifted again, the cascading code minimized to a small, pulsing icon in the corner, with a slowly filling progress bar beneath it. "It's running. It will continue to process as long as it has power."
+
+Eva looked at her team, a genuine smile touching her face for the first time that day. "Alright. While the tricorder works, we don't. We have a day. Let's make the most of it."
+
+Just as the order to rest was given, Anya's gaze shifted from the tricorder to the ceramic mold sitting on the workbench. The three small pools of molten, silvery liquid had finally cooled. The overnight process had transformed them. They were no longer a shimmering liquid, but three solid, perfectly formed lenses of a deep, mystical blue material that seemed to drink in the light of the room.
+
+"The lenses are ready," she announced, her voice filled with an engineer's satisfaction.
+
+All thoughts of rest vanished, replaced by the magnetic pull of the next step. Zax stepped forward, picking up the custom-fitted leather glove Tally had brought up the night before. It was time for the final assembly.
+
+Anya carefully tipped one of the lenses out of the mold. It was smooth, cool, and hummed with a faint, dormant energy. She tried to fit it into the first recessed socket on the palm of Zax's glove. It didn't fit. The leather socket, perfectly stitched, was incredibly tight, designed for a pressure-fit that her large claws couldn't manage without risking damage to the delicate lens.
+
+"The tolerance is too precise," she grunted in frustration. "I can't get the leverage."
+
+"Allow me," Elara said softly. She took the lens from Anya. Her small, nimble fingers were perfect for the task. She carefully worked one edge of the blue lens under the tough leather lip of the socket. Then, with a determined expression, she braced the glove and pushed with all her might. For a moment, nothing happened. With a small grunt of effort, a faint violet aura flickered around her hands as she used her psychic power to add a tiny amount of extra force, prying the edge of the socket open just a fraction of a millimeter more.
+
+With a satisfying snap, the lens popped into place. The leather tightened around it instantly, holding it perfectly secure. The deep blue lens now sat flush against the black leather, looking like a piece of alien technology that had always been there.
+
+"One down," Zax said, a note of admiration in his voice for Elara's delicate work. "Two to go."
+
+Elara looked at her trembling hands, then at the two remaining lenses and the two empty sockets. "This," she sighed, "is going to be an annoying process."
+
+The next two installations were just as painstaking. For each lens, Elara had to repeat the same meticulous, frustrating process: carefully aligning the lens, using her small fingers to gain purchase on the tough leather, and then applying a final burst of focused psychic energy to seat it properly. The faint violet hum of her power became a familiar sound, each successful snap of a lens locking into place punctuated by a small, weary sigh. By the time the third and final lens was seated, her brow was furrowed in concentration and her hands were shaking from the strain.
+
+With a final sigh that was equal parts frustration and relief, she handed the completed glove to Zax. "There," she said, her voice strained. "It's done. I am not doing that again."
+
+She looked at the finished product, the three blue lenses gleaming against the dark leather, and felt a small flicker of pride despite the tedium.
+
+Zax pulled the glove on and flexed his paw. It fit perfectly; the Leavanny knew her work. "Thank you, Elara. Excellent work."
+
+Before Elara could enjoy the compliment, T'Vella spoke from her station at the research desk. "A commendable effort, Coordinator. You will have the opportunity to refine your technique when my own glove arrives."
+
+Elara let out a small, tired groan and flopped back onto the nearest straw bed.
+
+For a while, the only sound in the room was the quiet hum of the tricorder's decryption, a constant, hopeful reminder of the work running in parallel to their own. Zax sat turning his hand in the crystal light. The leather was supple and the three lenses sat flush against the palm, but the glove felt... inert. Lifeless.
+
+"It's a fine piece of craftsmanship," Zax said at last. "But it feels like nothing more than a glove. I do not sense any amplification."
+
+"That is because assembly is merely the first step," T'Vella said, her eyes tracing the ghost’s annotations in the enchantment tome. "The notes are unequivocal. The device requires attunement. The crystalline lenses are currently a blank slate. They must be imprinted with the user's unique energy signature to function as a proper conduit."
+
+Anya nodded, picking up where T'Vella left off. "The book says you have to consciously channel your aura into the lenses," she explained, looking at Zax. "You need to 'sync' with it, make it an extension of your own energy field. The dust from the orb acts as the medium, the 'training wheels' that help the glove learn your signature."
+
+Zax looked down at the glove, a new understanding in his eyes. This was not a tool to be wielded, but a prosthetic to be integrated. He found a clear space on the floor and sat, cross-legged, in a meditative posture reminiscent of his Andorian martial arts training. He placed his gloved paw, palm up, on his knee.
+
+"Give me a wide berth," he commanded quietly. "I do not know what this will feel like."
+
+The others stepped back, forming a respectful circle around him, their expressions a mixture of scientific curiosity and cautious anticipation. Zax closed his eyes. The world of sight vanished, replaced by the familiar, now-manageable world of auras. He saw the steady blue flames of his crewmates, the gentle, pulsing violet of Elara's psychic potential, and the quiet, industrious hum of the tricorder's power crystal.
+
+He ignored it all, silencing the external data streams with the discipline of an Andorian monk entering a meditative trance. He turned his focus inward, not just reaching, but diving deep into the calm sea of his own life force. He found it—the deep, humming reservoir of blue energy at his core. In the heat of battle, he had let it explode outwards, a chaotic, desperate sphere of raw power. This was different. This required control. He coaxed it, not as a weapon, but as a tool.
+
+Slowly, deliberately, he pulled a single, shimmering thread of that energy from his core, guiding it up through his arm and into his paw. He could feel it move, a tingling warmth that spread through his palm. With intense concentration, he guided that thread of blue light, weaving it like a filament into the first of the deep blue lenses on the glove.
+
+The effect was immediate. The lens, which had been a dull, light-absorbing blue, began to glow with a soft, internal luminescence, the exact shade of Zax's own aura. A low hum filled the air, a sympathetic vibration between the Lucario and the device. He repeated the process, drawing two more threads from his core and painstakingly weaving them into the remaining two lenses.
+
+The three lenses now pulsed with a gentle, rhythmic blue light, in perfect sync with his own heartbeat. The glove itself hummed with a quiet power that he felt not in his ears, but in his very bones. It no longer felt like a separate object. It felt like a part of him, a second skin, an extension of his own will.
+
+He opened his eyes, a bead of sweat on his brow. He looked at his gloved paw, which was now radiating a faint, controlled blue light. He held it out and focused, calling on the energy for a Force Palm.
+
+The result was instantaneous and startling. The conscious effort of gathering and pushing the energy was gone. Now, it simply *was*. A sphere of perfectly stable, compressed blue energy coalesced in his palm the moment the intent formed in his mind. It was smaller than his previous attempts, dense as a singularity, and it hummed with a contained potency that made the very air around it crackle with ozone. He held it there for a moment, a miniature star of pure aura, demonstrating a level of control that would have been impossible just moments before. He then dissipated the Force Palm with a thought, the energy receding as quickly as it had formed.
+
+"Report," Eva commanded, her voice quiet with awe.
+
+"The glove is... online," Zax stated, his voice filled with a reverence he rarely showed. "The energy draw is negligible. The focusing time is reduced by a factor of five. My control... it's absolute."
+
+Anya let out a low whistle of pure, professional appreciation. "The feedback loop is nonexistent. The energy transfer is lossless. It's not just an interface; it's a seamless neuro-auric prosthetic. A perfect bio-integration."
+
+"Excellent work, Guardian," Eva said, a proud smile on her face. "Our first piece of custom-built magitech is operational." She then turned her gaze to T'Vella, a silent question in her eyes. "One down. One to go." T'Vella nodded, her expression as serene as ever, though a flicker of anticipation could be seen in her red eyes.
+
+While Zax continued to silently test the limits of his new, enhanced control, Anya walked back to the workbench. She picked up the Petrify Wand, the gnarled piece of dark wood with its pebble-encrusted tip. "Alright then," she rumbled, placing it next to the stone mortar and pestle. "Let's see about getting some more dust." Using a sharp shard of quartz she had kept from the caves, she began to carefully scrape at the petrified orb material on the wand's tip. It was slow, tedious work, but with each careful motion, a small amount of fine, grey powder fell into the waiting mortar.
+
+As Anya was occupied with her meticulous task, T'Vella turned the page in the heavy tome, her eyes scanning the next section: "Chapter Two: Interface Operation and Orb Analysis." She read for a moment, her brow furrowing slightly. "This is... intriguing," she said, catching the attention of Eva and Elara.
+
+She pointed to a diagram showing a gloved paw held over a standard orb. The text beside it, which she now translated with growing confidence, was cryptic. "'To perceive the inner workings of an orb,'" she read aloud, "'the user must hold their attuned hand over the vessel, close their eyes, and simply *look* inside it.'"
+
+"That makes no sense," Kenji chirped, having woken from a brief nap. "How can you look at something with your eyes closed?"
+
+"It's a contradiction," Eva agreed, shaking her head.
+
+But Zax, feeling the hum of the glove resonate with his own core, understood instantly. His head snapped up. "No," he said, his voice quiet with revelation. "It's not a paradox. It's an instruction." He closed his own eyes, and the glove acted as a lens for his Aura Sight, sharpening the world of energy into focus. "He's not talking about physical sight. He's talking about perception. The glove doesn't just amplify what's there; it lets you *see* what's there. It's a new sense. He's telling us to look with our souls."
+
+The team fell silent as it sank in. The Control Glove was more than an amplifier. It was a key to a deeper layer of reality, one that could only be perceived by those able to see beyond the visible spectrum. The ghost's instructions were not a paradox; they were an invitation to use a sense they were only just beginning to understand.
+
+They gathered around the workbench. "An experiment is required," T'Vella said, breaking the silence. "We must test this hypothesis."
+
+Anya rummaged in the team satchel and carefully placed one of the All-Hit Orbs on the petrified wood desk. It shimmered with a faint, rainbow-hued light, a silent promise of guaranteed accuracy. "Alright, Zax," the engineer said. "You're on deck. Give it a look."
+
+Zax nodded, his expression a mask of focus. He stepped up to the desk. First, as a control, he held his ungloved paw over the orb and closed his eyes. The world resolved into his now-familiar Aura Sight. He focused on the orb. As he had suspected, the energy within was a chaotic, indecipherable storm. It was a churning blur of light and power, a constant state of motion with no discernible pattern, like staring into the heart of a nebula. It was magic, raw, untamed, and utterly beyond his comprehension. "The energy is a chaotic blur," he reported. "I can sense its potential, but not its structure."
+
+"As expected," T'Vella noted. "Now, introduce the interface."
+
+Zax took a slow breath and hovered his gloved, glowing paw over the orb. The moment the three blue lenses passed over the All-Hit Orb's energy field, something shifted in his perception. The glove's soft hum intensified, and a new sensation flooded his mind—a connection, a feedback loop. It was as if a new sensory organ had come online, a second set of eyes that his brain, in its attempt to process the impossible input, immediately interpreted as a new point of view.
+
+He gasped, staggering back for a half-step. The chaotic storm within the orb was gone. In its place, viewed through this new "sight," was a vision of breathtaking order. He saw a perfect, three-dimensional tactical display, a translucent cube of pure energy composed of thousands of glowing cells. It was a living battle map, a strategic grid where each point of light represented a variable, a potential. His tactical mind, striving to quantify the unquantifiable, automatically began assigning values and threat assessments to the patterns. The All-Hit Orb was not chaos; it was a complex, stable equation, a specific configuration of thousands of data points.
+
+"I... I can see it," he whispered, his voice filled with a reverence that silenced the room. "It's a grid. A 3D matrix of energy cells. Each one has a specific value... a specific charge. It's... it's a program."
+
+He leaned closer, his enhanced sight allowing him to zoom in, to focus on a single, glowing cell deep within the matrix. It was a beautiful, intricate dance of light and logic. He felt a surge of pure, unadulterated excitement—the thrill of discovery, the joy of a scientist looking upon a new frontier. In that moment of exhilaration, his focus wavered. An unintentional pulse of his will, a mental flinch of excitement, shot down his arm and through the glove. It was the psychic equivalent of a mis-click.
+
+He "touched" the cell he was focused on. He felt a tiny thread of his own aura flow through the glove's lens and into that single point in the matrix, adding a single digit to its value.
+
+The reaction was instantaneous and catastrophic. The entire grid didn't just flicker; it convulsed, its stable pattern shattering into a chaotic mess of digital noise. A wave of dissonant energy, the psychic equivalent of a deafening blast of static, washed over Zax's senses. The orb on the desk flared violently with a rainbow of corrupted light, then imploded with a sickening *thump*. Its shimmer vanished, replaced by the same deep, inert, light-absorbing blue as the un-attuned lenses on his glove just a moment ago. The soft hum it had been emitting died, leaving a sudden, stark silence.
+
+"What happened?" Eva demanded, sensing the sudden shift.
+
+Zax opened his eyes, staring at the now-dead orb. "I... I changed it," he said, stunned. "By accident. I added my own energy to a single cell. It created an invalid configuration. The entire program... it crashed."
+
+Anya immediately scanned the altered orb with the tricorder. "He's right," she confirmed, her eyes wide as she read the display. "The original energy signature is gone. Completely erased. All that's left is a stable, but inert, energy lattice. It's not an All-Hit Orb anymore. It's just... a battery. A container for raw energy."
+
+Zax felt a pang of shame, but Eva cut it off before it could take root. "It's not a failure, Zax. It's an uncontrolled experiment. We have confirmation of write-access." She looked at him, her expression intense. "Now... see if you have 'undo' access."
+
+Zax's focus sharpened. She was right. This was a data point, not a disaster. He took another calming breath and hovered his gloved hand over the inert blue orb. He closed his eyes. The grid was still there, but it was frozen, static. All the energy was locked in place, the vibrant dance of light stilled. He scanned the thousands of cells until he found it: the single cell he had altered. It stood out, a single point of light tinged with the faint blue of his own aura. His mark.
+
+He focused, not on adding energy, but on withdrawing it. He reached out with his will, extending a metaphysical thread from the glove's lens and carefully, delicately, latching onto the tiny wisp of his own aura he had accidentally injected. With the precision of a surgeon removing a microscopic splinter, he pulled.
+
+The thread of his aura receded back into the glove, and the moment it did, the grid came back to life. The static cells flashed once, a cascade of light that rippled through the grid like a healing wave. The intricate, flowing pattern of the All-Hit Orb's program reasserted itself, its connections weaving back together, its values rebalancing in a silent, perfect symphony of self-correction. The entire system rebooted.
+
+On the desk, the inert blue orb flickered, and its brilliant, rainbow shimmer returned. Anya's tricorder beeped. "It's back," she breathed, her voice filled with disbelief. "Function restored. He just... recompiled it."
+
+Zax opened his eyes, looking from his glowing glove to the reactivated orb. A slow, dangerous smile spread across his face. He looked at his Captain. “Captain... I have full administrative access. I can read, edit, add, and subtract. I can rewrite the program.”
+
+The team stared at him. The possibilities spiraled out in every direction.
+
+"We're not just explorers anymore," Eva said, her voice quiet with a terrifying, exhilarating clarity. "We're developers."
+
+The words had barely left her when something on the research desk answered them. The heavy enchantment tome, still open to the laser-etched data pages at the back, began to react.
+
+The specific polymer page they had just scanned—the one containing Data Block 001—began to glow. It was not a soft, ambient light like the rest of the book's parchment, but a vibrant, active luminescence. The millions of microscopic, laser-etched characters that made up the wall of code lit up from within, turning the page into a miniature viewscreen of pure, golden data.
+
+"The book..." Eva breathed, her voice a hushed whisper. "It's reacting."
+
+"A proximity condition," T'Vella said, hushed with scientific awe. "The book is not merely a passive repository of data; it is an interactive device. The ghost's annotations contained no mention of this. Therefore, it was not a puzzle, but a blind competency test. It required a user to demonstrate not just the ability to build the interface, but the intellectual curiosity to experiment with it. The probability of Zax accidentally fulfilling the precise conditions... it is statistically infinitesimal. We were not merely lucky, Captain. The odds against it are astronomical."
+
+Zax, drawn by the strange light, approached the desk. He hovered his gloved hand over the glowing page. He closed his eyes. The sight that met his Aura Sight was breathtaking. He saw a single, staggeringly complex energy grid woven into the very fabric of the polymer page. It was a dense, multi-layered circuit board of light. He understood instantly that attempting to modify this monster of a system would be catastrophic. He pulled his hand back quickly.
+
+As he did, a new line of text began to etch itself across the top of the glowing page, written in shimmering, golden light. It was a string of characters in Federation Standard, a password revealing itself. At the same moment, the tricorder, still silently processing in the corner, let out a sharp, triumphant chime. Anya rushed over to it. The screen, which had displayed a slowly filling progress bar, now showed a single, glorious message:
+
+[EXTERNAL DECRYPTION KEY DETECTED. DECRYPTION COMPLETE. DISPLAYING FILE PRG-DB-001.]
+
+"The book broadcast the key," Anya whispered in disbelief. "It's a handshake protocol. The lock wasn't designed to be brute-forced; it was waiting for the right input to authenticate the user. It was waiting for someone to prove they knew what they were doing."
+
+With trembling anticipation, she tapped the file. The screen flickered, displaying the clean, block lettering of a Paradigm Research Group internal document. T'Vella leaned in, translating the text for the others.
+
+"Project File: Orb Glass Traces," she began. "Discovery Log: Experimentation has confirmed that the silicate-glass matrix of a standard orb is not required to be in a spherical form to maintain its energy-conduit properties. The material can be melted and drawn into fine, wire-like 'traces,' which retain their full functionality. Implication: This allows for the creation of complex, circuit-like enchantments, effectively 'wiring' multiple functions together and allowing for the miniaturization of enchanted components. This is the foundational principle behind the Mk.II Guild Badge."
+
+A diagram appeared on the screen, showing molten orb material being etched onto a flat surface, creating pathways that looked identical to the internal structure of their own badges.
+
+"It's beautiful," Anya marveled, her voice filled with an engineer's awe. She wasn't looking at the words, but at the elegant simplicity of the concept. "They didn't just find these orbs; they dissolved them and turned them into wiring. A perfect, organic circuit board."
+
+Zax grunted in approval, a slow, dangerous grin spreading across his face. "This changes our entire tactical doctrine. We're not just enchanting scarves anymore. We can wire a 'Protect' matrix directly into our gear. We could integrate the Scope Lens's targeting data into a weapon. The applications for enhancing our combat effectiveness are limitless."
+
+T'Vella scrolled to the next file. "Technical Schematic: ES-Orb_01 (Escape Orb)." The screen displayed a complex energy grid, the same one Zax had seen, but with specific cells highlighted. "The document details the energy pattern for a standard Escape Orb," she explained. "But here... here is the critical data." She pointed to a separate, smaller grid shown next to the main one. "Addendum: Coordinate Redirection. The orb's destination is handled by a secondary, isolated grid. This grid is normally dormant. By draining cell [15,7,22] of the primary grid to zero, the secondary grid becomes active, allowing for the input of custom subspace coordinates. A tertiary grid actively reads the orb's point of origin for return calibration. This is the mechanism that allows for targeted teleportation."
+
+The final piece of the puzzle slotted into place. The room fell silent, each member processing the sheer magnitude of what they were seeing.
+
+"So that's how they work," Kenji chirped, breaking the silence. He fluttered from Eva's back and landed on the desk, peering at the screen. "Our badges... it's just a fancy Escape Orb with an address book! We could go anywhere!"
+
+"The logic is flawless," T'Vella said, her voice calm but her mind firing with the intensity of a nova. "It is a multi-stage activation process controlled by a single variable. By manipulating one cell, you unlock an entirely new function. It is an elegant, efficient, and completely logical system. It validates every hypothesis I have formulated about the nature of this world's 'magic' being quantifiable data."
+
+Elara, however, wasn't looking at the screen. Her gaze was on the glowing page of the book. "He was brilliant," she whispered, her empathic senses picking up the faint, residual intent left on the page. "And so... frustrated. He wanted to share this, to build things. This wasn't just a log; it was a lesson, waiting for a student."
+
+Eva looked at the faces of her crew, each one alight with their own unique form of discovery—the pilot's freedom, the engineer's ingenuity, the scientist's validation, the soldier's new weapon, the empath's connection to the past. They had the ghost's own lab notes, the schematics for his greatest inventions. The path forward was no longer just a theory; it was a clearly written, peer-reviewed blueprint.
+
+"One block down, eighty-nine to go," Anya said, already turning to the next pristine, polymer page in the enchantment tome. "Let's see what's behind door number two."
+
+She held up the tricorder, the now-familiar blue bar of the scanner projecting onto the next page of laser-etched code. Once again, she began the slow, methodical scan, capturing the raw data into the tricorder's buffer. The process was becoming routine, a systematic excavation of their predecessor's knowledge. After a few minutes, the tricorder chimed, signaling the data was logged.
+
+[ENCRYPTED DATA BLOCK 001a LOGGED. INITIATE DECRYPTION ALGORITHM? Y/N]
+
+"Alright, let's see if lightning strikes twice," Anya said, her claw hovering over the 'Y' on the screen. She pressed it. The tricorder beeped, and the processor whirred to life, beginning the brute-force attack on the new cipher. But this time, there was no flash of insight from the book, no broadcasted key.
+
+[ESTIMATED TIME TO DECRYPTION: 23.1 STANDARD HOURS.]
+
+Zax grunted. "So the first one was a free sample. Now we have to do the work."
+
+"It is a logical progression," T'Vella noted, unfazed. "The initial block was a proof-of-concept, a confirmation that our technology was compatible. Now the true challenge begins."
+
+"A day isn't so bad," Kenji chirped from his perch. "We can just let it run in the background while we do other things!"
+
+While the rest of the team accepted this new pace with pragmatic resolve, Eva grew quiet. She stepped away from the workbench, her gaze distant and unfocused. She stared at a simple stone on the floor, her mind not on tactics or strategy, but on its very existence. The ease with which Zax had manipulated the orb, the casual way the book had interfaced with their technology—it had unlocked something in her mind, a deep and unsettling question that now demanded attention. Zax, his senses now finely attuned to the auras of his crew, was the first to notice. The captain's steady blue aura was gone. In its place was a churning, chaotic maelstrom, a singularity of cold dread that pulled at the edges of his perception.
+
+"Captain," he said, his voice cutting through the team's chatter. All heads turned towards Eva.
+
+Elara flinched at the sudden psychic chill rolling off their leader. She could feel a dizzying, philosophical vertigo, a sense of the ground itself becoming unreal. "Captain, are you alright?" she asked, her voice filled with a genuine, gentle concern.
+
+Eva looked up, her red eyes seeming to focus back from an immense distance. The confident commander was gone. What was left looked shaken.
+
+"We just watched Zax... edit reality," she said, her voice barely a whisper. The crew fell silent. "He didn't mix a chemical. He didn't forge a metal. He subtracted a variable from a single cell. He changed a line of code and a physical object obeyed. He flipped a bit, and the universe changed its mind."
+
+She took a step towards them, her gaze sweeping over each of her crewmates. "If an orb is just a program, then what is everything else? This stone on the floor? The great tree we live in? What are *we*?"
+
+The question hung in the air, heavy and terrifying.
+
+"Were we transformed by some strange energy upon our arrival?" she continued, her voice gaining a desperate, questioning edge. "Or were our bio-signatures simply... rewritten? Our bodies deleted and replaced with new character models? The Shadow Corruption... is it a disease, a spiritual sickness? Or is it a virus? A piece of malicious code propagating through the system, overwriting personalities, turning allies into mindless enemies?"
+
+She stopped, her mind connecting the terrifying thought to the archivist's warning. "Fia's warning," she breathed. "She said the Paradigm Research Group delved into secrets the world tried to forget. I think... I think this is that secret. The nature of this reality. Alan Hexfury wasn't just an engineer. He was a programmer with root access to the operating system of a universe." She looked at the humming tricorder, at the slow, steady progress of the decryption bar. "And we... we are about to read his private logs. We're trying to crack the password to a system we can't even begin to comprehend."
+
+A new silence fell over the team, deeper than the last. The exciting potential of their discovery was now tainted by a deep, existential dread.
+
+It was T'Vella who broke the silence, her voice a calm, logical anchor in the storm of Eva's philosophical crisis. "If reality possesses a quantifiable, code-based structure, Captain, it does not diminish its validity. It simply alters our understanding of its fundamental mechanics. The universe is still the universe. We have merely discovered the user manual."
+
+Anya nodded, her engineer's pragmatism taking over. "She's right. If it's a system, it has rules. If it has rules, it can be understood. If it can be corrupted, it can be patched. It doesn't matter if we fight with a phaser or a firewall. We're still engineers. We solve problems."
+
+"And if the enemy is a virus, we will find an antivirus," Zax added, his voice a low, resolute growl. "The nature of the weapon is irrelevant. The nature of the war is all that matters. And we will win it."
+
+Eva looked at them, at her crew, her family. T'Vella, the scientist, ready to codify the impossible. Anya, the engineer, ready to build and repair. Zax, the soldier, ready to fight. Their resolve, their unwavering pragmatism in the face of an existential nightmare, was a lifeline. It didn't erase her fear, but it contained it. She was not alone in this vertigo.
+
+"You're right," she said, her voice regaining its strength. The captain returned. "All of you. It is simply a new kind of physics. A new set of rules to master." She looked from the powerful control glove on Zax's hand to the arcane tome on the desk. "The potential is limitless, but our knowledge is not. Reality editing is only as dangerous as we are willing to make it. For now, we only know how to change orbs. We need to go back to the basics."
+
+Nobody made anything of it. While T'Vella went back to the book and Anya to the bench, Elara simply came and sat beside Eva on the moss, close enough that their shoulders almost touched, and said nothing at all. A moment later Kenji fluttered up and settled onto Eva's back, the way he did on long walks, his small weight warm between her shoulder blades.
+
+Eva didn't look at either of them. But she let out a long, slow breath, and for a minute she stayed exactly where she was.
+
+T'Vella, understanding immediately, turned back to the earlier, parchment pages of the book, which they had skimmed past in their eagerness to reach Hexfury's data. She scanned the text, now much more legible with their growing expertise. "Indeed," she confirmed. "The next standard chapter details the process of rendering an orb into a molten state for application onto other surfaces. The 'Orb Glass Traces' that Hexfury documented... this is the foundational technique for their creation. The injector pen is the application tool. The text specifies that for a stable enchantment, the applied orb glass must cover at least twenty percent of the target object's surface area, and the design must be a single, unbroken, connected pattern to allow for a continuous energy flow."
+
+T'Vella then pointed to another diagram, one showing the complex, spinning ring device. "It also details an alternate method for mapping the effect onto the object: the 'Orb Ring.' This is the traditional enchanting method, more complex than simple Orb Glass Traces, but it allows for more powerful and nuanced effects. The process is multi-staged. First, the catalyst—a berry, for example—is bombarded with energy from a stabilized orb until it decays, leaving behind a contained, free-floating field of its raw essence. The Orb Ring is then used to contain and stabilize this volatile energy field. Concurrently, the target object is prepared by applying Orb Glass Traces to its surface with the injector pen. Finally, the Orb Ring is used to press the contained essence field directly into the prepared traces, where it is absorbed and becomes a permanent enchantment."
+
+Anya shook her head. "That's... incredibly inefficient," she stated, her engineer's mind immediately identifying the flaw. "You destroy the catalyst, the berry, to create a single enchantment. You're limited by your supply of raw materials."
+
+"Indeed," T'Vella agreed, her own mind racing ahead to the logical conclusion. "A far more efficient method would be to use the Control Glove to analyze the energy signature of a single Pecha Berry, for example. We could record that specific 'program,' copy it, and then directly 'write' that pattern into as many blank Orb Glass Traces as we desire. We would only need one berry to create an infinite number of enchantments."
+
+The words landed hard. Infinite replication. The ability to create powerful, life-saving items from a single template, without cost or consumption of rare resources. They could equip the entire Guild. They could change the world overnight.
+
+Nobody spoke. No one needed to. They all understood the implication, the first true temptation of their newfound power. Starfleet General Order 1. The Prime Directive. Do not interfere in the normal development of any society. It was the highest law, the ethical bedrock upon which their entire civilization was built. Their arrival had already shattered it, an unavoidable catastrophe. But this... this was different. This was the power to intentionally and fundamentally alter the course of this world's development, to rewrite its economy, its power structures, its very way of life. The silence was their shared acknowledgement of the terrible and wonderful responsibility that had just fallen upon them. The vertigo remained, but now it had a direction. They had a path forward, a series of lessons to learn, and a clear, practical, and terrifyingly powerful new science to master. The question was no longer if they could, but if they should.
+
+“Infinite replication,” Anya said at last, very quietly. “We could equip the entire Guild by the end of the week.”
+
+"It would be a decisive tactical advantage," T'Vella said carefully. "It would also be the gravest violation of the Prime Directive any of us could commit."
+
+"A decisive tactical advantage? T'Vella, it's the war-winning advantage," Zax countered, his voice a low, intense growl. "We could arm every Pathfinder team with the move ‘Protect’. We could mass-produce Blast Seeds for siege-breaking. We could give the Gold-Tier teams a fighting chance out there instead of sending them on culling missions! People are dying. Our principles are a luxury we can't afford when we have the means to stop the bloodshed."
+
+“But at what cost?” Elara whispered, her empathic senses recoiling at the thought. “Imagine the fear it would cause. A small team that can suddenly create artifacts of immense power out of thin air? We are already a mystery to the Guild. This would make us monsters in their eyes. Power like that doesn’t inspire unity; it inspires terror.”
+
+“Her point is logical,” T’Vella added, her gaze fixed on the humming tricorder. “Furthermore, the economic ramifications would be catastrophic. The entire Guild economy is based on the scarcity and value of these items. If we flood the market with infinitely replicated goods, we would devalue the labor of every artisan, every merchant, and every team that risks their lives to find these items in dungeons. The system would collapse.”
+
+"And what happens the day after we win, Zax?" Eva countered, her voice cutting through the tension, sharp as a Klingon blade. "What happens when the war is over, and we've made this world dependent on a technology they can't replicate or understand? We would become kings, or gods. And that is a violation of everything Starfleet stands for." She looked at him, her gaze softening slightly. "Your point is valid. The tactical advantage would be immense. But Elara and T’Vella are right. We cannot risk destroying this society in order to save it.” She looked at each of her crewmates, her gaze firm. “Our mission is to fight the Shadow Corruption, not to play God. We will use this knowledge to arm ourselves, to protect Havenwood, but we will not distribute this technology indiscriminately. The potential for misuse is too great. Are we clear?"
+
+A chorus of affirmations answered her. The decision was made. They would be guardians, not gods.
+
+Sometime past midday, Elara realized nobody had eaten since the leftover rolls at dawn. She tipped a handful of berries from the satchel onto a clean cloth at the end of the bench, beside the water jug, and said nothing about it.
+
+No one touched them. T'Vella was already deep in the next diagram, Zax was turning the TM disc over in his gloved hand, and Anya was clearing the mortar. Only Kenji hopped over, worked steadily through his share, then considered the untouched pile with a pilot's eye for unused fuel.
+
+"Zax," he said. "Are you going to eat yours?"
+
+"No," Zax said, without looking up.
+
+"Great." Kenji hooked a berry toward himself with one foot. Elara sighed and moved two of the others out of his reach, for later.
+
+With the ethical debate settled, the atmosphere in the room shifted. The heavy weight of their moral dilemma was replaced by the familiar, focused energy of a scientific problem to be solved. T'Vella turned their attention to the day's primary experiment. "The inefficient 'Orb Ring' method of enchanting requires the destruction of a catalyst. Our new theory posits that we can bypass this by directly copying the 'program' of an ability and writing it to a new vessel. The 'Protect' TM is our first test case."
+
+Anya placed the flat, crystalline disc on the workbench. Beside it, she placed one of the shimmering Slumber Orbs. "We need a blank slate," she stated. "Zax, if you would."
+
+Zax nodded, hovering his gloved hand over the orb. He closed his eyes, saw the orb's inner grid, and with a precise application of will, overloaded a single, non-critical cell. The orb flared and then went dark, its complex program erased, leaving behind a stable, inert blue vessel—a blank slate.
+
+"If abilities are just data," the engineer said, "then this TM is the software, and that orb is the hardware."
+
+Zax stepped forward, the Control Glove humming softly on his paw. He hovered his hand over the TM. "Closing my eyes," he announced.
+
+The world of auras resolved around him. He focused on the TM, and as he did, he saw its energy pattern: a flat, two-dimensional grid of light, small and simple. "I see it," he reported. "It's not a complex program, more like... a key. A unique, unchanging energetic signature."
+
+"A key," T'Vella surmised. "A pointer that tells a Pokémon's own biological systems how to access the 'Protect' ability. The TM doesn't contain the move; it contains the address for the move."
+
+"So, let's try to copy that address," Anya said, her eyes gleaming. "Zax, focus on the code string. Just read it. Copy it to your glove's local memory."
+
+Zax focused, and after a moment, nodded. "I have it. It's... stored. I can feel it, a separate string of data held in the glove's matrix."
+
+"Excellent," Eva said. "Now for the difficult part. Try to write it to the blank orb."
+
+Zax turned his attention to the inert, blue orb. He hovered his gloved hand over it, and with his other sight, he saw its empty, static grid. He focused on the copied line of code held within his glove and, with a deliberate act of will, attempted to 'paste' it into the orb's central matrix.
+
+The moment he did, the orb reacted violently. It began to vibrate on the desk, a low, dissonant hum filling the room. "It's not taking the data cleanly," Zax grunted, struggling to maintain the connection. "The grid is rejecting it. It's... incompatible."
+
+"The hardware isn't designed to run this software!" Anya realized with a jolt. "The orb's matrix is designed for a complex program. We're trying to install a simple key onto a quantum computer. The architecture is fundamentally different!"
+
+With a final, violent shudder, the orb emitted a low, discordant hum that ended in a sharp cracking sound. From the new fracture on its surface, the orb's contained energy did not simply vanish; it vented into the air in a breathtaking, silent display. A miniature aurora, a swirling ribbon of pastel pinks and greens, danced in the air for a fleeting moment. T'Vella and Elara watched, their psychic senses tingling with the beautiful, harmless release of raw potential as the energy quickly dispersed back into the ambient field of the room, leaving only a new, dead fracture across the orb's now-dull surface.
+
+"So it's a failure," Kenji chirped, his crest drooping slightly.
+
+"No," Zax said immediately, his mind already working. "It's a data point. The Slumber Orb, even when I made it inert, still had its underlying architecture, its grid. That might have caused the incompatibility." Unwilling to let the failure go unanalyzed, he retrieved a fresh All-Hit Orb from their satchel. "I want to try something. I'm going to do a deep wipe."
+
+He placed the shimmering orb on the desk and hovered his gloved hand over it. He plunged his senses into the orb's core, and with a focused, disciplined application of will, he began to systematically unravel the program. It felt like pulling threads from a tapestry, each one dissolving into nothingness as he touched it. He felt the complex architecture of the All-Hit Orb's program collapsing under his command, the intricate dance of light and logic coming undone until all that was left was a silent, empty sphere of raw potential. He had not just broken the machine; he had disassembled it at a fundamental level, leaving only the raw materials behind. His eyes snapped open.
+
+"The grid is gone," he announced, a note of discovery in his voice. "This one... it's a truly clean workspace."
+
+"So our mistake wasn't just using the wrong hardware," Anya concluded, the pieces clicking into place. "It was using dirty hardware. The Slumber Orb still had its old operating system on it. We tried to write new code on top of old infrastructure."
+
+"Then try again, Zax," Eva urged, her voice steady and encouraging. "On the clean workspace."
+
+Zax gave a firm nod, his focus absolute. He turned his attention back to the deep-wiped All-Hit Orb. Once more, he hovered his gloved hand over it, the copied 'key' for Protect held ready in the glove's memory. He initiated the transfer.
+
+This time, there was no violent rejection. Instead, the moment the data stream touched the inert sphere, it was accepted. A soft, golden light bloomed from the orb's core, pulsing gently. Zax felt the data flow smoothly from the glove, the simple, elegant line of code settling into the heart of the orb. It didn't just sit there; it became a new nucleus, organizing the chaotic, inert energy around it into a stable, singular pattern. The golden light intensified for a moment before settling into a steady, warm glow. The All-Hit Orb was no more.
+
+"T'Vella?" Eva asked, her voice hushed.
+
+The Gardevoir was already scanning with the tricorder, her eyes wide. "The energy signature is stable," she reported, a rare note of astonishment in her voice. "It matches the TM's pattern perfectly. It is, for all intents and purposes... a Protect Orb."
+
+Anya let out a low, impressed whistle. "We did it," she said. "We actually did it. Copied and pasted a magical effect."
+
+"Which means," T'Vella stated, her gaze turning to the injector pen on the workbench, "that while a deep-wiped orb can serve as a rudimentary hardware vessel, it is bulky and inefficient for complex applications. To create integrated, multi-function devices, we must build our own hardware. The 'Orb Glass Traces' are the logical next step. They are the motherboard upon which any advanced program must be installed."
+
+With this final, critical piece of understanding, their path forward was now crystal clear. The failed experiment, far from dampening their spirits, had ignited a new fire of determination.
+
+"Alright," Eva said, her captain's voice cutting through the lingering scent of burnt orb. "We have our next objective. We need to master the creation of these Orb Glass Traces. Anya, what do we need?"
+
+The engineer was already at the workbench, her disappointment replaced by a focused, professional energy. "We have the injector pen, we have the dust I scraped off the Petrify Wand, and a power source." She gestured to the satchel. "Zax, I need one of those Blast Seeds."
+
+Zax reached for the satchel, then stopped. His ears flattened. "Wait."
+
+He drew a gloved finger across the desk and held it up. It came away grey. "We brushed the top off in the archive. We never cleaned it." He looked from the injector pen to the Blast Seed. "Molten glass, a contained explosion, and a desk wearing centuries of dust. Fine dust burns. In the right concentration it doesn't burn, it detonates. I've seen a cargo bay go up from less."
+
+Anya winced. "He's right. Yesterday I was melting dust in a stone mortar. This thing *sprays* it." She set the pen down. "Nobody fires anything until this surface is clean."
+
+They stripped the workbench. Elara wet a cloth from the jug at the end of the bench and worked the grime out of the carved channels along the desk's edge, and a startling amount of grey sludge came with it. Kenji, to everyone's surprise, proved useful: a few careful beats of his wings sent the loosened dust swirling out the door and down the corridor.
+
+"Air purge complete," he announced, and sneezed. "Helm recommends we never do that indoors again."
+
+Halfway along the edge, Elara paused. "Anya? There's a mark under here. Like a maker's stamp." It was worn almost smooth: a small anvil, and beside it a native glyph none of them could read yet.
+
+Anya crouched to look. "Huh. And that leg profile... the Xatu's shop counter had the same one, and that wood wasn't petrified." She straightened slowly. "So someone in Havenwood still makes these."
+
+"Or did," T'Vella said, "until recently."
+
+While the others finished the desk, Anya turned her attention to the pen itself. She unscrewed the front needle and held the barrel up to the light crystal, and her expression soured. The valve seat inside was crusted with green-white scale, the fine contacts pitted, the old housing seal gone brittle as a dried leaf.
+
+"And this," she said quietly. "Corrosion. Centuries of it. Half the channel's choked." She glanced at the ghost's diagram in the tome: clean bores, tolerances fine enough to lay down a hairline trace. "In its prime this thing would have drawn a line thinner than a whisker. Right now it's going to spit."
+
+"Can it be repaired?" Eva asked.
+
+"Restored," Anya said. "Properly? New seals, the contacts re-plated, the bore reamed out true. That's a job for Breaker, and maybe Lyra for the glass fittings." She worked the worst of the scale off the valve with the tip of a claw and the sharp quartz shard, blew out the channel, and screwed the needle back on. "For tonight, it'll run. Badly. But it'll run."
+
+Only then did Zax hand her one of the volatile seeds. Anya loaded the dust and impaled the seed, and the tool hummed to life with a faint, uneven rattle she didn't like the sound of.
+
+"Now we need a test surface," Anya said, her eyes landing on a flat, smooth river stone. She placed it on the desk. "According to the ghost's notes, this is a two-stage process. First, you apply the molten trace. Then, you 'program' it. For now, we're just focusing on the application."
+
+She held the injector pen like a soldering iron, the tip hovering just above the stone. She took a deep breath. Her hand, surprisingly steady, guided the tip. A thin, precise bead of molten, silvery orb glass, glowing faintly like liquid starlight, extruded from the tip, hissing softly as it met the cool stone. It flowed with a viscous grace, hardening almost in an instant into a solid, glassy circuit that shimmered with a faint, latent energy: an unbroken line across the surface, if not quite an even one.
+
+The team leaned in, mesmerized. It was their first piece of custom-built magitech.
+
+T'Vella held her tricorder over the stone. "The trace is stable," she reported. "It is holding a neutral energy charge. It is, for all intents and purposes, a blank, unformatted circuit board."
+
+Anya let out a low, satisfied chuckle. "It's crude. The line width is inconsistent. But it's a proof of concept." Her gaze shifted from the successful trace to the shattered remains of the Slumber Orb they had just destroyed. "Well," she added, a pragmatic glint in her eye, "waste not, want not. The experiment may have failed, but the raw material is perfectly viable."
+
+Zax, understanding immediately, stepped forward. He carefully gathered the sharp, crystalline fragments of the dead orb and placed them into the heavy stone mortar. "We have our next batch," he stated.
+
+Eva nodded, a proud smile on her face. "Before we move on to mass production, let's test the prototype." She gestured to the newly created Protect Orb, its golden light a steady, reassuring presence on the desk. "Anya, Zax, you both drew aggression in the caves. One of you should be the designated user. Any volunteers?"
+
+"I'll do it," Zax said, stepping forward. "My role is guardian. It's the most logical choice." He picked up the golden orb. It felt warm, humming with a contained, defensive energy. "How do I activate it?"
+
+"The book is... vague on that point," T'Vella admitted. "It simply says to 'use' it. Perhaps a direct command is required."
+
+Zax held the orb in his gloved paw. He focused his will, not on the orb's internal grid, but on the program it now contained. He sent a clear, simple command through the glove's interface: *Execute.*
+
+The orb responded instantly. Its golden light flared brightly, and Zax felt the 'Protect' program activate. But no shimmering green barrier appeared around him. Instead, the orb's light began to pulse with a slow, rhythmic, questioning beat. It flickered erratically, the golden glow shifting in intensity as if it were a machine searching for a missing driver, a command waiting for an operator who wasn't there. After a few seconds of this frantic, silent searching, the light gave up, settling into a dim, idle standby state.
+
+"...Nothing happened," Kenji chirped, tilting his head.
+
+"The program is running," Anya reported, her tricorder already scanning the orb. "The energy is active, cycling. But it's... idle. It's in a standby state."
+
+"It's waiting for something," Zax growled in frustration, focusing on the orb's energy with his Aura Sight. "The program is complete, the power is there, but the final execution command... it's not firing. It's like a weapon system that's armed and targeted, but the trigger won't pull."
+
+"The TM is a key that tells a Pokémon's own systems how to perform a move," T'Vella surmised, her mind working through the new data. "The orb contains the key, and it has a power source. But it is missing a critical component." She looked at Zax. "It is missing the user. The program is looking for a 'soul' to latch onto, a biological entity to execute the function *for*. The orb itself cannot perform the action. It can only grant the ability to do so."
+
+A new, fundamental hurdle had just manifested before them. They could copy the software and build the hardware, but the two pieces refused to communicate. The orb held the 'what,' but it was missing the 'how.' It was a weapon without a trigger, a command without a voice, waiting for a missing link to bridge the gap between potential and action.
+
+"So we can't just create a pile of 'Protect Orbs' and throw them at a problem," Eva concluded, the tactical implications immediately clear. "The orb doesn't create the shield. It allows the user to create the shield. We haven't replicated an effect; we've replicated the potential for an effect."
+
+The discovery was a sobering one. Their dream of mass-produced, automated magical items was, for now, out of reach. They had taken a giant leap forward, only to find a new, more complex wall in their path. With a sigh, Eva looked at the pile of shattered orb fragments waiting in the mortar.
+
+"It's another data point," she said, her voice firm, refusing to let the setback diminish their progress. "We'll solve it. But for now, we have a more immediate task." She looked at Anya. "Let's get grinding. We have a lot more hardware to build."
+
+The team settled back into their focused rhythm. The rhythmic, crunching sound of the mortar and pestle once again became the percussion of their workshop, a sound of failure and frustration being repurposed into the raw materials of progress. The mysteries of this world were peeling back, layer by layer, each one revealing a harder challenge beneath.
+
+As the sun sank, painting the Havenwood sky in orange and violet, the light in the great tree softened. They had spent the entire day immersed in the ghost's legacy, learning the first steps beyond the basics, and they did not stop. Night fell, and the work went on by the warm glow of the room's light crystal and the low hum of the tricorder.
+
+One by one, the shattered remains of their failed experiments were reduced to a fine, shimmering powder, each grain a tiny spark of potential. They had a small, but growing, supply of the raw material needed to build their new hardware.
+
+"That's the last of it," Anya said, tapping the last of the dust from the mortar into a small, sealed container. "We have enough for a few dozen attempts, depending on the complexity of the traces."
+
+"Then let's not waste it," Eva said, her gaze falling on the collection of smooth, flat river stones they had gathered. "We have the theory. We have the materials. Now we need the practice."
+
+Anya nodded, picking up the injector pen. She loaded a fresh cartridge of dust, her large claws moving with a newfound familiarity. Zax stood beside her, retrieving another Blast Seed from the satchel. The process was becoming routine.
+
+"The ghost's notes indicate that the consistency of the energy output is critical for creating stable, high-fidelity traces," T'Vella noted, her eyes glued to the tricorder's display as she monitored the energy readings from the pen. "The chaotic, rapid energy release of a Blast Seed is sufficient for crude applications, but for the more complex, multi-layered circuits shown in the schematics, we will require a more... elegant power source."
+
+"One problem at a time, T'Vella," Anya grunted, though she didn't disagree. She held the pen over a new stone, the tip humming as the Blast Seed's energy heated the dust within. "Zax, steady now."
+
+Zax closed his eyes, his gloved hand hovering near the pen. He wasn't touching it, but through his Aura Sight, he was connected to the flow of energy. His task was to act as a regulator, smoothing out the volatile energy of the Blast Seed as best he could, ensuring a consistent stream to the injector's tip.
+
+"Ready," he said, his voice calm and focused.
+
+Anya began to draw. "Easy... easy..." she muttered, the tip of her tongue sticking out in concentration. Her first line was a wobbly, thick smear of silver.
+
+"Gah! Volatile power source," she grumbled. "Zax, I felt a spike."
+
+"Apologies," Zax said, his eyes still closed. "The decay is not linear. I am adjusting."
+
+"Not all you," Anya admitted. "Half of that is the seed. The other half is a valve nobody's serviced in centuries."
+
+On the next attempt, the line was finer, but it sputtered out halfway across the stone.
+
+"Maybe if you go faster?" Kenji suggested from the sidelines, hopping from one foot to the other.
+
+"That is not a helpful suggestion, Kenji," T'Vella said without looking up from her tricorder. "The flow rate is dependent on energy consistency, not speed."
+
+"I know, I know, just trying to help!"
+
+Elara giggled. "It's okay, Kenji. The energy feels better this time. More... focused."
+
+With each failure, their synergy improved. Anya's hand grew steadier, her movements more precise. Zax learned to feel the rhythm of the Blast Seed's decay, counteracting it with his own aura before it could surge.
+
+Slowly, painstakingly, their skill grew. The simple, straight lines became smooth, elegant curves. The curves became sharp, precise angles. Soon, they were no longer just drawing lines; they were creating patterns, simple geometric shapes that held a faint, latent energy, shimmering on the surface of the stones like constellations on a tiny, gray sky.
+
+"The energy stability is improving by 12% with each successful attempt," T'Vella reported, a hint of approval in her voice. "Your collaborative efficiency is remarkable."
+
+By the time both moons were high in the sky, they had a small collection of stones, each bearing a perfectly executed, un-programmed circuit. They were no longer just a Starfleet crew adapting to a new world; they were becoming artisans, craftsmen learning a new, impossible trade.
+
+Anya held up their latest creation: a stone bearing a complex, interlocking series of circles, the traces so fine and precise they looked as if they had been etched by a laser. "It's not a starship's warp core," she said, a low, satisfied chuckle in her voice. "But it's a start."
+
+Eva smiled, about to commend the team on their progress when she glanced up at the large, glowing light crystal that illuminated their room. Her eyes then drifted to the small, circular window beside it. The sky outside was no longer a deep blue, but a velvety black, dotted with the sharp, unfamiliar pinpricks of alien stars.
+
+"Belay that," she said suddenly, her voice cutting through their focused work. "What time is it?"
+
+The question hung in the air for a moment before a low, rumbling growl echoed through the room. It was Anya's stomach. A second later, it was answered by a chorus of similar, if less dramatic, sounds from the rest of the team.
+
+Kenji's wings drooped. "Are we late for dinner again?"
+
+"It would appear so," T'Vella stated, her usual stoicism doing little to hide the fact that she, too, had been completely absorbed in their work.
+
+"Alright, team," Eva said, shaking her head with a fond smile. "Pack it in. The ghost's work will still be here tomorrow."
+
+With a collective sigh of relief and a few sheepish glances, they began to tidy their workspace. The stones were carefully set aside, the mortar and pestle wiped clean. The tricorder, the all-important satchel, and Zax's Control Glove were left secured on the workbench. One by one, they filed out of their quarters, the promise of a hot meal finally overriding the allure of their revolutionary work.
+
+As they walked, the promise of a meal finally broke their intense focus. "I hope they have those roasted Sitrus slices tonight," Anya said, her stomach punctuating the statement with another low growl. "The Maillard reaction on the sugars... it's ridiculous how good it is."
+
+"A predictable but understandable preference for simple, efficient energy delivery," T'Vella commented, though a thoughtful look crossed her face. "I, however, am partial to the sun-dried Tamato Berry stew. The subtle complexity of the spice blend is quite satisfying."
+
+"You would appreciate the spices, T'Vella," Zax said with a rare hint of amusement. "I've only ever seen a Pecha Berry used as an antidote. From a tactical standpoint, I find myself wondering about its non-medicinal properties. Is it a viable energy source?"
+
+"It's a viable *delicious* source!" Elara chirped, practically bouncing. "They're like... pure sweetness! Like candy, but healthy! We should definitely try one tomorrow!"
+
+Their path took them through the main chamber of the Guild, past the bustling job board where teams gathered to plan their next excursions. Just as they were about to pass it, a loud, attention-grabbing squawk cut through the evening chatter.
+
+"SQUAWK! ATTENTION, GUILD MEMBERS! URGENT ANNOUNCEMENT!"
+
+All heads turned toward Chirp, fluttering dramatically in front of the job board with a bright red piece of paper held in his beak. With a flourish, he pinned it right in the center of the board, the vibrant color a stark contrast to the usual beige and white of the job requests. The room fell into a hushed silence, all eyes fixed on the crimson warning.
+
+Chirp took a deep, theatrical breath. "Team Cinder has failed to report in from their expedition to Rust-Eater Cave! They are now two hours past their scheduled return! An emergency rescue mission has been posted! This is a Bronze-Tier alert!"
+
+A wave of murmurs and worried gasps swept through the hall. A young Sandshrew from another team looked pale, his claws digging into his teammate's arm. Older, more seasoned explorers exchanged grim looks, their expressions tight with shared memories of that dangerous place. Rust-Eater Cave was notoriously difficult, a labyrinth of metal and decay known for its aggressive Steel-type inhabitants. For a veteran team like Cinder's to be overdue was a serious cause for alarm.
+
+Eva's face, usually a mask of calm authority, was now a picture of grim determination. Her eyes, wide and sharp, fixed on the red paper.
+
+"Cinder showed us what it means to be a Pathfinder," Eva stated, her voice sharp and clear, cutting through the rising panic in the hall. "It's time we showed them what it means to be Starfleet. This is most certainly a job for us."
+
+"Zax," she said. "Go back to the quarters. Retrieve the tricorder and the team satchel. We'll need everything."
+
+Zax didn't hesitate. He spun on his heel, the soft pads of his feet making no sound as his powerful legs ate up the distance. He moved with the focused urgency of a tactical officer responding to a red alert. The air rushed past his ears. He burst into their room, his eyes immediately scanning the workbench, cataloging every item. His first priority was the team satchel. The rough texture of the canvas was familiar as he slung it over his shoulder. His paws were a blur, confirming the smooth skins of the berries, the volatile crackle of the Blast Seeds, the cool, solid weight of the Protect Orb. Satisfied, he snatched the tricorder, the faint hum of its power source vibrating in his paw. Finally, the Control Glove. The supple leather and its three cool lenses felt like an extension of his own body. Every piece of their advanced and arcane arsenal was accounted for. Within thirty seconds, he was out the door and sprinting back to the main hall, a silent, efficient blue-and-black streak of pure readiness.
+
+By the time Zax returned, the main hall was a flurry of activity. Several other Bronze-Tier teams were gathering, their leaders talking in low, urgent tones, forming impromptu rescue parties. Zax rejoined his team, handing the tricorder to Anya and the satchel to Eva. He quickly slipped the Control Glove onto his paw, the familiar hum of its attunement a comforting presence.
+
+"Gear secured, Captain," he reported, his voice a low, steady anchor in the surrounding chaos.
+
+"Good," Eva said. She turned and strode purposefully towards the job board, her team falling into a practiced formation behind her. They moved through the crowd with a quiet, disciplined efficiency that parted the other, more panicked teams.
+
+Chirp the Chatot was fluttering anxiously, trying to organize the response. "Alright, settle down, settle down! We need two teams to take the eastern passage, one to scout the main chamber—"
+
+"Chirp," Eva's voice cut through his frantic instructions, calm and authoritative. "Team Starfall is accepting the mission." She reached up and, with a decisive motion, pulled the red paper from the board.
+
+The Chatot stopped mid-squawk, his beak hanging open. The other teams fell silent, all eyes turning to the Absol who had just taken command of the situation.
+
+Chirp blinked, his feathers ruffling in astonishment. He, the Guild's official herald, was used to directing the flow of information, not having it demanded from him. But as he looked at the grim, focused faces of Team Starfall, he saw not arrogance, but a startling level of competence.
+
+"S-squawk! Right! Of course!" he stammered, composing himself with a shake of his colorful plumage. "A briefing! Yes! Team Cinder was on a standard resource-gathering mission in Rust-Eater Cave, lower levels. They were after high-grade metallic scrap, so they were heading deep. Their last check-in was scheduled for after they cleared the fifth basement floor. That was over two hours ago."
+
+He paused, tapping a wing to his chin in thought. "Resistance is primarily Steel-types. Annoying Aron and Lairon, mostly. *Clang, clang, clang!*" he mimicked the sound of metal hitting metal. "But the deeper levels have territorial Aggron, and they are *not* happy to see visitors. There are also reports of Mawile packs using the tight corridors for ambushes. Very nasty, very bitey!"
+
+"Environmental hazards are minimal," he continued, "but be aware of large, magnetized rock formations. They can interfere with the internal compasses of Steel-types, causing disorientation. It's a minor nuisance for most, but can be a real problem for any Steel-types on a team. That's all we know."
+
+Eva processed the information with battlefield clarity. Her stomach, which had been growling moments before, was now a tight knot of adrenaline. Dinner was a forgotten luxury. A rescue mission took precedence over everything.
+
+"Thank you, Chirp. That's all we need," she said, her tone leaving no room for debate. She turned to the other assembled teams. A few of the other team leaders—a gruff Tauros, a sleek Persian—looked annoyed, their own rescue plans momentarily upstaged. "We will take point," Eva continued, her voice projecting a calm authority that silenced their murmurs. "The rest of you, form a secondary support team. You will follow our lead and provide backup if we run into overwhelming resistance. Understood?"
+
+The initial annoyance from the other teams shifted to a grudging respect. This newcomer wasn't just grandstanding; she was organizing. She was thinking tactically. Chops the Machamp, leader of his own respected team, stepped forward with a decisive nod, his four arms crossed. "You heard her," he boomed, his voice resonating through the hall. "Starfall's got the lead. We'll be right behind you. It's the best chance Cinder's got." The other teams, swayed by his confidence and Eva's undeniable command presence, murmured their assent.
+
+Eva gave a sharp nod of acknowledgement. "One final question, Chirp. The location of Rust-Eater Cave?"
+
+"Northwest of here," the Chatot squawked, pointing a wing towards the main exit. "A half-hour's journey past the Whispering Grotto. You can't miss it. The trees around it are all stained with rust."
+
+Eva took a final look at the red briefing paper, then met the eyes of each of her crewmates. T'Vella gave a subtle, logical nod. Anya's flames burned a little hotter with readiness. Zax's posture was a steel spring of potential energy. No words were needed. They were a single unit, ready to act.
+
+"Poyekhali," Eva said, her voice quiet but carrying the unmistakable weight of command. She spun around and headed for the exit at a brisk, determined pace, and her team fell in behind her instantly.
+
+Kenji caught up first, landing on Anya's shoulder. "Captain? What does that mean?"
+
+"'Let's go,'" Eva said, without breaking stride. "Gagarin said it as his rocket left the pad. The first of us to leave the ground."
+
+Kenji was quiet for a moment. When he spoke again, the nervous edge had gone out of his voice. "Good word."
+
+They left the warm light of the Guildhall behind, the worried chatter resuming in their wake, their hunger forgotten, their minds focused on a single, overriding objective: no one gets left behind.
